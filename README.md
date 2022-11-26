@@ -20,3 +20,10 @@
 ## Other Documents from Middleware 
 - Topic Publish-Subscribe:
 - Queues Publish-Subscribe:
+
+# Project Examples
+- https://www.nongnu.org/cpirc/
+- https://opensource.com/life/16/6/irc-quickstart-guide
+- https://opensource.com/life/16/6/irc
+- https://oramind.com/tutorial-how-to-make-an-irc-server-connection/
+- https://se.inf.ethz.ch/student_projects/fabian_gremper/Report.pdf
