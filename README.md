@@ -16,10 +16,17 @@
 - TCP/IP v4 example in C: https://www.ibm.com/docs/en/zos/2.1.0?topic=applications-example-ipv4-tcp-server-program
 - Non-Blocking fd C++: https://stackoverflow.com/questions/5616092/non-blocking-call-for-reading-descriptor
 - Non-Blocking fd C++ extended version: https://www.linuxtoday.com/blog/blocking-and-non-blocking-i-0/
+- Sockets: https://beej.us/guide/bgnet/pdf/bgnet_usl_c_1.pdf (Pag 60)
 
-## Other Documents from Middleware 
-- Topic Publish-Subscribe:
-- Queues Publish-Subscribe:
+## CONCEPTS
+* BSD Sockets
+* Receive commands via recv()
+* Check Alive status with PINGS that must be responded with /PONG time()
+* Concurrency run() livelock
+* Multithreading -> main
+                    send() [OPTIONAL]
+                    receive()
+* Serializacion
 
 # Project Examples
 - https://www.nongnu.org/cpirc/

@@ -1,8 +1,8 @@
 # Project compilation files and directories
 
-NAME                    =   ft_irc
+NAME                    =   ircserv 
 
-SRCS                    =   main.cpp    VectorTests.cpp		MapTests.cpp		
+SRCS                    =   Server.cpp		
 
 SRCSFD					=	srcs/
 OBJSFD					=	objs/
