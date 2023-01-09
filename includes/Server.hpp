@@ -1,7 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <string>
+#include <string.h>
+#include <unistd.h>
+#include <netdb.h>
 #include <sys/socket.h>
+#include <sys/types.h>
+#include <arpa/inet.h>
 
 
 namespace IRC {

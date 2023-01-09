@@ -35,4 +35,5 @@
 - https://oramind.com/tutorial-how-to-make-an-irc-server-connection/
 - https://se.inf.ethz.ch/student_projects/fabian_gremper/Report.pdf
 
-- TPC Server https://www.youtube.com/watch?v=cNdlrbZSkyQ
+- TPC Server Linux https://www.youtube.com/watch?v=cNdlrbZSkyQ
+- TPC Server Mac https://www.youtube.com/watch?v=F3iIGUiW27Q
