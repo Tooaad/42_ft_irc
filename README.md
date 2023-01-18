@@ -28,6 +28,7 @@ Kqueue
 - https://nima101.github.io/io_multiplexing
 - http://eradman.com/posts/kqueue-tcp.html
 - https://wiki.netbsd.org/tutorials/kqueue_tutorial/
+- [bueno] https://dev.to/frevib/a-tcp-server-with-kqueue-527
 
 
 
