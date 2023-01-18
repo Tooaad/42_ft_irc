@@ -14,7 +14,7 @@ namespace IRC {
 	class Client {
 		private:
 			sockaddr_in address;
-   			socklen_t	size;
+			socklen_t	size;
 			int			cSocket;
 
 		public:

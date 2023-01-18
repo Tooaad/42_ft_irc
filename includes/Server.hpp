@@ -8,12 +8,17 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
+#include <fcntl.h> // fcntl
+#include <sys/event.h> // kqueue
 
 
 namespace IRC {
 	class Server {
 		private:
-			int		sSocket; 
+			int				sSocket;
+			int				kq;
+			struct kevent	change_event[4];
+			struct kevent	event[4];
 
 
 
@@ -38,5 +43,8 @@ namespace IRC {
 
 			int createNetwork(std::string *args);
 			int getSocket(void) const;
+			int getKq(void);
+			struct kevent*	getEvent(void);
+			struct kevent*	getChgEvent(void);
 	};
 }
