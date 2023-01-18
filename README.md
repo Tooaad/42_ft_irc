@@ -18,6 +18,19 @@
 - Non-Blocking fd C++ extended version: https://www.linuxtoday.com/blog/blocking-and-non-blocking-i-0/
 - Sockets: https://beej.us/guide/bgnet/pdf/bgnet_usl_c_1.pdf (Pag 60)
 
+No bloqueante
+- https://www.linuxtoday.com/blog/blocking-and-non-blocking-i-0/
+- https://linux.die.net/man/7/socket
+- https://man7.org/linux/man-pages/man2/fcntl.2.html
+
+Kqueue
+- https://www.youtube.com/watch?v=Y6pFtgRdUts
+- https://nima101.github.io/io_multiplexing
+- http://eradman.com/posts/kqueue-tcp.html
+- https://wiki.netbsd.org/tutorials/kqueue_tutorial/
+
+
+
 ## CONCEPTS
 * BSD Sockets
 * Receive commands via recv()
