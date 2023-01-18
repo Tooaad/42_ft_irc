@@ -1,8 +1,8 @@
 # Project compilation files and directories
 
-NAME                    =   ircserv 
+NAME					=	ircserv 
 
-SRCS                    =   Server.cpp	Client.cpp	
+SRCS					=	Server.cpp	Client.cpp	
 
 SRCSFD					=	srcs/
 OBJSFD					=	objs/
