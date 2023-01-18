@@ -13,6 +13,10 @@
 namespace IRC {
 	class Server {
 		private:
+			int		sSocket; 
+
+
+
 // //			◦ If host, port_network and password_network aren’t given, you must create a new IRC network
 // //			◦ host is the hostname on which IRC must connect to join a already existing network
 // 			std::string		hostname;
@@ -26,11 +30,13 @@ namespace IRC {
 // 			std::string		password;
 
 
-// 		public:
-// 			Server() {}
-// 			Server(const Server& other) {}
-// 			Server& operator=(const Server& other) {}
-// 			~Server();
+		public:
+			Server();
+			Server(const Server& other);
+			Server& operator=(const Server& other);
+			~Server();
 
+			int createNetwork(std::string *args);
+			int getSocket(void) const;
 	};
 }

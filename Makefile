@@ -2,7 +2,7 @@
 
 NAME                    =   ircserv 
 
-SRCS                    =   Server.cpp		
+SRCS                    =   Server.cpp	Client.cpp	
 
 SRCSFD					=	srcs/
 OBJSFD					=	objs/
