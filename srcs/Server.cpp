@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 20:43:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/18 13:35:10 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:43:35 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int IRC::Server::createNetwork(std::string *args) {
     // Bind the Socket to any free IP / Port
     sockaddr_in hint;
     hint.sin_family = AF_INET;                          // IPv4 type
-    // atoi(args[0].c_str());
-    hint.sin_port = htons(54000);       // Little Endian (for bigger numbers) | Host To Network Short
+    hint.sin_port = htons(atoi(args[0].c_str()));       // Little Endian (for bigger numbers) | Host To Network Short
     inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
     
     bind(sSocket, (struct sockaddr *)&hint, sizeof(hint));
@@ -64,7 +63,7 @@ int main(int argc, char **argv) {
     IRC::Server server;
     if (argc == 3)
         server.createNetwork(args);
-    else if (argc == 5)
+    else if (argc == 4)
         connectNetwork(args);
 	
     IRC::Client client(server.getSocket());
