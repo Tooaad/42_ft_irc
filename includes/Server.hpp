@@ -5,6 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <netdb.h>
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
@@ -17,8 +18,9 @@ namespace IRC {
 		private:
 			int				sSocket;
 			int				kq;
-			struct kevent	change_event[4];
-			struct kevent	event[4];
+			std::string		pwd;
+			struct kevent	change_event[4]; // TODO: hay que ampliar?
+			struct kevent	event[4]; // TODO: hay que ampliar?
 
 
 
@@ -43,6 +45,12 @@ namespace IRC {
 
 			int		createNetwork(std::string *args);
 			void	connectNetwork(std::string *args);
+			int		loop(void);
+			int		clientConnected(void);
+			void	clientDisconnected(int event_fd);
+			int		receiveMessage(int event_fd);
+			void	serverClose(void);
+
 			int		getSocket(void) const;
 			int		getKq(void);
 			struct kevent*	getEvent(void);

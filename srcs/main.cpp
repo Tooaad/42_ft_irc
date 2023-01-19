@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/19 11:57:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/19 13:04:17 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,67 +28,9 @@ int main(int argc, char **argv) {
 		server.createNetwork(args);
 	else if (argc == 4)
 		server.connectNetwork(args);
-
-	int new_events;
-	
-	// Server loop
-	while (true) {
-		if ((new_events = kevent(server.getKq(), NULL, 0, server.getEvent(), 1, NULL)) == -1) {
-			perror("kevent");
-			return -1;
-		}
-
-		// kqueue events loop
-		for (int i = 0; i < new_events; i++) {
-			int event_fd = server.getEvent()[i].ident;
-
-			// Client disconnected
-			if (server.getEvent()[i].flags & EV_EOF) {
-				std::cout << "Client has disconnected" << std::endl;
-				close(event_fd);
-			}
-			// New client connected
-			else if (event_fd == server.getSocket()) {
-				IRC::Client client(server.getSocket());
-				client.clientSetup();
-
-				EV_SET(server.getChangeEvent(), client.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
-				if (kevent(server.getKq(), server.getChangeEvent(), 1, NULL, 0, NULL) < 0)
-				{
-					perror("kevent error");
-					return -1;
-				}
-			}
-			// New message from client
-			else if (server.getEvent()[i].filter & EVFILT_READ) {
-				char buf[4096];
-				int bytesRec;
-
-				memset(buf, 0, 4096);
-				if (fcntl(event_fd, F_SETFL, O_NONBLOCK) < 0) {
-					perror("Error making client socket non blocking");
-					return -1;
-				}
-				
-				if ((bytesRec = recv(event_fd, buf, 4096, 0)) == -1) {
-					std::cout << "Error in recv(). Quitting" << std::endl;
-					return -1;
-				}
-
-				// Todo: Comprobar si ocurre alguna vez para borrar sino
-				if (bytesRec == 0) {
-					std::cout << "Client disconnected " << std::endl;
-					return -1;
-				}
-				// ***********
-
-				std::cout << "Msg: " << std::string(buf, 0, bytesRec) << std::endl;
-
-				send(event_fd, buf, bytesRec + 1, 0);
-			}
-		}
-	}
-
-	close(server.getSocket());
+		
+	// atexit(server.serverClose);
+	server.loop();
+	close(server.getSocket()); // TODO: Mirar como cerrar bien, tras Ctrl+C no llega aqui
 	return 0;
 }
