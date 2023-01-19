@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/Server.hpp"
-#include "../includes/Client.hpp"
+
 
 IRC::Server::Server()
 {
@@ -19,11 +19,6 @@ IRC::Server::Server()
 
 IRC::Server::~Server()
 {
-}
-
-int IRC::Server::getSocket(void) const
-{
-	return this->sSocket;
 }
 
 void IRC::Server::connectNetwork(std::string *args)
@@ -74,21 +69,6 @@ int IRC::Server::createNetwork(std::string *args)
 	return 0;
 }
 
-int IRC::Server::getKq(void)
-{
-	return this->kq;
-}
-
-struct kevent *IRC::Server::getEvent(void)
-{
-	return &this->event[0];
-}
-
-struct kevent *IRC::Server::getChangeEvent(void)
-{
-	return &this->change_event[0];
-}
-
 int IRC::Server::loop(void)
 {
 	int new_events;
@@ -134,6 +114,8 @@ int IRC::Server::clientConnected(void)
 		perror("kevent error");
 		return -1;
 	}
+
+	this->users.push_back(IRC::User(client.getSocket()));
 	return 0;
 }
 
@@ -161,6 +143,8 @@ int IRC::Server::receiveMessage(int event_fd)
 		return -1;
 	}
 
+	IRC::User user = findUser(this->getUsers(), event_fd);
+
 	// Todo: Comprobar si ocurre alguna vez para borrar sino
 	if (bytesRec == 0)
 	{
@@ -171,10 +155,32 @@ int IRC::Server::receiveMessage(int event_fd)
 
 	std::cout << "Msg from " << event_fd << ": " << std::string(buf, 0, bytesRec) << std::endl;
 
-	send(event_fd, buf, bytesRec + 1, 0);
+	for (size_t i = 0; i < users.size(); i++)
+		send(users[i].getSocket(), buf, bytesRec + 1, 0);
 	return 0;
 }
 
-void IRC::Server::serverClose(void) {
-	close(this->sSocket);
+int IRC::Server::getSocket(void) const
+{
+	return this->sSocket;
+}
+
+int IRC::Server::getKq(void)
+{
+	return this->kq;
+}
+
+struct kevent *IRC::Server::getEvent(void)
+{
+	return &this->event[0];
+}
+
+struct kevent *IRC::Server::getChangeEvent(void)
+{
+	return &this->change_event[0];
+}
+
+std::vector<IRC::User> IRC::Server::getUsers(void)
+{
+	return this->users;
 }
