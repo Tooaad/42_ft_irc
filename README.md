@@ -2,6 +2,7 @@
 
 ## RFC-IRC PROTOCOL
 - https://www.rfc-es.org/rfc/rfc1459-es.txt
+- https://modern.ircdocs.horse/#client-to-server
 
 ## IRC Clients using on terminal is kinda ugly
 - https://kiwiirc.com/              (Online)
