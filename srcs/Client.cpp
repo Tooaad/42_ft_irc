@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 12:03:43 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/19 10:46:33 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/19 11:35:20 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ IRC::Client::~Client() {
 }
 
 void IRC::Client::clientSetup() const {
-	// Accept a Call
-	
 	char host[NI_MAXHOST];
 	char service[NI_MAXSERV];
 	memset(host, 0, NI_MAXHOST);

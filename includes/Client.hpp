@@ -13,7 +13,7 @@
 namespace IRC {
 	class Client {
 		private:
-			sockaddr_in address;
+			sockaddr_in	address;
 			socklen_t	size;
 			int			cSocket;
 
@@ -24,10 +24,9 @@ namespace IRC {
 			~Client();
 			Client& operator= (const Client& other);
 
-//
-			void clientSetup() const;
-			sockaddr_in getClientAddress() const;
-			socklen_t getClientSize() const;
-			int getSocket() const;
+			void		clientSetup() const;
+			sockaddr_in	getClientAddress() const;
+			socklen_t	getClientSize() const;
+			int			getSocket() const;
 	};
 }

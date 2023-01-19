@@ -41,11 +41,11 @@ namespace IRC {
 			Server& operator=(const Server& other);
 			~Server();
 
-			int createNetwork(std::string *args);
-			void connectNetwork(std::string *args);
-			int getSocket(void) const;
-			int getKq(void);
+			int		createNetwork(std::string *args);
+			void	connectNetwork(std::string *args);
+			int		getSocket(void) const;
+			int		getKq(void);
 			struct kevent*	getEvent(void);
-			struct kevent*	getChgEvent(void);
+			struct kevent*	getChangeEvent(void);
 	};
 }
