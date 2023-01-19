@@ -42,6 +42,7 @@ namespace IRC {
 			~Server();
 
 			int createNetwork(std::string *args);
+			void connectNetwork(std::string *args);
 			int getSocket(void) const;
 			int getKq(void);
 			struct kevent*	getEvent(void);
