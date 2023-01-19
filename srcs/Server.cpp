@@ -17,6 +17,11 @@ IRC::Server::Server()
 {
 }
 
+IRC::Server::Server(std::string pwd)
+{
+	this->pwd = pwd;
+}
+
 IRC::Server::~Server()
 {
 }
@@ -143,7 +148,34 @@ int IRC::Server::receiveMessage(int event_fd)
 		return -1;
 	}
 
+	/*
+	CAP LS 302
+	PASS
+	NICK and USER
+	Capability Negotiation
+	SASL (if negotiated)
+	CAP END
+
+	if PASS == servpass
+		guardapass
+	if (PASS guardada or !servpass) and (NICK)
+		guardanick
+	if (PASS guardada or !servpass) and (USER)
+		guardauser
+	if (PASS && USER && NICK)
+		authenticated
+
+		  Command: USER
+  		  Parameters: <username> 0 * <realname>
+
+		ERR_PASSWDMISMATCH (464) 
+  		"<client> :Password incorrect"
+	*/
 	IRC::User user = findUser(this->getUsers(), event_fd);
+	std::string tmpPWD = parsePwd(buf, "PASS ");
+	if (this->pwd.size() > 0 && !user.isAuthenticated())
+		if (tmpPWD != "")
+			registration(user, tmpPWD);
 
 	// Todo: Comprobar si ocurre alguna vez para borrar sino
 	if (bytesRec == 0)
@@ -158,6 +190,20 @@ int IRC::Server::receiveMessage(int event_fd)
 	for (size_t i = 0; i < users.size(); i++)
 		send(users[i].getSocket(), buf, bytesRec + 1, 0);
 	return 0;
+}
+
+void IRC::Server::registration(IRC::User user, std::string PWDD) {
+	user.setPassword(PWDD);
+	std::cout << pwd;
+	std::cout << "ServPass: '" << PWDD << "'" << std::endl;
+	if (user.getPassword().compare(this->pwd) == 0)
+	{
+		// send "<client> :Password incorrect"
+		clientDisconnected(user.getSocket());
+	}	
+	user.setUser("TEST");
+	user.setNick("TEST");
+	user.setAuthenticated();
 }
 
 int IRC::Server::getSocket(void) const
@@ -183,4 +229,10 @@ struct kevent *IRC::Server::getChangeEvent(void)
 std::vector<IRC::User> IRC::Server::getUsers(void)
 {
 	return this->users;
+}
+
+std::string IRC::parsePwd(std::string buf, std::string command) {
+	if (buf.substr(0, 5) == command)
+		return buf.substr(5, buf.size() - 1);
+	return "";
 }
