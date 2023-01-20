@@ -148,6 +148,9 @@ int IRC::Server::receiveMessage(int event_fd)
 		return -1;
 	}
 
+	std::string message_str(buf);
+	message_str = trim_endl(message_str); // TODO: leaks?
+
 	/*
 	CAP LS 302
 	PASS
@@ -172,18 +175,21 @@ int IRC::Server::receiveMessage(int event_fd)
   		"<client> :Password incorrect"
 	*/
 	IRC::User user = findUser(this->getUsers(), event_fd);
-	std::string tmpPWD = parsePwd(buf, "PASS ");
-	if (this->pwd.size() > 0 && !user.isAuthenticated())
-		if (tmpPWD != "")
-			registration(user, tmpPWD);
+	if (!user.isAuthenticated())
+		registration(user, message_str);
+	
+	if (!user.isAuthenticated())
+		return -1;
 
+	
+	/*
 	// Todo: Comprobar si ocurre alguna vez para borrar sino
 	if (bytesRec == 0)
 	{
 		std::cout << "Client disconnected " << std::endl;
 		return -1;
 	}
-	// ***********
+	*/
 
 	std::cout << "Msg from " << event_fd << ": " << std::string(buf, 0, bytesRec) << std::endl;
 
@@ -192,18 +198,41 @@ int IRC::Server::receiveMessage(int event_fd)
 	return 0;
 }
 
-void IRC::Server::registration(IRC::User user, std::string PWDD) {
-	user.setPassword(PWDD);
-	std::cout << pwd;
-	std::cout << "ServPass: '" << PWDD << "'" << std::endl;
-	if (user.getPassword().compare(this->pwd) == 0)
+void IRC::Server::registration(IRC::User user, std::string message_str) {
+	std::string tmpPwd = parsePwd(message_str, "PASS ");
+	if (tmpPwd.size() > 0)
 	{
-		// send "<client> :Password incorrect"
-		clientDisconnected(user.getSocket());
+		user.setPassword(tmpPwd);
+
+		std::cout << "Server Pass: '" << this->pwd << "'" << std::endl;
+		std::cout << "User Pass: '" << user.getPassword() << "'" << std::endl;
+
+		if (this->pwd.size() > 0 && user.getPassword().compare(this->pwd) != 0)
+		{
+			std::string error_msg = "<client> :Password incorrect\n";
+			send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
+			clientDisconnected(user.getSocket());
+		}
+	}
+	
+	if (user.getPassword().size() > 0 || this->pwd.size() == 0)
+	{
+		user.setUser("TEST");
+		user.setNick("TEST");
+		std::cout << "user" << std::endl;
+	}
+
+	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
+	{
+		user.setAuthenticated(true);
+		std::cout << "authenticated" << std::endl;
 	}	
-	user.setUser("TEST");
-	user.setNick("TEST");
-	user.setAuthenticated();
+
+	if (user.isAuthenticated() == false)
+	{
+		std::string error_msg = "Not authenticated! Provide PASS, NICK and USER\n";
+		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
+	}
 }
 
 int IRC::Server::getSocket(void) const
