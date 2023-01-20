@@ -177,10 +177,10 @@ int IRC::Server::receiveMessage(int event_fd)
 	IRC::User user = findUser(this->getUsers(), event_fd);
 	if (!user.isAuthenticated())
 		registration(user, message_str);
-	
+
 	if (!user.isAuthenticated())
 		return -1;
-
+	
 	
 	/*
 	// Todo: Comprobar si ocurre alguna vez para borrar sino
@@ -199,34 +199,38 @@ int IRC::Server::receiveMessage(int event_fd)
 }
 
 void IRC::Server::registration(IRC::User user, std::string message_str) {
-	std::string tmpPwd = parsePwd(message_str, "PASS ");
-	if (tmpPwd.size() > 0)
+	if (this->pwd.size() > 0)
 	{
-		user.setPassword(tmpPwd);
-
-		std::cout << "Server Pass: '" << this->pwd << "'" << std::endl;
-		std::cout << "User Pass: '" << user.getPassword() << "'" << std::endl;
-
-		if (this->pwd.size() > 0 && user.getPassword().compare(this->pwd) != 0)
+		std::string tmpPwd = parsePwd(message_str, "PASS ");
+		if (tmpPwd.compare("") != 0)
 		{
-			std::string error_msg = "<client> :Password incorrect\n";
-			send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
-			clientDisconnected(user.getSocket());
+			user.setPassword(tmpPwd);
+
+			std::cout << "Server Pass: '" << this->pwd << "'" << std::endl;
+			std::cout << "User Pass: '" << user.getPassword() << "'" << std::endl;
+
+			if (this->pwd.size() > 0 && user.getPassword().compare(this->pwd) != 0)
+			{
+				std::string error_msg = "<client> :Password incorrect\n";
+				send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
+				clientDisconnected(user.getSocket());
+			}
 		}
 	}
 	
-	if (user.getPassword().size() > 0 || this->pwd.size() == 0)
-	{
+	// if (user.getPassword().size() > 0 || this->pwd.size() == 0)
+	// {
 		user.setUser("TEST");
 		user.setNick("TEST");
 		std::cout << "user" << std::endl;
-	}
 
-	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
-	{
-		user.setAuthenticated(true);
+		user.changeAuthenticated(); 				// true 
 		std::cout << "authenticated" << std::endl;
-	}	
+	// }
+
+	// if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
+	// {
+	// }	
 
 	if (user.isAuthenticated() == false)
 	{

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 11:32:55 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/20 12:35:45 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void IRC::User::setUser(std::string user)
 	this->user = user;
 }
 
-void IRC::User::setAuthenticated(bool auth)
+void IRC::User::changeAuthenticated()
 {
-	this->authenticated = auth;
+	this->authenticated = !authenticated;
 }
 
 IRC::User IRC::findUser(std::vector<IRC::User> users, int event_fd)
