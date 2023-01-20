@@ -148,8 +148,8 @@ int IRC::Server::receiveMessage(int event_fd)
 		return -1;
 	}
 
-	std::string message_str(buf);
-	message_str = trim_endl(message_str); // TODO: leaks?
+	std::string message(buf);
+	message = trim_endl(message); // TODO: leaks?
 
 	/*
 	CAP LS 302
@@ -159,24 +159,15 @@ int IRC::Server::receiveMessage(int event_fd)
 	SASL (if negotiated)
 	CAP END
 
-	if PASS == servpass
-		guardapass
-	if (PASS guardada or !servpass) and (NICK)
-		guardanick
-	if (PASS guardada or !servpass) and (USER)
-		guardauser
-	if (PASS && USER && NICK)
-		authenticated
-
-		  Command: USER
-  		  Parameters: <username> 0 * <realname>
+		Command: USER
+		Parameters: <username> 0 * <realname>
 
 		ERR_PASSWDMISMATCH (464) 
   		"<client> :Password incorrect"
 	*/
 	IRC::User user = findUser(this->getUsers(), event_fd);
 	if (!user.isAuthenticated())
-		registration(user, message_str);
+		registration(user, message);
 
 	if (!user.isAuthenticated())
 		return -1;
@@ -198,10 +189,11 @@ int IRC::Server::receiveMessage(int event_fd)
 	return 0;
 }
 
-void IRC::Server::registration(IRC::User user, std::string message_str) {
+void IRC::Server::registration(IRC::User user, std::string message) {
 	if (this->pwd.size() > 0)
 	{
-		std::string tmpPwd = parsePwd(message_str, "PASS ");
+		// Command cmd(message)
+		std::string tmpPwd = parsePwd(message, "PASS ");
 		if (tmpPwd.compare("") != 0)
 		{
 			user.setPassword(tmpPwd);

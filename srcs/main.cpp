@@ -6,12 +6,13 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 10:45:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/20 14:29:19 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Server.hpp"
 #include "../includes/Client.hpp"
+#include "../includes/utils.hpp"
 
 void saveArgs(std::string *args, int argc, char **argv)
 {
@@ -25,6 +26,9 @@ int main(int argc, char **argv)
 {
 	std::string args[argc - 1];
 	saveArgs(args, argc, argv);
+
+	// split_string(" hola  buenas tardes q ");
+
 
 	IRC::Server server(args[1]);
 	if (argc == 3)

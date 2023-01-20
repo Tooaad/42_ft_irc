@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 10:32:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/20 13:51:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ namespace IRC
 		int sSocket;
 		int kq;
 		std::string pwd;
-		struct kevent change_event[4]; // TODO: hay que ampliar?
-		struct kevent event[4];		   // TODO: hay que ampliar?
+		struct kevent change_event[4]; // TODO: hay que ampliar? vector
+		struct kevent event[4];		   // TODO: hay que ampliar? vector
 		std::vector<IRC::User> users;
 		std::vector<std::string> commands;
 

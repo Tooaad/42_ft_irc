@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.hpp                                          :+:      :+:    :+:   */
+/*   Pass.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/20 10:31:29 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 13:54:08 by karisti-         ###   ########.fr       */
+/*   Created: 2023/01/20 15:20:40 by karisti-          #+#    #+#             */
+/*   Updated: 2023/01/20 18:10:26 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <string>
-#include <vector>
-#include <iostream>
+#include "Command.hpp"
 
-std::string	                trim_endl(std::string str);
-std::vector<std::string>    split_string(std::string str);
+namespace IRC 
+{
+	class Pass : public Command
+	{
+		public:
+			Pass();
+			Pass(Pass const & other);
+			virtual ~Pass();
+
+			virtual void exec() const;
+	};
+}
+
