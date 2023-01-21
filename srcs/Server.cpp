@@ -192,22 +192,23 @@ int IRC::Server::receiveMessage(int event_fd)
 void IRC::Server::registration(IRC::User user, std::string message) {
 	if (this->pwd.size() > 0)
 	{
-		// Command cmd(message)
-		std::string tmpPwd = parsePwd(message, "PASS ");
-		if (tmpPwd.compare("") != 0)
-		{
-			user.setPassword(tmpPwd);
+		IRC::Command cmd(message);
+		cmd.detectCommand(this, user);
+		// std::string tmpPwd = parsePwd(message, "PASS ");
+		// if (tmpPwd.compare("") != 0)
+		// {
+		// 	user.setPassword(tmpPwd);
 
-			std::cout << "Server Pass: '" << this->pwd << "'" << std::endl;
-			std::cout << "User Pass: '" << user.getPassword() << "'" << std::endl;
+		// 	std::cout << "Server Pass: '" << this->pwd << "'" << std::endl;
+		// 	std::cout << "User Pass: '" << user.getPassword() << "'" << std::endl;
 
-			if (this->pwd.size() > 0 && user.getPassword().compare(this->pwd) != 0)
-			{
-				std::string error_msg = "<client> :Password incorrect\n";
-				send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
-				clientDisconnected(user.getSocket());
-			}
-		}
+		// 	if (this->pwd.size() > 0 && user.getPassword().compare(this->pwd) != 0)
+		// 	{
+		// 		std::string error_msg = "<client> :Password incorrect\n";
+		// 		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
+		// 		clientDisconnected(user.getSocket());
+		// 	}
+		// }
 	}
 	
 	// if (user.getPassword().size() > 0 || this->pwd.size() == 0)
@@ -239,6 +240,11 @@ int IRC::Server::getSocket(void) const
 int IRC::Server::getKq(void)
 {
 	return this->kq;
+}
+
+std::string IRC::Server::getPWD(void) const
+{
+	return this->pwd;
 }
 
 struct kevent *IRC::Server::getEvent(void)

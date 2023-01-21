@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 21:24:47 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/21 15:45:11 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 #include <string>
 #include <map>
-
+#include "Server.hpp"
+#include "User.hpp"
 
 namespace IRC
 {
+	class Server;
 	class Command
 	{
 		enum Err {HAZLO, KEPA};
 		
-		public:
-			static std::map<std::string, Command*> cmd_map;
+		private:
+			std::map<std::string, Command*> cmd_map;
 
 		public:
 
@@ -34,8 +36,8 @@ namespace IRC
 			virtual ~Command();
 
 			Command* find(std::string key) const;
-			void detectCommand(void);
-			virtual void exec(void) = 0;
+			void detectCommand(IRC::Server* server, IRC::User user);
+			virtual void exec(IRC::Server* server, IRC::User user);
 
 
 		protected:

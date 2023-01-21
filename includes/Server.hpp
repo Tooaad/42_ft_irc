@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 13:51:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/21 11:47:35 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 #include <fcntl.h>	   // fcntl
 #include <sys/event.h> // kqueue
 #include <vector>
-#include "../includes/User.hpp"
-#include "../includes/Client.hpp"
-#include "../includes/utils.hpp"
+#include "User.hpp"
+#include "Client.hpp"
+#include "Command.hpp"
+#include "utils.hpp"
 
 namespace IRC
 {
@@ -71,6 +72,7 @@ namespace IRC
 
 		int getSocket(void) const;
 		int getKq(void);
+		std::string getPWD(void) const;
 		struct kevent *getEvent(void);
 		struct kevent *getChangeEvent(void);
 		std::vector<User> getUsers(void);
