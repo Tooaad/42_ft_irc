@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 18:19:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/20 21:14:33 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,15 @@ IRC::Command::~Command()
 // {
 // }
 
-void IRC::Command::detectCommand(void) const
+
+
+IRC::Command* IRC::Command::find(std::string key) const
 {
+    return cmd_map.find(key)->second;
+}
 
-
+void IRC::Command::detectCommand(void)
+{
+    IRC::Command* t = find(this->command);
+    t->exec();
 }

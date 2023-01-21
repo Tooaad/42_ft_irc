@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 18:12:20 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/20 21:24:47 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace IRC
 	{
 		enum Err {HAZLO, KEPA};
 		
-		private:
+		public:
 			static std::map<std::string, Command*> cmd_map;
 
 		public:
@@ -31,10 +31,12 @@ namespace IRC
 			Command(std::string str);
 			Command(const Command& other);
 			Command operator=(const Command& other);
-			~Command();
+			virtual ~Command();
 
-			void detectCommand(void) const;
-			virtual void exec(void) const;
+			Command* find(std::string key) const;
+			void detectCommand(void);
+			virtual void exec(void) = 0;
+
 
 		protected:
 
