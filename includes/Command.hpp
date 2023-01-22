@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/22 16:37:03 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/22 18:56:54 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <string>
 #include <algorithm>
+#include <typeinfo>
 #include <map>
 #include "Server.hpp"
 #include "User.hpp"

@@ -151,20 +151,20 @@ int IRC::Server::receiveMessage(int event_fd)
 	std::string message(buf);
 	message = trim_endl(message); // TODO: leaks?
 
-	/*
-	CAP LS 302
-	PASS
-	NICK and USER
-	Capability Negotiation
-	SASL (if negotiated)
-	CAP END
+		/*
+		CAP LS 302
+		PASS
+		NICK and USER
+		Capability Negotiation
+		SASL (if negotiated)
+		CAP END
 
-		Command: USER
-		Parameters: <username> 0 * <realname>
+			Command: USER
+			Parameters: <username> 0 * <realname>
 
-		ERR_PASSWDMISMATCH (464) 
-  		"<client> :Password incorrect"
-	*/
+			ERR_PASSWDMISMATCH (464) 
+			"<client> :Password incorrect"
+		*/
 	IRC::User user = findUser(this->getUsers(), event_fd);
 	if (!user.isAuthenticated())
 		registration(user, message);
