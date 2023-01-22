@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/21 18:37:13 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:55:29 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ IRC::Command::Command(std::string str)
     // cmd_map["/USER"] = new IRC::User();
     // cmd_map.insert(std::make_pair("/PASS", new IRC::Pass()));
 
-    
     this->command = str.substr(0, str.find(" ") + 1);
+    std::transform(this->command.begin(), this->command.end(), this->command.begin(), ::toupper);   // transform command type to upper anyways
     this->args = str.substr(str.find(" ") + 1, str.size());
 
     // std::cout << "'" << command << "'" << std::endl;
@@ -41,12 +41,11 @@ IRC::Command::Command(const IRC::Command& other)
     *this = other;
 }
 
-IRC::Command IRC::Command::operator=(const IRC::Command& other)
+IRC::Command& IRC::Command::operator=(const IRC::Command& other)
 {
     this->command = other.command;
     this->args = other.command;
     return *this;
-    
 }
 
 IRC::Command* IRC::Command::find(std::string key) const

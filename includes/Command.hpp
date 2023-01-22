@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/21 15:45:11 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:37:03 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <string>
+#include <algorithm>
 #include <map>
 #include "Server.hpp"
 #include "User.hpp"
@@ -32,7 +33,7 @@ namespace IRC
 			Command();
 			Command(std::string str);
 			Command(const Command& other);
-			Command operator=(const Command& other);
+			Command& operator=(const Command& other);
 			virtual ~Command();
 
 			Command* find(std::string key) const;

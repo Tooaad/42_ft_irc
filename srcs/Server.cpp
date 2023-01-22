@@ -169,8 +169,8 @@ int IRC::Server::receiveMessage(int event_fd)
 	if (!user.isAuthenticated())
 		registration(user, message);
 
-	if (!user.isAuthenticated())
-		return -1;
+	// if (!user.isAuthenticated())
+	// 	return -1;
 	
 	
 	/*
@@ -181,8 +181,7 @@ int IRC::Server::receiveMessage(int event_fd)
 		return -1;
 	}
 	*/
-
-	std::cout << "Msg from " << event_fd << ": " << std::string(buf, 0, bytesRec) << std::endl;
+		std::cout << "Msg from " << event_fd << ": " << std::string(buf, 0, bytesRec) << std::endl;
 
 	for (size_t i = 0; i < users.size(); i++)
 		send(users[i].getSocket(), buf, bytesRec + 1, 0);

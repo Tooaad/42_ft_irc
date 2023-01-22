@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 15:20:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/21 12:54:29 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:13:54 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace IRC
 	{
 		public:
 			Pass();
-			Pass(Pass const & other);
+			Pass(Pass const& other);
 			virtual ~Pass();
 
 			void exec(IRC::Server* server, IRC::User user);
