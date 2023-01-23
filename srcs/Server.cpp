@@ -126,7 +126,10 @@ int IRC::Server::clientConnected(void)
 
 void IRC::Server::clientDisconnected(int event_fd)
 {
-	std::cout << "Client has disconnected" << std::endl;
+	std::cout << "Client " << event_fd << " has disconnected" << std::endl;
+	std::vector<IRC::User>::iterator removed = std::remove(users.begin(), users.end(), User(event_fd));
+	if (removed != users.end())
+		users.resize(users.size() - 1);
 	close(event_fd);
 }
 
@@ -152,10 +155,15 @@ int IRC::Server::receiveMessage(int event_fd)
 	message = trim_endl(message); // TODO: leaks?
 
 
-	IRC::User& user = *(std::find(users.begin(), users.end(), User(event_fd)).base());
+	printUsers(users);
+	std::vector<IRC::User>::iterator found = std::find(users.begin(), users.end(), User(event_fd));
+	if (found == users.end()) // TODO: que hacer si no encontramos usuario
+		return -1;
+
+	IRC::User& user = *found.base();
 
 	if (!user.isAuthenticated())
-		registration(user, message);	
+		registration(user, message);
 	
 	/*
 	// Todo: Comprobar si ocurre alguna vez para borrar sino
