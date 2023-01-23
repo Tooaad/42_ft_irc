@@ -165,10 +165,20 @@ int IRC::Server::receiveMessage(int event_fd)
 			ERR_PASSWDMISMATCH (464) 
 			"<client> :Password incorrect"
 		*/
-	IRC::User user = findUser(this->getUsers(), event_fd);
-	if (!user.isAuthenticated())
-		registration(user, message);
+	printUsers(this->getUsers());
 
+	int found = findUser(this->getUsers(), event_fd);
+	if (found < 0)
+		return -1;
+
+	IRC::User& user = users.at(found);
+
+	//std::cout << "User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() << ", User: " << user.getUser() << std::endl;
+	if (!(user).isAuthenticated())
+		registration(user, message);
+	//std::cout << "--User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() << ", User: " << user.getUser() << std::endl;
+	
+	(user).setUser("pepito");
 	// if (!user.isAuthenticated())
 	// 	return -1;
 	
@@ -188,26 +198,11 @@ int IRC::Server::receiveMessage(int event_fd)
 	return 0;
 }
 
-void IRC::Server::registration(IRC::User user, std::string message) {
+void IRC::Server::registration(IRC::User& user, std::string message) {
 	if (this->pwd.size() > 0)
 	{
 		IRC::Command cmd(message);
 		cmd.detectCommand(this, user);
-		// std::string tmpPwd = parsePwd(message, "PASS ");
-		// if (tmpPwd.compare("") != 0)
-		// {
-		// 	user.setPassword(tmpPwd);
-
-		// 	std::cout << "Server Pass: '" << this->pwd << "'" << std::endl;
-		// 	std::cout << "User Pass: '" << user.getPassword() << "'" << std::endl;
-
-		// 	if (this->pwd.size() > 0 && user.getPassword().compare(this->pwd) != 0)
-		// 	{
-		// 		std::string error_msg = "<client> :Password incorrect\n";
-		// 		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
-		// 		clientDisconnected(user.getSocket());
-		// 	}
-		// }
 	}
 	
 	// if (user.getPassword().size() > 0 || this->pwd.size() == 0)
@@ -256,7 +251,7 @@ struct kevent *IRC::Server::getChangeEvent(void)
 	return &this->change_event[0];
 }
 
-std::vector<IRC::User> IRC::Server::getUsers(void)
+std::vector<IRC::User>& IRC::Server::getUsers(void)
 {
 	return this->users;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/21 11:47:35 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:37:43 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ namespace IRC
 		int clientConnected(void);
 		void clientDisconnected(int event_fd);
 		int receiveMessage(int event_fd);
-		void registration(IRC::User user, std::string PWD);
+		void registration(IRC::User& user, std::string PWD);
 		// void serverClose(void);
 
 		int getSocket(void) const;
@@ -75,7 +75,7 @@ namespace IRC
 		std::string getPWD(void) const;
 		struct kevent *getEvent(void);
 		struct kevent *getChangeEvent(void);
-		std::vector<User> getUsers(void);
+		std::vector<User>& getUsers(void);
 	};
 	std::string parsePwd(std::string buf, std::string command);
 }

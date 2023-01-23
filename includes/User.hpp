@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 12:35:39 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:34:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace IRC
 {
@@ -29,7 +30,7 @@ namespace IRC
 	public:
 		User();
 		User(int socket);
-		// User(const User& other);
+		User(const User& other);
 		~User();
 		User &operator=(const User &other);
 
@@ -43,5 +44,7 @@ namespace IRC
 		void setUser(std::string user);
 		void changeAuthenticated();
 	};
-	IRC::User findUser(std::vector<IRC::User> users, int event_fd);
+	int		findUser(std::vector<User> users, int event_fd);
+	void	printUser(User user);
+	void	printUsers(std::vector<User> users);
 }

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/20 12:35:45 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:34:26 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,25 @@ IRC::User::User(int socket) : socket(socket), password(""), nick(""), user(""), 
 {
 }
 
+IRC::User::User(const IRC::User& other)
+{
+	*this = other;
+}
+
 IRC::User::~User()
 {
 }
+IRC::User& IRC::User::operator=(const IRC::User &other)
+{
+	this->authenticated = other.isAuthenticated();
+	this->nick = other.getNick();
+	this->password = other.getPassword();
+	this->user = other.getUser();
+	this->socket = other.getSocket();
+	
+	return *this;
+}
+
 
 int IRC::User::getSocket(void) const
 {
@@ -69,12 +85,26 @@ void IRC::User::changeAuthenticated()
 	this->authenticated = !authenticated;
 }
 
-IRC::User IRC::findUser(std::vector<IRC::User> users, int event_fd)
+int IRC::findUser(std::vector<IRC::User> users, int event_fd)
 {
-	for (std::vector<IRC::User>::iterator it = users.begin(); it != users.end(); it++)
+	std::vector<IRC::User>::iterator it = users.begin();
+	int i = 0;
+	for (; it != users.end(); it++, i++)
 	{
 		if ((*it).getSocket() == event_fd)
-			return *it;
+			return i;
 	}
-	return NULL;
+	return i;
+}
+
+void	IRC::printUsers(std::vector<IRC::User> users)
+{
+	std::vector<IRC::User>::iterator it = users.begin();
+	for (; it != users.end(); it++)
+		printUser(*it);
+}
+
+void	IRC::printUser(IRC::User user)
+{
+	std::cout << "User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() << ", User: " << user.getUser() << std::endl;
 }

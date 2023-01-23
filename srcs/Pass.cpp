@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/22 17:17:30 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:24:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ IRC::Pass::~Pass()
 {
 }
 
-void IRC::Pass::exec(IRC::Server* server, IRC::User user)
+void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 {
 	user.setPassword(args.substr(0, args.find(" ")));
 	std::cout << "'" << args << "'" << std::endl;
