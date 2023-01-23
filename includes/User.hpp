@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/23 13:34:34 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:44:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ namespace IRC
 		void setUser(std::string user);
 		void changeAuthenticated();
 	};
+	bool 	operator== (const IRC::User lhs, const IRC::User rhs);
 	int		findUser(std::vector<User> users, int event_fd);
 	void	printUser(User user);
 	void	printUsers(std::vector<User> users);

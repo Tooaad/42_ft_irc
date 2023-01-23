@@ -151,37 +151,11 @@ int IRC::Server::receiveMessage(int event_fd)
 	std::string message(buf);
 	message = trim_endl(message); // TODO: leaks?
 
-		/*
-		CAP LS 302
-		PASS
-		NICK and USER
-		Capability Negotiation
-		SASL (if negotiated)
-		CAP END
 
-			Command: USER
-			Parameters: <username> 0 * <realname>
+	IRC::User& user = *(std::find(users.begin(), users.end(), User(event_fd)).base());
 
-			ERR_PASSWDMISMATCH (464) 
-			"<client> :Password incorrect"
-		*/
-	printUsers(this->getUsers());
-
-	int found = findUser(this->getUsers(), event_fd);
-	if (found < 0)
-		return -1;
-
-	IRC::User& user = users.at(found);
-
-	//std::cout << "User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() << ", User: " << user.getUser() << std::endl;
-	if (!(user).isAuthenticated())
-		registration(user, message);
-	//std::cout << "--User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() << ", User: " << user.getUser() << std::endl;
-	
-	(user).setUser("pepito");
-	// if (!user.isAuthenticated())
-	// 	return -1;
-	
+	if (!user.isAuthenticated())
+		registration(user, message);	
 	
 	/*
 	// Todo: Comprobar si ocurre alguna vez para borrar sino
@@ -198,6 +172,20 @@ int IRC::Server::receiveMessage(int event_fd)
 	return 0;
 }
 
+		/*
+		CAP LS 302
+		PASS
+		NICK and USER
+		Capability Negotiation
+		SASL (if negotiated)
+		CAP END
+
+			Command: USER
+			Parameters: <username> 0 * <realname>
+
+			ERR_PASSWDMISMATCH (464) 
+			"<client> :Password incorrect"
+		*/
 void IRC::Server::registration(IRC::User& user, std::string message) {
 	if (this->pwd.size() > 0)
 	{

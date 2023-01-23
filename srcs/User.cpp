@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/23 13:34:26 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:45:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,11 @@ void	IRC::printUsers(std::vector<IRC::User> users)
 void	IRC::printUser(IRC::User user)
 {
 	std::cout << "User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() << ", User: " << user.getUser() << std::endl;
+}
+
+
+bool IRC::operator== (const IRC::User lhs, const IRC::User rhs) {
+	if (lhs.getSocket() != rhs.getSocket())
+		return false;
+	return true;
 }
