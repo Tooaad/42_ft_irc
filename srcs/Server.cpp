@@ -157,7 +157,7 @@ int IRC::Server::receiveMessage(int event_fd)
 	}
 
 	std::string message(buf);
-	message = trim_endl(message); // TODO: leaks?
+	message = trimEndl(message); // TODO: leaks?
 
 
 	std::vector<IRC::User>::iterator found = std::find(users.begin(), users.end(), User(event_fd));
@@ -169,6 +169,7 @@ int IRC::Server::receiveMessage(int event_fd)
 	if (!user.isAuthenticated())
 		registration(user, message);
 	printUsers(users);
+	printChannels(channels);
 	
 	/* 
 	// Todo: Comprobar si ocurre alguna vez para borrar sino
@@ -242,6 +243,11 @@ struct kevent *IRC::Server::getChangeEvent(void)
 std::vector<IRC::User>& IRC::Server::getUsers(void)
 {
 	return this->users;
+}
+
+std::vector<IRC::Channel>& IRC::Server::getChannels(void)
+{
+	return this->channels;
 }
 
 std::string IRC::parsePwd(std::string buf, std::string command) {
