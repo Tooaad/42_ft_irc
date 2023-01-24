@@ -6,14 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 10:45:08 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:50:35 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
 IRC::Channel::Channel() {}
-IRC::Channel::Channel(std::string name) : name(name) {}
+IRC::Channel::Channel(std::string name, std::string createdBy) : name(name), createdBy(createdBy) {}
 IRC::Channel::Channel(const IRC::Channel &other) : name(other.name), users(other.users) {}
 IRC::Channel::~Channel() {}
 
@@ -27,17 +27,24 @@ IRC::Channel &IRC::Channel::operator=(const IRC::Channel &other)
 	return *this;
 }
 
-std::string IRC::Channel::getName() const
+std::string					IRC::Channel::getName() const { return name; }
+void						IRC::Channel::setName(std::string newName) { name = newName; }
+std::string					IRC::Channel::getTopic() const { return topic; }
+void						IRC::Channel::setTopic(std::string newTopic) { topic = newTopic; }
+std::vector<std::string>	IRC::Channel::getUsers() const { return users; }
+void						IRC::Channel::addUser(std::string user) { users.push_back(user); }
+bool						IRC::Channel::isInviteOnly() const { return inviteOnlyMode; }
+void						IRC::Channel::setInviteOnly(bool newInviteOnlyMode) { inviteOnlyMode = newInviteOnlyMode; }
+
+
+bool	IRC::Channel::checkPassword(std::string pass) const
 {
-	return name;
+	if (password.size() == 0 || password.compare(pass) == 0)
+		return true;
+	return false;
 }
 
-void IRC::Channel::addUser(std::string user)
-{
-	users.push_back(user);
-}
-
-void IRC::Channel::removeUser(std::string user)
+void	IRC::Channel::removeUser(std::string user)
 {
 	for (size_t i = 0; i < users.size(); i++)
 	{
@@ -49,12 +56,14 @@ void IRC::Channel::removeUser(std::string user)
 	}
 }
 
-std::vector<std::string> IRC::Channel::getUsers() const
+bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 {
-	return users;
+	if (lhs.getName().compare(rhs.getName()) == 0)
+		return true;
+	return false;
 }
 
-void	printChannels(const std::vector<IRC::Channel>& channels)
+void	IRC::printChannels(const std::vector<IRC::Channel>& channels)
 {
 	for (std::vector<IRC::Channel>::const_iterator it = channels.begin(); it != channels.end(); ++it)
 	{
