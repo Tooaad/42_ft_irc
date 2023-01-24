@@ -2,7 +2,7 @@
 
 NAME					=	ircserv 
 
-SRCS					=	main.cpp Server.cpp Client.cpp User.cpp utils.cpp Command.cpp Pass.cpp Nick.cpp
+SRCS					=	main.cpp Server.cpp Client.cpp User.cpp utils.cpp Command.cpp Pass.cpp Nick.cpp Channel.cpp
 
 SRCSFD					=	srcs/
 OBJSFD					=	objs/

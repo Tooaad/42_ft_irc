@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/23 12:37:43 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:23:33 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include "Client.hpp"
 #include "Command.hpp"
 #include "utils.hpp"
+#include "Channel.hpp"
 
 namespace IRC
 {
@@ -41,6 +42,7 @@ namespace IRC
 		struct kevent event[4];		   // TODO: hay que ampliar? vector
 		std::vector<IRC::User> users;
 		std::vector<std::string> commands;
+		std::vector<IRC::Channel> channels;
 
 		// //			◦ If host, port_network and password_network aren’t given, you must create a new IRC network
 		// //			◦ host is the hostname on which IRC must connect to join a already existing network
