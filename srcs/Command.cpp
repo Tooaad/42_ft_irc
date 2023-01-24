@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/23 13:26:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:28:14 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 #include "../includes/Pass.hpp"
+#include "../includes/Nick.hpp"
 
 IRC::Command::Command()
 {
@@ -20,7 +21,7 @@ IRC::Command::Command()
 IRC::Command::Command(std::string str)
 {
 	cmd_map["/PASS "] = new IRC::Pass();
-	// cmd_map["/NICK"] = new IRC::Nick();
+	cmd_map["/NICK "] = new IRC::Nick();
 	// cmd_map["/USER"] = new IRC::User();
 
 	this->command = str.substr(0, str.find(" ") + 1);
@@ -66,8 +67,16 @@ void IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
 	
 	if (!t)
 		return ;
+    
+    // if (dynamic_cast <IRC::Pass *> (t))
+    //     continue ;
+    // else if (dynamic_cast <IRC::User *> (t) || dynamic_cast <IRC::Nick *> (t))
+    //     condicion
+    // else
+    //     condicion autenticado
 
-	t->operator=(*this);
+
+	*t = *this;
 	
 	// std::cout << typeid(t).name() <<  std::endl;
 	// std::cout << t->args <<  std::endl;

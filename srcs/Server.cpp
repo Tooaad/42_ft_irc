@@ -200,22 +200,12 @@ int IRC::Server::receiveMessage(int event_fd)
 			"<client> :Password incorrect"
 		*/
 void IRC::Server::registration(IRC::User& user, std::string message) {
-	if (this->pwd.size() > 0)
-	{
-		IRC::Command cmd(message);
-		cmd.detectCommand(this, user);
-	}
 	
-	// if (user.getPassword().size() > 0 || this->pwd.size() == 0)
-	// {
-		user.setUser("TEST");
-		user.setNick("TEST");
-		std::cout << "user" << std::endl;
-	// }
+	IRC::Command cmd(message);
+	cmd.detectCommand(this, user);
 
-	// if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
-	// {
-	// }	
+	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
+		user.changeAuthenticated(); 				// true 
 
 	if (user.isAuthenticated() == false)
 	{

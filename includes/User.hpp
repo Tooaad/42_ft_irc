@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/23 14:44:59 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:10:10 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ namespace IRC
 		void setUser(std::string user);
 		void changeAuthenticated();
 	};
+	bool 	operator== (const IRC::User lhs, const IRC::User rhs);
 	bool 	operator== (const IRC::User lhs, const IRC::User rhs);
 	int		findUser(std::vector<User> users, int event_fd);
 	void	printUser(User user);

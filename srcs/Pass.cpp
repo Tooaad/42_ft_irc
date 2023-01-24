@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/23 17:26:39 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:22:52 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,9 @@ void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 		std::string error_msg = "<client> :Password incorrect\n";
 		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
 		server->clientDisconnected(user.getSocket());
-	} else {
-		user.changeAuthenticated(); 				// true 
-		std::cout << "authenticated" << std::endl;
 	}
 	
 	// if (res.compare("") == 0)
 		// std::cout << "ERR_NEEDMOREPARAMS" << std::endl;
 	
-	
-	// std::string tmpPwd = parsePwd(message, "PASS ");
-	// 	if (tmpPwd.compare("") != 0)
-	// 	{
-	// 		user.setPassword(tmpPwd);
-
-	// 		std::cout << "Server Pass: '" << this->pwd << "'" << std::endl;
-	// 		std::cout << "User Pass: '" << user.getPassword() << "'" << std::endl;
-
-	// 		if (this->pwd.size() > 0 && user.getPassword().compare(this->pwd) != 0)
-	// 		{
-	// 			std::string error_msg = "<client> :Password incorrect\n";
-	// 			send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
-	// 			clientDisconnected(user.getSocket());
-	// 		}
-	// 	}	
 }

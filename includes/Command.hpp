@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/23 13:25:33 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:40:06 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ namespace IRC
 			Command* find(std::string key) const;
 			void detectCommand(IRC::Server* server, IRC::User& user);
 			virtual void exec(IRC::Server* server, IRC::User& user);
-
 
 		protected:
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/23 14:45:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:50:26 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	IRC::printUsers(std::vector<IRC::User> users)
 
 void	IRC::printUser(IRC::User user)
 {
-	std::cout << "User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() << ", User: " << user.getUser() << std::endl;
+	std::cout << "User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() << ", User: " << user.getNick() << std::endl;
 }
 
 
