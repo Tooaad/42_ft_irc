@@ -6,13 +6,13 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 15:20:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/23 13:24:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:01:06 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "Command.hpp"
+#include "../Command.hpp"
 
 namespace IRC 
 {

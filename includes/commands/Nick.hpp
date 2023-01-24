@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:14:55 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/24 02:15:28 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:01:11 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "Command.hpp"
+#include "../Command.hpp"
 
 namespace IRC 
 {

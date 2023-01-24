@@ -6,11 +6,11 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/24 11:49:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:01:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Pass.hpp"
+#include "../../includes/commands/Pass.hpp"
 
 IRC::Pass::Pass()
 {

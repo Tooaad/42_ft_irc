@@ -6,11 +6,11 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:21:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/24 12:11:35 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:01:40 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Nick.hpp"
+#include "../../includes/commands/Nick.hpp"
 
 IRC::Nick::Nick()
 {

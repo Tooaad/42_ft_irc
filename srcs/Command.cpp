@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 11:28:14 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:01:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
-#include "../includes/Pass.hpp"
-#include "../includes/Nick.hpp"
+#include "../includes/commands/Pass.hpp"
+#include "../includes/commands/Nick.hpp"
 
 IRC::Command::Command()
 {
