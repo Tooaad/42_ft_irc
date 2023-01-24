@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/24 11:22:52 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:49:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Pass.hpp"
+#include "../../includes/Pass.hpp"
 
 IRC::Pass::Pass()
 {

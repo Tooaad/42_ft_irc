@@ -1,14 +1,21 @@
-# Project compilation files and directories
+# Project compilation files and directoriesclear
+
 
 NAME					=	ircserv 
 
-SRCS					=	main.cpp Server.cpp Client.cpp User.cpp utils.cpp Command.cpp Pass.cpp Nick.cpp Channel.cpp
+SRCS					=	main.cpp \
+							Server.cpp \
+							Client.cpp \
+							User.cpp \
+							utils.cpp \
+							Command.cpp \
+							Channel.cpp \
+							commands/Pass.cpp \
+							commands/Nick.cpp
 
 SRCSFD					=	srcs/
 OBJSFD					=	objs/
 HDR_INC					=	-I./includes
-
-OBJS					=	$(addprefix $(OBJSFD), $(SRCS:.cpp=.o))
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # Compilation
@@ -28,11 +35,11 @@ project:
 	@echo "Checking project ..."
 
 $(OBJSFD):
-	@mkdir $@
+	@mkdir -p $@/commands
 	@echo "\t[ $(GREEN)✔$(NONE) ] $@ directory"
 
-$(NAME): $(OBJSFD) $(OBJS)
-	@clang++ $(CFLAGS) $(OBJS) -o $@
+$(NAME): $(OBJSFD) $(SRCS:%.cpp=$(OBJSFD)%.o)
+	@clang++ $(CFLAGS) $(SRCS:%.cpp=$(OBJSFD)%.o) -o $@
 	@echo "\t[ $(GREEN)✔$(NONE) ] $(NAME) executable"
 
 $(OBJSFD)%.o: $(SRCSFD)%.cpp
