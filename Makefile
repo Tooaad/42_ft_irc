@@ -11,7 +11,8 @@ SRCS					=	main.cpp \
 							Command.cpp \
 							Channel.cpp \
 							commands/Pass.cpp \
-							commands/Nick.cpp
+							commands/Nick.cpp \
+							commands/ChannelJoin.cpp
 
 SRCSFD					=	srcs/
 OBJSFD					=	objs/

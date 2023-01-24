@@ -6,13 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 13:01:57 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:07:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 #include "../includes/commands/Pass.hpp"
 #include "../includes/commands/Nick.hpp"
+#include "../includes/commands/ChannelJoin.hpp"
 
 IRC::Command::Command()
 {
@@ -23,6 +24,7 @@ IRC::Command::Command(std::string str)
 	cmd_map["/PASS "] = new IRC::Pass();
 	cmd_map["/NICK "] = new IRC::Nick();
 	// cmd_map["/USER"] = new IRC::User();
+	cmd_map["/JOIN "] = new IRC::ChannelJoin();
 
 	this->command = str.substr(0, str.find(" ") + 1);
 	std::transform(this->command.begin(), this->command.end(), this->command.begin(), ::toupper);   // transform command type to upper anyways
