@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/25 10:35:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:27:55 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ IRC::ChannelJoin::~ChannelJoin()
 }
 
 /*
-	PASS
-	NICK <nick>
-	USER <username> 0 * <realname>
-*/
-
-/*
 	Comando: JOIN
 	Parámetros: <canal>{,<canal>} [<clave>{,<clave>}]
 */
@@ -35,33 +29,33 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 	// TODO: Solo para pruebas, borrar cuando la autenticacion este bien.
 	user.setNick("karisti"),
 	user.setPassword("pass");
-	user.changeAuthenticated();
+	if (!user.isAuthenticated())
+		user.changeAuthenticated();
 	// *************************************************************** //
 	
-	// CHECK AUTHENTICATION //
+	/** CHECK AUTHENTICATION **/
 	if (!user.isAuthenticated())
 	{
-		// 451     ERR_NOTREGISTERED
-		std::cout << "451 * JOIN :You have not registered." << std::endl;
+		setError(ERR_NOTREGISTERED, 0);
 		return ;
 	}
 
+	/** PARSE ARGS (channels and passwords) **/
 	if (parseArgs() < 0)
 		return ;
 
-	// ITERATE EACH PARSED CHANNEL //
+	/** ITERATE EACH PARSED CHANNEL **/
 	for (size_t i = 0; i < channelsArray.size(); i++)
 	{
 		if (channelsArray[i].size() < 2 || channelsArray[i].at(0) != '#')
 		{
-			// 476     ERR_BADCHANMASK    "<channel> :Bad Channel Mask"
-			std::cout << "476 karisti test :Invalid channel name." << std::endl;
+			setError(ERR_BADCHANMASK, 1, channelsArray[i].c_str());
 			return ;
 		}
 		
 		channelsArray[i].erase(0, 1); // erase #
 		
-		// IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE. //
+		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE. **/
 		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i], ""));
 		if (found != server->getChannels().end())
 		{
@@ -76,15 +70,13 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 	}
 }
 
-/** PARSE ARGS (channels and passwords) **/
 int	IRC::ChannelJoin::parseArgs(void)
 {
 	std::vector<std::string> argsArray = splitString(args, " ");
 	
 	if (argsArray.size() < 1 || argsArray[0].size() == 0)
 	{
-		// 461	ERR_NEEDMOREPARAMS  "<client> <command> :Not enough parameters"
-		std::cout << "461 * JOIN :Not enough parameters." << std::endl;
+		setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
 		return -1;
 	}
 	
@@ -100,15 +92,13 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, std::string ni
 {
 	if (channel.isInviteOnly())
 	{
-		// 473     ERR_INVITEONLYCHAN
-		std::cout << "<client> <channel> :Cannot join channel (+i)" << std::endl;
+		setError(ERR_INVITEONLYCHAN, 1, channel.getName().c_str());
 		return -1;
 	}
 	
 	if (!channel.checkPassword("") && (passwordsArray.size() <= 0 || !channel.checkPassword(passwordsArray.at(0))))
 	{
-		// 475     ERR_BADCHANNELKEY
-		std::cout << "<client> <channel> :Cannot join channel (+k)" << std::endl;
+		setError(ERR_BADCHANNELKEY, 1, channel.getName().c_str());
 		return -1;
 	}
 	else if (passwordsArray.size() > 0)
