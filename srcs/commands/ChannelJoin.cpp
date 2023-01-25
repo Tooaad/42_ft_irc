@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/25 09:58:38 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 10:08:08 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 /** PARSE ARGS (channels and passwords) **/
 int	IRC::ChannelJoin::parseArgs(void)
 {
-	std::vector<std::string> argsArray = splitString(args, " ", -1);
+	std::vector<std::string> argsArray = splitString(args, " ");
 	
 	if (argsArray.size() < 1 || argsArray[0].size() == 0)
 	{
@@ -92,10 +92,10 @@ int	IRC::ChannelJoin::parseArgs(void)
 		return -1;
 	}
 	
-	channelsArray = splitString(argsArray[0], ",", -1);
+	channelsArray = splitString(argsArray[0], ",");
 	
 	if (argsArray.size() > 1)
-		passwordsArray = splitString(argsArray[1], ",", -1);
+		passwordsArray = splitString(argsArray[1], ",");
 
 	return 0;
 }
