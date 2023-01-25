@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 10:08:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 10:22:30 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 std::string	trimEndl(std::string str)
 {
-	std::size_t found = str.find_last_not_of('\n');
+	std::string::iterator found = std::find(str.begin(), str.end(), '\n');
 	
-	if (found != std::string::npos)
-		str.erase(found + 1);
+	if (found != str.end())
+		str.erase(found);
 
 	return str;
 }
