@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/25 15:27:55 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:01:25 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ IRC::ChannelJoin::~ChannelJoin()
 void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 {
 	// TODO: Solo para pruebas, borrar cuando la autenticacion este bien.
-	user.setNick("karisti"),
+	user.setNick("karisti");
 	user.setPassword("pass");
 	if (!user.isAuthenticated())
 		user.changeAuthenticated();
@@ -105,8 +105,19 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, std::string ni
 		passwordsArray.erase(passwordsArray.begin());
 
 	std::vector<std::string>::iterator found = std::find(channel.getUsers().begin(), channel.getUsers().end(), nick);
+	
+	std::cout << "Nick::: " << nick << std::endl;
+	std::cout << "Found::: " << *found << std::endl;
+	/*
+	for (std::vector<std::string>::iterator it = channel.getUsers().begin(); it != channel.getUsers().end(); it++)
+		std::cout << "	>> " << *it << std::endl;
+	*/
+	// Todo: Roto: no añade usuario aunque no este en el canal antes, deberia añadirlo. Found devuelve el usuario cuando no lo encuentra
 	if (found == channel.getUsers().end())
+	{
 		channel.addUser(nick);
+		std::cout << "added!" << std::endl;
+	}
 	return 0;
 }
 

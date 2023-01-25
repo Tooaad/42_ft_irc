@@ -6,14 +6,14 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 15:20:52 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:38:03 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
 IRC::Channel::Channel() {}
-IRC::Channel::Channel(std::string name, std::string createdBy) : name(name), createdBy(createdBy) {}
+IRC::Channel::Channel(std::string name, std::string createdBy) : name(name), createdBy(createdBy), inviteOnlyMode(false) {}
 IRC::Channel::Channel(const IRC::Channel &other) : name(other.name), users(other.users) {}
 IRC::Channel::~Channel() {}
 
@@ -75,7 +75,7 @@ void	IRC::printChannels(const std::vector<IRC::Channel>& channels)
 		for (std::vector<std::string>::const_iterator user_it = users.begin(); user_it != users.end(); ++user_it)
 		{
 			std::cout << *user_it;
-			if (user_it + 1 != it->getUsers().end())
+			if (user_it + 1 != users.end())
 				std::cout << ", ";
 		}
 		std::cout << std::endl;
