@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 13:07:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 01:09:52 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 #include "../includes/commands/Pass.hpp"
 #include "../includes/commands/Nick.hpp"
+#include "../includes/commands/Username.hpp"
 #include "../includes/commands/ChannelJoin.hpp"
 
 IRC::Command::Command()
 {
 }
 
+std::map<std::string, IRC::Command*> IRC::Command::cmd_map;
 IRC::Command::Command(std::string str)
 {
 	cmd_map["/PASS "] = new IRC::Pass();
 	cmd_map["/NICK "] = new IRC::Nick();
-	// cmd_map["/USER"] = new IRC::User();
+	cmd_map["/USER "] = new IRC::Username();
 	cmd_map["/JOIN "] = new IRC::ChannelJoin();
 
 	this->command = str.substr(0, str.find(" ") + 1);

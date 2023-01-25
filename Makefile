@@ -12,6 +12,7 @@ SRCS					=	main.cpp \
 							Channel.cpp \
 							commands/Pass.cpp \
 							commands/Nick.cpp \
+							commands/Username.cpp \
 							commands/ChannelJoin.cpp
 
 SRCSFD					=	srcs/

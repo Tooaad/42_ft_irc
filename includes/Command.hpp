@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 10:40:06 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/24 18:06:54 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace IRC
 		enum Err {HAZLO, KEPA};
 		
 		private:
-			std::map<std::string, Command*> cmd_map;
+			static std::map<std::string, Command*> cmd_map;
 
 		public:
 
