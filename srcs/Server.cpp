@@ -168,6 +168,13 @@ int IRC::Server::receiveMessage(int event_fd)
 
 	if (!user.isAuthenticated())
 		registration(user, message);
+	else
+	{
+		// Detect commands once registered
+		IRC::Command cmd(message);
+		cmd.detectCommand(this, user);
+	}
+
 	printUsers(users);
 	printChannels(channels);
 	
