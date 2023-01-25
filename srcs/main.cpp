@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 14:35:55 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 09:22:30 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int main(int argc, char **argv)
 	std::string args[argc - 1];
 	saveArgs(args, argc, argv);
 
-	// splitString(" hola  buenas tardes q ");
 
 
 	IRC::Server server(args[1]);
