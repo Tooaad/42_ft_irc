@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/24 13:01:57 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:53:29 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ IRC::Pass::Pass()
 IRC::Pass::~Pass()
 {
 }
+
+// Block message if password is not provide
 
 void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 {

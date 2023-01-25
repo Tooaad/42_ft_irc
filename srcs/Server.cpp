@@ -213,13 +213,17 @@ void IRC::Server::registration(IRC::User& user, std::string message) {
 	cmd.detectCommand(this, user);
 
 	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
-		user.changeAuthenticated(); 				// true 
-
-	if (user.isAuthenticated() == false)
 	{
-		std::string error_msg = "Not authenticated! Provide PASS, NICK and USER\n";
+		user.changeAuthenticated(); 				// true 
+		std::string error_msg = "You have been authenticated!\n";
 		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
 	}
+
+	// if (user.isAuthenticated() == false)
+	// {
+	// 	std::string error_msg = "Not authenticated! Provide PASS, NICK and USER\n";
+	// 	send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
+	// }
 }
 
 int IRC::Server::getSocket(void) const

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 10:50:26 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:23:50 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ std::string IRC::User::getUser(void) const
 	return this->user;
 }
 
+std::string IRC::User::getRealname(void) const
+{
+	return this->realname;
+}
+
 bool IRC::User::isAuthenticated(void) const
 {
 	return this->authenticated;
@@ -79,6 +84,12 @@ void IRC::User::setUser(std::string user)
 {
 	this->user = user;
 }
+
+void IRC::User::setRealname(std::string realname)
+{
+	this->realname = realname;
+}
+
 
 void IRC::User::changeAuthenticated()
 {
@@ -106,7 +117,8 @@ void	IRC::printUsers(std::vector<IRC::User> users)
 
 void	IRC::printUser(IRC::User user)
 {
-	std::cout << "User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() << ", User: " << user.getNick() << std::endl;
+	std::cout << "User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() 
+	<< ", Nick: " << user.getNick() << ", User: " << user.getUser() << ", RN: " << user.getRealname() << std::endl;
 }
 
 
