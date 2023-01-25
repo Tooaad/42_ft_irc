@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 01:09:52 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:36:30 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,20 @@ IRC::Command::Command()
 std::map<std::string, IRC::Command*> IRC::Command::cmd_map;
 IRC::Command::Command(std::string str)
 {
-	cmd_map["/PASS "] = new IRC::Pass();
-	cmd_map["/NICK "] = new IRC::Nick();
-	cmd_map["/USER "] = new IRC::Username();
-	cmd_map["/JOIN "] = new IRC::ChannelJoin();
+	cmd_map["/PASS"] = new IRC::Pass();
+	cmd_map["/NICK"] = new IRC::Nick();
+	cmd_map["/USER"] = new IRC::Username();
+	cmd_map["/JOIN"] = new IRC::ChannelJoin();
 
-	this->command = str.substr(0, str.find(" ") + 1);
+	std::vector<std::string> argsArray = splitString(str, " ", 1);
+	this->command = argsArray.at(0);
 	std::transform(this->command.begin(), this->command.end(), this->command.begin(), ::toupper);   // transform command type to upper anyways
 
-// >>>PROTEGER<<<
-	this->args = str.substr(str.find(" ") + 1, str.size());
+	if (argsArray.size() > 1)
+		this->args = argsArray.at(1);
 
-	// std::cout << "'" << command << "'" << std::endl;
-	// std::cout << args << std::endl;
+	std::cout << "Command: '" << command << "'" << std::endl;
+	std::cout << "Args: '" << args << "'" << std::endl;
 }
 
 IRC::Command::~Command()
