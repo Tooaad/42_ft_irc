@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 15:20:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:39:38 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ IRC::User::User(const IRC::User& other)
 IRC::User::~User()
 {
 }
+
 IRC::User& IRC::User::operator=(const IRC::User &other)
 {
 	this->authenticated = other.isAuthenticated();
@@ -89,7 +90,6 @@ void IRC::User::setRealname(std::string realname)
 {
 	this->realname = realname;
 }
-
 
 void IRC::User::changeAuthenticated()
 {
