@@ -177,6 +177,7 @@ int IRC::Server::receiveMessage(int event_fd)
 
 	printUsers(users);
 	printChannels(channels);
+	std::cout << std::endl << "*** *** *** *** *** *** *** *** *** *** ***" << std::endl << std::endl;
 	
 	/* 
 	// Todo: Comprobar si ocurre alguna vez para borrar sino
@@ -186,10 +187,13 @@ int IRC::Server::receiveMessage(int event_fd)
 		return -1;
 	}
 	*/
-		std::cout << "Msg from " << event_fd << ": " << std::string(buf, 0, bytesRec) << std::endl;
+	// std::cout << "Msg from " << event_fd << ": " << std::string(buf, 0, bytesRec) << std::endl;
 
+	/*
 	for (size_t i = 0; i < users.size(); i++)
 		send(users[i].getSocket(), buf, bytesRec + 1, 0);
+	*/
+
 	return 0;
 }
 
