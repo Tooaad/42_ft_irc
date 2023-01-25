@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 18:06:54 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:01:01 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,13 @@ namespace IRC
 	class Server;
 	class Command
 	{
-		enum Err {HAZLO, KEPA};
+		enum Errors {
+			ERR_NOTREGISTERED=451,
+			ERR_BADCHANMASK=476,
+			ERR_NEEDMOREPARAMS=461,
+			ERR_INVITEONLYCHAN=473,
+			ERR_BADCHANNELKEY=475
+		};
 		
 		private:
 			static std::map<std::string, Command*> cmd_map;
