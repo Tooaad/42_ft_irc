@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/25 10:08:08 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 10:35:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,15 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 	user.setNick("karisti"),
 	user.setPassword("pass");
 	user.changeAuthenticated();
-	// **              ** //
+	// *************************************************************** //
 	
 	// CHECK AUTHENTICATION //
-	/*
 	if (!user.isAuthenticated())
 	{
 		// 451     ERR_NOTREGISTERED
 		std::cout << "451 * JOIN :You have not registered." << std::endl;
 		return ;
 	}
-	*/
 
 	if (parseArgs() < 0)
 		return ;
@@ -54,9 +52,7 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 	// ITERATE EACH PARSED CHANNEL //
 	for (size_t i = 0; i < channelsArray.size(); i++)
 	{
-		if (channelsArray[i].size() < 2)
-			continue ;
-		if (channelsArray[i].at(0) != '#')
+		if (channelsArray[i].size() < 2 || channelsArray[i].at(0) != '#')
 		{
 			// 476     ERR_BADCHANMASK    "<channel> :Bad Channel Mask"
 			std::cout << "476 karisti test :Invalid channel name." << std::endl;
