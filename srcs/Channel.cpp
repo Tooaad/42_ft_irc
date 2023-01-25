@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 17:50:35 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:20:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 
 void	IRC::printChannels(const std::vector<IRC::Channel>& channels)
 {
+	if (channels.size() == 0)
+		return ;
+	std::cout << "------- Channels -------" << std::endl;
 	for (std::vector<IRC::Channel>::const_iterator it = channels.begin(); it != channels.end(); ++it)
 	{
 		std::cout << it->getName() << ": ";
@@ -77,4 +80,5 @@ void	IRC::printChannels(const std::vector<IRC::Channel>& channels)
 		}
 		std::cout << std::endl;
 	}
+	std::cout << "------------------------" << std::endl;
 }

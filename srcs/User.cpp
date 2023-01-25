@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 13:23:50 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:20:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,12 @@ void IRC::User::changeAuthenticated()
 	this->authenticated = !authenticated;
 }
 
+bool IRC::operator== (const IRC::User lhs, const IRC::User rhs) {
+	if (lhs.getSocket() != rhs.getSocket())
+		return false;
+	return true;
+}
+
 int IRC::findUser(std::vector<IRC::User> users, int event_fd)
 {
 	std::vector<IRC::User>::iterator it = users.begin();
@@ -110,20 +116,23 @@ int IRC::findUser(std::vector<IRC::User> users, int event_fd)
 
 void	IRC::printUsers(std::vector<IRC::User> users)
 {
+	if (users.size() == 0)
+		return ;
+
+	std::cout << "------- Users -------" << std::endl;
 	std::vector<IRC::User>::iterator it = users.begin();
 	for (; it != users.end(); it++)
 		printUser(*it);
+	std::cout << "---------------------" << std::endl;
 }
 
 void	IRC::printUser(IRC::User user)
 {
-	std::cout << "User: " << user.getSocket() << " --> " << user.isAuthenticated() << ", Pass: " << user.getPassword() 
-	<< ", Nick: " << user.getNick() << ", User: " << user.getUser() << ", RN: " << user.getRealname() << std::endl;
-}
-
-
-bool IRC::operator== (const IRC::User lhs, const IRC::User rhs) {
-	if (lhs.getSocket() != rhs.getSocket())
-		return false;
-	return true;
+	std::cout << "Socket: " << user.getSocket();
+	std::cout << ", Password: " << user.getPassword();
+	std::cout << ", Nick: " << user.getNick();
+	std::cout << ", User: " << user.getUser();
+	std::cout << ", Real name: " << user.getRealname();
+	std::cout << ", Authenticated: " << user.isAuthenticated();
+	std::cout << std::endl;
 }
