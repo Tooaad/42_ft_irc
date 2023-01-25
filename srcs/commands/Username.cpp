@@ -22,7 +22,7 @@ IRC::Username::~Username()
 
 void IRC::Username::exec(IRC::Server* server, IRC::User& user)
 {
-	std::vector<std::string> argSplit = split_string(this->args);
+	std::vector<std::string> argSplit = splitString(this->args, " ");
 	for (std::vector<IRC::User>::iterator it = server->getUsers().begin(); it != server->getUsers().end(); it++)
 	{	
 		if ((argSplit.at(0)).compare(it.base()->getUser()) == 0)
@@ -34,13 +34,13 @@ void IRC::Username::exec(IRC::Server* server, IRC::User& user)
 	user.setUser(argSplit.at(0));
 	// argSplit.at(1); hostname
 	// argSplit.at(2); servername
-
+	/*
 	if (argSplit.at(3).at(0) == ':')
 	{
-		for (std::vector<IRC::User>::iterator it = argsSplit.begin()+3 ; it != argsSplit.end(); it++)		
+		for (std::vector<IRC::User>::iterator it = argSplit.begin()+3 ; it != argSplit.end(); it++)
 			user.setRealname(user.getRealname + it.base()->getRealname());
 	}
-		
+	*/
 	(void) server;
 	(void) user;
 }
