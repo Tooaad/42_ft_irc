@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/25 20:22:53 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:13:35 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ IRC::ChannelJoin::~ChannelJoin()
 void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 {
 	// TODO: Solo para pruebas, borrar cuando la autenticacion este bien.
-	/*
 	user.setNick("karisti");
 	user.setPassword("pass");
 	if (!user.isAuthenticated())
 		user.changeAuthenticated();
-	*/
 	// *************************************************************** //
 	
 	/** CHECK AUTHENTICATION **/
@@ -55,7 +53,7 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 			return ;
 		}
 		
-		channelsArray[i].erase(0, 1); // erase #
+		// channelsArray[i].erase(0, 1); // erase #
 		
 		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE. **/
 		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i], ""));
@@ -69,6 +67,10 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 			if (createNewChannel(channelsArray[i], user.getNick(), server->getChannels()))
 				return ;
 		}
+
+		// TODO: If a JOIN is successful, the user is then sent the channel's topic
+		// (using RPL_TOPIC) and the list of users who are on the channel (using
+		// RPL_NAMREPLY), which must include the user joining.
 	}
 }
 
@@ -98,6 +100,8 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, std::string ni
 		setError(ERR_INVITEONLYCHAN, 1, channel.getName().c_str());
 		return -1;
 	}
+
+	// TODO: the user's nick/username/hostname must not match any active bans;
 	
 	if (!channel.checkPassword("") && (passwordsArray.size() <= 0 || !channel.checkPassword(passwordsArray.at(0))))
 	{
@@ -107,7 +111,7 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, std::string ni
 	else if (passwordsArray.size() > 0)
 		passwordsArray.erase(passwordsArray.begin());
 
-	if (!channel.existUser(nick))
+	if (!channel.existsUser(nick))
 		channel.addUser(nick);
 	
 	printChannel(channel);
