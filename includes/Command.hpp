@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 20:27:31 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:22:47 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ namespace IRC
 				ERR_NOTONCHANNEL=442,
 				ERR_NONICKNAMEGIVEN=431,
 				ERR_ERRONEUSNICKNAME=432,
-				ERR_NICKNAMEINUSE=433
+				ERR_NICKNAMEINUSE=433,
+				ERR_ALREADYREGISTRED=462
+				
 			};
 
 			enum ReplyNos {

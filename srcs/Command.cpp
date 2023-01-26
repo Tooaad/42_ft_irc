@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 20:29:59 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:43:54 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,9 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 			break;
 		case ERR_NICKNAMEINUSE:
 			this->errorMsg = expandMessage(n, vaList, "% :Nickname is already in use");
+			break;
+		case ERR_ALREADYREGISTRED:
+			this->errorMsg = expandMessage(n, vaList, " :You may not reregister");
 			break;
 		default:
 			break;
