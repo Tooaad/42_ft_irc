@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/26 18:13:35 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:01:40 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,14 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 		// TODO: If a JOIN is successful, the user is then sent the channel's topic
 		// (using RPL_TOPIC) and the list of users who are on the channel (using
 		// RPL_NAMREPLY), which must include the user joining.
+		/*
+		join #kk
+		:karisti!kepa@Abp.OEh.j49ElA.virtual JOIN :#kk
+		:aberdeen.chathispano.com 353 karisti = #kk :@Alexdotado_21 Guest68 karisti
+		:aberdeen.chathispano.com 366 karisti #kk :End of /NAMES list.
+
+		:Guest6318!kiwiirccom@Abp.OEh.j49ElA.virtual PART :#kk
+		*/
 	}
 }
 

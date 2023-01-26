@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 17:29:21 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:19:50 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ IRC::Command& IRC::Command::operator=(const IRC::Command& other)
 {
 	this->command = other.command;
 	this->args = other.args;
+	this->replyNo = other.replyNo;
+	this->replyMsg = other.replyMsg;
+	this->errorNo = other.errorNo;
+	this->errorMsg = other.errorMsg;
+	
 	return *this;
 }
 
@@ -114,6 +119,25 @@ void IRC::Command::answer(IRC::User& user)
 	
 }
 
+void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
+{
+	va_list vaList;
+	va_start(vaList, n);
+
+	this->replyNo = replyNo;
+	
+	switch (replyNo)
+	{
+		case ERR_BADCHANMASK:
+			this->errorMsg = expandMessage(n, vaList, "% :Bad Channel Mask");
+			break;
+		default:
+			break;
+	}
+	
+	va_end(vaList);
+}
+
 void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 {
 	va_list vaList;
@@ -124,25 +148,25 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 	switch (errorNo)
 	{
 		case ERR_BADCHANMASK:
-			this->errorMsg = expandError(n, vaList, "% :Bad Channel Mask");
+			this->errorMsg = expandMessage(n, vaList, "% :Bad Channel Mask");
 			break;
 		case ERR_NOTREGISTERED:
-			this->errorMsg = expandError(n, vaList, ":You have not registered");
+			this->errorMsg = expandMessage(n, vaList, ":You have not registered");
 			break;
 		case ERR_NEEDMOREPARAMS:
-			this->errorMsg = expandError(n, vaList, "% :Not enough parameters");
+			this->errorMsg = expandMessage(n, vaList, "% :Not enough parameters");
 			break;
 		case ERR_INVITEONLYCHAN:
-			this->errorMsg = expandError(n, vaList, "% :Cannot join channel (+i)");
+			this->errorMsg = expandMessage(n, vaList, "% :Cannot join channel (+i)");
 			break;
 		case ERR_BADCHANNELKEY:
-			this->errorMsg = expandError(n, vaList, "% :Cannot join channel (+k)");
+			this->errorMsg = expandMessage(n, vaList, "% :Cannot join channel (+k)");
 			break;
 		case ERR_NOSUCHCHANNEL:
-			this->errorMsg = expandError(n, vaList, "% :No such channel");
+			this->errorMsg = expandMessage(n, vaList, "% :No such channel");
 			break;
 		case ERR_NOTONCHANNEL:
-			this->errorMsg = expandError(n, vaList, "% :You're not on that channel");
+			this->errorMsg = expandMessage(n, vaList, "% :You're not on that channel");
 			break;
 		default:
 			break;
@@ -151,7 +175,7 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 	va_end(vaList);
 }
 
-std::string IRC::Command::expandError(int argCount, va_list vaList, std::string errorStr)
+std::string IRC::Command::expandMessage(int argCount, va_list vaList, std::string errorStr)
 {
 	size_t startPos;
 	std::string vaValue;

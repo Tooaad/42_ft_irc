@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 17:28:43 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:20:31 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,19 @@ namespace IRC
 				ERR_NOSUCHCHANNEL=403,
 				ERR_NOTONCHANNEL=442
 			};
+
+			enum ReplyNos {
+				ERR_NOTREGISTERED=451,
+			};
+
+			
 		
 		protected:
 
 			std::string		command;
 			std::string		args;
-			std::string		resMsg;
+			int				replyNo;
+			std::string		replyMsg;
 			int				errorNo;
 			std::string		errorMsg;
 			
@@ -63,8 +70,9 @@ namespace IRC
 			virtual void	exec(IRC::Server* server, IRC::User& user);
 			void			answer(IRC::User& user);
 			void			setError(ErrorNos errorNo, int n, ...);
+			void			setReply(ReplyNos replyNo, int n, ...);
 			
 		private:
-			std::string		expandError(int argCount, va_list vaList, std::string errorStr);
+			std::string		expandMessage(int argCount, va_list vaList, std::string errorStr);
 	};
 }
