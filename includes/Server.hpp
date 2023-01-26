@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 16:18:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:04:17 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ namespace IRC
 		struct kevent *getChangeEvent(void);
 		std::vector<User>& getUsers(void);
 		std::vector<Channel>& getChannels(void);
+		int getChannelPos(std::string name);
 	};
 	std::string parsePwd(std::string buf, std::string command);
 }

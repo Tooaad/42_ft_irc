@@ -13,7 +13,8 @@ SRCS					=	main.cpp \
 							commands/Pass.cpp \
 							commands/Nick.cpp \
 							commands/Username.cpp \
-							commands/ChannelJoin.cpp
+							commands/ChannelJoin.cpp \
+							commands/ChannelPart.cpp
 
 SRCSFD					=	srcs/
 OBJSFD					=	objs/

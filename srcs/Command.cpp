@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 15:23:55 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:29:21 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../includes/commands/Nick.hpp"
 #include "../includes/commands/Username.hpp"
 #include "../includes/commands/ChannelJoin.hpp"
+#include "../includes/commands/ChannelPart.hpp"
 
 IRC::Command::Command()
 {
@@ -28,6 +29,7 @@ IRC::Command::Command(std::string str)
 	cmd_map["/NICK"] = new IRC::Nick();
 	cmd_map["/USER"] = new IRC::Username();
 	cmd_map["/JOIN"] = new IRC::ChannelJoin();
+	cmd_map["/PART"] = new IRC::ChannelPart();
 
 	std::vector<std::string> argsArray = splitString(str, " ", 1);
 	this->command = argsArray.at(0);
@@ -135,6 +137,12 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 			break;
 		case ERR_BADCHANNELKEY:
 			this->errorMsg = expandError(n, vaList, "% :Cannot join channel (+k)");
+			break;
+		case ERR_NOSUCHCHANNEL:
+			this->errorMsg = expandError(n, vaList, "% :No such channel");
+			break;
+		case ERR_NOTONCHANNEL:
+			this->errorMsg = expandError(n, vaList, "% :You're not on that channel");
 			break;
 		default:
 			break;

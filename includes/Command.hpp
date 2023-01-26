@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 15:24:05 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:28:43 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ namespace IRC
 				ERR_BADCHANMASK=476,
 				ERR_NEEDMOREPARAMS=461,
 				ERR_INVITEONLYCHAN=473,
-				ERR_BADCHANNELKEY=475
+				ERR_BADCHANNELKEY=475,
+				ERR_NOSUCHCHANNEL=403,
+				ERR_NOTONCHANNEL=442
 			};
 		
 		protected:
