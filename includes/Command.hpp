@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 17:28:43 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:05:15 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ namespace IRC
 				ERR_INVITEONLYCHAN=473,
 				ERR_BADCHANNELKEY=475,
 				ERR_NOSUCHCHANNEL=403,
-				ERR_NOTONCHANNEL=442
+				ERR_NOTONCHANNEL=442,
+				ERR_NONICKNAMEGIVEN=431,
+				ERR_ERRONEUSNICKNAME=432,
+				ERR_NICKNAMEINUSE=433
 			};
 		
 		protected:

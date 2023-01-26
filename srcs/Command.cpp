@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 17:29:21 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:02:33 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,15 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 			break;
 		case ERR_NOTONCHANNEL:
 			this->errorMsg = expandError(n, vaList, "% :You're not on that channel");
+			break;
+		case ERR_NONICKNAMEGIVEN:
+			this->errorMsg = expandError(n, vaList, " :No nickname given");
+			break;
+		case ERR_ERRONEUSNICKNAME:
+			this->errorMsg = expandError(n, vaList, "% :Erroneus nickname");
+			break;
+		case ERR_NICKNAMEINUSE:
+			this->errorMsg = expandError(n, vaList, "% :Nickname is already in use");
 			break;
 		default:
 			break;

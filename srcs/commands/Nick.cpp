@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:21:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/25 13:49:25 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:22:25 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,25 @@ void IRC::Nick::exec(IRC::Server* server, IRC::User& user)
 {	
 
 	if (server->getPWD().size() > 0 && user.getPassword() != server->getPWD())
-		// error no password provide
 		return ;			
-	if (this->args.size() < 0)
-		// error no nickname given
-		return ;
+	if (this->args.size() < 1)
+		{
+			setError(ERR_NONICKNAMEGIVEN, 0);
+			return ;
+		}
 	for (size_t i = 0; i != this->args.size(); i++)
 		if (!std::isprint(this->args.at(i)))
-			// error char no printable
-			return ;
+			{
+				setError(ERR_ERRONEUSNICKNAME, 1, this->args.c_str());
+				return ; 
+			}	
 	for (std::vector<IRC::User>::iterator it = server->getUsers().begin(); it != server->getUsers().end(); it++)
 	{	
 		if (this->args.compare(it.base()->getNick()) == 0)
 		{
-			// error nickname in use
-			return ;
-		}	
+				setError(ERR_NICKNAMEINUSE, 1, this->args.c_str());
+				return ; 
+		}
 	}
 	user.setNick(splitString(this->args, " ").at(0));
 }
