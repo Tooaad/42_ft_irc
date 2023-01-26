@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:54:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/25 14:00:22 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/26 19:13:30 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void IRC::Username::exec(IRC::Server* server, IRC::User& user)
 		return ;	
 	std::vector<std::string> argSplit = splitString(this->args, " ", 3);
 	if (argSplit.size() < 4)
-		// error need more params
+		
 	for (std::vector<IRC::User>::iterator it = server->getUsers().begin(); it != server->getUsers().end(); it++)
 	{	
 		if ((argSplit.at(0)).compare(it.base()->getUser()) == 0)
@@ -37,12 +37,11 @@ void IRC::Username::exec(IRC::Server* server, IRC::User& user)
 		}	
 	}
 	user.setUser(argSplit.at(0));
-	// argSplit.at(1); hostname
-	// argSplit.at(2); servername
+	user.setHostname(argSplit.at(1)); 
+	user.setServername(argSplit.at(2)); 
 	if (argSplit.at(3).at(0) == ':')
-		argSplit.erase(argSplit.begin());
-	
-	// Not setting realname
+		argSplit.at(3).erase(0, 1);
 	user.setRealname(argSplit.at(3));
+	exit(1);
 
 }

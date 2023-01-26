@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 20:19:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:29:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ void IRC::Command::exec(IRC::Server* server, IRC::User& user)
 
 void IRC::Command::answer(IRC::User& user)
 {
-	resMsg = resMsg + "\n";
+	replyMsg = replyMsg + "\n";
 	errorMsg = errorMsg + "\n";
 	
-	if (this->errorNo == 0)
-		send(user.getSocket(), resMsg.c_str(), resMsg.size(), 0);
-	else
+	if (this->errorNo != 0)
 		send(user.getSocket(), errorMsg.c_str(), errorMsg.size(), 0);
+	else if (this-> replyNo != 0)
+		send(user.getSocket(), replyMsg.c_str(), replyMsg.size(), 0);
 	
 }
 
@@ -128,8 +128,8 @@ void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
 	
 	switch (replyNo)
 	{
-		case ERR_BADCHANMASK:
-			this->errorMsg = expandMessage(n, vaList, "% :Bad Channel Mask");
+		case TEST:
+			this->replyMsg += expandMessage(n, vaList, "% :Bad Channel Mask");
 			break;
 		default:
 			break;
@@ -167,6 +167,15 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 			break;
 		case ERR_NOTONCHANNEL:
 			this->errorMsg = expandMessage(n, vaList, "% :You're not on that channel");
+			break;
+		case ERR_NONICKNAMEGIVEN:
+			this->errorMsg = expandMessage(n, vaList, " :No nickname given");
+			break;
+		case ERR_ERRONEUSNICKNAME:
+			this->errorMsg = expandMessage(n, vaList, "% :Erroneus nickname");
+			break;
+		case ERR_NICKNAMEINUSE:
+			this->errorMsg = expandMessage(n, vaList, "% :Nickname is already in use");
 			break;
 		default:
 			break;
