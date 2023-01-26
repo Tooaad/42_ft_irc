@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 17:53:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:10:27 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ bool	IRC::Channel::existsUser(std::string user)
 	return false;
 }
 
-
 void	IRC::Channel::removeUser(std::string user)
 {
 	for (size_t i = 0; i < users.size(); i++)
@@ -70,6 +69,19 @@ void	IRC::Channel::removeUser(std::string user)
 			break;
 		}
 	}
+}
+
+std::string	IRC::Channel::getUsersString(void)
+{
+	std::string usersString = "";
+	for (std::vector<std::string>::const_iterator user_it = users.begin(); user_it != users.end(); ++user_it)
+	{
+		usersString += *user_it;
+		if (user_it + 1 != users.end())
+			usersString += " ";
+	}
+	
+	return usersString;
 }
 
 bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)

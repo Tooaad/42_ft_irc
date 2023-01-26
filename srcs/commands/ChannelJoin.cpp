@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/26 20:01:40 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:36:35 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ IRC::ChannelJoin::~ChannelJoin()
 void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 {
 	// TODO: Solo para pruebas, borrar cuando la autenticacion este bien.
+	
+	/*
 	user.setNick("karisti");
 	user.setPassword("pass");
 	if (!user.isAuthenticated())
 		user.changeAuthenticated();
+	*/
 	// *************************************************************** //
 	
 	/** CHECK AUTHENTICATION **/
@@ -64,10 +67,11 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 		}
 		else
 		{
-			if (createNewChannel(channelsArray[i], user.getNick(), server->getChannels()))
+			if (createNewChannel(channelsArray[i], user.getNick(), server->getChannels()) != 0)
 				return ;
 		}
-
+		
+		
 		// TODO: If a JOIN is successful, the user is then sent the channel's topic
 		// (using RPL_TOPIC) and the list of users who are on the channel (using
 		// RPL_NAMREPLY), which must include the user joining.
@@ -102,7 +106,6 @@ int	IRC::ChannelJoin::parseArgs(void)
 
 int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, std::string nick)
 {
-	
 	if (channel.isInviteOnly())
 	{
 		setError(ERR_INVITEONLYCHAN, 1, channel.getName().c_str());
@@ -122,14 +125,24 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, std::string ni
 	if (!channel.existsUser(nick))
 		channel.addUser(nick);
 	
-	printChannel(channel);
+	setReply(RPL_NAMREPLY, 2, channel.getName().c_str(), channel.getUsersString().c_str());
+	setReply(RPL_ENDOFNAMES, 1, channel.getName().c_str());
+
+	// TODO: Solo para pruebas,
+	// printChannel(channel);
+	///////////////////
+	
 	return 0;
 }
 
-int		IRC::ChannelJoin::createNewChannel(std::string channelName, std::string nick, std::vector<IRC::Channel>& channels)
+int	IRC::ChannelJoin::createNewChannel(std::string channelName, std::string nick, std::vector<IRC::Channel>& channels)
 {
 	IRC::Channel newChannel = Channel(channelName, nick);
 	newChannel.addUser(nick);
 	channels.push_back(newChannel);
+
+	setReply(RPL_NAMREPLY, 2, channelName.c_str(), newChannel.getUsersString().c_str());
+	setReply(RPL_ENDOFNAMES, 1, channelName.c_str());
+
 	return 0;
 }

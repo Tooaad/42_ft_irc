@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 20:27:31 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:45:26 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ namespace IRC
 			};
 
 			enum ReplyNos {
-				TEST=451,
+				RPL_NAMREPLY=353,
+				RPL_ENDOFNAMES=366
 			};
 
 			
