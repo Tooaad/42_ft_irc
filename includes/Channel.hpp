@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 20:34:51 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:53:06 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace IRC
 			std::string					getName() const;
 			void						setName(std::string newName);
 			void						addUser(std::string user);
-			bool						existUser(std::string user);
+			bool						existsUser(std::string user);
 			void						removeUser(std::string user);
 			std::vector<std::string>	getUsers() const;
 			std::string					getCreatedBy() const;

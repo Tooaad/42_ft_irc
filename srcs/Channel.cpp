@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 20:34:39 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:53:10 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	IRC::Channel::checkPassword(std::string pass) const
 	return false;
 }
 
-bool	IRC::Channel::existUser(std::string user)
+bool	IRC::Channel::existsUser(std::string user)
 {
 	std::vector<std::string>::iterator found = std::find(users.begin(), users.end(), user);
 	

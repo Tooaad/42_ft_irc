@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:07:58 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 09:26:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:21:17 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ namespace IRC
 {
 	class Server;
 	class Command;
+
 	class ChannelJoin : public Command
 	{
 		private:
