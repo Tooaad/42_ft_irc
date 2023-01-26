@@ -1,6 +1,7 @@
 # ft_irc
 
 ## RFC-IRC PROTOCOL
+- https://www.ietf.org/rfc/rfc1459.txt
 - https://www.rfc-es.org/rfc/rfc1459-es.txt
 - https://modern.ircdocs.horse/#client-to-server
 
