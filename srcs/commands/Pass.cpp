@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/26 21:43:24 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:45:20 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 {
 	if (this->args.size() < 1)
 	{
-		setError(ERR_NEEDMOREPARAMS, 1, this->command);
+		setError(ERR_NEEDMOREPARAMS, 1, this->command.c_str());
 		return ;
 	}
 	if (user.isAuthenticated())

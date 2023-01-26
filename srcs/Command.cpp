@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 21:43:54 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:44:48 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 #include "../includes/commands/ChannelJoin.hpp"
 #include "../includes/commands/ChannelPart.hpp"
 
-IRC::Command::Command()
+IRC::Command::Command() : replyNo(0), replyMsg(""), errorNo(0), errorMsg("")
 {
 }
 
 // TODO: Quitar el / inicial en los comandos antes de guardar y tambien para comprobar
 std::map<std::string, IRC::Command*> IRC::Command::cmd_map;
-IRC::Command::Command(std::string str)
+IRC::Command::Command(std::string str) : replyNo(0), replyMsg(""), errorNo(0), errorMsg("")
 {
 	cmd_map["/PASS"] = new IRC::Pass();
 	cmd_map["/NICK"] = new IRC::Nick();
@@ -114,9 +114,8 @@ void IRC::Command::answer(IRC::User& user)
 	
 	if (this->errorNo != 0)
 		send(user.getSocket(), errorMsg.c_str(), errorMsg.size(), 0);
-	else if (this-> replyNo != 0)
+	else if (this->replyNo != 0)
 		send(user.getSocket(), replyMsg.c_str(), replyMsg.size(), 0);
-	
 }
 
 void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
@@ -126,10 +125,16 @@ void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
 
 	this->replyNo = replyNo;
 	
+	if (!this->replyMsg.empty())
+		this->replyMsg += "\n";
+	
 	switch (replyNo)
 	{
-		case TEST:
-			this->replyMsg += expandMessage(n, vaList, "% :Bad Channel Mask");
+		case RPL_NAMREPLY:
+			this->replyMsg += expandMessage(n, vaList, "% :%");
+			break;
+		case RPL_ENDOFNAMES:
+			this->replyMsg += expandMessage(n, vaList, "% :End of /NAMES list");
 			break;
 		default:
 			break;

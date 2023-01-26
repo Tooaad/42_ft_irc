@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 17:53:06 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:00:12 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ namespace IRC
 			bool						existsUser(std::string user);
 			void						removeUser(std::string user);
 			std::vector<std::string>	getUsers() const;
+			std::string					getUsersString(void);
 			std::string					getCreatedBy() const;
 			std::string					getTopic() const;
 			void						setTopic(std::string newTopic);
