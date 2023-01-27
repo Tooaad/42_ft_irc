@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/27 18:26:59 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:31:11 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 {
 	// TODO: Solo para pruebas, borrar cuando la autenticacion este bien.
 	
-	/*
+	
 	user.setNick("karisti");
 	user.setPassword("pass");
 	if (!user.isAuthenticated())
 		user.changeAuthenticated();
-	*/
+	
+	
 	// *************************************************************** //
 	
 	/** CHECK AUTHENTICATION **/
@@ -123,7 +124,10 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::User& use
 		passwordsArray.erase(passwordsArray.begin());
 
 	if (!channel.existsUser(user))
+	{
 		channel.addUser(user);
+		user.addJoinedChannel(channel);
+	}
 	
 	setReply(RPL_NAMREPLY, 2, channel.getName().c_str(), channel.getUsersString().c_str());
 	setReply(RPL_ENDOFNAMES, 1, channel.getName().c_str());
@@ -140,6 +144,7 @@ int	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user,
 	IRC::Channel newChannel = Channel(channelName, user);
 	newChannel.addUser(user);
 	channels.push_back(newChannel);
+	user.addJoinedChannel(newChannel);
 
 	setReply(RPL_NAMREPLY, 2, channelName.c_str(), newChannel.getUsersString().c_str());
 	setReply(RPL_ENDOFNAMES, 1, channelName.c_str());

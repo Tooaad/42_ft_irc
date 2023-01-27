@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 18:35:01 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/27 19:58:19 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "Channel.hpp"
+
 
 namespace IRC
 {
+	class Channel;
+	
 	class User
 	{
 	private:
@@ -29,6 +33,7 @@ namespace IRC
 		std::string hostname;
 		std::string servername;
 		bool authenticated;
+		std::vector<Channel> joinedChannels;
 
 	public:
 		User();
@@ -45,6 +50,10 @@ namespace IRC
 		std::string getHostname(void) const;
 		std::string getServername(void) const;
 		bool isAuthenticated(void) const;
+		std::vector<Channel> getJoinedChannels(void) const;
+		void addJoinedChannel(Channel channel);
+		void removeJoinedChannel(Channel channel);
+		std::string	getJoinedChannelsString(void);
 		void setPassword(std::string password);
 		void setNick(std::string nick);
 		void setUser(std::string user);
@@ -53,7 +62,7 @@ namespace IRC
 		void setServername(std::string realname);
 		void changeAuthenticated();
 	};
-	bool 	operator== (const IRC::User lhs, const IRC::User rhs);
+	bool 	operator== (const User lhs, const User rhs);
 	int		findUser(std::vector<User> users, int event_fd);
 	void	printUser(User user);
 	void	printUsers(std::vector<User> users);
