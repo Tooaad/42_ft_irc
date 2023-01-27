@@ -6,14 +6,18 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 17:38:12 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/27 19:26:47 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
 IRC::Channel::Channel() {}
-IRC::Channel::Channel(std::string name, IRC::User createdBy) : name(name), createdBy(createdBy), inviteOnlyMode(false) {}
+IRC::Channel::Channel(std::string name, IRC::User createdBy) : name(name), inviteOnlyMode(false)
+{
+	operators.push_back(createdBy);
+}
+
 IRC::Channel::Channel(const IRC::Channel &other) { *this = other; }
 IRC::Channel::~Channel() {}
 
@@ -23,7 +27,7 @@ IRC::Channel &IRC::Channel::operator=(const IRC::Channel &other)
 	{
 		name = other.name;
 		users = other.users;
-		createdBy = other.createdBy;
+		operators = other.operators;
 		topic = other.topic;
 		password = other.password;
 		inviteOnlyMode = other.inviteOnlyMode;
@@ -35,7 +39,7 @@ std::string					IRC::Channel::getName() const { return name; }
 void						IRC::Channel::setName(std::string newName) { name = newName; }
 std::vector<IRC::User>		IRC::Channel::getUsers() const { return users; }
 void						IRC::Channel::addUser(IRC::User user) { users.push_back(user); }
-IRC::User					IRC::Channel::getCreatedBy() const { return createdBy; }
+std::vector<IRC::User>		IRC::Channel::getOperators() const { return operators; }
 std::string					IRC::Channel::getTopic() const { return topic; }
 void						IRC::Channel::setTopic(std::string newTopic) { topic = newTopic; }
 std::string					IRC::Channel::getPassword() const { return password; }
@@ -81,6 +85,20 @@ std::string	IRC::Channel::getUsersString(void)
 	return usersString;
 }
 
+std::string	IRC::Channel::getOperatorsString(void)
+{
+	std::string operatorsString = "";
+	
+	for (std::vector<IRC::User>::const_iterator operator_it = operators.begin(); operator_it != operators.end(); ++operator_it)
+	{
+		operatorsString += operator_it->getNick();
+		if (operator_it + 1 != operators.end())
+			operatorsString += " ";
+	}
+	
+	return operatorsString;
+}
+
 bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 {
 	if (lhs.getName().compare(rhs.getName()) == 0)
@@ -91,7 +109,7 @@ bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 void	IRC::printChannel(IRC::Channel& channel)
 {
 	std::cout << "Channel name: " << channel.getName();
-	std::cout << ", Created By: " << channel.getCreatedBy().getNick();
+	std::cout << ", Operators: " << channel.getOperatorsString();
 	std::cout << ", Topic: " << channel.getTopic();
 	std::cout << ", Password: " << channel.getPassword();
 	std::cout << ", Invite Only mode: " << channel.isInviteOnly();

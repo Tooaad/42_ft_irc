@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 18:37:56 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:22:41 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ bool IRC::User::isAuthenticated(void) const
 	return this->authenticated;
 }
 
+std::vector<IRC::Channel> IRC::User::getJoinedChannels(void) const
+{
+	return this->joinedChannels;
+}
+
 void IRC::User::setPassword(std::string password)
 {
 	this->password = password;
@@ -117,6 +122,37 @@ void IRC::User::setServername(std::string servername)
 void IRC::User::changeAuthenticated()
 {
 	this->authenticated = !authenticated;
+}
+
+void IRC::User::addJoinedChannel(IRC::Channel channel)
+{
+	// std::vector<IRC::Channel>::iterator found = std::find(joinedChannels.begin(), joinedChannels.end(), channel);
+	
+	// if (found == joinedChannels.end())
+	joinedChannels.push_back(channel);
+	
+}
+
+void IRC::User::removeJoinedChannel(IRC::Channel channel)
+{
+	std::vector<IRC::Channel>::iterator found = std::find(joinedChannels.begin(), joinedChannels.end(), channel);
+	
+	if (found != joinedChannels.end())
+		this->joinedChannels.erase(found);
+}
+
+std::string	IRC::User::getJoinedChannelsString(void)
+{
+	std::string channelsString = "";
+	
+	for (std::vector<IRC::Channel>::const_iterator channel_it = joinedChannels.begin(); channel_it != joinedChannels.end(); ++channel_it)
+	{
+		channelsString += channel_it->getName();
+		if (channel_it + 1 != joinedChannels.end())
+			channelsString += " ";
+	}
+
+	return channelsString;
 }
 
 bool IRC::operator== (const IRC::User lhs, const IRC::User rhs) {
@@ -157,5 +193,6 @@ void	IRC::printUser(IRC::User user)
 	std::cout << ", User: " << user.getUser();
 	std::cout << ", Real name: " << user.getRealname();
 	std::cout << ", Authenticated: " << user.isAuthenticated();
+	std::cout << ", Channels: " << user.getJoinedChannelsString();
 	std::cout << std::endl;
 }

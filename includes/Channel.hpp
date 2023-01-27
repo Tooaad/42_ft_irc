@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 17:41:29 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/27 19:25:25 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@
 
 namespace IRC
 {
+	class User;
+	
 	class Channel
 	{
 		private:
 			std::string					name;
-			std::vector<IRC::User>		users;
-			IRC::User					createdBy;
+			std::vector<User>			users;
+			std::vector<User>			operators;
 			
 			std::string					topic;
 			std::string					password;
@@ -43,9 +45,10 @@ namespace IRC
 			void						addUser(User user);
 			bool						existsUser(User user);
 			void						removeUser(User user);
-			std::vector<IRC::User>		getUsers() const;
+			std::vector<User>			getUsers() const;
 			std::string					getUsersString(void);
-			IRC::User					getCreatedBy() const;
+			std::vector<User>			getOperators() const;
+			std::string					getOperatorsString(void);
 			std::string					getTopic() const;
 			void						setTopic(std::string newTopic);
 			std::string					getPassword() const;
@@ -54,7 +57,7 @@ namespace IRC
 			void						setInviteOnly(bool newInviteOnlyMode);
 			
 	};
-	bool	operator== (const IRC::Channel lhs, const IRC::Channel rhs);
+	bool	operator== (const Channel lhs, const Channel rhs);
 	
 	void	printChannels(std::vector<Channel>& channels);
 	void	printChannel(Channel& channel);
