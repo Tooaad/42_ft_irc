@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 21:00:12 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:41:29 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "User.hpp"
 
 namespace IRC
 {
@@ -22,8 +23,8 @@ namespace IRC
 	{
 		private:
 			std::string					name;
-			std::vector<std::string>	users;
-			std::string					createdBy;
+			std::vector<IRC::User>		users;
+			IRC::User					createdBy;
 			
 			std::string					topic;
 			std::string					password;
@@ -32,19 +33,19 @@ namespace IRC
 
 		public:
 			Channel();
-			Channel(std::string name, std::string createdBy);
+			Channel(std::string name, User createdBy);
 			Channel(const Channel& other);
 			~Channel();
 			Channel& operator=(const Channel& other);
 
 			std::string					getName() const;
 			void						setName(std::string newName);
-			void						addUser(std::string user);
-			bool						existsUser(std::string user);
-			void						removeUser(std::string user);
-			std::vector<std::string>	getUsers() const;
+			void						addUser(User user);
+			bool						existsUser(User user);
+			void						removeUser(User user);
+			std::vector<IRC::User>		getUsers() const;
 			std::string					getUsersString(void);
-			std::string					getCreatedBy() const;
+			IRC::User					getCreatedBy() const;
 			std::string					getTopic() const;
 			void						setTopic(std::string newTopic);
 			std::string					getPassword() const;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelPart.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 18:19:31 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:12:55 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ IRC::ChannelPart::~ChannelPart()
 void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 {
 	// TODO: Solo para pruebas, borrar cuando la autenticacion este bien.
+	/*
 	user.setNick("karisti");
 	user.setPassword("pass");
 	if (!user.isAuthenticated())
 		user.changeAuthenticated();
+	*/
 	// *************************************************************** //
 
 	/** CHECK AUTHENTICATION **/
@@ -57,15 +59,17 @@ void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 			return ;
 		}
 		
-		std::cout << "channelPos: " << channelPos << std::endl;
-		
-		if (!server->getChannels().at(channelPos).existsUser(user.getNick()))
+		if (!server->getChannels().at(channelPos).existsUser(user))
 		{
 			setError(ERR_NOTONCHANNEL, 1, (*it).c_str());
 			return ;
 		}
 
-		server->getChannels().at(channelPos).removeUser(user.getNick());
+		IRC::Channel channel = server->getChannels().at(channelPos);
+		
+		channel.removeUser(user);
+		if (channel.getUsers().empty())
+			server->removeChannel(channel);
 	}
 }
 

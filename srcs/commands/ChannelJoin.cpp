@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/26 21:36:35 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:49:12 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 		// channelsArray[i].erase(0, 1); // erase #
 		
 		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE. **/
-		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i], ""));
+		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i], User()));
 		if (found != server->getChannels().end())
 		{
-			if (joinExistingChannel(*found, user.getNick()) < 0)
+			if (joinExistingChannel(*found, user) < 0)
 				return ;
 		}
 		else
 		{
-			if (createNewChannel(channelsArray[i], user.getNick(), server->getChannels()) != 0)
+			if (createNewChannel(channelsArray[i], user, server->getChannels()) != 0)
 				return ;
 		}
 		
@@ -104,7 +104,7 @@ int	IRC::ChannelJoin::parseArgs(void)
 	return 0;
 }
 
-int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, std::string nick)
+int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::User user)
 {
 	if (channel.isInviteOnly())
 	{
@@ -122,8 +122,8 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, std::string ni
 	else if (passwordsArray.size() > 0)
 		passwordsArray.erase(passwordsArray.begin());
 
-	if (!channel.existsUser(nick))
-		channel.addUser(nick);
+	if (!channel.existsUser(user))
+		channel.addUser(user);
 	
 	setReply(RPL_NAMREPLY, 2, channel.getName().c_str(), channel.getUsersString().c_str());
 	setReply(RPL_ENDOFNAMES, 1, channel.getName().c_str());
@@ -135,10 +135,10 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, std::string ni
 	return 0;
 }
 
-int	IRC::ChannelJoin::createNewChannel(std::string channelName, std::string nick, std::vector<IRC::Channel>& channels)
+int	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User user, std::vector<IRC::Channel>& channels)
 {
-	IRC::Channel newChannel = Channel(channelName, nick);
-	newChannel.addUser(nick);
+	IRC::Channel newChannel = Channel(channelName, user);
+	newChannel.addUser(user);
 	channels.push_back(newChannel);
 
 	setReply(RPL_NAMREPLY, 2, channelName.c_str(), newChannel.getUsersString().c_str());
