@@ -265,18 +265,17 @@ std::vector<IRC::Channel>& IRC::Server::getChannels(void)
 	return this->channels;
 }
 
-int IRC::Server::getChannelPos(std::string name)
+std::vector<IRC::Channel>::iterator IRC::Server::getChannelIt(std::string name)
 {
 	std::vector<IRC::Channel>::iterator it = channels.begin();
 	
-	int i = 0;
-	for (; it != channels.end(); it++, i++)
+	for (; it != channels.end(); it++)
 	{
 		if (it->getName().compare(name) == 0)
-			return i;
+			return it;
 	}
 	
-	return -1;
+	return it;
 }
 
 std::string IRC::parsePwd(std::string buf, std::string command) {

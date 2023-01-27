@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/27 17:49:12 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:26:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	IRC::ChannelJoin::parseArgs(void)
 	return 0;
 }
 
-int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::User user)
+int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::User& user)
 {
 	if (channel.isInviteOnly())
 	{
@@ -135,7 +135,7 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::User user
 	return 0;
 }
 
-int	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User user, std::vector<IRC::Channel>& channels)
+int	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, std::vector<IRC::Channel>& channels)
 {
 	IRC::Channel newChannel = Channel(channelName, user);
 	newChannel.addUser(user);

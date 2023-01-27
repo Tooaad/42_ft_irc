@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:07:58 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 17:40:12 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:26:42 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace IRC
 
 		private:
 			int		parseArgs(void);
-			int		joinExistingChannel(IRC::Channel& channel, IRC::User user);
-			int		createNewChannel(std::string channelName, IRC::User user, std::vector<IRC::Channel>& channels);
+			int		joinExistingChannel(IRC::Channel& channel, IRC::User &user);
+			int		createNewChannel(std::string channelName, IRC::User &user, std::vector<IRC::Channel>& channels);
 	};
 }

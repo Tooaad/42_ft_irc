@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 18:14:02 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:32:40 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ namespace IRC
 		struct kevent *getChangeEvent(void);
 		std::vector<User>& getUsers(void);
 		std::vector<Channel>& getChannels(void);
-		int getChannelPos(std::string name);
+		std::vector<Channel>::iterator getChannelIt(std::string name);
 		void removeChannel(IRC::Channel channel);
 	};
 	std::string parsePwd(std::string buf, std::string command);
