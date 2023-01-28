@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 21:44:48 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/28 02:28:30 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,27 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 			break;
 		case ERR_ALREADYREGISTRED:
 			this->errorMsg = expandMessage(n, vaList, " :You may not reregister");
+			break;
+		case ERR_NORECIPTIENT:
+			this->errorMsg = expandMessage(n, vaList, " :No recipient given %");;
+			break;
+		case ERR_CANNOTSENDTOCHAN:
+			this->errorMsg = expandMessage(n, vaList, "% :Cannot send to channel");
+			break;
+		case ERR_WILDTOPLEVEL:
+			this->errorMsg = expandMessage(n, vaList, "% :Wildcard in toplevel");
+			break;
+		case ERR_NOSUCHNICK:
+			this->errorMsg = expandMessage(n, vaList, "% :No such nick/channel");
+			break;
+		case ERR_NOTEXTTOSEND:
+			this->errorMsg = expandMessage(n, vaList, " :No text to send");
+			break;
+		case ERR_NOTOPLEVEL:
+			this->errorMsg = expandMessage(n, vaList, "% :No toplevel domain specified");
+			break;
+		case ERR_TOOMANYTARGETS:
+			this->errorMsg = expandMessage(n, vaList, "% :Duplicate recipients. No message");
 			break;
 		default:
 			break;
