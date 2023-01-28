@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 18:34:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/28 12:16:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,28 @@ void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 		return ;
 
 
-	std::vector<Channel>::iterator channel;
+	std::vector<Channel>::iterator channelIt;
 	/** ITERATE EACH PARSED CHANNEL **/
 	for (std::vector<std::string>::iterator it = channelsArray.begin(); it != channelsArray.end(); it++)
 	{
-		channel = server->getChannelIt(*it);
-		if (channel == server->getChannels().end())
+		channelIt = server->getChannelIt(*it);
+		if (channelIt == server->getChannels().end())
 		{
 			setError(ERR_NOSUCHCHANNEL, 1, (*it).c_str());
 			return ;
 		}
 		
-		if (!channel->existsUser(user))
+		if (!channelIt->existsUser(user))
 		{
 			setError(ERR_NOTONCHANNEL, 1, (*it).c_str());
 			return ;
 		}
 		
-		channel->removeUser(user);
-		if (channel->getUsers().empty())
-			server->removeChannel(*channel);
+		channelIt->removeUser(user);
+		user.removeJoinedChannel(*channelIt);
+		
+		if (channelIt->getUsers().empty())
+			server->removeChannel(*channelIt);
 	}
 }
 

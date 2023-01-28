@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 20:22:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/28 12:13:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ IRC::User& IRC::User::operator=(const IRC::User &other)
 	this->realname = other.getRealname();
 	this->hostname = other.getHostname();
 	this->servername = other.getServername();
+	this->joinedChannels = other.getJoinedChannels();
 	
 	return *this;
 }
@@ -126,10 +127,10 @@ void IRC::User::changeAuthenticated()
 
 void IRC::User::addJoinedChannel(IRC::Channel channel)
 {
-	// std::vector<IRC::Channel>::iterator found = std::find(joinedChannels.begin(), joinedChannels.end(), channel);
+	std::vector<IRC::Channel>::iterator found = std::find(joinedChannels.begin(), joinedChannels.end(), channel);
 	
-	// if (found == joinedChannels.end())
-	joinedChannels.push_back(channel);
+	if (found == joinedChannels.end())
+		joinedChannels.push_back(channel);
 	
 }
 
