@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/27 20:31:11 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/28 12:18:18 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 {
 	// TODO: Solo para pruebas, borrar cuando la autenticacion este bien.
 	
-	
+	/*
 	user.setNick("karisti");
 	user.setPassword("pass");
 	if (!user.isAuthenticated())
 		user.changeAuthenticated();
+	*/
 	
 	
 	// *************************************************************** //
