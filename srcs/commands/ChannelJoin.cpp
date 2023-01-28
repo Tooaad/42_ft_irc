@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/28 12:18:18 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/28 12:42:10 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 	
 	/** CHECK AUTHENTICATION **/
 	if (!user.isAuthenticated())
-	{
-		setError(ERR_NOTREGISTERED, 0);
-		return ;
-	}
+		return setError(ERR_NOTREGISTERED, 0);
 
 	/** PARSE ARGS (channels and passwords) **/
 	if (parseArgs() < 0)
@@ -53,10 +50,7 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 	for (size_t i = 0; i < channelsArray.size(); i++)
 	{
 		if (channelsArray[i].size() < 2 || channelsArray[i].at(0) != '#')
-		{
-			setError(ERR_BADCHANMASK, 1, channelsArray[i].c_str());
-			return ;
-		}
+			return setError(ERR_BADCHANMASK, 1, channelsArray[i].c_str());
 		
 		// channelsArray[i].erase(0, 1); // erase #
 		

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 12:16:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/28 12:49:11 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 
 	/** CHECK AUTHENTICATION **/
 	if (!user.isAuthenticated())
-	{
-		setError(ERR_NOTREGISTERED, 0);
-		return ;
-	}
-
+		return setError(ERR_NOTREGISTERED, 0);
 
 	/** PARSE ARGS (channels and passwords) **/
 	if (parseArgs() < 0)
@@ -54,16 +50,10 @@ void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 	{
 		channelIt = server->getChannelIt(*it);
 		if (channelIt == server->getChannels().end())
-		{
-			setError(ERR_NOSUCHCHANNEL, 1, (*it).c_str());
-			return ;
-		}
+			return setError(ERR_NOSUCHCHANNEL, 1, (*it).c_str());
 		
 		if (!channelIt->existsUser(user))
-		{
-			setError(ERR_NOTONCHANNEL, 1, (*it).c_str());
-			return ;
-		}
+			return setError(ERR_NOTONCHANNEL, 1, (*it).c_str());
 		
 		channelIt->removeUser(user);
 		user.removeJoinedChannel(*channelIt);
