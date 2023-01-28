@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 02:28:30 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/28 12:29:30 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,9 @@ void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
 			break;
 		case RPL_ENDOFNAMES:
 			this->replyMsg += expandMessage(n, vaList, "% :End of /NAMES list");
+			break;
+		case RPL_AWAY:
+			this->replyMsg += expandMessage(n, vaList, "% :%<AWAY MSG>");
 			break;
 		default:
 			break;

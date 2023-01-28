@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 23:26:21 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/28 11:43:42 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ namespace IRC
 				ERR_NOTOPLEVEL=413,
 				ERR_TOOMANYTARGETS=407,
 				
-				
 			};
 
 			enum ReplyNos {
@@ -54,8 +53,7 @@ namespace IRC
 				RPL_ENDOFNAMES=366,
 				RPL_AWAY=301, 
 			};
-
-			
+	
 		
 		protected:
 
@@ -71,7 +69,6 @@ namespace IRC
 		
 		private:
 			static	std::map<std::string, Command*> cmd_map;
-
 
 		public:
 			Command();
