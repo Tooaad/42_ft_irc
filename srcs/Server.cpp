@@ -19,6 +19,7 @@ IRC::Server::Server()
 
 IRC::Server::Server(std::string pwd)
 {
+	this->timeout = 10;
 	this->pwd = pwd;
 }
 
@@ -235,7 +236,7 @@ int IRC::Server::getSocket(void) const
 	return this->sSocket;
 }
 
-int IRC::Server::getKq(void)
+int IRC::Server::getKq(void) const
 {
 	return this->kq;
 }
@@ -243,6 +244,11 @@ int IRC::Server::getKq(void)
 std::string IRC::Server::getPWD(void) const
 {
 	return this->pwd;
+}
+
+time_t IRC::Server::getTimeout(void) const
+{
+	return this->timeout;
 }
 
 struct kevent *IRC::Server::getEvent(void)

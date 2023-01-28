@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 13:46:43 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/28 20:13:56 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ namespace IRC
 		std::string realname;
 		std::string hostname;
 		std::string servername;
-		bool authenticated;
+		bool 		authenticated;
+		time_t		timeout;
 		std::vector<Channel> joinedChannels;
 
 	public:
@@ -49,6 +50,7 @@ namespace IRC
 		std::string getRealname(void) const;
 		std::string getHostname(void) const;
 		std::string getServername(void) const;
+		time_t getTimeout(void) const;
 		bool isAuthenticated(void) const;
 		std::vector<Channel> getJoinedChannels(void) const;
 		void addJoinedChannel(Channel channel);
@@ -60,6 +62,7 @@ namespace IRC
 		void setRealname(std::string realname);
 		void setHostname(std::string realname);
 		void setServername(std::string realname);
+		void setTimeout(time_t timeout);
 		void changeAuthenticated();
 	};
 	bool 		operator== (const User lhs, const User rhs);

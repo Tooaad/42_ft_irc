@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Privmsg.hpp                                        :+:      :+:    :+:   */
+/*   Pong.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 23:07:51 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/28 21:10:10 by gpernas-         ###   ########.fr       */
+/*   Created: 2023/01/24 02:14:55 by gpernas-          #+#    #+#             */
+/*   Updated: 2023/01/28 19:03:30 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 #include "../Command.hpp"
 
-namespace IRC
+namespace IRC 
 {
 	class Server;
 	class Command;
-
-	class PrivMsg : public Command
+	class Pong : public Command
 	{
 		public:
-			PrivMsg();
-			virtual ~PrivMsg();
+			Pong();
+			Pong(Pong const& other);
+			virtual ~Pong();
 
 			void exec(IRC::Server* server, IRC::User& user);
-
 	};
 }
+

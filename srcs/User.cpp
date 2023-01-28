@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 13:46:24 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:02:45 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/User.hpp"
 
-IRC::User::User(void) : socket(0), password(""), nick(""), user(""), realname(""), authenticated(false)
+IRC::User::User(void) : socket(0), password(""), nick(""), user(""), realname(""), authenticated(false), timeout(0)
 {
 }
 
-IRC::User::User(int socket) : socket(socket), password(""), nick(""), user(""), realname(""), authenticated(false)
+IRC::User::User(int socket) : socket(socket), password(""), nick(""), user(""), realname(""), authenticated(false), timeout(0)
 {
 }
 
@@ -39,6 +39,7 @@ IRC::User& IRC::User::operator=(const IRC::User &other)
 	this->realname = other.getRealname();
 	this->hostname = other.getHostname();
 	this->servername = other.getServername();
+	this->timeout = other.getTimeout();
 	this->joinedChannels = other.getJoinedChannels();
 	
 	return *this;
@@ -80,6 +81,11 @@ std::string IRC::User::getServername(void) const
 	return this->servername;
 }
 
+time_t IRC::User::getTimeout(void) const
+{
+	return this->timeout;
+}
+
 bool IRC::User::isAuthenticated(void) const
 {
 	return this->authenticated;
@@ -118,6 +124,11 @@ void IRC::User::setHostname(std::string hostname)
 void IRC::User::setServername(std::string servername)
 {
 	this->servername = servername;
+}
+
+void IRC::User::setTimeout(time_t timeout)
+{
+	this->timeout = timeout;
 }
 
 void IRC::User::changeAuthenticated()

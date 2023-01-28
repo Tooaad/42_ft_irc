@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 11:43:42 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/28 20:41:37 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ namespace IRC
 				ERR_NOTEXTTOSEND=412,
 				ERR_NOTOPLEVEL=413,
 				ERR_TOOMANYTARGETS=407,
+				ERR_NOORIGIN=409,
+				ERR_NOSUCHSERVER=402
 				
 			};
 

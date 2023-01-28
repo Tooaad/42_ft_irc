@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Privmsg.hpp                                        :+:      :+:    :+:   */
+/*   Pong.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 23:07:51 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/28 21:10:10 by gpernas-         ###   ########.fr       */
+/*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
+/*   Updated: 2023/01/28 20:15:13 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "../../includes/commands/Pong.hpp"
 
-#include "../Command.hpp"
-
-namespace IRC
+IRC::Pong::Pong()
 {
-	class Server;
-	class Command;
+}
 
-	class PrivMsg : public Command
-	{
-		public:
-			PrivMsg();
-			virtual ~PrivMsg();
+IRC::Pong::~Pong()
+{
+}
 
-			void exec(IRC::Server* server, IRC::User& user);
-
-	};
+void IRC::Pong::exec(IRC::Server* server, IRC::User& user)
+{
+    if (user.getTimeout() > server->getTimeout())
+        // exit timeout
+        return ;
 }

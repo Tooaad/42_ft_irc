@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 12:29:30 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:16:07 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../includes/commands/Pass.hpp"
 #include "../includes/commands/Nick.hpp"
 #include "../includes/commands/Username.hpp"
+#include "../includes/commands/Privmsg.hpp" 
 #include "../includes/commands/ChannelJoin.hpp"
 #include "../includes/commands/ChannelPart.hpp"
 
@@ -28,6 +29,7 @@ IRC::Command::Command(std::string str) : replyNo(0), replyMsg(""), errorNo(0), e
 	cmd_map["/PASS"] = new IRC::Pass();
 	cmd_map["/NICK"] = new IRC::Nick();
 	cmd_map["/USER"] = new IRC::Username();
+	// cmd_map["/PRIVMSG"] = new IRC::PrivMsg();
 	cmd_map["/JOIN"] = new IRC::ChannelJoin();
 	cmd_map["/PART"] = new IRC::ChannelPart();
 
@@ -208,6 +210,12 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 			break;
 		case ERR_TOOMANYTARGETS:
 			this->errorMsg = expandMessage(n, vaList, "% :Duplicate recipients. No message");
+			break;
+		case ERR_NOORIGIN:
+			this->errorMsg = expandMessage(n, vaList, " :No origin specified");
+			break;
+		case ERR_NOSUCHSERVER:
+			this->errorMsg = expandMessage(n, vaList, "% :No such server");
 			break;
 		default:
 			break;

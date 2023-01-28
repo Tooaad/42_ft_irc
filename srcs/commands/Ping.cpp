@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Privmsg.hpp                                        :+:      :+:    :+:   */
+/*   Ping.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 23:07:51 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/28 21:10:10 by gpernas-         ###   ########.fr       */
+/*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
+/*   Updated: 2023/01/28 20:57:53 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "../../includes/commands/Ping.hpp"
 
-#include "../Command.hpp"
-
-namespace IRC
+IRC::Ping::Ping()
 {
-	class Server;
-	class Command;
+}
 
-	class PrivMsg : public Command
-	{
-		public:
-			PrivMsg();
-			virtual ~PrivMsg();
+IRC::Ping::~Ping()
+{
+}
 
-			void exec(IRC::Server* server, IRC::User& user);
+void IRC::Ping::exec(IRC::Server* server, IRC::User& user)
+{
+    send(user.getSocket(). "PING", 4, 0);
+    user.setTimeout() = time(0);
+    
+    
 
-	};
+    return 0;
 }

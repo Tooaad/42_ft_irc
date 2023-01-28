@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/28 15:02:24 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:14:49 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/commands/Privmsg.hpp"
+#include "../../includes/commands/Privmsg.hpp"
 
 IRC::PrivMsg::PrivMsg()
 {	
@@ -35,9 +35,13 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		return setError(ERR_NOTEXTTOSEND, 0);
 	
 	IRC::User& receptor = *findUser(server->getUsers(), argSplit[0]);
-	if (receptor == NULL)
+	// Mirar argSplit[0] es un canal y si existe
+	
+	
+	if (&receptor == NULL)
 		return setError(ERR_NOSUCHCHANNEL, 1, argSplit[0].c_str());
 		
+	
 	send(receptor.getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
 	
 	// if (usuario/canal is in find(arraycanal))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 18:32:40 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:01:09 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ namespace IRC
 	class Server
 	{
 	private:
-		int sSocket;
-		int kq;
-		std::string pwd;
-		struct kevent change_event[4]; // TODO: hay que ampliar? vector
-		struct kevent event[4];		   // TODO: hay que ampliar? vector
-		std::vector<IRC::User> users;
-		std::vector<std::string> commands;
-		std::vector<IRC::Channel> channels;
+		int				sSocket;
+		int				kq;
+		std::string 	pwd;
+		struct kevent	change_event[4]; // TODO: hay que ampliar? vector
+		struct kevent	event[4];		   // TODO: hay que ampliar? vector
+		time_t			timeout;
+		std::vector<IRC::User>		users;
+		std::vector<std::string>	commands;
+		std::vector<IRC::Channel>	channels;
 
 		// //			◦ If host, port_network and password_network aren’t given, you must create a new IRC network
 		// //			◦ host is the hostname on which IRC must connect to join a already existing network
@@ -73,10 +74,11 @@ namespace IRC
 		// void serverClose(void);
 
 		int getSocket(void) const;
-		int getKq(void);
+		int getKq(void) const;
 		std::string getPWD(void) const;
 		struct kevent *getEvent(void);
 		struct kevent *getChangeEvent(void);
+		time_t getTimeout(void) const;
 		std::vector<User>& getUsers(void);
 		std::vector<Channel>& getChannels(void);
 		std::vector<Channel>::iterator getChannelIt(std::string name);
