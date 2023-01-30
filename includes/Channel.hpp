@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:25 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 19:17:38 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace IRC
 			std::string					topic;
 			std::string					password;
 			bool						inviteOnlyMode;
-			
+			size_t						maxUsers;
 
 		public:
 			Channel();
@@ -43,6 +43,9 @@ namespace IRC
 
 			std::string					getName() const;
 			void						setName(std::string newName);
+			void						setMaxUsers(size_t size);
+			size_t						getMaxUsers(void);
+			bool						isFull(void) const;
 			void						addUser(User user);
 			bool						existsUser(User user);
 			void						removeUser(User user);
