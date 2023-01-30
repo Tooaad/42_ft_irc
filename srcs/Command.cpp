@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 21:16:07 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/30 10:57:03 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ IRC::Command::Command(std::string str) : replyNo(0), replyMsg(""), errorNo(0), e
 	cmd_map["/PASS"] = new IRC::Pass();
 	cmd_map["/NICK"] = new IRC::Nick();
 	cmd_map["/USER"] = new IRC::Username();
-	// cmd_map["/PRIVMSG"] = new IRC::PrivMsg();
+	cmd_map["/PRIVMSG"] = new IRC::PrivMsg();
 	cmd_map["/JOIN"] = new IRC::ChannelJoin();
 	cmd_map["/PART"] = new IRC::ChannelPart();
 

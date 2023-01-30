@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ping.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/28 20:57:53 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/30 11:01:36 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ IRC::Ping::~Ping()
 
 void IRC::Ping::exec(IRC::Server* server, IRC::User& user)
 {
-    send(user.getSocket(). "PING", 4, 0);
-    user.setTimeout() = time(0);
+    // send(user.getSocket(). "PING", 4, 0);
+    // user.setTimeout() = time(0);
+    (void)server;
+    (void)user;
     
-    
-
-    return 0;
 }

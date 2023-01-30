@@ -13,6 +13,9 @@ SRCS					=	main.cpp \
 							commands/Pass.cpp \
 							commands/Nick.cpp \
 							commands/Username.cpp \
+							commands/Privmsg.cpp \
+							commands/Ping.cpp \
+							commands/Pong.cpp \
 							commands/ChannelJoin.cpp \
 							commands/ChannelPart.cpp
 
