@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:13:46 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:34:28 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,7 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 			setReply(RPL_ENDOFNAMES, 1, newChannel->getName().c_str());
 		}
 		
-		
-		
-		// TODO: If a JOIN is successful, the user is then sent the channel's topic
-		// (using RPL_TOPIC) and the list of users who are on the channel (using
-		// RPL_NAMREPLY), which must include the user joining.
+		// TODO
 		/*
 		> join #jeje
 		:karisti1!karisti1@0G6.n4M.2Cld1O.virtual JOIN :#jeje
