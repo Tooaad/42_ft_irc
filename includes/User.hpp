@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 20:13:56 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/30 15:35:46 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ namespace IRC
 		void changeAuthenticated();
 	};
 	bool 		operator== (const User lhs, const User rhs);
-	IRC::User*	findUser(std::vector<User> users, std::string nick);
+	IRC::User	findUser(std::vector<User> users, std::string nick);
 	void		printUser(User user);
 	void		printUsers(std::vector<User> users);
 }
