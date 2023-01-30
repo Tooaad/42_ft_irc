@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/30 11:01:58 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/30 11:02:40 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ void IRC::Pong::exec(IRC::Server* server, IRC::User& user)
     // if (user.getTimeout() > server->getTimeout())
     //     // exit timeout
     //     return ;
-        (void)server;
+    (void)server;
     (void)user;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:21:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/26 20:22:25 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/30 11:09:32 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void IRC::Nick::exec(IRC::Server* server, IRC::User& user)
 			return ;
 		}
 	for (size_t i = 0; i != this->args.size(); i++)
-		if (!std::isprint(this->args.at(i)))
+		if (!std::isprint(this->args.at(i)) || this->args.at(i) == '#')
 			{
 				setError(ERR_ERRONEUSNICKNAME, 1, this->args.c_str());
 				return ; 
