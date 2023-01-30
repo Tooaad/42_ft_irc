@@ -6,14 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:34 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:10:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
 IRC::Channel::Channel() {}
-IRC::Channel::Channel(std::string name, IRC::User createdBy) : name(name), inviteOnlyMode(false)
+IRC::Channel::Channel(std::string name, IRC::User createdBy) : name(name), topic(""), inviteOnlyMode(false), maxUsers(0)
 {
 	operators.push_back(createdBy);
 }
@@ -37,6 +37,8 @@ IRC::Channel &IRC::Channel::operator=(const IRC::Channel &other)
 
 std::string					IRC::Channel::getName() const { return name; }
 void						IRC::Channel::setName(std::string newName) { name = newName; }
+void						IRC::Channel::setMaxUsers(size_t size) { maxUsers = size; }
+size_t						IRC::Channel::getMaxUsers(void) { return maxUsers; }
 std::vector<IRC::User>		IRC::Channel::getUsers() const { return users; }
 void						IRC::Channel::addUser(IRC::User user) { users.push_back(user); }
 std::vector<IRC::User>		IRC::Channel::getOperators() const { return operators; }
@@ -105,6 +107,13 @@ void	IRC::Channel::sendMessage(std::string message)
 		send(it->getSocket(), message.c_str(), message.size(), 0);
 }
 
+bool	IRC::Channel::isFull(void) const
+{
+	if (maxUsers > 0 && users.size() >= maxUsers)
+		return true;
+	return false;
+}
+
 bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 {
 	if (lhs.getName().compare(rhs.getName()) == 0)
@@ -119,6 +128,7 @@ void	IRC::printChannel(IRC::Channel& channel)
 	std::cout << ", Topic: " << channel.getTopic();
 	std::cout << ", Password: " << channel.getPassword();
 	std::cout << ", Invite Only mode: " << channel.isInviteOnly();
+	std::cout << ", Max users: " << channel.getMaxUsers();
 	std::cout << std::endl;
 	
 	std::cout << "Users: " << channel.getUsersString() << std::endl;

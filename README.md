@@ -78,3 +78,6 @@ Kqueue
 [ ] squit
 [ ] kill
 [ ] who
+
+
+nc irc.irc-hispano.org 6667

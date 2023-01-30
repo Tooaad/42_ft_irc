@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 20:41:37 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:00:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 #include <map>
 #include "Server.hpp"
 #include "User.hpp"
+
+/*
+
+RPL_TOPIC
+*/
 
 namespace IRC
 {
@@ -46,14 +51,18 @@ namespace IRC
 				ERR_NOTOPLEVEL=413,
 				ERR_TOOMANYTARGETS=407,
 				ERR_NOORIGIN=409,
-				ERR_NOSUCHSERVER=402
-				
+				ERR_NOSUCHSERVER=402,
+				ERR_CHANNELISFULL=471,
+				ERR_TOOMANYCHANNELS=405
+				// ERR_BANNEDFROMCHAN
 			};
 
 			enum ReplyNos {
 				RPL_NAMREPLY=353,
 				RPL_ENDOFNAMES=366,
-				RPL_AWAY=301, 
+				RPL_AWAY=301,
+				RPL_NOTOPIC=331,
+				RPL_TOPIC=332
 			};
 	
 		
