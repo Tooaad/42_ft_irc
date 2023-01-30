@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/30 19:25:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:06:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 
 		if (newChannel != NULL)
 		{
+			if (newChannel->getTopic().size() == 0)
+				setReply(RPL_NOTOPIC, 1, newChannel->getName().c_str());
+			else
+				setReply(RPL_TOPIC, 2, newChannel->getName().c_str(), newChannel->getTopic().c_str());
+				
 			setReply(RPL_NAMREPLY, 2, newChannel->getName().c_str(), newChannel->getUsersString().c_str());
 			setReply(RPL_ENDOFNAMES, 1, newChannel->getName().c_str());
 		}

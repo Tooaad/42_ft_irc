@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:02:22 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:09:49 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
 			this->replyMsg += expandMessage(n, vaList, "% :%<AWAY MSG>");
 			break;
 		case RPL_NOTOPIC:
-			this->replyMsg += expandMessage(n, vaList, "%  :No topic is set");
+			this->replyMsg += expandMessage(n, vaList, "% :No topic is set");
 			break;
 		case RPL_TOPIC:
 			this->replyMsg += expandMessage(n, vaList, "% :%");

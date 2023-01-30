@@ -6,14 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 19:18:13 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:10:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
 IRC::Channel::Channel() {}
-IRC::Channel::Channel(std::string name, IRC::User createdBy) : name(name), inviteOnlyMode(false), maxUsers(0)
+IRC::Channel::Channel(std::string name, IRC::User createdBy) : name(name), topic(""), inviteOnlyMode(false), maxUsers(0)
 {
 	operators.push_back(createdBy);
 }
