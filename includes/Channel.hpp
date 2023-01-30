@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 19:25:25 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:50:25 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <sys/socket.h>
 #include "User.hpp"
 
 namespace IRC
@@ -55,6 +56,7 @@ namespace IRC
 			bool						checkPassword(std::string pass) const;
 			bool						isInviteOnly() const;
 			void						setInviteOnly(bool newInviteOnlyMode);
+			void						sendMessage(std::string message);
 			
 	};
 	bool	operator== (const Channel lhs, const Channel rhs);

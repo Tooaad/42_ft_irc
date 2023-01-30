@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/27 19:26:47 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:50:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ std::string	IRC::Channel::getOperatorsString(void)
 	}
 	
 	return operatorsString;
+}
+
+void	IRC::Channel::sendMessage(std::string message)
+{
+	for (std::vector<IRC::User>::iterator it = users.begin(); it != users.end(); it++)
+		send(it->getSocket(), message.c_str(), message.size(), 0);
 }
 
 bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
