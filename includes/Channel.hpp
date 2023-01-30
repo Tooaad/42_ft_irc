@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:35:56 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:37:23 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ namespace IRC
 			~Channel();
 			Channel& operator=(const Channel& other);
 
-			std::string					getName() const;
-			void						setName(std::string newName);
 			void						setMaxUsers(size_t size);
 			size_t						getMaxUsers(void);
 			bool						isFull(void) const;
