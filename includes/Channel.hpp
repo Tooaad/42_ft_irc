@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:25 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:31:27 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ namespace IRC
 			std::string					name;
 			std::vector<User>			users;
 			std::vector<User>			operators;
-			
 			std::string					topic;
+			
 			std::string					password;
 			bool						inviteOnlyMode;
 			
@@ -41,18 +41,18 @@ namespace IRC
 			~Channel();
 			Channel& operator=(const Channel& other);
 
-			std::string					getName() const;
-			void						setName(std::string newName);
 			void						addUser(User user);
 			bool						existsUser(User user);
 			void						removeUser(User user);
+			std::string					getName() const;
 			std::vector<User>			getUsers() const;
 			std::string					getUsersString(void);
 			std::vector<User>			getOperators() const;
 			std::string					getOperatorsString(void);
 			std::string					getTopic() const;
-			void						setTopic(std::string newTopic);
 			std::string					getPassword() const;
+			void						setTopic(std::string newTopic);
+			void						setName(std::string newName);
 			bool						checkPassword(std::string pass) const;
 			bool						isInviteOnly() const;
 			void						setInviteOnly(bool newInviteOnlyMode);
