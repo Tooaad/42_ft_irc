@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/28 12:42:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 19:25:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,25 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 	{
 		if (channelsArray[i].size() < 2 || channelsArray[i].at(0) != '#')
 			return setError(ERR_BADCHANMASK, 1, channelsArray[i].c_str());
-		
-		// channelsArray[i].erase(0, 1); // erase #
+
+		if (user.getJoinedChannels().size() >= MAX_CHANNELS)
+			return setError(ERR_TOOMANYCHANNELS, 1, channelsArray[i].c_str());
+
 		
 		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE. **/
 		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i], User()));
+		IRC::Channel* newChannel;
 		if (found != server->getChannels().end())
-		{
-			if (joinExistingChannel(*found, user) < 0)
-				return ;
-		}
+			newChannel = joinExistingChannel(*found, user);
 		else
+			newChannel = createNewChannel(channelsArray[i], user, server->getChannels());
+
+		if (newChannel != NULL)
 		{
-			if (createNewChannel(channelsArray[i], user, server->getChannels()) != 0)
-				return ;
+			setReply(RPL_NAMREPLY, 2, newChannel->getName().c_str(), newChannel->getUsersString().c_str());
+			setReply(RPL_ENDOFNAMES, 1, newChannel->getName().c_str());
 		}
+		
 		
 		
 		// TODO: If a JOIN is successful, the user is then sent the channel's topic
@@ -100,23 +104,29 @@ int	IRC::ChannelJoin::parseArgs(void)
 	return 0;
 }
 
-int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::User& user)
+IRC::Channel*	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::User& user)
 {
 	if (channel.isInviteOnly())
 	{
 		setError(ERR_INVITEONLYCHAN, 1, channel.getName().c_str());
-		return -1;
+		return NULL;
 	}
 
-	// TODO: the user's nick/username/hostname must not match any active bans;
+	// TODO: ERR_BANNEDFROMCHAN: the user's nick/username/hostname must not match any active bans;
 	
 	if (!channel.checkPassword("") && (passwordsArray.size() <= 0 || !channel.checkPassword(passwordsArray.at(0))))
 	{
 		setError(ERR_BADCHANNELKEY, 1, channel.getName().c_str());
-		return -1;
+		return NULL;
 	}
 	else if (passwordsArray.size() > 0)
 		passwordsArray.erase(passwordsArray.begin());
+
+	if (channel.isFull())
+	{
+		setError(ERR_CHANNELISFULL, 1, channel.getName().c_str());
+		return NULL;
+	}
 
 	if (!channel.existsUser(user))
 	{
@@ -124,25 +134,16 @@ int		IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::User& use
 		user.addJoinedChannel(channel);
 	}
 	
-	setReply(RPL_NAMREPLY, 2, channel.getName().c_str(), channel.getUsersString().c_str());
-	setReply(RPL_ENDOFNAMES, 1, channel.getName().c_str());
-
-	// TODO: Solo para pruebas,
-	// printChannel(channel);
-	///////////////////
-	
-	return 0;
+	return &channel;
 }
 
-int	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, std::vector<IRC::Channel>& channels)
+IRC::Channel*	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, std::vector<IRC::Channel>& channels)
 {
-	IRC::Channel newChannel = Channel(channelName, user);
-	newChannel.addUser(user);
-	channels.push_back(newChannel);
-	user.addJoinedChannel(newChannel);
+	// TODO: Cuidado leaks
+	IRC::Channel* newChannel = new Channel(channelName, user);
+	newChannel->addUser(user);
+	channels.push_back(*newChannel);
+	user.addJoinedChannel(*newChannel);
 
-	setReply(RPL_NAMREPLY, 2, channelName.c_str(), newChannel.getUsersString().c_str());
-	setReply(RPL_ENDOFNAMES, 1, channelName.c_str());
-
-	return 0;
+	return newChannel;
 }
