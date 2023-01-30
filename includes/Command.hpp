@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 18:32:43 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:00:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ namespace IRC
 			enum ReplyNos {
 				RPL_NAMREPLY=353,
 				RPL_ENDOFNAMES=366,
-				RPL_AWAY=301, 
+				RPL_AWAY=301,
+				RPL_NOTOPIC=331,
+				RPL_TOPIC=332
 			};
 	
 		
