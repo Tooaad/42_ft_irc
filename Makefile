@@ -19,7 +19,8 @@ SRCS					=	main.cpp \
 							commands/Pong.cpp \
 							commands/ChannelJoin.cpp \
 							commands/ChannelPart.cpp \
-							commands/ChannelTopic.cpp
+							commands/ChannelTopic.cpp \
+							commands/ChannelNames.cpp
 
 SRCSFD					=	srcs/
 OBJSFD					=	objs/

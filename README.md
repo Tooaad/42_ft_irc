@@ -54,15 +54,18 @@ Kqueue
 - TPC Server Linux https://www.youtube.com/watch?v=cNdlrbZSkyQ
 - TPC Server Mac https://www.youtube.com/watch?v=F3iIGUiW27Q
 
+[+] Join
+[+] Part
+[+] topic
 
 [-] Pass
 [-] Nick
 [-] Username
-[+] Join
-[+] Part
-[+] topic
 [-] Privsmg
+
 [ ] list
+[ ] names
+[ ] invite
 [ ] Ping
 [ ] Pong
 [ ] quit
