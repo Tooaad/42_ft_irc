@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 15:35:36 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:34:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ IRC::User::User(int socket) : socket(socket), password(""), nick(""), user(""), 
 {
 }
 
-IRC::User::User(const IRC::User& other)
+IRC::User::User(const IRC::User& oth
+
+void isInChannel(Channel channel);er)
 {
 	*this = other;
 }
@@ -165,6 +167,13 @@ std::string	IRC::User::getJoinedChannelsString(void)
 	}
 
 	return channelsString;
+}
+
+bool IRC::User::isInChannel(IRC::Channel channel)
+{
+	if (std::find(joinedChannels.begin(), joinedChannels.end(), channel) != joinedChannels.end())
+		return true;
+	return false;
 }
 
 bool IRC::operator== (const IRC::User lhs, const IRC::User rhs) {
