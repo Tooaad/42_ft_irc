@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 12:37:33 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:54:28 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,9 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 			break;
 		case ERR_UMODEUNKWOWNFLAG:
 			this->errorMsg = expandMessage(n, vaList, " :Unknown MODE flag");
+			break;
+		case ERR_CHANOPRIVSNEEDED:
+			this->errorMsg = expandMessage(n, vaList, "% :You're not channel operator");
 			break;
 		default:
 			break;

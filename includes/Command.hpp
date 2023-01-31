@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 13:43:22 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:53:43 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ namespace IRC
 				ERR_TOOMANYCHANNELS=405,
 				ERR_USERSDONTMATCH=502,
 				ERR_UMODEUNKWOWNFLAG=501,
+				ERR_CHANOPRIVSNEEDED=482
 				// ERR_BANNEDFROMCHAN
 			};
 
