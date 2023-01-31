@@ -60,9 +60,9 @@ Kqueue
 [-] Username
 [+] Join
 [+] Part
+[+] topic
 [-] Privsmg
 [ ] list
-[ ] topic
 [ ] Ping
 [ ] Pong
 [ ] quit
