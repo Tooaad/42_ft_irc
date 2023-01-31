@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:00:52 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 11:25:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "Server.hpp"
 #include "User.hpp"
 
+
 /*
 
 RPL_TOPIC
@@ -27,6 +28,7 @@ RPL_TOPIC
 namespace IRC
 {
 	class Server;
+	class User;
 	
 	class Command
 	{

@@ -34,7 +34,6 @@ void IRC::Server::connectNetwork(std::string *args)
 
 int IRC::Server::createNetwork(std::string *args)
 {
-	(void)args;
 	if ((this->sSocket = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 	{
 		perror("Error opening socket");
@@ -71,6 +70,10 @@ int IRC::Server::createNetwork(std::string *args)
 		perror("kevent");
 		return -1;
 	}
+
+	if (this->saveIP() == -1)
+		return -1;
+	std::cout << "--- IP: " << this->ip << " ---" << std::endl;
 
 	return 0;
 }
@@ -219,7 +222,7 @@ void IRC::Server::registration(IRC::User& user, std::string message) {
 
 	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
 	{
-		user.changeAuthenticated(); 				// true 
+		user.changeAuthenticated(); 				// true
 		std::string error_msg = "You have been authenticated!\n";
 		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
 	}
@@ -297,4 +300,27 @@ void IRC::Server::removeChannel(IRC::Channel channel)
 	if (found != channels.end())
 		channels.erase(found);
 	
+}
+
+int IRC::Server::saveIP(void)
+{
+	char host[256];
+	struct hostent *host_entry;
+
+	if (gethostname(host, sizeof(host)) == -1)
+	{
+		perror("Error getting ip: gethostname");
+		return -1;
+	}
+	host_entry = gethostbyname(host);
+	if (!host_entry)
+		this->ip = "127.0.0.1";
+	else
+		this->ip = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
+	return 0;
+}
+
+std::string IRC::Server::getIP(void)
+{
+	return this->ip;
 }

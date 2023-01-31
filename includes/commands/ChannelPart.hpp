@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelPart.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:20:00 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 17:22:24 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 11:20:07 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 namespace IRC
 {
-	class Server;
 	class Command;
 
 	class ChannelPart : public Command
