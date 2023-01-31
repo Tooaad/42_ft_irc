@@ -57,12 +57,12 @@ Kqueue
 [+] Join
 [+] Part
 [+] topic
-[+] names
 
 [-] Pass
 [-] Nick
 [-] Username
 [-] Privsmg
+[-] names
 
 [ ] list
 [ ] invite
