@@ -57,6 +57,7 @@ Kqueue
 [+] Join
 [+] Part
 [+] topic
+[+] names
 
 [-] Pass
 [-] Nick
@@ -64,7 +65,6 @@ Kqueue
 [-] Privsmg
 
 [ ] list
-[ ] names
 [ ] invite
 [ ] Ping
 [ ] Pong
