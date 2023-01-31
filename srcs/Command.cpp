@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 01:32:32 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:37:33 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,9 @@ void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
 		case RPL_TOPIC:
 			this->replyMsg += expandMessage(n, vaList, "% :%");
 			break;
+		case RPL_UMODEIS:
+			this->replyMsg += expandMessage(n, vaList, "% %, % %, % %");
+			break;
 		default:
 			break;
 	}
@@ -224,6 +227,12 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 			break;
 		case ERR_NOSUCHSERVER:
 			this->errorMsg = expandMessage(n, vaList, "% :No such server");
+			break;
+		case ERR_USERSDONTMATCH:
+			this->errorMsg = expandMessage(n, vaList, " :Cant change mode for other users");
+			break;
+		case ERR_UMODEUNKWOWNFLAG:
+			this->errorMsg = expandMessage(n, vaList, " :Unknown MODE flag");
 			break;
 		default:
 			break;

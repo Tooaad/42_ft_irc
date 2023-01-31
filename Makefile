@@ -1,5 +1,6 @@
 # Project compilation files and directoriesclear
 
+# commands/Mode.cpp
 
 NAME					=	ircserv 
 
