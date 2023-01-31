@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 19:16:33 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 21:01:13 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "../includes/commands/ChannelPart.hpp"
 #include "../includes/commands/ChannelTopic.hpp"
 #include "../includes/commands/ChannelNames.hpp"
+#include "../includes/commands/ChannelList.hpp"
 
 IRC::Command::Command() : replyNo(0), replyMsg(""), errorNo(0), errorMsg("")
 {
@@ -36,6 +37,7 @@ IRC::Command::Command(std::string str) : replyNo(0), replyMsg(""), errorNo(0), e
 	cmd_map["/PART"] = new IRC::ChannelPart();
 	cmd_map["/TOPIC"] = new IRC::ChannelTopic();
 	cmd_map["/NAMES"] = new IRC::ChannelNames();
+	cmd_map["/LIST"] = new IRC::ChannelList();
 
 	std::vector<std::string> argsArray = splitString(str, " ", 1);
 	this->command = argsArray.at(0);
@@ -153,6 +155,15 @@ void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
 			break;
 		case RPL_UMODEIS:
 			this->replyMsg += expandMessage(n, vaList, "% %, % %, % %");
+			break;
+		case RPL_LISTSTART:
+			this->replyMsg += expandMessage(n, vaList, "Channel :Users  Name");
+			break;
+		case RPL_LIST:
+			this->replyMsg += expandMessage(n, vaList, "% % :%");
+			break;
+		case RPL_LISTEND:
+			this->replyMsg += expandMessage(n, vaList, ":End of /LIST");
 			break;
 		default:
 			break;

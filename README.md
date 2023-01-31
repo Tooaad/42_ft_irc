@@ -63,8 +63,8 @@ Kqueue
 [-] Username
 [-] Privsmg
 [-] names
+[-] list
 
-[ ] list
 [ ] invite
 [ ] Ping
 [ ] Pong

@@ -20,7 +20,8 @@ SRCS					=	main.cpp \
 							commands/ChannelJoin.cpp \
 							commands/ChannelPart.cpp \
 							commands/ChannelTopic.cpp \
-							commands/ChannelNames.cpp
+							commands/ChannelNames.cpp \
+							commands/ChannelList.cpp
 
 SRCSFD					=	srcs/
 OBJSFD					=	objs/

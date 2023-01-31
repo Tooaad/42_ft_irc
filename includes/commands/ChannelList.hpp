@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ChannelJoin.hpp                                    :+:      :+:    :+:   */
+/*   ChannelList.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 13:07:58 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 20:54:03 by karisti-         ###   ########.fr       */
+/*   Created: 2023/01/31 19:46:06 by karisti-          #+#    #+#             */
+/*   Updated: 2023/01/31 21:02:05 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "../Command.hpp"
-#include <algorithm>
-
-#define MAX_CHANNELS 10
+#include <sstream>
 
 namespace IRC
 {
 	class Command;
-	class Server;
 
-	class ChannelJoin : public Command
+	class ChannelList : public Command
 	{
 		private:
-			std::vector<std::string> channelsArray;
-			std::vector<std::string> passwordsArray;
+			std::vector<Channel> channelsArray;
 
 		public:
-			ChannelJoin();
-			virtual ~ChannelJoin();
+			ChannelList();
+			virtual ~ChannelList();
 
-			void exec(IRC::Server* server, IRC::User& user);
+			void exec(Server* server, User& user);
 
 		private:
-			int				parseArgs(void);
-			IRC::Channel*	joinExistingChannel(IRC::Channel& channel, IRC::User &user);
-			IRC::Channel*	createNewChannel(std::string channelName, IRC::User& user, IRC::Server* server);
+			void	parseArgs(Server* server);
+			void	printNames(std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd);
 	};
 }

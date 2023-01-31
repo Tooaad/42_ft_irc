@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 15:53:43 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 20:42:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ namespace IRC
 				ERR_TOOMANYCHANNELS=405,
 				ERR_USERSDONTMATCH=502,
 				ERR_UMODEUNKWOWNFLAG=501,
-				ERR_CHANOPRIVSNEEDED=482
+				ERR_CHANOPRIVSNEEDED=482,
 				// ERR_BANNEDFROMCHAN
 			};
 
@@ -68,7 +68,10 @@ namespace IRC
 				RPL_AWAY=301,
 				RPL_NOTOPIC=331,
 				RPL_TOPIC=332,
-				RPL_UMODEIS=221
+				RPL_UMODEIS=221,
+				RPL_LISTSTART=321,
+				RPL_LIST=322,
+				RPL_LISTEND=323
 			};
 	
 		
