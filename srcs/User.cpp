@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 12:34:47 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:42:50 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,13 @@ std::string	IRC::User::getJoinedChannelsString(void)
 	}
 
 	return channelsString;
+}
+
+bool IRC::User::isInChannel(IRC::Channel channel)
+{
+	if (std::find(joinedChannels.begin(), joinedChannels.end(), channel) != joinedChannels.end())
+		return true;
+	return false;
 }
 
 bool IRC::operator== (const IRC::User lhs, const IRC::User rhs) {

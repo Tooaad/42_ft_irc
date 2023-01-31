@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 21:01:09 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 11:14:28 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 
 namespace IRC
 {
+	class User;
+	class Channel;
+	
 	class Server
 	{
 	private:
@@ -44,6 +47,7 @@ namespace IRC
 		std::vector<IRC::User>		users;
 		std::vector<std::string>	commands;
 		std::vector<IRC::Channel>	channels;
+		std::string		ip;
 
 		// //			◦ If host, port_network and password_network aren’t given, you must create a new IRC network
 		// //			◦ host is the hostname on which IRC must connect to join a already existing network
@@ -83,6 +87,8 @@ namespace IRC
 		std::vector<Channel>& getChannels(void);
 		std::vector<Channel>::iterator getChannelIt(std::string name);
 		void removeChannel(IRC::Channel channel);
+		int saveIP(void);
+		std::string getIP(void);
 	};
 	std::string parsePwd(std::string buf, std::string command);
 }

@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 12:36:45 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:44:16 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ namespace IRC
 		void changeInvisibility();
 		void changeSubscription();
 		void deOp();
+		bool isInChannel(Channel channel);
 	};
 	bool 		operator== (const User lhs, const User rhs);
 	IRC::User	findUser(std::vector<User> users, std::string nick);

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:34:28 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:10:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 
 		if (newChannel != NULL)
 		{
+			newChannel->broadcastAction(server, user, "JOIN");
+			
 			if (newChannel->getTopic().size() == 0)
 				setReply(RPL_NOTOPIC, 1, newChannel->getName().c_str());
 			else
@@ -74,20 +76,6 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 			setReply(RPL_NAMREPLY, 2, newChannel->getName().c_str(), newChannel->getUsersString().c_str());
 			setReply(RPL_ENDOFNAMES, 1, newChannel->getName().c_str());
 		}
-		
-		// TODO
-		/*
-		> join #jeje
-		:karisti1!karisti1@0G6.n4M.2Cld1O.virtual JOIN :#jeje
-		:glencoe.chathispano.com 332 karisti1 #jeje :teeeeeeeeeest
-		:glencoe.chathispano.com 333 karisti1 #jeje Guest53 :1675104783
-		:glencoe.chathispano.com 353 karisti1 = #jeje :karisti1 @Guest53
-		:glencoe.chathispano.com 366 karisti1 #jeje :End of /NAMES list.
-
-
-		> part #jeje
-		:karisti1!karisti1@0G6.n4M.2Cld1O.virtual PART :#jeje
-		*/
 	}
 }
 
@@ -133,11 +121,11 @@ IRC::Channel*	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::
 		return NULL;
 	}
 
-	if (!channel.existsUser(user))
-	{
-		channel.addUser(user);
-		user.addJoinedChannel(channel);
-	}
+	if (channel.existsUser(user))
+		return NULL;
+
+	channel.addUser(user, IRC::Channel::NORMAL_USER);
+	user.addJoinedChannel(channel);
 	
 	return &channel;
 }
@@ -146,7 +134,6 @@ IRC::Channel*	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::U
 {
 	// TODO: Cuidado leaks
 	IRC::Channel* newChannel = new Channel(channelName, user);
-	newChannel->addUser(user);
 	channels.push_back(*newChannel);
 	user.addJoinedChannel(*newChannel);
 

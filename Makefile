@@ -1,5 +1,6 @@
 # Project compilation files and directoriesclear
 
+# commands/Mode.cpp
 
 NAME					=	ircserv 
 
@@ -16,7 +17,6 @@ SRCS					=	main.cpp \
 							commands/Privmsg.cpp \
 							commands/Ping.cpp \
 							commands/Pong.cpp \
-							commands/Mode.cpp \
 							commands/ChannelJoin.cpp \
 							commands/ChannelPart.cpp \
 							commands/ChannelTopic.cpp
