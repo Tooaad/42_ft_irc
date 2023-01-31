@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 14:49:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:23:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ namespace IRC
 			
 			std::string					password;
 			bool						inviteOnlyMode;
+			bool						secretMode;
+			bool						freeTopicMode;
+			bool						publicMsgMode;
+			bool						moderatedMode;
 			int							maxUsers;
 
 		public:
@@ -54,29 +58,40 @@ namespace IRC
 			void						setMaxUsers(int size);
 			int							getMaxUsers(void);
 			bool						isFull(void) const;
-			void						addUser(IRC::User& user, ChannelUserTypes userType);
+			void						addUser(User& user);
 			bool						existsUser(User user);
 			void						removeUser(User user);
 			std::string					getName() const;
 			std::string					getUsersString(void);
 			std::vector<User>			getOperators() const;
+			void						addOperator(IRC::User user);
+			void						removeOperator(IRC::User user);
 			std::vector<User>			getModerators() const;
+			void						addModerator(IRC::User user);
+			void						removeModerator(IRC::User user);
+			bool						isSecret() const;
+			void						changeSecrecy();
+			bool						isFreeTopic() const;
+			void						changeFreeTopic();
+			bool						isPublicMsg() const;
+			void						changePublicMsg();
+			bool						isModerated() const;
+			void						changeModerated();
 			std::vector<User>			getUsers() const;
 			std::string					getTopic() const;
 			std::string					getPassword() const;
+			void						setPassword(std::string password);
 			void						setTopic(std::string newTopic);
 			void						setName(std::string newName);
 			bool						checkPassword(std::string pass) const;
 			bool						isInviteOnly() const;
-			void						setInviteOnly(bool newInviteOnlyMode);
-			void						sendMessageToAll(std::string message);
+			void						changeInviteOnly();
 			void						sendMessageToOperators(std::string message);
 			void						sendMessageToModerators(std::string message);
 			void						sendMessageToUsers(std::string message);
 			void						broadcastAction(IRC::Server* server, IRC::User user, std::string command);
 			bool						isOperator(IRC::User user);
 			bool						isModerator(IRC::User user);
-			bool						isUser(IRC::User user);
 			bool						isEmpty(void);
 	};
 	bool	operator== (const Channel lhs, const Channel rhs);

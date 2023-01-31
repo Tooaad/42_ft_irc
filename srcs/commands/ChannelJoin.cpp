@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/31 14:31:53 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:02:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ IRC::Channel*	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::
 	if (channel.existsUser(user))
 		return NULL;
 
-	channel.addUser(user, IRC::Channel::NORMAL_USER);
+	channel.addUser(user);
 	user.addJoinedChannel(channel);
 	
 	return &channel;

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/31 14:46:09 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:35:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if (receptor.base() == NULL)
 			return setError(ERR_NOSUCHCHANNEL, 1, argSplit[0].c_str());
 			
-		if(!receptor->existsUser(user))
+		if(!user.isInChannel(*receptor))
 			return setError(ERR_CANNOTSENDTOCHAN, 1, argSplit[1].c_str());
-				
-		receptor->sendMessageToAll(argSplit[1] + "\n");
+
+		receptor->sendMessageToUsers(argSplit[1] + "\n");
 	}
 	else
 	{
