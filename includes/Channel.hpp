@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 13:26:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:49:50 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ namespace IRC
 			void						setMaxUsers(int size);
 			int							getMaxUsers(void);
 			bool						isFull(void) const;
-			void						addUser(IRC::User user, ChannelUserTypes userType);
+			void						addUser(IRC::User& user, ChannelUserTypes userType);
 			bool						existsUser(User user);
 			void						removeUser(User user);
 			std::string					getName() const;
@@ -69,11 +69,15 @@ namespace IRC
 			bool						checkPassword(std::string pass) const;
 			bool						isInviteOnly() const;
 			void						setInviteOnly(bool newInviteOnlyMode);
-			void						sendMessage(std::string message);
+			void						sendMessageToAll(std::string message);
+			void						sendMessageToOperators(std::string message);
+			void						sendMessageToModerators(std::string message);
+			void						sendMessageToUsers(std::string message);
 			void						broadcastAction(IRC::Server* server, IRC::User user, std::string command);
 			bool						isOperator(IRC::User user);
 			bool						isModerator(IRC::User user);
 			bool						isUser(IRC::User user);
+			bool						isEmpty(void);
 	};
 	bool	operator== (const Channel lhs, const Channel rhs);
 	

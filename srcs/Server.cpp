@@ -293,6 +293,11 @@ std::string IRC::parsePwd(std::string buf, std::string command) {
 	return "";
 }
 
+void	IRC::Server::addChannel(IRC::Channel& channel)
+{
+	channels.push_back(channel);
+}
+
 void IRC::Server::removeChannel(IRC::Channel channel)
 {
 	std::vector<IRC::Channel>::iterator found = std::find(channels.begin(), channels.end(), channel);

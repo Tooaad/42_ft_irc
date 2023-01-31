@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 13:31:25 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:48:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ IRC::Channel &IRC::Channel::operator=(const IRC::Channel &other)
 		topic = other.topic;
 		password = other.password;
 		inviteOnlyMode = other.inviteOnlyMode;
+		maxUsers = other.maxUsers;
 	}
 	return *this;
 }
@@ -57,7 +58,7 @@ bool	IRC::Channel::checkPassword(std::string pass) const
 	return false;
 }
 
-void	IRC::Channel::addUser(IRC::User user, ChannelUserTypes userType)
+void	IRC::Channel::addUser(IRC::User& user, ChannelUserTypes userType)
 {
 	switch (userType)
 	{
@@ -132,10 +133,29 @@ std::string	IRC::Channel::getUsersString(void)
 	return usersString;
 }
 
-void	IRC::Channel::sendMessage(std::string message)
+void	IRC::Channel::sendMessageToOperators(std::string message)
+{
+	for (std::vector<IRC::User>::iterator it = operators.begin(); it != operators.end(); it++)
+		send(it->getSocket(), message.c_str(), message.size(), 0);
+}
+
+void	IRC::Channel::sendMessageToModerators(std::string message)
+{
+	for (std::vector<IRC::User>::iterator it = moderators.begin(); it != moderators.end(); it++)
+		send(it->getSocket(), message.c_str(), message.size(), 0);
+}
+
+void	IRC::Channel::sendMessageToUsers(std::string message)
 {
 	for (std::vector<IRC::User>::iterator it = users.begin(); it != users.end(); it++)
 		send(it->getSocket(), message.c_str(), message.size(), 0);
+}
+
+void	IRC::Channel::sendMessageToAll(std::string message)
+{
+	sendMessageToOperators(message);
+	sendMessageToModerators(message);
+	sendMessageToUsers(message);
 }
 
 bool	IRC::Channel::isFull(void) const
@@ -151,7 +171,7 @@ void	IRC::Channel::broadcastAction(IRC::Server* server, IRC::User user, std::str
 	str += " " + command + " :" + this->getName();
 	str += "\n";
 	
-	this->sendMessage(str);
+	this->sendMessageToAll(str);
 }
 
 bool	IRC::Channel::isOperator(IRC::User user)
@@ -171,6 +191,13 @@ bool	IRC::Channel::isModerator(IRC::User user)
 bool	IRC::Channel::isUser(IRC::User user)
 {
 	if (std::find(users.begin(), users.end(), user) != users.end())
+		return true;
+	return false;
+}
+
+bool	IRC::Channel::isEmpty(void)
+{
+	if (this->operators.empty() && this->moderators.empty() && this->users.empty())
 		return true;
 	return false;
 }

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 11:50:28 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:16:07 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 		channelIt->removeUser(user);
 		user.removeJoinedChannel(*channelIt);
 		
-		if (channelIt->getUsers().empty())
+		if (channelIt->isEmpty())
 			server->removeChannel(*channelIt);
 	}
 }

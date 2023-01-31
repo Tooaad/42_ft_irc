@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 13:34:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:37:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ namespace IRC
 		time_t getTimeout(void) const;
 		bool isAuthenticated(void) const;
 		std::vector<Channel> getJoinedChannels(void) const;
-		void addJoinedChannel(Channel channel);
+		void addJoinedChannel(Channel& channel);
 		void removeJoinedChannel(Channel channel);
 		std::string	getJoinedChannelsString(void);
 		void setPassword(std::string password);

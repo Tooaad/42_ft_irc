@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 13:38:05 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:37:33 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void IRC::User::changeAuthenticated()
 	this->authenticated = !authenticated;
 }
 
-void IRC::User::addJoinedChannel(IRC::Channel channel)
+void IRC::User::addJoinedChannel(IRC::Channel& channel)
 {
 	std::vector<IRC::Channel>::iterator found = std::find(joinedChannels.begin(), joinedChannels.end(), channel);
 	

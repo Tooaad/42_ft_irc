@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/30 18:00:57 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:46:09 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if(!receptor->existsUser(user))
 			return setError(ERR_CANNOTSENDTOCHAN, 1, argSplit[1].c_str());
 				
-		receptor->sendMessage(argSplit[1] + "\n");
+		receptor->sendMessageToAll(argSplit[1] + "\n");
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 11:14:28 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:36:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ namespace IRC
 		std::vector<User>& getUsers(void);
 		std::vector<Channel>& getChannels(void);
 		std::vector<Channel>::iterator getChannelIt(std::string name);
-		void removeChannel(IRC::Channel channel);
+		void addChannel(Channel& channel);
+		void removeChannel(Channel channel);
 		int saveIP(void);
 		std::string getIP(void);
 	};

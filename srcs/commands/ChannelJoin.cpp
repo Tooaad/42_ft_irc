@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/31 13:10:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:31:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 		if (found != server->getChannels().end())
 			newChannel = joinExistingChannel(*found, user);
 		else
-			newChannel = createNewChannel(channelsArray[i], user, server->getChannels());
+			newChannel = createNewChannel(channelsArray[i], user, server);
 
 		if (newChannel != NULL)
 		{
@@ -130,11 +130,11 @@ IRC::Channel*	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::
 	return &channel;
 }
 
-IRC::Channel*	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, std::vector<IRC::Channel>& channels)
+IRC::Channel*	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, IRC::Server* server)
 {
 	// TODO: Cuidado leaks
 	IRC::Channel* newChannel = new Channel(channelName, user);
-	channels.push_back(*newChannel);
+	server->addChannel(*newChannel);
 	user.addJoinedChannel(*newChannel);
 
 	return newChannel;
