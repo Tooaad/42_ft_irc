@@ -6,13 +6,14 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:00:31 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/31 10:00:57 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 16:33:00 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "../Command.hpp"
+#include "../Channel.hpp"
 
 namespace IRC 
 {
