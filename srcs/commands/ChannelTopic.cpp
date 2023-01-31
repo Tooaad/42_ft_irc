@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/30 19:24:28 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 01:34:41 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ void IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 	std::vector<IRC::Channel>::iterator channel = server->getChannelIt(argsArray[0]);
 	if (argsArray.size() == 1)
 	{
-		//RPL_TOPIC - send(user.getSocket(), channel->getTopic().c_str(), channel->getTopic().size(), 0);
-		//RPL_NOTOPIC
-		// 
+		if (channel->getTopic().size() == 0)
+			setReply(RPL_NOTOPIC, 1, channel->getName().c_str());
+		else
+			setReply(RPL_TOPIC, 2, channel->getName().c_str(), channel->getTopic().c_str());
 	}
 	else
 	{	

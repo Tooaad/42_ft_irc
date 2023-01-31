@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:35:40 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 01:32:32 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "../includes/commands/Privmsg.hpp" 
 #include "../includes/commands/ChannelJoin.hpp"
 #include "../includes/commands/ChannelPart.hpp"
+#include "../includes/commands/ChannelTopic.hpp"
 
 IRC::Command::Command() : replyNo(0), replyMsg(""), errorNo(0), errorMsg("")
 {
@@ -32,6 +33,7 @@ IRC::Command::Command(std::string str) : replyNo(0), replyMsg(""), errorNo(0), e
 	cmd_map["/PRIVMSG"] = new IRC::PrivMsg();
 	cmd_map["/JOIN"] = new IRC::ChannelJoin();
 	cmd_map["/PART"] = new IRC::ChannelPart();
+	cmd_map["/TOPIC"] = new IRC::ChannelTopic();
 
 	std::vector<std::string> argsArray = splitString(str, " ", 1);
 	this->command = argsArray.at(0);
