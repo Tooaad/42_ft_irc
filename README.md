@@ -58,8 +58,8 @@ Kqueue
 [-] Pass
 [-] Nick
 [-] Username
-[-] Join
-[-] Part
+[+] Join
+[+] Part
 [-] Privsmg
 [ ] list
 [ ] topic
