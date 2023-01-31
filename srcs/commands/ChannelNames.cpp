@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 19:39:57 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 19:56:50 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 	parseArgs(server);
 	
 	if (this->channelsArray.size() > 0)
-		printNames(this->channelsArray.begin(), this->channelsArray.end());
+		printNames(user,this->channelsArray.begin(), this->channelsArray.end());
 	else
-		printNames(server->getChannels().begin(), server->getChannels().end());
+		printNames(user, server->getChannels().begin(), server->getChannels().end());
 }
 
 void	IRC::ChannelNames::parseArgs(IRC::Server* server)
@@ -48,10 +48,14 @@ void	IRC::ChannelNames::parseArgs(IRC::Server* server)
 	}
 }
 
-void	IRC::ChannelNames::printNames(std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd)
+void	IRC::ChannelNames::printNames(IRC::User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd)
 {
 	for (std::vector<Channel>::iterator it = itBegin; it != itEnd; it++)
 	{
+		// TODO: private (+p) check
+		
+		if (it->isSecret() && !user.isInChannel(*it))
+			continue;
 		setReply(RPL_NAMREPLY, 2, it->getName().c_str(), it->getUsersString().c_str());
 		setReply(RPL_ENDOFNAMES, 1, it->getName().c_str());
 	}
