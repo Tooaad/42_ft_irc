@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/28 12:49:11 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 11:50:28 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 		if (!channelIt->existsUser(user))
 			return setError(ERR_NOTONCHANNEL, 1, (*it).c_str());
 		
+		channelIt->broadcastAction(server, user, "PART");
 		channelIt->removeUser(user);
 		user.removeJoinedChannel(*channelIt);
 		
