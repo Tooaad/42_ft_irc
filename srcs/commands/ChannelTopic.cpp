@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelTopic.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/31 01:34:41 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 17:14:06 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, 0);
 	
-	std::vector<std::string> argsArray = splitString(args, " ");
+	std::vector<std::string> argsArray = splitString(args, " ", 1);
 	
 	if (argsArray.size() < 1 || argsArray[0].size() == 0)
 		return setError(ERR_NEEDMOREPARAMS, 1, this->command.c_str());
@@ -39,12 +39,12 @@ void IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 			setReply(RPL_TOPIC, 2, channel->getName().c_str(), channel->getTopic().c_str());
 	}
 	else
-	{	
+	{
 		if(!channel->existsUser(user))
 			return setError(ERR_NOTONCHANNEL, 1, argsArray[1].c_str());
 			
-		// if (not operator)
-			// return setError(ERR_CHANOPRIVSNEEDED, 1, argsArray[1].c_str());
+		if (!channel->isFreeTopic() && !channel->isOperator(user))
+			return setError(ERR_CHANOPRIVSNEEDED, 1, argsArray[1].c_str());
 		
 		channel->setTopic(argsArray[1]);
 	}
