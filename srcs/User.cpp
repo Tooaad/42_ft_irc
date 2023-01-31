@@ -6,17 +6,17 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 15:35:36 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:34:47 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/User.hpp"
 
-IRC::User::User(void) : socket(0), password(""), nick(""), user(""), realname(""), authenticated(false), timeout(0)
+IRC::User::User(void) : socket(0), password(""), nick(""), user(""), realname(""), authenticated(false), invisible(false), timeout(0)
 {
 }
 
-IRC::User::User(int socket) : socket(socket), password(""), nick(""), user(""), realname(""), authenticated(false), timeout(0)
+IRC::User::User(int socket) : socket(socket), password(""), nick(""), user(""), realname(""), authenticated(false), invisible(false), timeout(0)
 {
 }
 
@@ -41,6 +41,7 @@ IRC::User& IRC::User::operator=(const IRC::User &other)
 	this->servername = other.getServername();
 	this->timeout = other.getTimeout();
 	this->joinedChannels = other.getJoinedChannels();
+	this->invisible = other.isInvisible();
 	
 	return *this;
 }
@@ -91,6 +92,21 @@ bool IRC::User::isAuthenticated(void) const
 	return this->authenticated;
 }
 
+bool IRC::User::isInvisible(void) const
+{
+	return this->invisible;
+}
+
+bool IRC::User::isSubscribed(void) const
+{
+	return this->subscribe;
+}
+
+bool IRC::User::isOp(void) const
+{
+	return this->op;
+}
+
 std::vector<IRC::Channel> IRC::User::getJoinedChannels(void) const
 {
 	return this->joinedChannels;
@@ -134,6 +150,21 @@ void IRC::User::setTimeout(time_t timeout)
 void IRC::User::changeAuthenticated()
 {
 	this->authenticated = !authenticated;
+}
+
+void IRC::User::changeInvisibility()
+{
+	this->invisible = !invisible;
+}
+
+void IRC::User::changeSubscription()
+{
+	this->subscribe = !subscribe;
+}
+
+void IRC::User::deOp()
+{
+	this->op = false;
 }
 
 void IRC::User::addJoinedChannel(IRC::Channel channel)

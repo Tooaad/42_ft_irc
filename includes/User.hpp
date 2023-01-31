@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 15:35:46 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:36:45 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ namespace IRC
 		std::string hostname;
 		std::string servername;
 		bool 		authenticated;
+		bool		invisible;
+		bool		op;
+		bool		subscribe;
 		time_t		timeout;
 		std::vector<Channel> joinedChannels;
 
@@ -52,6 +55,9 @@ namespace IRC
 		std::string getServername(void) const;
 		time_t getTimeout(void) const;
 		bool isAuthenticated(void) const;
+		bool isInvisible(void) const;
+		bool isSubscribed(void) const;
+		bool isOp(void) const;
 		std::vector<Channel> getJoinedChannels(void) const;
 		void addJoinedChannel(Channel channel);
 		void removeJoinedChannel(Channel channel);
@@ -64,6 +70,9 @@ namespace IRC
 		void setServername(std::string realname);
 		void setTimeout(time_t timeout);
 		void changeAuthenticated();
+		void changeInvisibility();
+		void changeSubscription();
+		void deOp();
 	};
 	bool 		operator== (const User lhs, const User rhs);
 	IRC::User	findUser(std::vector<User> users, std::string nick);

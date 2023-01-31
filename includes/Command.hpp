@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:00:52 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:06:06 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ namespace IRC
 				ERR_NOORIGIN=409,
 				ERR_NOSUCHSERVER=402,
 				ERR_CHANNELISFULL=471,
-				ERR_TOOMANYCHANNELS=405
+				ERR_TOOMANYCHANNELS=405,
+				ERR_USERSDONTMATCH=502,
+				ERR_UMODEUNKWOWNFLAG=501,
 				// ERR_BANNEDFROMCHAN
 			};
 
@@ -62,7 +64,8 @@ namespace IRC
 				RPL_ENDOFNAMES=366,
 				RPL_AWAY=301,
 				RPL_NOTOPIC=331,
-				RPL_TOPIC=332
+				RPL_TOPIC=332,
+				RPL_UMODEIS=221
 			};
 	
 		
