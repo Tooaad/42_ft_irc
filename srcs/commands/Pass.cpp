@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/26 21:45:20 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:19:35 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 	{
 		std::string error_msg = "<client> :Password incorrect\n";
 		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
-		server->clientDisconnected(user.getSocket());
+		server->clientDisconnected(user.getSocket(), "Quit: Password incorrect");
 	}	
 }
