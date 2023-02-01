@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 18:05:25 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:23:46 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			return setError(ERR_NOTONCHANNEL, 1, argSplit[1].c_str()); //revisar
 
 		if(!receptor->isOperator(user))
-			return setError(ERR_CHANOPRIVSNEEDED, 1, argSplit[1].c_str())
+			return setError(ERR_CHANOPRIVSNEEDED, 1, argSplit[1].c_str());
 
 		if (argSplit.size() > 1)
 		{
