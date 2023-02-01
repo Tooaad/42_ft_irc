@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 18:22:17 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:36:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 
 void	IRC::printChannel(IRC::Channel& channel)
 {	
-	std::cout << "Channel name: " << channel.getName() << std::endl;
+	std::cout << channel.getName() << ":" << std::endl;
 	std::cout << "	> Topic: " << channel.getTopic() << std::endl;
 	std::cout << "	> Password: " << channel.getPassword() << std::endl;
 	std::cout << "	> Mode: ";
@@ -235,11 +235,9 @@ void	IRC::printChannel(IRC::Channel& channel)
 	modes += " ";
 	
 	std::cout << modes << std::endl;
-	
 	std::cout << "	> Max users: " << channel.getMaxUsers() << std::endl;
+	std::cout << "	> Users: " << channel.getUsersString() << std::endl;
 	std::cout << std::endl;
-	
-	std::cout << "Users: " << channel.getUsersString() << std::endl;
 }
 
 void	IRC::printChannels(std::vector<IRC::Channel>& channels)
