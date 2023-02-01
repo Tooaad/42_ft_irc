@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/31 19:08:58 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:33:06 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, 0);
 
+	if (this->args.size() == 0)
+		setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
+
 	if (this->args.at(0) == '#' || this->args.at(0) == '&')
 	{
 		// NeedMoreParams
@@ -35,11 +38,12 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		// RPL_ENDOFBANLIST
 		// Unknownmode
 		// NoSuchChannel
+		
 		std::vector<std::string> argSplit = splitString(this->args, " ");
 		std::vector<IRC::Channel>::iterator receptor = server->getChannelIt(argSplit[0]);
 		if (receptor.base() == NULL)
 			return setError(ERR_NOSUCHCHANNEL, 1, argSplit[0].c_str());
-
+		
 		if (!user.isInChannel(*receptor))
 			return setError(ERR_NOTONCHANNEL, 1, argSplit[1].c_str()); //revisar
 
@@ -50,6 +54,8 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		{
 			if (argSplit[1].at(i) == 'o')
 			{
+				if (argSplit.size() < 2)
+					setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
 				if (argSplit[1].at(0) == '+')
 					receptor->addOperator(findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 				else if (argSplit[1].at(0) == '-')
@@ -92,6 +98,8 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			}
 			else if (argSplit[1].at(i) == 'l')
 			{
+				if (argSplit.size() < 2)
+					setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
 				if (argSplit[1].at(0) == '+')
 					receptor->setMaxUsers(atoi(argSplit[2].c_str())); 
 				else if (argSplit[1].at(0) == '-')
@@ -101,6 +109,8 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			}
 			else if (argSplit[1].at(i) == 'v')
 			{
+				if (argSplit.size() < 2)
+					setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
 				if (argSplit[1].at(0) == '+')
 					receptor->addModerator(findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 				else if (argSplit[1].at(0) == '-')
@@ -108,6 +118,8 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			}
 			else if (argSplit[1].at(i) == 'k')
 			{
+				if (argSplit.size() < 2)
+					setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
 				if (argSplit[1].at(0) == '+')
 					receptor->setPassword(argSplit[2]);		// gestionar 2o arg
 				else if (argSplit[1].at(0) == '-')
@@ -120,9 +132,10 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 	}
 	else
 	{
+		
 		std::vector<std::string> argSplit = splitString(this->args, " ", 1);
-		if (argSplit.size() != 2)
-			return setError(ERR_NEEDMOREPARAMS, 1, this->command.c_str());
+		// if (argSplit.size() < 2)
+		// 	return setError(ERR_NEEDMOREPARAMS, 1, this->command.c_str());
 		
 		IRC::User receptor = findUser(server->getUsers(), argSplit[0]);	
 		if (receptor == NULL)
@@ -131,7 +144,8 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		if (!(receptor == user))
 			return setError(ERR_USERSDONTMATCH, 0);
 	
-		if (argSplit[1].size() > 1)
+
+		if (argSplit.size() > 1) // when empty should be 0?
 		{
 			for (size_t i = 1 ; i < argSplit[1].size(); i++)
 			{
@@ -160,7 +174,10 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					return setError(ERR_UMODEUNKWOWNFLAG, 0);
 			}
 		}
-		setReply(RPL_UMODEIS, 6, "i: ", user.isInvisible(), "s: ", user.isSubscribed(), "o: ", user.isOp());
+		else
+		{
+			setReply(RPL_UMODEIS, 6, "i:", user.isInvisible()? "true":"false", "s:", user.isSubscribed()? "true":"false", "o:", user.isOp()? "true":"false");
+		}
 	}
 }
 
