@@ -64,12 +64,15 @@ Kqueue
 [-] Privsmg
 [-] names
 [-] list
+[-] mode
+
+[ ] notice
+[ ] quit
+[ ] Cerrar puerto correctamente
 
 [ ] invite
 [ ] Ping
 [ ] Pong
-[ ] quit
-[ ] mode
 [ ] oper
 [ ] 
 [ ]
@@ -78,7 +81,6 @@ Kqueue
 [ ] motd
 [ ] kick
 [ ] ison
-[ ] squit
 [ ] kill
 [ ] who
 

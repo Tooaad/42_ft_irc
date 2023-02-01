@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 21:01:13 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:47:03 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../includes/commands/Pass.hpp"
 #include "../includes/commands/Nick.hpp"
 #include "../includes/commands/Username.hpp"
-#include "../includes/commands/Privmsg.hpp" 
+#include "../includes/commands/Privmsg.hpp"
 #include "../includes/commands/ChannelJoin.hpp"
 #include "../includes/commands/ChannelPart.hpp"
 #include "../includes/commands/ChannelTopic.hpp"
