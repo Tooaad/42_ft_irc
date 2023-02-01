@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 13:48:08 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:17:26 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../includes/commands/Nick.hpp"
 #include "../includes/commands/Username.hpp"
 #include "../includes/commands/Privmsg.hpp"
+#include "../includes/commands/Notice.hpp"
 #include "../includes/commands/Mode.hpp"
 #include "../includes/commands/Quit.hpp"
 #include "../includes/commands/ChannelJoin.hpp"
@@ -35,6 +36,7 @@ IRC::Command::Command(std::string str) : replyNo(0), replyMsg(""), errorNo(0), e
 	cmd_map["/NICK"] = new IRC::Nick();
 	cmd_map["/USER"] = new IRC::Username();
 	cmd_map["/PRIVMSG"] = new IRC::PrivMsg();
+	cmd_map["/NOTICE"] = new IRC::Notice();
 	cmd_map["/MODE"] = new IRC::Mode();
 	cmd_map["/JOIN"] = new IRC::ChannelJoin();
 	cmd_map["/PART"] = new IRC::ChannelPart();

@@ -14,6 +14,7 @@ SRCS					=	main.cpp \
 							commands/Nick.cpp \
 							commands/Username.cpp \
 							commands/Privmsg.cpp \
+							commands/Notice.cpp \
 							commands/Ping.cpp \
 							commands/Pong.cpp \
 							commands/Mode.cpp \
