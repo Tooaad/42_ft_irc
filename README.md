@@ -94,6 +94,7 @@ Lista de prioridades:
 - Revisar todo y explicarnoslo
 
 nc irc.irc-hispano.org 6667
+lsof -t -i tcp:6667 | xargs kill
 
 
 /*
