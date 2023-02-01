@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 20:42:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:52:50 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ namespace IRC
 				RPL_UMODEIS=221,
 				RPL_LISTSTART=321,
 				RPL_LIST=322,
-				RPL_LISTEND=323
+				RPL_LISTEND=323,
+				RPL_CHANNELMODEIS=324
 			};
 	
 		
