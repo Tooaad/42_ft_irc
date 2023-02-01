@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/31 18:35:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:01:49 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if (receptor.base() == NULL)
 			return setError(ERR_NOSUCHCHANNEL, 1, argSplit[0].c_str());
 			
-		if(!user.isInChannel(*receptor))
+		if(!user.isInChannel(*receptor) || !receptor->isPublicMsg() || (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
 			return setError(ERR_CANNOTSENDTOCHAN, 1, argSplit[1].c_str());
 
 		receptor->sendMessageToUsers(argSplit[1] + "\n");
