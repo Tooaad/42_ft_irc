@@ -17,6 +17,7 @@ SRCS					=	main.cpp \
 							commands/Ping.cpp \
 							commands/Pong.cpp \
 							commands/Mode.cpp \
+							commands/Quit.cpp \
 							commands/ChannelJoin.cpp \
 							commands/ChannelPart.cpp \
 							commands/ChannelTopic.cpp \

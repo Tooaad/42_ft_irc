@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 12:01:51 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:20:38 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include "../includes/commands/Pass.hpp"
 #include "../includes/commands/Nick.hpp"
 #include "../includes/commands/Username.hpp"
-#include "../includes/commands/Privmsg.hpp" 
-#include "../includes/commands/Mode.hpp" 
+#include "../includes/commands/Privmsg.hpp"
+#include "../includes/commands/Mode.hpp"
+#include "../includes/commands/Quit.hpp"
 #include "../includes/commands/ChannelJoin.hpp"
 #include "../includes/commands/ChannelPart.hpp"
 #include "../includes/commands/ChannelTopic.hpp"
@@ -40,6 +41,7 @@ IRC::Command::Command(std::string str) : replyNo(0), replyMsg(""), errorNo(0), e
 	cmd_map["/TOPIC"] = new IRC::ChannelTopic();
 	cmd_map["/NAMES"] = new IRC::ChannelNames();
 	cmd_map["/LIST"] = new IRC::ChannelList();
+	cmd_map["/QUIT"] = new IRC::Quit();
 
 	std::vector<std::string> argsArray = splitString(str, " ", 1);
 	this->command = argsArray.at(0);

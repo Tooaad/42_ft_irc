@@ -98,7 +98,7 @@ int IRC::Server::loop(void)
 
 			// Client disconnected
 			if (this->getEvent()[i].flags & EV_EOF)
-				clientDisconnected(event_fd);
+				clientDisconnected(event_fd, "Quit: Connection closed");
 
 			// New client connected
 			else if (event_fd == this->getSocket())
@@ -128,15 +128,13 @@ int IRC::Server::clientConnected(void)
 	return 0;
 }
 
-void IRC::Server::clientDisconnected(int event_fd)
+void IRC::Server::clientDisconnected(int event_fd, std::string message)
 {
-	std::cout << "Client " << event_fd << " has disconnected" << std::endl;
-
 	std::vector<IRC::User>::iterator found = std::find(users.begin(), users.end(), User(event_fd));
 	if (found != users.end())
 	{
+		std::cout << message << std::endl;
 		users.erase(found);
-		std::cout << "Client " << event_fd << " removed" << std::endl;
 	}
 
 	close(event_fd); // TODO: ver errores o si es bloqueante
