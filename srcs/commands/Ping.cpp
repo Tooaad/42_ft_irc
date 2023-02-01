@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ping.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 16:39:46 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:23:02 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ IRC::Ping::~Ping()
 
 void IRC::Ping::exec(IRC::Server* server, IRC::User& user)
 {
-    std::string recep_str = splitString(this->args, " ")[0];
-    User receptor = findUser(server->getUsers(), recep_str);
-    send(receptor.getSocket(), "PING", 4, 0);
-    
-    // user.setTimeout() = time(0);
-    (void)server;
-    (void)user;
-    
+	std::string recep_str = splitString(this->args, " ")[0];
+	User receptor = findUser(server->getUsers(), recep_str);
+	send(receptor.getSocket(), "PING", 4, 0);
+
+	// user.setTimeout() = time(0);
+	(void)server;
+	(void)user;
+
 }

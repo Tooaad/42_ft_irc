@@ -3,18 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 13:18:00 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:36:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
 IRC::Channel::Channel() {}
-IRC::Channel::Channel(std::string name, IRC::User createdBy) : name(name), topic(""), password(""), inviteOnlyMode(false), secretMode(false), freeTopicMode(true), publicMsgMode(false), moderatedMode(false), maxUsers(0)
+IRC::Channel::Channel(std::string name, IRC::User createdBy)
 {
+	this->name = name;
+	this->topic = "";
+	this->password = "";
+	this->inviteOnlyMode = false;
+	this->secretMode = false;
+	this->freeTopicMode = true;
+	this->publicMsgMode = false;
+	this->moderatedMode = false;
+	this->maxUsers = 0;
+	
 	this->addUser(createdBy);
 	this->addOperator(createdBy);
 }
@@ -205,16 +215,29 @@ bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 	return false;
 }
 
-void	IRC::printChannel(IRC::Channel& channel) // TODO: print all info
-{
-	std::cout << "Channel name: " << channel.getName();
-	std::cout << ", Topic: " << channel.getTopic();
-	std::cout << ", Password: " << channel.getPassword();
-	std::cout << ", Invite Only mode: " << channel.isInviteOnly();
-	std::cout << ", Max users: " << channel.getMaxUsers();
-	std::cout << std::endl;
+void	IRC::printChannel(IRC::Channel& channel)
+{	
+	std::cout << channel.getName() << ":" << std::endl;
+	std::cout << "	> Topic: " << channel.getTopic() << std::endl;
+	std::cout << "	> Password: " << channel.getPassword() << std::endl;
+	std::cout << "	> Mode: ";
 	
-	std::cout << "Users: " << channel.getUsersString() << std::endl;
+	std::string modes = "";
+	modes += (channel.isInviteOnly()) ? "+i" : "-i";
+	modes += " ";
+	modes += (channel.isSecret()) ? "+s" : "-s";
+	modes += " ";
+	modes += (channel.isFreeTopic()) ? "+t" : "-t";
+	modes += " ";
+	modes += (channel.isPublicMsg()) ? "+n" : "-n";
+	modes += " ";
+	modes += (channel.isModerated()) ? "+m" : "-m";
+	modes += " ";
+	
+	std::cout << modes << std::endl;
+	std::cout << "	> Max users: " << channel.getMaxUsers() << std::endl;
+	std::cout << "	> Users: " << channel.getUsersString() << std::endl;
+	std::cout << std::endl;
 }
 
 void	IRC::printChannels(std::vector<IRC::Channel>& channels)
