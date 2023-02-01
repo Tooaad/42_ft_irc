@@ -82,6 +82,12 @@ Kqueue
 [ ] kill
 [ ] who
 
+Lista de prioridades:
+- Notice + Quit + Cerrar puerto correctamente
+- Revisar Modes + Derivados Modes (PrivMSG/List/Channels)
+- Probar comandos parciales + input ./ircserv
+- Conectar a Kiwi + Comandos '/'
+- Revisar todo y explicarnoslo
 
 nc irc.irc-hispano.org 6667
 
