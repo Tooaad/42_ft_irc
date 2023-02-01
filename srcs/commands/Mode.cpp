@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 18:05:25 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:15:13 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						receptor->setPassword(argSplit[2]);
 				}
 				else
-					return setError(ERR_UNKNOWNMODE, 1, argSplit[i].c_str()); // ERR_UMODEUNKWOWN
+					return setError(ERR_UNKNOWNMODE, 1, argSplit[i].c_str());
 			}
 		}
 		else
