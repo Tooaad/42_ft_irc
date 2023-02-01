@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 13:50:26 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:05:25 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			return setError(ERR_NOTONCHANNEL, 1, argSplit[1].c_str()); //revisar
 
 		if(!receptor->isOperator(user))
-			return setError(ERR_CHANOPRIVSNEEDED, 1, argSplit[1].c_str()); //revisar
+			return setError(ERR_CHANOPRIVSNEEDED, 1, argSplit[1].c_str())
 
 		if (argSplit.size() > 1)
 		{
@@ -57,7 +57,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 				if (argSplit[1].at(i) == 'o')
 				{
 					if (argSplit.size() < 2)
-						setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
+						return setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 						receptor->addOperator(findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 					else if (argSplit[1].at(0) == '-')
@@ -84,7 +84,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					else if (argSplit[1].at(0) == '-' && receptor->isFreeTopic())
 						receptor->changeFreeTopic();
 				}
-				else if (argSplit[1].at(i) == 'n')
+				else if (argSplit[1].at(i) == 'n')	// NO FUNCIONA??
 				{
 					if (argSplit[1].at(0) == '+' && !receptor->isPublicMsg())
 						receptor->changePublicMsg();
@@ -101,7 +101,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 				else if (argSplit[1].at(i) == 'l')
 				{
 					if (argSplit.size() < 2)
-						setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
+						return setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 						receptor->setMaxUsers(atoi(argSplit[2].c_str())); 
 					else if (argSplit[1].at(0) == '-')
@@ -111,7 +111,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 				else if (argSplit[1].at(i) == 'v')
 				{
 					if (argSplit.size() < 2)
-						setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
+						return setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 						receptor->addModerator(findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 					else if (argSplit[1].at(0) == '-')
@@ -120,7 +120,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 				else if (argSplit[1].at(i) == 'k')
 				{
 					if (argSplit.size() < 2)
-						setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
+						return setError(ERR_NEEDMOREPARAMS, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 						receptor->setPassword(argSplit[2]);		// gestionar 2o arg
 					else if (argSplit[1].at(0) == '-')
@@ -182,7 +182,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			}
 		}
 		else
-			setReply(RPL_UMODEIS, 3, user.isInvisible()? "+t":"", user.isSubscribed()? "+s":"", user.isOp()? "+o":"");
+			setReply(RPL_UMODEIS, 3, user.isInvisible()? "+i":"", user.isSubscribed()? "+s":"", user.isOp()? "+o":"");
 	}
 }
 
