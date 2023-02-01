@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 13:20:38 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:48:08 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,8 +252,11 @@ void IRC::Command::setError(ErrorNos errorNo, int n, ...)
 		case ERR_USERSDONTMATCH:
 			this->errorMsg = expandMessage(n, vaList, " :Cant change mode for other users");
 			break;
-		case ERR_UMODEUNKWOWNFLAG:
+		case ERR_UMODEUNKNOWNFLAG:
 			this->errorMsg = expandMessage(n, vaList, " :Unknown MODE flag");
+			break;
+		case ERR_UNKNOWNMODE:
+			this->errorMsg = expandMessage(n, vaList, "% :is unknown mode char to me");
 			break;
 		case ERR_CHANOPRIVSNEEDED:
 			this->errorMsg = expandMessage(n, vaList, "% :You're not channel operator");

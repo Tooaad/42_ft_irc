@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 13:13:31 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:50:26 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						receptor->setMaxUsers(atoi(argSplit[2].c_str())); 
 					else if (argSplit[1].at(0) == '-')
 						receptor->setMaxUsers(0);
-
-				// else if (argSplit[1].at(i) == 'b')
+			// else if (argSplit[1].at(i) == 'b')
 				}
 				else if (argSplit[1].at(i) == 'v')
 				{
@@ -128,7 +127,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						receptor->setPassword(argSplit[2]);
 				}
 				else
-					return setError(ERR_UMODEUNKWOWNFLAG, 0); // ERR_UMODEUNKWOWN
+					return setError(ERR_UNKNOWNMODE, 1, argSplit[i].c_str()); // ERR_UMODEUNKWOWN
 			}
 		}
 		else
@@ -179,7 +178,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						user.deOp();
 				}
 				else 
-					return setError(ERR_UMODEUNKWOWNFLAG, 0);
+					return setError(ERR_UMODEUNKNOWNFLAG, 0);
 			}
 		}
 		else

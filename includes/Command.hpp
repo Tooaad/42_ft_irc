@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 11:52:50 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:48:18 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ namespace IRC
 				ERR_CHANNELISFULL=471,
 				ERR_TOOMANYCHANNELS=405,
 				ERR_USERSDONTMATCH=502,
-				ERR_UMODEUNKWOWNFLAG=501,
+				ERR_UMODEUNKNOWNFLAG=501,
 				ERR_CHANOPRIVSNEEDED=482,
+				ERR_UNKNOWNMODE=472
 				// ERR_BANNEDFROMCHAN
 			};
 
