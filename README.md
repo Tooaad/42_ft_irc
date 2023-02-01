@@ -54,20 +54,21 @@ Kqueue
 - TPC Server Linux https://www.youtube.com/watch?v=cNdlrbZSkyQ
 - TPC Server Mac https://www.youtube.com/watch?v=F3iIGUiW27Q
 
-[+] Join
-[+] Part
-[+] topic
+
 
 [-] Pass
 [-] Nick
 [-] Username
 [-] Privsmg
+[-] Join
+[-] Part
+[-] topic
 [-] names
 [-] list
 [-] mode
+[-] quit
 
 [ ] notice
-[ ] quit
 [ ] Cerrar puerto correctamente
 
 [ ] invite
