@@ -60,6 +60,7 @@ Kqueue
 [-] Nick
 [-] Username
 [-] Privsmg
+[-] notice
 [-] Join
 [-] Part
 [-] topic
@@ -68,7 +69,7 @@ Kqueue
 [-] mode
 [-] quit
 
-[ ] notice
+
 [ ] Cerrar puerto correctamente
 
 [ ] invite
@@ -76,7 +77,7 @@ Kqueue
 [ ] Pong
 [ ] oper
 [ ] 
-[ ]
+[ ] 
 
 [ ] whois
 [ ] motd
