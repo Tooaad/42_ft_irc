@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 19:17:37 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:49:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Server.hpp"
 #include "../includes/Client.hpp"
 #include "../includes/utils.hpp"
+
+bool terminate = false;
+
 
 void saveArgs(std::string *args, int argc, char **argv)
 {

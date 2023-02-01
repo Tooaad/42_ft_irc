@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 12:18:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:01:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
+#include <signal.h>
 #include <fcntl.h>	   // fcntl
 #include <sys/event.h> // kqueue
 #include <vector>
@@ -92,4 +93,8 @@ namespace IRC
 		std::string getIP(void);
 	};
 	std::string parsePwd(std::string buf, std::string command);
+	void	recSignals();
+	void	handleSig(int sig);
 }
+
+extern bool terminate;

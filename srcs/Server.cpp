@@ -36,7 +36,7 @@ int IRC::Server::createNetwork(std::string *args)
 {
 	if ((this->sSocket = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 	{
-		perror("Error opening socket");
+		perror("[Server] Error creating socket");
 		return -1;
 	}
 
@@ -49,13 +49,13 @@ int IRC::Server::createNetwork(std::string *args)
 
 	if (bind(sSocket, (struct sockaddr *)&hint, sizeof(hint)) < 0)
 	{
-		perror("Error binding socket");
+		perror("[Server] Error binding socket");
 		return -1;
 	}
 
 	if (fcntl(sSocket, F_SETFL, O_NONBLOCK) < 0)
 	{
-		perror("Error making server socket non blocking");
+		perror("[Server] Error making socket non blocking");
 		return -1;
 	}
 
@@ -67,7 +67,7 @@ int IRC::Server::createNetwork(std::string *args)
 
 	if (kevent(kq, change_event, 1, NULL, 0, NULL) == -1)
 	{
-		perror("kevent");
+		perror("kevent 1");
 		return -1;
 	}
 
@@ -83,11 +83,12 @@ int IRC::Server::loop(void)
 	int new_events;
 
 	// Server loop
-	while (true)
+	while (!terminate)
 	{
+		recSignals();
 		if ((new_events = kevent(this->getKq(), NULL, 0, this->getEvent(), 1, NULL)) == -1)
 		{
-			perror("kevent");
+			perror("kevent 2");
 			return -1;
 		}
 
@@ -109,6 +110,8 @@ int IRC::Server::loop(void)
 				receiveMessage(event_fd);
 		}
 	}
+
+	std::cout << "[Server]: Bye bye!" << std::endl;
 	return 0;
 }
 
@@ -120,7 +123,7 @@ int IRC::Server::clientConnected(void)
 	EV_SET(this->change_event, client.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
 	if (kevent(this->kq, this->change_event, 1, NULL, 0, NULL) < 0)
 	{
-		perror("kevent error");
+		perror("kevent 3");
 		return -1;
 	}
 
@@ -148,7 +151,7 @@ int IRC::Server::receiveMessage(int event_fd)
 	memset(buf, 0, 4096);
 	if (fcntl(event_fd, F_SETFL, O_NONBLOCK) < 0)
 	{
-		perror("Error making client socket non blocking");
+		perror("[Server] Error making client socket non blocking");
 		return -1;
 	}
 
@@ -327,3 +330,18 @@ std::string IRC::Server::getIP(void)
 {
 	return this->ip;
 }
+
+void	IRC::handleSig(int sig)
+{
+	if (sig == SIGINT || sig == SIGQUIT)
+		terminate = true;
+}
+
+void	IRC::recSignals()
+{
+	signal(SIGINT, handleSig);
+	signal(SIGQUIT, handleSig);
+	signal(SIGPIPE, SIG_IGN);
+}
+
+
