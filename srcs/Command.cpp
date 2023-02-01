@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 16:17:26 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:53:07 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
 			this->replyMsg += expandMessage(n, vaList, ":End of /LIST");
 			break;
 		case RPL_CHANNELMODEIS:
-			this->replyMsg += expandMessage(n, vaList, "% % %");
+			this->replyMsg += expandMessage(n, vaList, "% % % % % % %");
 			break;
 		
 		default:
