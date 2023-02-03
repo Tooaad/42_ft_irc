@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 17:53:07 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:11:22 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ IRC::Command::Command() : replyNo(0), replyMsg(""), errorNo(0), errorMsg("")
 std::map<std::string, IRC::Command*> IRC::Command::cmd_map;
 IRC::Command::Command(std::string str) : replyNo(0), replyMsg(""), errorNo(0), errorMsg("")
 {
-	cmd_map["/PASS"] = new IRC::Pass();
-	cmd_map["/NICK"] = new IRC::Nick();
-	cmd_map["/USER"] = new IRC::Username();
-	cmd_map["/PRIVMSG"] = new IRC::PrivMsg();
-	cmd_map["/NOTICE"] = new IRC::Notice();
-	cmd_map["/MODE"] = new IRC::Mode();
-	cmd_map["/JOIN"] = new IRC::ChannelJoin();
-	cmd_map["/PART"] = new IRC::ChannelPart();
-	cmd_map["/TOPIC"] = new IRC::ChannelTopic();
-	cmd_map["/NAMES"] = new IRC::ChannelNames();
-	cmd_map["/LIST"] = new IRC::ChannelList();
-	cmd_map["/QUIT"] = new IRC::Quit();
+	cmd_map["PASS"] = new IRC::Pass();
+	cmd_map["NICK"] = new IRC::Nick();
+	cmd_map["USER"] = new IRC::Username();
+	cmd_map["PRIVMSG"] = new IRC::PrivMsg();
+	cmd_map["NOTICE"] = new IRC::Notice();
+	cmd_map["MODE"] = new IRC::Mode();
+	cmd_map["JOIN"] = new IRC::ChannelJoin();
+	cmd_map["PART"] = new IRC::ChannelPart();
+	cmd_map["TOPIC"] = new IRC::ChannelTopic();
+	cmd_map["NAMES"] = new IRC::ChannelNames();
+	cmd_map["LIST"] = new IRC::ChannelList();
+	cmd_map["QUIT"] = new IRC::Quit();
 
 	std::vector<std::string> argsArray = splitString(str, " ", 1);
 	this->command = argsArray.at(0);
