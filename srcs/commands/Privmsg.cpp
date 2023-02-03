@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 18:05:00 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:43:11 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		std::vector<IRC::Channel>::iterator receptor = server->getChannelIt(argSplit[0]);
 		if (receptor.base() == NULL)
 			return setError(ERR_NOSUCHCHANNEL, 1, argSplit[0].c_str());
-			
-		if((!user.isInChannel(*receptor) || !receptor->isPublicMsg()) && (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
+
+		// TODO: REVISAR CONDICION	
+		if((!user.isInChannel(*receptor) && !receptor->isPublicMsg()) && (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
 			return setError(ERR_CANNOTSENDTOCHAN, 1, argSplit[1].c_str());
 
 		receptor->sendMessageToUsers(argSplit[1] + "\n");

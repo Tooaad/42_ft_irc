@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 18:23:46 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:47:52 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						receptor->setPassword(argSplit[2]);
 				}
 				else
-					return setError(ERR_UNKNOWNMODE, 1, argSplit[i].c_str()); // ERR_UMODEUNKWOWN
+					return setError(ERR_UNKNOWNMODE, 1, argSplit[i].c_str());
 			}
 		}
 		else
