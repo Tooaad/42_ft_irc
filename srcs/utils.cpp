@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/25 12:07:02 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/03 15:25:07 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,19 @@ std::vector<std::string> splitString(std::string str, std::string delim, int cou
 {
 	size_t pos = 0;
 	std::vector<std::string> tokens;
-	while (count != 0 && (pos = str.find(delim)) != std::string::npos) {
-		tokens.push_back(str.substr(0, pos));
-		// TODO: remove
-		// std::cout << tokens.back() << std::endl;
+	while (count != 0 && (pos = str.find(delim)) != std::string::npos)
+	{
+		if (!str.substr(0, pos).empty())
+			tokens.push_back(str.substr(0, pos));
+		
 		str.erase(0, pos + 1);
 		count--;
 	}
+	
 	tokens.push_back(str);
-	// TODO: remove
-	// std::cout << tokens.back() << std::endl;
+	
+	for (std::vector<std::string>::iterator it = tokens.begin(); it != tokens.end(); it++)
+		std::cout << *it << std::endl;
+	
 	return tokens;
 }
-

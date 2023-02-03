@@ -158,29 +158,74 @@ int IRC::Server::receiveMessage(int event_fd)
 		return -1;
 	}
 
-	std::string message(buf);
-	message = trimEndl(message); // TODO: leaks?
-
-
 	std::vector<IRC::User>::iterator found = std::find(users.begin(), users.end(), User(event_fd));
 	if (found == users.end()) // TODO: que hacer si no encontramos usuario
 		return -1;
 
 	IRC::User& user = *found.base();
 
-	if (!user.isAuthenticated())
-		registration(user, message);
+	std::string message(buf);
+
+	std::cout << "*** Buffer prev: '" << user.getBuffer() << "'" << std::endl;
+	user.appendBuffer(message);
+	std::cout << "*** Buffer now: '" << user.getBuffer() << "'" << std::endl;
+
+	std::vector<std::string> messageSplit = splitString(user.getBuffer(), "\n");
+	if (messageSplit.size() == 0)
+		return 0;
+
+	user.clearBuffer();
+	
+	if (messageSplit[messageSplit.size() - 1].size() == 0)
+	{
+		std::cout << "Message OK" << std::endl;
+		messageSplit.erase(messageSplit.end() - 1);
+	}
 	else
 	{
-		// Detect commands once registered
-		IRC::Command cmd(message);
-		cmd.detectCommand(this, user);
+		user.appendBuffer(messageSplit[messageSplit.size() - 1]);
+		messageSplit.erase(messageSplit.end() - 1);
 	}
 
-	printUsers(users);
-	printChannels(channels);
-	std::cout << std::endl << "*** *** *** *** *** *** *** *** *** *** ***" << std::endl << std::endl;
+	user.setPassword("12");
+	for (std::vector<std::string>::iterator it = messageSplit.begin(); it != messageSplit.end(); it++)
+	{
+		//std::cout << "*** Split: '" << *it << "'" << std::endl;
+		if (!user.isAuthenticated())
+			registration(user, *it);
+		else
+		{
+			// Detect commands once registered
+			IRC::Command cmd(*it);
+			cmd.detectCommand(this, user);
+		}
+
+		printUsers(users);
+		printChannels(channels);
+		std::cout << std::endl << "*** *** *** *** *** *** *** *** *** *** ***" << std::endl << std::endl;
+	}
 	
+	messageSplit.clear();
+
+
+
+
+/*
+	pass 12
+	nick karisti
+	user\d
+
+	pass 12
+	nick karisti
+	user karisti 0 * :Kepa
+*/
+
+	// message = trimEndl(message); // TODO: leaks?
+
+
+	
+
+
 	/* 
 	// Todo: Comprobar si ocurre alguna vez para borrar sino
 	if (bytesRec == 0)
