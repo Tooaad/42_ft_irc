@@ -6,18 +6,37 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 14:57:17 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:55:09 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/User.hpp"
 
-IRC::User::User(void) : socket(0), password(""), nick(""), user(""), realname(""), authenticated(false), invisible(false), timeout(0)
+IRC::User::User(void)
 {
+	this->socket = 0;
+	this->password = "";
+	this->nick = "";
+	this->user = "";
+	this->realname = "";
+	this->authenticated = false;
+	this->invisible = false;
+	this->timeout = 0;
+	this->buffer = "";
 }
 
-IRC::User::User(int socket) : socket(socket), password(""), nick(""), user(""), realname(""), authenticated(false), invisible(false), timeout(0)
+IRC::User::User(int socket)
 {
+	
+	this->socket = socket;
+	this->password = "";
+	this->nick = "";
+	this->user = "";
+	this->realname = "";
+	this->authenticated = false;
+	this->invisible = false;
+	this->timeout = 0;
+	this->buffer = "";
 }
 
 IRC::User::User(const IRC::User& other)
@@ -204,6 +223,10 @@ bool IRC::User::isInChannel(IRC::Channel channel)
 		return true;
 	return false;
 }
+
+std::string	IRC::User::getBuffer(void) const { return this->buffer; }
+void		IRC::User::appendBuffer(std::string str) { this->buffer.append(str); }
+void		IRC::User::clearBuffer(void) { this->buffer.clear(); }
 
 bool IRC::operator== (const IRC::User lhs, const IRC::User rhs) {
 	if (lhs.getSocket() != rhs.getSocket())
