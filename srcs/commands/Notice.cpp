@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Notice.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:13:36 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 16:16:28 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:29:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void IRC::Notice::exec(IRC::Server *server, IRC::User& user)
 		if(!user.isInChannel(*receptor) || !receptor->isPublicMsg() || (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
 			return ;
 
-		receptor->sendMessageToUsers(argSplit[1] + "\n");
+		receptor->sendMessageToUsers(user.getNick() + " " + argSplit[1] + "\n");
 	}
 	else
 	{

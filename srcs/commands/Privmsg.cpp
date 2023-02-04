@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 18:43:11 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:29:11 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if((!user.isInChannel(*receptor) && !receptor->isPublicMsg()) && (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
 			return setError(ERR_CANNOTSENDTOCHAN, 1, argSplit[1].c_str());
 
-		receptor->sendMessageToUsers(argSplit[1] + "\n");
+		receptor->sendMessageToUsers(user.getNick() + " " + argSplit[1] + "\n");
 	}
 	else
 	{
