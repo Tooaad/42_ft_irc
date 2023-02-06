@@ -96,6 +96,7 @@ Lista de prioridades:
 [ ] Proteger cuando usuario no existe
 [ ] Corregir setReply (falta poner host cogido del server)
 [ ] Corregir setError también como setReply
+[ ] Revisar constructores de copia (borrar en clases que no aportan nuevos atributos, y crearlos en los demás)
 
 nc irc.irc-hispano.org 6667
 lsof -t -i tcp:6667 | xargs kill

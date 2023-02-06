@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:00:31 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 13:12:40 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:54:28 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ namespace IRC
 	{
 		public:
 			Mode();
-			Mode(Mode const& other);
 			virtual ~Mode();
 
 			void exec(IRC::Server* server, IRC::User& user);

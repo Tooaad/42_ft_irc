@@ -6,18 +6,18 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 13:50:59 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:40:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Privmsg.hpp"
 
 IRC::PrivMsg::PrivMsg()
-{	
+{
 }
 
 IRC::PrivMsg::~PrivMsg()
-{	
+{
 }
 
 void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
@@ -53,5 +53,4 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		argSplit[1] = ":" + user.getNick() + " PRIVMSG " + receptor.getNick() + " " + argSplit[1] + "\n";
 		send(receptor.getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
 	}
-	
 }

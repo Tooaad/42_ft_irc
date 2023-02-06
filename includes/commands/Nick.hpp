@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:14:55 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/24 13:01:11 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:54:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ namespace IRC
 	{
 		public:
 			Nick();
-			Nick(Nick const& other);
 			virtual ~Nick();
 
 			void exec(IRC::Server* server, IRC::User& user);

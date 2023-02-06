@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pong.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:14:55 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/28 19:03:30 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:55:08 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ namespace IRC
 	{
 		public:
 			Pong();
-			Pong(Pong const& other);
 			virtual ~Pong();
 
 			void exec(IRC::Server* server, IRC::User& user);

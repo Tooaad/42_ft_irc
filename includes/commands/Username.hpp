@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Username.hpp                                           :+:      :+:    :+:   */
+/*   Username.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:51:15 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/24 13:54:16 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:55:20 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ namespace IRC
 	{
 		public:
 			Username();
-			Username(Username const& other);
 			virtual ~Username();
 
 			void exec(IRC::Server* server, IRC::User& user);

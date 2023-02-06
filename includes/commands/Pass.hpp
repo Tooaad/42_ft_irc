@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 15:20:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/24 13:01:06 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:55:00 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ namespace IRC
 	{
 		public:
 			Pass();
-			Pass(Pass const& other);
 			virtual ~Pass();
 
 			void exec(IRC::Server* server, IRC::User& user);
