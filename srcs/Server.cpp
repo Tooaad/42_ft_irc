@@ -13,9 +13,9 @@
 #include "../includes/Server.hpp"
 
 
-IRC::Server::Server()
-{
-}
+IRC::Server::Server() {}
+IRC::Server::Server(const IRC::Server &other) { *this = other; }
+IRC::Server::~Server() {}
 
 IRC::Server::Server(std::string pwd)
 {
@@ -23,9 +23,23 @@ IRC::Server::Server(std::string pwd)
 	this->pwd = pwd;
 }
 
-IRC::Server::~Server()
+IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 {
+	if (this != &other)
+	{
+		sSocket = other.sSocket;
+		kq = other.kq;
+		pwd = other.pwd;
+		timeout = other.timeout;
+		users = other.users;
+		commands = other.commands;
+		channels = other.channels;
+		ip = other.ip;
+	}
+	return *this;
 }
+
+
 
 void IRC::Server::connectNetwork(std::string *args)
 {

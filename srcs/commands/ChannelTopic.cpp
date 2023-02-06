@@ -6,19 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:42:03 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:19:05 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelTopic.hpp"
 
-IRC::ChannelTopic::ChannelTopic()
-{
-}
-
-IRC::ChannelTopic::~ChannelTopic()
-{
-}
+IRC::ChannelTopic::ChannelTopic() {}
+IRC::ChannelTopic::~ChannelTopic() {}
 
 void IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 {

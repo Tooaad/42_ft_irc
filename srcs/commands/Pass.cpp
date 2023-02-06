@@ -6,19 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 12:19:35 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:21:08 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Pass.hpp"
 
-IRC::Pass::Pass()
-{
-}
-
-IRC::Pass::~Pass()
-{
-}
+IRC::Pass::Pass() {}
+IRC::Pass::~Pass() {}
 
 // Block message if password is not provide
 

@@ -6,19 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:54:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/31 10:35:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:22:48 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Username.hpp"
 
-IRC::Username::Username()
-{
-}
-
-IRC::Username::~Username()
-{
-}
+IRC::Username::Username() {}
+IRC::Username::~Username() {}
 
 void IRC::Username::exec(IRC::Server* server, IRC::User& user)
 {

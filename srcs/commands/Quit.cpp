@@ -6,19 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:46:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 12:20:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:22:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Quit.hpp"
 
-IRC::Quit::Quit()
-{
-}
-
-IRC::Quit::~Quit()
-{
-}
+IRC::Quit::Quit() {}
+IRC::Quit::~Quit() {}
 
 void IRC::Quit::exec(IRC::Server* server, IRC::User& user)
 {

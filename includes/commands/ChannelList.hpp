@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:06 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:48:45 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:12:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ namespace IRC
 
 		public:
 			ChannelList();
+			ChannelList(const ChannelList& other);
 			virtual ~ChannelList();
+			ChannelList& operator=(const ChannelList& other);
 
 			void exec(Server* server, User& user);
 

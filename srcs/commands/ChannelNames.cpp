@@ -6,18 +6,21 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:41:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:16:31 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelNames.hpp"
 
-IRC::ChannelNames::ChannelNames()
-{
-}
+IRC::ChannelNames::ChannelNames() {}
+IRC::ChannelNames::ChannelNames(const IRC::ChannelNames &other) { *this = other; }
+IRC::ChannelNames::~ChannelNames() {}
 
-IRC::ChannelNames::~ChannelNames()
+IRC::ChannelNames &IRC::ChannelNames::operator=(const IRC::ChannelNames &other)
 {
+	if (this != &other)
+		channelsArray = other.channelsArray;
+	return *this;
 }
 
 void IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)

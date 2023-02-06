@@ -6,19 +6,26 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:41:21 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:14:08 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelJoin.hpp"
 
-IRC::ChannelJoin::ChannelJoin()
+IRC::ChannelJoin::ChannelJoin() {}
+IRC::ChannelJoin::ChannelJoin(const IRC::ChannelJoin &other) { *this = other; }
+IRC::ChannelJoin::~ChannelJoin() {}
+
+IRC::ChannelJoin &IRC::ChannelJoin::operator=(const IRC::ChannelJoin &other)
 {
+	if (this != &other)
+	{
+		channelsArray = other.channelsArray;
+		passwordsArray = other.passwordsArray;
+	}
+	return *this;
 }
 
-IRC::ChannelJoin::~ChannelJoin()
-{
-}
 
 /*
 	Comando: JOIN

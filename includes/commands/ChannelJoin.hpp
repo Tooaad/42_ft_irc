@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:07:58 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 20:54:03 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:10:05 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ namespace IRC
 
 		public:
 			ChannelJoin();
+			ChannelJoin(const ChannelJoin& other);
 			virtual ~ChannelJoin();
+			ChannelJoin& operator=(const ChannelJoin& other);
 
 			void exec(IRC::Server* server, IRC::User& user);
 

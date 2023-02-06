@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:20:00 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 11:20:07 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:17:17 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ namespace IRC
 
 		public:
 			ChannelPart();
+			ChannelPart(const ChannelPart& other);
 			virtual ~ChannelPart();
+			ChannelPart& operator=(const ChannelPart& other);
 
 			void exec(IRC::Server* server, IRC::User& user);
 

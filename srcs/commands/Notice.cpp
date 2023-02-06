@@ -6,19 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:13:36 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 17:07:13 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:20:39 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Notice.hpp"
 
-IRC::Notice::Notice()
-{	
-}
-
-IRC::Notice::~Notice()
-{	
-}
+IRC::Notice::Notice() {}
+IRC::Notice::~Notice() {}
 
 void IRC::Notice::exec(IRC::Server *server, IRC::User& user)
 {

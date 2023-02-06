@@ -6,11 +6,16 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 12:03:43 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/20 13:06:18 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:28:22 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Client.hpp"
+
+
+IRC::Client::Client() {}
+IRC::Client::Client(const IRC::Client &other) { *this = other; }
+IRC::Client::~Client() {}
 
 IRC::Client::Client(int sSocket) {
 	this->size = sizeof(this->address);
@@ -22,8 +27,17 @@ IRC::Client::Client(int sSocket) {
 	}
 }
 
-IRC::Client::~Client() {
+IRC::Client &IRC::Client::operator=(const IRC::Client &other)
+{
+	if (this != &other)
+	{
+		address = other.address;
+		size = other.size;
+		cSocket = other.cSocket;
+	}
+	return *this;
 }
+
 
 void IRC::Client::clientSetup() const {
 	char host[NI_MAXHOST];

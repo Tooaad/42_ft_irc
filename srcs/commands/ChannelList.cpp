@@ -6,18 +6,21 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:48:53 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:13:47 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelList.hpp"
 
-IRC::ChannelList::ChannelList()
-{
-}
+IRC::ChannelList::ChannelList() {}
+IRC::ChannelList::ChannelList(const IRC::ChannelList &other) { *this = other; }
+IRC::ChannelList::~ChannelList() {}
 
-IRC::ChannelList::~ChannelList()
+IRC::ChannelList &IRC::ChannelList::operator=(const IRC::ChannelList &other)
 {
+	if (this != &other)
+		channelsArray = other.channelsArray;
+	return *this;
 }
 
 void IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 12:49:11 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:29:46 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 #include "../includes/commands/ChannelNames.hpp"
 #include "../includes/commands/ChannelList.hpp"
 
-IRC::Command::Command() : replyNo(0), replyMsg(""), errorNo(0), errorMsg("")
-{
-}
+IRC::Command::Command() : replyNo(0), replyMsg(""), errorNo(0), errorMsg("") {}
+IRC::Command::Command(const IRC::Command& other) { *this = other; }
+IRC::Command::~Command() {}
 
 // TODO: Quitar el / inicial en los comandos antes de guardar y tambien para comprobar
 std::map<std::string, IRC::Command*> IRC::Command::cmd_map;
@@ -59,15 +59,6 @@ IRC::Command::Command(std::string str) : replyNo(0), replyMsg(""), errorNo(0), e
 	std::cout << " Command: '" << command << "'" << std::endl;
 	std::cout << " Args:    '" << args << "'" << std::endl;
 	std::cout << "-------------------------------" << std::endl;
-}
-
-IRC::Command::~Command()
-{
-}
-
-IRC::Command::Command(const IRC::Command& other)
-{
-	*this = other;
 }
 
 IRC::Command& IRC::Command::operator=(const IRC::Command& other)

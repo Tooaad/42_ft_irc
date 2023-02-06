@@ -3,22 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:21:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/30 11:09:32 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:20:14 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Nick.hpp"
 
-IRC::Nick::Nick()
-{
-}
-
-IRC::Nick::~Nick()
-{
-}
+IRC::Nick::Nick() {}
+IRC::Nick::~Nick() {}
 
 void IRC::Nick::exec(IRC::Server* server, IRC::User& user)
 {	

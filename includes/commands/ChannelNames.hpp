@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:06 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 19:54:06 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:15:16 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ namespace IRC
 
 		public:
 			ChannelNames();
+			ChannelNames(const ChannelNames& other);
 			virtual ~ChannelNames();
+			ChannelNames& operator=(const ChannelNames& other);
 
 			void exec(Server* server, User& user);
 

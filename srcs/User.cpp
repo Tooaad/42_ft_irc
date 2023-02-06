@@ -6,61 +6,49 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/03 12:55:09 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:38:43 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/User.hpp"
 
-IRC::User::User(void)
-{
-	this->socket = 0;
-	this->password = "";
-	this->nick = "";
-	this->user = "";
-	this->realname = "";
-	this->authenticated = false;
-	this->invisible = false;
-	this->timeout = 0;
-	this->buffer = "";
-}
+IRC::User::User(void) { User(0); }
+IRC::User::User(const IRC::User& other) { *this = other; }
+IRC::User::~User() {}
 
 IRC::User::User(int socket)
 {
-	
 	this->socket = socket;
 	this->password = "";
 	this->nick = "";
 	this->user = "";
 	this->realname = "";
+	this->hostname = "";
+	this->servername = "";
 	this->authenticated = false;
 	this->invisible = false;
+	this->op = false;
+	this->subscribe = false;
 	this->timeout = 0;
 	this->buffer = "";
 }
 
-IRC::User::User(const IRC::User& other)
-{
-	*this = other;
-}
-
-IRC::User::~User()
-{
-}
-
 IRC::User& IRC::User::operator=(const IRC::User &other)
 {
-	this->authenticated = other.isAuthenticated();
-	this->nick = other.getNick();
-	this->password = other.getPassword();
-	this->user = other.getUser();
-	this->socket = other.getSocket();
-	this->realname = other.getRealname();
-	this->hostname = other.getHostname();
-	this->servername = other.getServername();
-	this->timeout = other.getTimeout();
-	this->joinedChannels = other.getJoinedChannels();
-	this->invisible = other.isInvisible();
+	this->socket = other.socket;
+	this->password = other.password;
+	this->nick = other.nick;
+	this->user = other.user;
+	this->realname = other.realname;
+	this->hostname = other.hostname;
+	this->servername = other.servername;
+	this->authenticated = other.authenticated;
+	this->invisible = other.invisible;
+	this->op = other.op;
+	this->subscribe = other.subscribe;
+	this->timeout = other.timeout;
+	this->joinedChannels = other.joinedChannels;
+	this->buffer = other.buffer;
 	
 	return *this;
 }

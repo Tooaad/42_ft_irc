@@ -6,18 +6,21 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 14:16:07 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:18:41 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelPart.hpp"
 
-IRC::ChannelPart::ChannelPart()
-{
-}
+IRC::ChannelPart::ChannelPart() {}
+IRC::ChannelPart::ChannelPart(const IRC::ChannelPart &other) { *this = other; }
+IRC::ChannelPart::~ChannelPart() {}
 
-IRC::ChannelPart::~ChannelPart()
+IRC::ChannelPart &IRC::ChannelPart::operator=(const IRC::ChannelPart &other)
 {
+	if (this != &other)
+		channelsArray = other.channelsArray;
+	return *this;
 }
 
 /*

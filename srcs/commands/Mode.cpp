@@ -6,19 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:42:20 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:19:48 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Mode.hpp"
 
-IRC::Mode::Mode()
-{
-}
-
-IRC::Mode::~Mode()
-{
-}
+IRC::Mode::Mode() {}
+IRC::Mode::~Mode() {}
 
 void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 {
