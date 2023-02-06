@@ -94,7 +94,6 @@ Lista de prioridades:
 - Revisar todo y explicarnoslo
 
 [ ] Proteger cuando usuario no existe
-[ ] Corregir notice como privmsg
 [ ] Corregir setReply (falta poner host cogido del server)
 [ ] Corregir setError también como setReply
 

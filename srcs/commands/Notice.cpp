@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:13:36 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:29:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:07:13 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void IRC::Notice::exec(IRC::Server *server, IRC::User& user)
 		if(!user.isInChannel(*receptor) || !receptor->isPublicMsg() || (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
 			return ;
 
-		receptor->sendMessageToUsers(user.getNick() + " " + argSplit[1] + "\n");
+		receptor->sendMessageToUsers(":" + user.getNick() + " NOTICE " + argSplit[0] + " " + argSplit[1] + "\n");
 	}
 	else
 	{
@@ -49,7 +49,7 @@ void IRC::Notice::exec(IRC::Server *server, IRC::User& user)
 		if (receptor == NULL)
 			return ;
 	
-		argSplit[1] += "\n";
+		argSplit[1] = ":" + user.getNick() + " NOTICE " + receptor.getNick() + " " + argSplit[1] + "\n";
 		send(receptor.getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
 	}
 	
