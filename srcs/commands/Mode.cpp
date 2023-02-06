@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 18:47:52 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:42:20 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,13 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			}
 		}
 		else
-			setReply(RPL_CHANNELMODEIS, 7,	receptor->isSecret()? "+s ":"",
-											receptor->isInviteOnly()? "+i ":"",
-											receptor->isFreeTopic()? "+t ":"",
-											receptor->isPublicMsg()? "+n ":"",
-											receptor->isModerated()? "+m ":"",
-											receptor->hasMax()? printChannelMax(*receptor).c_str():"",
-											receptor->hasPass()? printPass(*receptor).c_str():"");
+			setReply(RPL_CHANNELMODEIS, user, 7,	receptor->isSecret()? "+s ":"",
+													receptor->isInviteOnly()? "+i ":"",
+													receptor->isFreeTopic()? "+t ":"",
+													receptor->isPublicMsg()? "+n ":"",
+													receptor->isModerated()? "+m ":"",
+													receptor->hasMax()? printChannelMax(*receptor).c_str():"",
+													receptor->hasPass()? printPass(*receptor).c_str():"");
 	}
 	else
 	{
@@ -182,7 +182,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			}
 		}
 		else
-			setReply(RPL_UMODEIS, 3, user.isInvisible()? "+i":"", user.isSubscribed()? "+s":"", user.isOp()? "+o":"");
+			setReply(RPL_UMODEIS, user, 3, user.isInvisible()? "+i":"", user.isSubscribed()? "+s":"", user.isOp()? "+o":"");
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 19:56:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:41:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	IRC::ChannelNames::printNames(IRC::User user, std::vector<Channel>::iterato
 		
 		if (it->isSecret() && !user.isInChannel(*it))
 			continue;
-		setReply(RPL_NAMREPLY, 2, it->getName().c_str(), it->getUsersString().c_str());
-		setReply(RPL_ENDOFNAMES, 1, it->getName().c_str());
+		setReply(RPL_NAMREPLY, user, 2, it->getName().c_str(), it->getUsersString().c_str());
+		setReply(RPL_ENDOFNAMES, user, 1, it->getName().c_str());
 	}
 }

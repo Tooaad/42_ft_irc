@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/31 21:08:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:48:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 	parseArgs(server);
 	
 	if (this->channelsArray.size() > 0)
-		printNames(this->channelsArray.begin(), this->channelsArray.end());
+		printNames(user, this->channelsArray.begin(), this->channelsArray.end());
 	else
-		printNames(server->getChannels().begin(), server->getChannels().end());
+		printNames(user, server->getChannels().begin(), server->getChannels().end());
 }
 
 void	IRC::ChannelList::parseArgs(IRC::Server* server)
@@ -48,9 +48,9 @@ void	IRC::ChannelList::parseArgs(IRC::Server* server)
 	}
 }
 
-void	IRC::ChannelList::printNames(std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd)
+void	IRC::ChannelList::printNames(IRC::User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd)
 {
-	setReply(RPL_LISTSTART, 0);
+	setReply(RPL_LISTSTART, user, 0);
 	
 	for (std::vector<Channel>::iterator it = itBegin; it != itEnd; it++)
 	{
@@ -67,8 +67,8 @@ void	IRC::ChannelList::printNames(std::vector<Channel>::iterator itBegin, std::v
 		ss << it->getUsers().size();
 		std::string sizeStr = ss.str();
 		
-		setReply(RPL_LIST, 3, it->getName().c_str(), sizeStr.c_str(), it->getTopic().c_str());
+		setReply(RPL_LIST, user, 3, it->getName().c_str(), sizeStr.c_str(), it->getTopic().c_str());
 	}
 	
-	setReply(RPL_LISTEND, 0);
+	setReply(RPL_LISTEND, user, 0);
 }

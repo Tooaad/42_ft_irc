@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/31 17:14:06 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:42:03 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 	if (argsArray.size() == 1)
 	{
 		if (channel->getTopic().size() == 0)
-			setReply(RPL_NOTOPIC, 1, channel->getName().c_str());
+			setReply(RPL_NOTOPIC, user, 1, channel->getName().c_str());
 		else
-			setReply(RPL_TOPIC, 2, channel->getName().c_str(), channel->getTopic().c_str());
+			setReply(RPL_TOPIC, user, 2, channel->getName().c_str(), channel->getTopic().c_str());
 	}
 	else
 	{
