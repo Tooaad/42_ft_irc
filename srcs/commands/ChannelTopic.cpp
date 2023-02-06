@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 19:48:46 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:03:00 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ IRC::ChannelTopic::~ChannelTopic() {}
 void IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
-		return setError(ERR_NOTREGISTERED, 0);
+		return setError(ERR_NOTREGISTERED, *server, user, 0);
 	
 	std::vector<std::string> argsArray = splitString(args, " ", 1);
 	
 	if (argsArray.size() < 1 || argsArray[0].size() == 0)
-		return setError(ERR_NEEDMOREPARAMS, 1, this->command.c_str());
+		return setError(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
 		
 	std::vector<IRC::Channel>::iterator channel = server->getChannelIt(argsArray[0]);
 	if (argsArray.size() == 1)
@@ -36,10 +36,10 @@ void IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 	else
 	{
 		if(!channel->existsUser(user))
-			return setError(ERR_NOTONCHANNEL, 1, argsArray[1].c_str());
+			return setError(ERR_NOTONCHANNEL, *server, user, 1, argsArray[1].c_str());
 			
 		if (!channel->isFreeTopic() && !channel->isOperator(user))
-			return setError(ERR_CHANOPRIVSNEEDED, 1, argsArray[1].c_str());
+			return setError(ERR_CHANOPRIVSNEEDED, *server, user, 1, argsArray[1].c_str());
 		
 		channel->setTopic(argsArray[1]);
 	}

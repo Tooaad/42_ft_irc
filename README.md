@@ -93,7 +93,6 @@ Lista de prioridades:
 - Revisar todo y explicarnoslo
 
 [ ] Proteger cuando usuario no existe
-[ ] Corregir setReply (falta poner host cogido del server)
 [ ] Corregir setError también como setReply
 
 nc irc.irc-hispano.org 6667

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 19:42:35 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:53:01 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ namespace IRC
 			void			detectCommand(Server* server, User& user);
 			virtual void	exec(Server* server, User& user);
 			void			answer(User& user);
-			void			setError(ErrorNos errorNo, int n, ...);
+			void			setError(ErrorNos errorNo, Server server, User user, int n, ...);
 			void 			setReply(ReplyNos replyNo, Server server, User user, int n, ...);
 			
 		private:

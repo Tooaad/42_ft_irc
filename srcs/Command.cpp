@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 19:48:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:27:27 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,86 +183,93 @@ void IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User user
 	va_end(vaList);
 }
 
-void IRC::Command::setError(ErrorNos errorNo, int n, ...)
+void IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User user, int n, ...)
 {
+	std::stringstream ss;
+	
 	va_list vaList;
 	va_start(vaList, n);
 
 	this->errorNo = errorNo;
+
+	ss << errorNo;
+	std::string errorNoStr = ss.str();
+	// :127.0.0.1 353 karisti = #jeje :@karisti
+	this->errorMsg = ":" + server.getIP() + " " + errorNoStr + " " + user.getNick() + " ";
 	
 	switch (errorNo)
 	{
 		case ERR_BADCHANMASK:
-			this->errorMsg = expandMessage(n, vaList, "% :Bad Channel Mask");
+			this->errorMsg += expandMessage(n, vaList, "% :Bad Channel Mask");
 			break;
 		case ERR_NOTREGISTERED:
-			this->errorMsg = expandMessage(n, vaList, ":You have not registered");
+			this->errorMsg += expandMessage(n, vaList, ":You have not registered");
 			break;
 		case ERR_NEEDMOREPARAMS:
-			this->errorMsg = expandMessage(n, vaList, "% :Not enough parameters");
+			this->errorMsg += expandMessage(n, vaList, "% :Not enough parameters");
 			break;
 		case ERR_INVITEONLYCHAN:
-			this->errorMsg = expandMessage(n, vaList, "% :Cannot join channel (+i)");
+			this->errorMsg += expandMessage(n, vaList, "% :Cannot join channel (+i)");
 			break;
 		case ERR_BADCHANNELKEY:
-			this->errorMsg = expandMessage(n, vaList, "% :Cannot join channel (+k)");
+			this->errorMsg += expandMessage(n, vaList, "% :Cannot join channel (+k)");
 			break;
 		case ERR_NOSUCHCHANNEL:
-			this->errorMsg = expandMessage(n, vaList, "% :No such channel");
+			this->errorMsg += expandMessage(n, vaList, "% :No such channel");
 			break;
 		case ERR_NOTONCHANNEL:
-			this->errorMsg = expandMessage(n, vaList, "% :You're not on that channel");
+			this->errorMsg += expandMessage(n, vaList, "% :You're not on that channel");
 			break;
 		case ERR_NONICKNAMEGIVEN:
-			this->errorMsg = expandMessage(n, vaList, " :No nickname given");
+			this->errorMsg += expandMessage(n, vaList, " :No nickname given");
 			break;
 		case ERR_ERRONEUSNICKNAME:
-			this->errorMsg = expandMessage(n, vaList, "% :Erroneus nickname");
+			this->errorMsg += expandMessage(n, vaList, "% :Erroneus nickname");
 			break;
 		case ERR_NICKNAMEINUSE:
-			this->errorMsg = expandMessage(n, vaList, "% :Nickname is already in use");
+			this->errorMsg += expandMessage(n, vaList, "% :Nickname is already in use");
 			break;
 		case ERR_ALREADYREGISTRED:
-			this->errorMsg = expandMessage(n, vaList, " :You may not reregister");
+			this->errorMsg += expandMessage(n, vaList, " :You may not reregister");
 			break;
 		case ERR_NORECIPTIENT:
-			this->errorMsg = expandMessage(n, vaList, " :No recipient given %");;
+			this->errorMsg += expandMessage(n, vaList, " :No recipient given %");;
 			break;
 		case ERR_CANNOTSENDTOCHAN:
-			this->errorMsg = expandMessage(n, vaList, "% :Cannot send to channel");
+			this->errorMsg += expandMessage(n, vaList, "% :Cannot send to channel");
 			break;
 		case ERR_WILDTOPLEVEL:
-			this->errorMsg = expandMessage(n, vaList, "% :Wildcard in toplevel");
+			this->errorMsg += expandMessage(n, vaList, "% :Wildcard in toplevel");
 			break;
 		case ERR_NOSUCHNICK:
-			this->errorMsg = expandMessage(n, vaList, "% :No such nick/channel");
+			this->errorMsg += expandMessage(n, vaList, "% :No such nick/channel");
 			break;
 		case ERR_NOTEXTTOSEND:
-			this->errorMsg = expandMessage(n, vaList, " :No text to send");
+			this->errorMsg += expandMessage(n, vaList, " :No text to send");
 			break;
 		case ERR_NOTOPLEVEL:
-			this->errorMsg = expandMessage(n, vaList, "% :No toplevel domain specified");
+			this->errorMsg += expandMessage(n, vaList, "% :No toplevel domain specified");
 			break;
 		case ERR_TOOMANYTARGETS:
-			this->errorMsg = expandMessage(n, vaList, "% :Duplicate recipients. No message");
+			this->errorMsg += expandMessage(n, vaList, "% :Duplicate recipients. No message");
 			break;
 		case ERR_NOORIGIN:
-			this->errorMsg = expandMessage(n, vaList, " :No origin specified");
+			this->errorMsg += expandMessage(n, vaList, " :No origin specified");
 			break;
 		case ERR_NOSUCHSERVER:
-			this->errorMsg = expandMessage(n, vaList, "% :No such server");
+			this->errorMsg += expandMessage(n, vaList, "% :No such server");
 			break;
 		case ERR_USERSDONTMATCH:
-			this->errorMsg = expandMessage(n, vaList, " :Cant change mode for other users");
+			this->errorMsg += expandMessage(n, vaList, " :Cant change mode for other users");
 			break;
 		case ERR_UMODEUNKNOWNFLAG:
-			this->errorMsg = expandMessage(n, vaList, " :Unknown MODE flag");
+			this->errorMsg += expandMessage(n, vaList, " :Unknown MODE flag");
 			break;
 		case ERR_UNKNOWNMODE:
-			this->errorMsg = expandMessage(n, vaList, "% :is unknown mode char to me");
+			this->errorMsg += expandMessage(n, vaList, "% :is unknown mode char to me");
 			break;
 		case ERR_CHANOPRIVSNEEDED:
-			this->errorMsg = expandMessage(n, vaList, "% :You're not channel operator");
+			this->errorMsg += expandMessage(n, vaList, "% :You're not channel operator");
 			break;
 		default:
 			break;

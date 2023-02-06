@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 19:46:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:01:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ IRC::ChannelNames &IRC::ChannelNames::operator=(const IRC::ChannelNames &other)
 void IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
-		return setError(ERR_NOTREGISTERED, 0);
+		return setError(ERR_NOTREGISTERED, *server, user, 0);
 	
 	parseArgs(server);
 	
