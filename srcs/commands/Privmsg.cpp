@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:29:11 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:50:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if((!user.isInChannel(*receptor) && !receptor->isPublicMsg()) && (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
 			return setError(ERR_CANNOTSENDTOCHAN, 1, argSplit[1].c_str());
 
-		receptor->sendMessageToUsers(user.getNick() + " " + argSplit[1] + "\n");
+		receptor->sendMessageToUsers(":" + user.getNick() + " PRIVMSG " + argSplit[0] + " " + argSplit[1] + "\n");
 	}
 	else
 	{
-		IRC::User receptor = findUser(server->getUsers(), argSplit[0]);	
+		IRC::User receptor = findUser(server->getUsers(), argSplit[0]);
 		if (receptor == NULL)
 			return setError(ERR_NOSUCHNICK, 1, argSplit[0].c_str());
 	
-		argSplit[1] += "\n";
+		argSplit[1] = ":" + user.getNick() + " PRIVMSG " + receptor.getNick() + " " + argSplit[1] + "\n";
 		send(receptor.getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
 	}
 	
