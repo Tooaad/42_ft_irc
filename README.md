@@ -93,7 +93,6 @@ Lista de prioridades:
 - Revisar todo y explicarnoslo
 
 [ ] Proteger cuando usuario no existe
-[ ] Corregir setError también como setReply
 
 nc irc.irc-hispano.org 6667
 lsof -t -i tcp:6667 | xargs kill
