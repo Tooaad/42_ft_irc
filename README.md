@@ -90,7 +90,6 @@ Lista de prioridades:
 - Notice + Quit + Cerrar puerto correctamente
 - Revisar Modes + Derivados Modes (PrivMSG/List/Channels)
 - Probar comandos parciales + input ./ircserv
-- Conectar a Kiwi + Comandos '/'
 - Revisar todo y explicarnoslo
 
 [ ] Proteger cuando usuario no existe
