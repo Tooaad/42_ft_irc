@@ -10,6 +10,7 @@
 - https://www.mirc.com/             (Online)
 - https://bitchx.sourceforge.net/
 - http://www.instantbird.com/
+- https://client01.chat.mibbit.com/
 
 
 ## Info
