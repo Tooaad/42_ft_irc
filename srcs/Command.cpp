@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:38:46 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:49:11 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,10 @@ void IRC::Command::answer(IRC::User& user)
 		send(user.getSocket(), replyMsg.c_str(), replyMsg.size(), 0);
 }
 
-void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
+void IRC::Command::setReply(ReplyNos replyNo, IRC::User user, int n, ...)
 {
+	std::stringstream ss;
+
 	va_list vaList;
 	va_start(vaList, n);
 
@@ -144,11 +146,16 @@ void IRC::Command::setReply(ReplyNos replyNo, int n, ...)
 	
 	if (!this->replyMsg.empty())
 		this->replyMsg += "\n";
+
+	ss << replyNo;
+	std::string replyNoStr = ss.str();
+	// :127.0.0.1 353 karisti = #jeje :@karisti
+	this->replyMsg += ":127.0.0.1 " + replyNoStr + " " + user.getNick() + " ";
 	
 	switch (replyNo)
 	{
 		case RPL_NAMREPLY:
-			this->replyMsg += expandMessage(n, vaList, "% :%");
+			this->replyMsg += expandMessage(n, vaList, "= % :%");
 			break;
 		case RPL_ENDOFNAMES:
 			this->replyMsg += expandMessage(n, vaList, "% :End of /NAMES list");
