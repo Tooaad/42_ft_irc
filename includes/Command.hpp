@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 13:48:18 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:46:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ namespace IRC
 			virtual ~Command();
 
 			Command*		find(std::string key) const;
-			void			detectCommand(IRC::Server* server, IRC::User& user);
-			virtual void	exec(IRC::Server* server, IRC::User& user);
-			void			answer(IRC::User& user);
+			void			detectCommand(Server* server, User& user);
+			virtual void	exec(Server* server, User& user);
+			void			answer(User& user);
 			void			setError(ErrorNos errorNo, int n, ...);
-			void			setReply(ReplyNos replyNo, int n, ...);
+			void 			setReply(ReplyNos replyNo, User user, int n, ...);
 			
 		private:
 			std::string		expandMessage(int argCount, va_list vaList, std::string errorStr);
