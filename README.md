@@ -92,7 +92,11 @@ Lista de prioridades:
 - Probar comandos parciales + input ./ircserv
 - Conectar a Kiwi + Comandos '/'
 - Revisar todo y explicarnoslo
-- Proteger cuando usuario no existe
+
+[ ] Proteger cuando usuario no existe
+[ ] Corregir notice como privmsg
+[ ] Corregir setReply (falta poner host cogido del server)
+[ ] Corregir setError también como setReply
 
 nc irc.irc-hispano.org 6667
 lsof -t -i tcp:6667 | xargs kill
