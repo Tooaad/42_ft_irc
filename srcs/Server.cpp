@@ -180,12 +180,13 @@ int IRC::Server::receiveMessage(int event_fd)
 
 	std::string message(buf);
 
-	std::cout << "*** Buffer prev: '" << user.getBuffer() << "'" << std::endl;
-	std::cout << "*** New buffer: '" << message << "'" << std::endl;
+	
+	// std::cout << "*** Buffer prev: '" << user.getBuffer() << "'" << std::endl;
+	// std::cout << "*** New buffer: '" << message << "'" << std::endl;
 	message.erase(remove(message.begin(), message.end(), '\r'), message.end());
-	std::cout << "*** New buffer replaced: '" << message << "'" << std::endl;
+	// std::cout << "*** New buffer replaced: '" << message << "'" << std::endl;
 	user.appendBuffer(message);
-	std::cout << "*** Buffer now: '" << user.getBuffer() << "'" << std::endl;
+	std::cout << "Command: '" << user.getBuffer() << "'" << std::endl;
 
 
 	std::vector<std::string> messageSplit = splitString(user.getBuffer(), "\n");
@@ -195,10 +196,7 @@ int IRC::Server::receiveMessage(int event_fd)
 	user.clearBuffer();
 	
 	if (messageSplit[messageSplit.size() - 1].size() == 0)
-	{
-		std::cout << "Message OK" << std::endl;
 		messageSplit.erase(messageSplit.end() - 1);
-	}
 	else
 	{
 		user.appendBuffer(messageSplit[messageSplit.size() - 1]);

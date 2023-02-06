@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:19:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:34:39 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 IRC::Mode::Mode() {}
 IRC::Mode::~Mode() {}
 
+// TODO: Proteger todas las llamadas a findUser
 void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 {
 	if (!user.isAuthenticated())

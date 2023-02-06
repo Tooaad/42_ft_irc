@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/03 19:29:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:16:24 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ std::vector<std::string> splitString(std::string str, std::string delim, int cou
 	
 	tokens.push_back(str);
 	
+	/*
 	for (std::vector<std::string>::iterator it = tokens.begin(); it != tokens.end(); it++)
 		std::cout << ">> '"<< *it << "'" << std::endl;
+	*/
 	
 	return tokens;
 }
