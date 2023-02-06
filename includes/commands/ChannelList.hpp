@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:06 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:12:52 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:44:36 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ namespace IRC
 
 		private:
 			void	parseArgs(Server* server);
-			void	printNames(User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd);
+			void	printNames(Server server, User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd);
 	};
 }

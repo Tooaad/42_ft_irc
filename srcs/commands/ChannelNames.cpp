@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:16:31 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:46:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 	parseArgs(server);
 	
 	if (this->channelsArray.size() > 0)
-		printNames(user,this->channelsArray.begin(), this->channelsArray.end());
+		printNames(*server, user,this->channelsArray.begin(), this->channelsArray.end());
 	else
-		printNames(user, server->getChannels().begin(), server->getChannels().end());
+		printNames(*server, user, server->getChannels().begin(), server->getChannels().end());
 }
 
 void	IRC::ChannelNames::parseArgs(IRC::Server* server)
@@ -51,7 +51,7 @@ void	IRC::ChannelNames::parseArgs(IRC::Server* server)
 	}
 }
 
-void	IRC::ChannelNames::printNames(IRC::User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd)
+void	IRC::ChannelNames::printNames(IRC::Server server, IRC::User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd)
 {
 	for (std::vector<Channel>::iterator it = itBegin; it != itEnd; it++)
 	{
@@ -59,7 +59,7 @@ void	IRC::ChannelNames::printNames(IRC::User user, std::vector<Channel>::iterato
 		
 		if (it->isSecret() && !user.isInChannel(*it))
 			continue;
-		setReply(RPL_NAMREPLY, user, 2, it->getName().c_str(), it->getUsersString().c_str());
-		setReply(RPL_ENDOFNAMES, user, 1, it->getName().c_str());
+		setReply(RPL_NAMREPLY, server, user, 2, it->getName().c_str(), it->getUsersString().c_str());
+		setReply(RPL_ENDOFNAMES, server, user, 1, it->getName().c_str());
 	}
 }

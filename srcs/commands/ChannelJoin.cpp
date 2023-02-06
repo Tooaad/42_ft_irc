@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:14:08 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:43:21 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 			newChannel->broadcastAction(server, user, "JOIN");
 			
 			if (newChannel->getTopic().size() == 0)
-				setReply(RPL_NOTOPIC, user, 1, newChannel->getName().c_str());
+				setReply(RPL_NOTOPIC, *server, user, 1, newChannel->getName().c_str());
 			else
-				setReply(RPL_TOPIC, user, 2, newChannel->getName().c_str(), newChannel->getTopic().c_str());
+				setReply(RPL_TOPIC, *server, user, 2, newChannel->getName().c_str(), newChannel->getTopic().c_str());
 				
-			setReply(RPL_NAMREPLY, user, 2, newChannel->getName().c_str(), newChannel->getUsersString().c_str());
-			setReply(RPL_ENDOFNAMES, user, 1, newChannel->getName().c_str());
+			setReply(RPL_NAMREPLY, *server, user, 2, newChannel->getName().c_str(), newChannel->getUsersString().c_str());
+			setReply(RPL_ENDOFNAMES, *server, user, 1, newChannel->getName().c_str());
 		}
 	}
 }

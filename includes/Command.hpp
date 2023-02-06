@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/04 11:46:59 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:42:35 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ namespace IRC
 			virtual void	exec(Server* server, User& user);
 			void			answer(User& user);
 			void			setError(ErrorNos errorNo, int n, ...);
-			void 			setReply(ReplyNos replyNo, User user, int n, ...);
+			void 			setReply(ReplyNos replyNo, Server server, User user, int n, ...);
 			
 		private:
 			std::string		expandMessage(int argCount, va_list vaList, std::string errorStr);

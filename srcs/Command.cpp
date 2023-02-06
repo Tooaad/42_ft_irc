@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:29:46 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:48:10 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void IRC::Command::answer(IRC::User& user)
 		send(user.getSocket(), replyMsg.c_str(), replyMsg.size(), 0);
 }
 
-void IRC::Command::setReply(ReplyNos replyNo, IRC::User user, int n, ...)
+void IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User user, int n, ...)
 {
 	std::stringstream ss;
 
@@ -141,7 +141,7 @@ void IRC::Command::setReply(ReplyNos replyNo, IRC::User user, int n, ...)
 	ss << replyNo;
 	std::string replyNoStr = ss.str();
 	// :127.0.0.1 353 karisti = #jeje :@karisti
-	this->replyMsg += ":127.0.0.1 " + replyNoStr + " " + user.getNick() + " ";
+	this->replyMsg += ":" + server.getIP() + " " + replyNoStr + " " + user.getNick() + " ";
 	
 	switch (replyNo)
 	{
