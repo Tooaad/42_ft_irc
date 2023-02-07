@@ -22,7 +22,15 @@ IRC::Server::Server(std::string password)
 }
 
 IRC::Server::Server(const IRC::Server &other) { *this = other; }
-IRC::Server::~Server() {}
+
+IRC::Server::~Server()
+{
+	/*
+		TODO:
+		- Cerrar todas las conexiones de clentes.
+		- Liberar todo.
+	*/
+}
 
 IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 {
