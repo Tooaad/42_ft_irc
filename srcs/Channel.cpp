@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 14:09:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:41:05 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ bool	IRC::Channel::hasMax(void) const
 
 bool	IRC::Channel::isFull(void) const
 {
-	if (this->maxUsers > 0 && (int)this->users.size() >= this->maxUsers)
+	if (hasMax() && (int)this->users.size() >= getMaxUsers())
 		return true;
 	return false;
 }
