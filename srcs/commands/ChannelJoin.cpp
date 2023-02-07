@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:13:09 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:03:50 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelJoin.hpp"
+
 
 IRC::ChannelJoin::ChannelJoin() {}
 IRC::ChannelJoin::ChannelJoin(const IRC::ChannelJoin &other) { *this = other; }
@@ -26,25 +27,8 @@ IRC::ChannelJoin &IRC::ChannelJoin::operator=(const IRC::ChannelJoin &other)
 	return *this;
 }
 
-
-/*
-	Comando: JOIN
-	Parámetros: <canal>{,<canal>} [<clave>{,<clave>}]
-*/
-void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
+void			IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 {
-	// TODO: Solo para pruebas, borrar cuando la autenticacion este bien.
-	
-	/*
-	user.setNick("karisti");
-	user.setPassword("pass");
-	if (!user.isAuthenticated())
-		user.changeAuthenticated();
-	*/
-	
-	
-	// *************************************************************** //
-	
 	/** CHECK AUTHENTICATION **/
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);
@@ -62,7 +46,6 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 		if (user.getJoinedChannels().size() >= MAX_CHANNELS)
 			return setError(ERR_TOOMANYCHANNELS, *server, user, 1, channelsArray[i].c_str());
 
-		
 		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE. **/
 		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i], User()));
 		IRC::Channel* newChannel;
@@ -86,7 +69,7 @@ void IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 	}
 }
 
-int	IRC::ChannelJoin::parseArgs(IRC::Server server, IRC::User user)
+int				IRC::ChannelJoin::parseArgs(IRC::Server server, IRC::User user)
 {
 	std::vector<std::string> argsArray = splitString(args, " ");
 	

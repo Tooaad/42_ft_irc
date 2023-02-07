@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelNames.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:01:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:09:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelNames.hpp"
+
 
 IRC::ChannelNames::ChannelNames() {}
 IRC::ChannelNames::ChannelNames(const IRC::ChannelNames &other) { *this = other; }
@@ -23,7 +24,7 @@ IRC::ChannelNames &IRC::ChannelNames::operator=(const IRC::ChannelNames &other)
 	return *this;
 }
 
-void IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
+void	IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);

@@ -6,16 +6,17 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:21:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 11:47:17 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:07:01 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Nick.hpp"
 
+
 IRC::Nick::Nick() {}
 IRC::Nick::~Nick() {}
 
-void IRC::Nick::exec(IRC::Server* server, IRC::User& user)
+void	IRC::Nick::exec(IRC::Server* server, IRC::User& user)
 {	
 
 	if (server->getPassword().size() > 0 && user.getPassword() != server->getPassword())

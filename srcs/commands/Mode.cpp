@@ -6,17 +6,18 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 11:50:31 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:07:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Mode.hpp"
 
+
 IRC::Mode::Mode() {}
 IRC::Mode::~Mode() {}
 
 // TODO: Proteger todas las llamadas a findUser
-void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
+void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);
@@ -182,7 +183,7 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 	}
 }
 
-std::string IRC::Mode::printChannelMax(IRC::Channel recept)
+std::string		IRC::Mode::printChannelMax(IRC::Channel recept)
 {
 	std::string str("+l ");
 	std::stringstream ss;
@@ -192,7 +193,7 @@ std::string IRC::Mode::printChannelMax(IRC::Channel recept)
 	return str;
 }
 
-std::string IRC::Mode::printPassword(IRC::Channel recept)
+std::string		IRC::Mode::printPassword(IRC::Channel recept)
 {
 	std::string str("+k ");
 	str += recept.getPassword();

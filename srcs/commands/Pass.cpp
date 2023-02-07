@@ -6,17 +6,17 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 11:47:33 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:06:26 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Pass.hpp"
 
+
 IRC::Pass::Pass() {}
 IRC::Pass::~Pass() {}
 
 // Block message if password is not provide
-
 void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 {
 	if (this->args.size() < 1)
@@ -35,5 +35,5 @@ void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 		std::string error_msg = "<client> :Password incorrect\n";
 		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
 		server->closeConnection(user.getSocket(), "Quit: Password incorrect");
-	}	
+	}
 }

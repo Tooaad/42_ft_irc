@@ -6,16 +6,17 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:13:36 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 08:57:25 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:06:47 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Notice.hpp"
 
+
 IRC::Notice::Notice() {}
 IRC::Notice::~Notice() {}
 
-void IRC::Notice::exec(IRC::Server *server, IRC::User& user)
+void	IRC::Notice::exec(IRC::Server *server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
 		return ;
@@ -47,5 +48,4 @@ void IRC::Notice::exec(IRC::Server *server, IRC::User& user)
 		argSplit[1] = ":" + user.getNick() + " NOTICE " + receptor->getNick() + " " + argSplit[1] + "\n";
 		send(receptor->getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
 	}
-	
 }

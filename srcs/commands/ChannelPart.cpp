@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelPart.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:13:34 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:08:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelPart.hpp"
+
 
 IRC::ChannelPart::ChannelPart() {}
 IRC::ChannelPart::ChannelPart(const IRC::ChannelPart &other) { *this = other; }
@@ -23,21 +24,8 @@ IRC::ChannelPart &IRC::ChannelPart::operator=(const IRC::ChannelPart &other)
 	return *this;
 }
 
-/*
-	Command: PART
-	Parameters: <channel>{,<channel>}
-*/
-void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
+void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 {
-	// TODO: Solo para pruebas, borrar cuando la autenticacion este bien.
-	/*
-	user.setNick("karisti");
-	user.setPassword("pass");
-	if (!user.isAuthenticated())
-		user.changeAuthenticated();
-	*/
-	// *************************************************************** //
-
 	/** CHECK AUTHENTICATION **/
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);
@@ -45,7 +33,6 @@ void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 	/** PARSE ARGS (channels and passwords) **/
 	if (parseArgs(*server, user) < 0)
 		return ;
-
 
 	std::vector<Channel>::iterator channelIt;
 	/** ITERATE EACH PARSED CHANNEL **/
@@ -67,7 +54,7 @@ void IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 	}
 }
 
-int	IRC::ChannelPart::parseArgs(IRC::Server server, IRC::User user)
+int		IRC::ChannelPart::parseArgs(IRC::Server server, IRC::User user)
 {
 	std::vector<std::string> argsArray = splitString(args, " ");
 	

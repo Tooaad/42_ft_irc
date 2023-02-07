@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelTopic.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:03:00 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:07:42 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelTopic.hpp"
 
+
 IRC::ChannelTopic::ChannelTopic() {}
 IRC::ChannelTopic::~ChannelTopic() {}
 
-void IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
+void	IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);
@@ -43,5 +44,4 @@ void IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 		
 		channel->setTopic(argsArray[1]);
 	}
-
 }

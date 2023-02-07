@@ -6,16 +6,17 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 10:12:46 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:05:13 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Privmsg.hpp"
 
+
 IRC::PrivMsg::PrivMsg() {}
 IRC::PrivMsg::~PrivMsg() {}
 
-void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
+void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);

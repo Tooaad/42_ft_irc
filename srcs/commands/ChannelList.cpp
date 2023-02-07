@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelList.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:01:12 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:09:00 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/ChannelList.hpp"
+
 
 IRC::ChannelList::ChannelList() {}
 IRC::ChannelList::ChannelList(const IRC::ChannelList &other) { *this = other; }
@@ -23,7 +24,7 @@ IRC::ChannelList &IRC::ChannelList::operator=(const IRC::ChannelList &other)
 	return *this;
 }
 
-void IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
+void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);

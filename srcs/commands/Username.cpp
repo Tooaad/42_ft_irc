@@ -6,16 +6,17 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:54:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 11:47:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:04:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/commands/Username.hpp"
 
+
 IRC::Username::Username() {}
 IRC::Username::~Username() {}
 
-void IRC::Username::exec(IRC::Server* server, IRC::User& user)
+void	IRC::Username::exec(IRC::Server* server, IRC::User& user)
 {
 	if (server->getPassword().size() > 0 && user.getPassword() != server->getPassword())
 		return ;

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:07:51 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:01:20 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:05:20 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ namespace IRC
 			PrivMsg();
 			virtual ~PrivMsg();
 
-			void exec(IRC::Server* server, IRC::User& user);
+			void	exec(IRC::Server* server, IRC::User& user);
 	};
 }
