@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:04:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:12:46 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if (receptor.base() == NULL)
 			return setError(ERR_NOSUCHCHANNEL, *server, user, 1, argSplit[0].c_str());
 
-		// TODO: REVISAR CONDICION	
+		// TODO: REVISAR CONDICION
 		if((!user.isInChannel(*receptor) && !receptor->isPublicMsg()) && (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
 			return setError(ERR_CANNOTSENDTOCHAN, *server, user, 1, argSplit[1].c_str());
 
@@ -41,11 +41,12 @@ void IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 	}
 	else
 	{
-		IRC::User receptor = findUser(server->getUsers(), argSplit[0]);
-		if (receptor == NULL)
+		std::vector<IRC::User>::iterator receptor = findUser(server->getUsers(), argSplit[0]);
+		
+		if (receptor == server->getUsers().end())
 			return setError(ERR_NOSUCHNICK, *server, user, 1, argSplit[0].c_str());
 	
-		argSplit[1] = ":" + user.getNick() + " PRIVMSG " + receptor.getNick() + " " + argSplit[1] + "\n";
-		send(receptor.getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
+		argSplit[1] = ":" + user.getNick() + " PRIVMSG " + receptor->getNick() + " " + argSplit[1] + "\n";
+		send(receptor->getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
 	}
 }

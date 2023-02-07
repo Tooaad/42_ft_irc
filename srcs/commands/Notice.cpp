@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Notice.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:13:36 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:20:39 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 08:57:25 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void IRC::Notice::exec(IRC::Server *server, IRC::User& user)
 	}
 	else
 	{
-		IRC::User receptor = findUser(server->getUsers(), argSplit[0]);	
-		if (receptor == NULL)
+		std::vector<IRC::User>::iterator receptor = findUser(server->getUsers(), argSplit[0]);
+		if (receptor == server->getUsers().end())
 			return ;
 	
-		argSplit[1] = ":" + user.getNick() + " NOTICE " + receptor.getNick() + " " + argSplit[1] + "\n";
-		send(receptor.getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
+		argSplit[1] = ":" + user.getNick() + " NOTICE " + receptor->getNick() + " " + argSplit[1] + "\n";
+		send(receptor->getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
 	}
 	
 }

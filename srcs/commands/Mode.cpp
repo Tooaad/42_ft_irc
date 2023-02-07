@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:25:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 08:59:51 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					if (argSplit.size() < 2)
 						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
-						receptor->addOperator(findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						receptor->addOperator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 					else if (argSplit[1].at(0) == '-')
-						receptor->removeOperator(findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						receptor->removeOperator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 				}
 				else if (argSplit[1].at(i) == 's')
 				{
@@ -109,9 +109,9 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					if (argSplit.size() < 2)
 						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
-						receptor->addModerator(findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						receptor->addModerator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 					else if (argSplit[1].at(0) == '-')
-						receptor->removeModerator(findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						receptor->removeModerator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 				}
 				else if (argSplit[1].at(i) == 'k')
 				{
@@ -141,12 +141,11 @@ void IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		std::vector<std::string> argSplit = splitString(this->args, " ", 1);
 		// if (argSplit.size() < 2)
 		// 	return setError(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
-		
-		IRC::User receptor = findUser(server->getUsers(), argSplit[0]);	
-		if (receptor == NULL)
+		std::vector<IRC::User>::iterator receptor = findUser(server->getUsers(), argSplit[0]);
+		if (receptor == server->getUsers().end())
 			return setError(ERR_NOSUCHNICK, *server, user, 1, argSplit[0].c_str());
-	
-		if (!(receptor == user))
+			
+		if (!(*receptor == user))
 			return setError(ERR_USERSDONTMATCH, *server, user, 0);
 	
 		if (argSplit.size() > 1)

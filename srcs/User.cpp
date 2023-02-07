@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:38:43 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:11:27 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,16 +222,17 @@ bool IRC::operator== (const IRC::User lhs, const IRC::User rhs) {
 	return true;
 }
 
-IRC::User IRC::findUser(std::vector<IRC::User> users, std::string nick)
+std::vector<IRC::User>::iterator IRC::findUser(std::vector<IRC::User>& users, std::string nick)
 {
-	std::vector<IRC::User>::iterator it = users.begin();
-	int i = 0;
-	for (; it != users.end(); it++, i++)
+	std::vector<IRC::User>::iterator it;
+	
+	for (it = users.begin(); it != users.end(); it++)
 	{
-		if ((*it).getNick() == nick)
-			return *it;
+		std::cout << it->getNick();
+		if (it->getNick().compare(nick) == 0)
+			return it;
 	}
-	return *it;
+	return it;
 }
 
 void	IRC::printUsers(std::vector<IRC::User> users)

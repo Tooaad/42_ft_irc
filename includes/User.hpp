@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:32:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:09:12 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ namespace IRC
 	
 	
 	bool 		operator== (const User lhs, const User rhs);
-	IRC::User	findUser(std::vector<User> users, std::string nick);
+	std::vector<IRC::User>::iterator	findUser(std::vector<User>& users, std::string nick);
 	void		printUser(User user);
 	void		printUsers(std::vector<User> users);
 }

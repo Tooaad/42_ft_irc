@@ -93,8 +93,6 @@ Lista de prioridades:
 - Probar comandos parciales + input ./ircserv
 - Revisar todo y explicarnoslo
 
-[ ] Proteger cuando usuario no existe
-
 nc irc.irc-hispano.org 6667
 lsof -t -i tcp:6667 | xargs kill
 
