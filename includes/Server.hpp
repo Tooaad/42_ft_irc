@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 14:08:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:23:08 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ namespace IRC
 			void							clientDisconnected(int eventFd, std::string message);
 			int								receiveMessage(int eventFd);
 			void							registration(IRC::User& user, std::string password);
+			int								throwError(std::string message);
 			// void serverClose(void);
 	};
 }

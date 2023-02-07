@@ -87,10 +87,7 @@ void IRC::Server::connectNetwork(std::string *args)
 int IRC::Server::createNetwork(std::string *args)
 {
 	if ((this->sSocket = socket(AF_INET, SOCK_STREAM, 0)) == -1)
-	{
-		perror("Error opening socket");
-		return -1;
-	}
+		return throwError("Error opening socket");
 
 	// Bind the Socket to any free IP / Port
 	sockaddr_in hint;
@@ -100,16 +97,10 @@ int IRC::Server::createNetwork(std::string *args)
 	inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
 
 	if (bind(this->sSocket, (struct sockaddr *)&hint, sizeof(hint)) < 0)
-	{
-		perror("Error binding socket");
-		return -1;
-	}
+		return throwError("Error binding socket");
 
 	if (fcntl(this->sSocket, F_SETFL, O_NONBLOCK) < 0)
-	{
-		perror("Error making server socket non blocking");
-		return -1;
-	}
+		return throwError("Error making server socket non blocking");
 
 	listen(this->sSocket, SOMAXCONN);
 
@@ -118,10 +109,7 @@ int IRC::Server::createNetwork(std::string *args)
 	EV_SET(this->changeEvent, this->sSocket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, 0);
 
 	if (kevent(this->kq, this->changeEvent, 1, NULL, 0, NULL) == -1)
-	{
-		perror("kevent");
-		return -1;
-	}
+		return throwError("kevent 1");
 
 	if (saveIp() == -1)
 		return -1;
@@ -138,10 +126,7 @@ int IRC::Server::loop(void)
 	while (true)
 	{
 		if ((newEvents = kevent(getKq(), NULL, 0, getEvent(), 1, NULL)) == -1)
-		{
-			perror("kevent");
-			return -1;
-		}
+			return throwError("kevent 2");
 
 		// kqueue events loop
 		for (int i = 0; i < newEvents; i++)
@@ -177,10 +162,8 @@ int		IRC::Server::saveIp(void)
 	struct hostent*		hostEntry;
 
 	if (gethostname(host, sizeof(host)) == -1)
-	{
-		perror("Error getting ip: gethostname");
-		return -1;
-	}
+		return throwError("Error getting ip: gethostname");
+	
 	hostEntry = gethostbyname(host);
 	if (!hostEntry)
 		this->ip = "127.0.0.1";
@@ -197,10 +180,7 @@ int		IRC::Server::clientConnected(void)
 
 	EV_SET(this->changeEvent, client.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
 	if (kevent(this->kq, this->changeEvent, 1, NULL, 0, NULL) < 0)
-	{
-		perror("kevent error");
-		return -1;
-	}
+		return throwError("kevent 3");
 
 	this->users.push_back(IRC::User(client.getSocket()));
 	return 0;
@@ -225,10 +205,7 @@ int		IRC::Server::receiveMessage(int eventFd)
 
 	memset(buf, 0, 4096);
 	if (fcntl(eventFd, F_SETFL, O_NONBLOCK) < 0)
-	{
-		perror("Error making client socket non blocking");
-		return -1;
-	}
+		return throwError("Error making client socket non blocking");
 
 	if ((bytesRec = recv(eventFd, buf, 4096, 0)) == -1)
 	{
@@ -304,7 +281,7 @@ int		IRC::Server::receiveMessage(int eventFd)
 	return 0;
 }
 
-void IRC::Server::registration(IRC::User& user, std::string message)
+void	IRC::Server::registration(IRC::User& user, std::string message)
 {
 	IRC::Command cmd(message);
 	cmd.detectCommand(this, user);
@@ -321,4 +298,10 @@ void IRC::Server::registration(IRC::User& user, std::string message)
 	// 	std::string errorMsg = "Not authenticated! Provide PASS, NICK and USER\n";
 	// 	send(user.getSocket(), errorMsg.c_str(), errorMsg.size(), 0);
 	// }
+}
+
+int		IRC::Server::throwError(std::string message)
+{
+	perror(message.c_str());
+	return -1;
 }
