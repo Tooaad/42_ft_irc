@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelNames.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:06 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 19:45:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:52:40 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace IRC
 			virtual ~ChannelNames();
 			ChannelNames& operator=(const ChannelNames& other);
 
-			void exec(Server* server, User& user);
+			void	exec(Server* server, User& user);
 
 		private:
 			void	parseArgs(Server* server);

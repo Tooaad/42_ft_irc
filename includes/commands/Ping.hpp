@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ping.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:14:55 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 17:55:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:51:48 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 #include "../Command.hpp"
 
-namespace IRC 
+namespace IRC
 {
 	class Server;
 	class Command;
+	
 	class Ping : public Command
 	{
 		public:
 			Ping();
 			virtual ~Ping();
 
-			void exec(IRC::Server* server, IRC::User& user);
+			void	exec(IRC::Server* server, IRC::User& user);
 	};
 }
-

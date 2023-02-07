@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:07:58 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:26:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:52:51 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace IRC
 			virtual ~ChannelJoin();
 			ChannelJoin& operator=(const ChannelJoin& other);
 
-			void exec(IRC::Server* server, IRC::User& user);
+			void	exec(IRC::Server* server, IRC::User& user);
 
 		private:
 			int				parseArgs(IRC::Server server, IRC::User user);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 15:20:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 17:55:00 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:51:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 #include "../Command.hpp"
 
-namespace IRC 
+namespace IRC
 {
 	class Server;
 	class Command;
+
 	class Pass : public Command
 	{
 		public:
 			Pass();
 			virtual ~Pass();
 
-			void exec(IRC::Server* server, IRC::User& user);
+			void	exec(IRC::Server* server, IRC::User& user);
 	};
 }
-

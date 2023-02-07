@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelPart.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:20:00 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:15:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:52:29 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace IRC
 			virtual ~ChannelPart();
 			ChannelPart& operator=(const ChannelPart& other);
 
-			void exec(IRC::Server* server, IRC::User& user);
+			void	exec(IRC::Server* server, IRC::User& user);
 
 		private:
 			int		parseArgs(IRC::Server server, IRC::User user);

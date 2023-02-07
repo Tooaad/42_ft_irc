@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Notice.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:12:55 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/01 16:13:13 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:51:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ namespace IRC
 			Notice();
 			virtual ~Notice();
 
-			void exec(IRC::Server* server, IRC::User& user);
-
+			void	exec(IRC::Server* server, IRC::User& user);
 	};
 }
