@@ -158,7 +158,7 @@ int IRC::Server::loop(void)
 	return 0;
 }
 
-void	IRC::Server::closeConnection(int eventFd, std::string message)
+void	IRC::Server::closeClient(int eventFd, std::string message)
 {
 	clientDisconnected(eventFd, message);
 }
@@ -179,6 +179,12 @@ int		IRC::Server::saveIp(void)
 		this->ip = inet_ntoa(*((struct in_addr*) hostEntry->h_addr_list[0]));
 	
 	return 0;
+}
+
+void	IRC::Server::terminateServer(void)
+{
+	if (close(getSocket()) == -1)
+		throwError("Server close error");
 }
 
 int		IRC::Server::clientConnected(void)
@@ -203,7 +209,8 @@ void	IRC::Server::clientDisconnected(int eventFd, std::string message)
 		this->users.erase(found);
 	}
 
-	close(eventFd); // TODO: ver errores o si es bloqueante
+	if (close(eventFd) == -1)
+		throwError("Client close error");
 }
 
 int		IRC::Server::receiveMessage(int eventFd)

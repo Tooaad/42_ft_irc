@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:39:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:16:55 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int main(int argc, char **argv)
 		server.connectNetwork(args);
 
 	server.loop();
-	close(server.getSocket()); // TODO: Mirar como cerrar bien, tras Ctrl+C no llega aqui
+	server.terminateServer();
+
 	return 0;
 }

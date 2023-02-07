@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:46:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:04:59 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:14:55 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	IRC::Quit::exec(IRC::Server* server, IRC::User& user)
 	else
 		message = "Quit: " + user.getNick();
 		
-	server->closeConnection(user.getSocket(), message);
+	server->closeClient(user.getSocket(), message);
 }
