@@ -92,6 +92,7 @@ Lista de prioridades:
 - Revisar Modes + Derivados Modes (PrivMSG/List/Channels)
 - Probar comandos parciales + input ./ircserv
 - Revisar todo y explicarnoslo
+- Control de errores y leaks
 
 nc irc.irc-hispano.org 6667
 lsof -t -i tcp:6667 | xargs kill
