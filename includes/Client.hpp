@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:08 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:38:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:59:44 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace IRC
 			Client(int serverSocket);
 			Client(const Client& other);
 			~Client();
-			Client& operator= (const Client& other);
+			Client& operator=(const Client& other);
 
 			/* -- Getters -- */
 			sockaddr_in		getAddress(void) const;
