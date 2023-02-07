@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:46:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:22:57 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:47:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void IRC::Quit::exec(IRC::Server* server, IRC::User& user)
 	else
 		message = "Quit: " + user.getNick();
 		
-	server->clientDisconnected(user.getSocket(), message);
+	server->closeConnection(user.getSocket(), message);
 }

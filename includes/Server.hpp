@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/01 12:18:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:47:03 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #include "utils.hpp"
 #include "Channel.hpp"
 
+
 namespace IRC
 {
 	class User;
@@ -37,59 +38,66 @@ namespace IRC
 	
 	class Server
 	{
-	private:
-		int				sSocket;
-		int				kq;
-		std::string 	pwd;
-		struct kevent	change_event[4]; // TODO: hay que ampliar? vector
-		struct kevent	event[4];		   // TODO: hay que ampliar? vector
-		time_t			timeout;
-		std::vector<IRC::User>		users;
-		std::vector<std::string>	commands;
-		std::vector<IRC::Channel>	channels;
-		std::string		ip;
+		private:
+			int								sSocket;
+			int								kq;
+			std::string 					password;
+			struct kevent					changeEvent[4];		// TODO: hay que ampliar? vector
+			struct kevent					event[4];			// TODO: hay que ampliar? vector
+			time_t							timeout;
+			std::vector<IRC::User>			users;
+			std::vector<std::string>		commands;
+			std::vector<IRC::Channel>		channels;
+			std::string						ip;
 
-		// //			◦ If host, port_network and password_network aren’t given, you must create a new IRC network
-		// //			◦ host is the hostname on which IRC must connect to join a already existing network
-		// 			std::string		hostname;
-		// //			◦ port_network is the server port on which IRC must connect on host
-		// 			int				port_network;
-		// //			◦ password_network is the password needed to connect on host
-		// 			std::string		pw_network;
-		// //			◦ port is the port number on which your server will accept incoming connections.
-		// 			int				port;
-		// //			◦ password is the password needed by any IRC client who wants to connect to your server.
-		// 			std::string		password;
+			// //			◦ If host, port_network and password_network aren’t given, you must create a new IRC network
+			// //			◦ host is the hostname on which IRC must connect to join a already existing network
+			// 			std::string		hostname;
+			// //			◦ port_network is the server port on which IRC must connect on host
+			// 			int				port_network;
+			// //			◦ password_network is the password needed to connect on host
+			// 			std::string		pw_network;
+			// //			◦ port is the port number on which your server will accept incoming connections.
+			// 			int				port;
+			// //			◦ password is the password needed by any IRC client who wants to connect to your server.
+			// 			std::string		password;
 
-	public:
-		Server();
-		Server(std::string pwd);
-		Server(const Server &other);
-		Server &operator=(const Server &other);
-		~Server();
+		public:
+			Server();
+			Server(std::string password);
+			Server(const Server &other);
+			~Server();
+			Server &operator=(const Server &other);
 
-		int createNetwork(std::string *args);
-		void connectNetwork(std::string *args);
-		int loop(void);
-		int clientConnected(void);
-		void clientDisconnected(int event_fd, std::string message);
-		int receiveMessage(int event_fd);
-		void registration(IRC::User& user, std::string PWD);
-		// void serverClose(void);
+			/* -- Getters -- */
+			int								getSocket(void) const;
+			int								getKq(void) const;
+			std::string						getPassword(void) const;
+			struct kevent					*getChangeEvent(void);
+			struct kevent					*getEvent(void);
+			time_t							getTimeout(void) const;
+			std::vector<User>&				getUsers(void);
+			std::vector<Channel>&			getChannels(void);
+			std::vector<Channel>::iterator	getChannelIt(std::string name);
+			std::string						getIp(void);
 
-		int getSocket(void) const;
-		int getKq(void) const;
-		std::string getPWD(void) const;
-		struct kevent *getEvent(void);
-		struct kevent *getChangeEvent(void);
-		time_t getTimeout(void) const;
-		std::vector<User>& getUsers(void);
-		std::vector<Channel>& getChannels(void);
-		std::vector<Channel>::iterator getChannelIt(std::string name);
-		void addChannel(Channel& channel);
-		void removeChannel(Channel channel);
-		int saveIP(void);
-		std::string getIP(void);
+			/* -- Modifiers -- */
+			void							addChannel(Channel& channel);
+			void							removeChannel(Channel channel);
+
+			/* -- Member functions */
+			int								createNetwork(std::string *args);
+			void							connectNetwork(std::string *args);
+			int								loop(void);
+			void 							closeConnection(int event_fd, std::string message);
+			
+		private:
+			/* -- Member functions */
+			int								saveIp(void);
+			int								clientConnected(void);
+			void							clientDisconnected(int event_fd, std::string message);
+			int								receiveMessage(int event_fd);
+			void							registration(IRC::User& user, std::string password);
+			// void serverClose(void);
 	};
-	std::string parsePwd(std::string buf, std::string command);
 }

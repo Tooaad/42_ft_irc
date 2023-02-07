@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:21:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:04:06 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:47:17 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ IRC::Nick::~Nick() {}
 void IRC::Nick::exec(IRC::Server* server, IRC::User& user)
 {	
 
-	if (server->getPWD().size() > 0 && user.getPassword() != server->getPWD())
+	if (server->getPassword().size() > 0 && user.getPassword() != server->getPassword())
 		return ;			
 	if (this->args.size() < 1)
 		{

@@ -17,10 +17,10 @@ IRC::Server::Server() {}
 IRC::Server::Server(const IRC::Server &other) { *this = other; }
 IRC::Server::~Server() {}
 
-IRC::Server::Server(std::string pwd)
+IRC::Server::Server(std::string password)
 {
 	this->timeout = 10;
-	this->pwd = pwd;
+	this->password = password;
 }
 
 IRC::Server &IRC::Server::operator=(const IRC::Server &other)
@@ -29,7 +29,7 @@ IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 	{
 		sSocket = other.sSocket;
 		kq = other.kq;
-		pwd = other.pwd;
+		password = other.password;
 		timeout = other.timeout;
 		users = other.users;
 		commands = other.commands;
@@ -77,15 +77,15 @@ int IRC::Server::createNetwork(std::string *args)
 
 	kq = kqueue();
 
-	EV_SET(change_event, sSocket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, 0);
+	EV_SET(changeEvent, sSocket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, 0);
 
-	if (kevent(kq, change_event, 1, NULL, 0, NULL) == -1)
+	if (kevent(kq, changeEvent, 1, NULL, 0, NULL) == -1)
 	{
 		perror("kevent");
 		return -1;
 	}
 
-	if (this->saveIP() == -1)
+	if (this->saveIp() == -1)
 		return -1;
 	std::cout << "--- IP: " << this->ip << " ---" << std::endl;
 
@@ -129,10 +129,10 @@ int IRC::Server::loop(void)
 int IRC::Server::clientConnected(void)
 {
 	IRC::Client client(this->sSocket);
-	client.clientSetup();
+	client.setup();
 
-	EV_SET(this->change_event, client.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
-	if (kevent(this->kq, this->change_event, 1, NULL, 0, NULL) < 0)
+	EV_SET(this->changeEvent, client.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
+	if (kevent(this->kq, this->changeEvent, 1, NULL, 0, NULL) < 0)
 	{
 		perror("kevent error");
 		return -1;
@@ -140,6 +140,11 @@ int IRC::Server::clientConnected(void)
 
 	this->users.push_back(IRC::User(client.getSocket()));
 	return 0;
+}
+
+void IRC::Server::closeConnection(int event_fd, std::string message)
+{
+	this->clientDisconnected(event_fd, message);
 }
 
 void IRC::Server::clientDisconnected(int event_fd, std::string message)
@@ -303,9 +308,9 @@ int IRC::Server::getKq(void) const
 	return this->kq;
 }
 
-std::string IRC::Server::getPWD(void) const
+std::string IRC::Server::getPassword(void) const
 {
-	return this->pwd;
+	return this->password;
 }
 
 time_t IRC::Server::getTimeout(void) const
@@ -320,7 +325,7 @@ struct kevent *IRC::Server::getEvent(void)
 
 struct kevent *IRC::Server::getChangeEvent(void)
 {
-	return &this->change_event[0];
+	return &this->changeEvent[0];
 }
 
 std::vector<IRC::User>& IRC::Server::getUsers(void)
@@ -346,12 +351,6 @@ std::vector<IRC::Channel>::iterator IRC::Server::getChannelIt(std::string name)
 	return it;
 }
 
-std::string IRC::parsePwd(std::string buf, std::string command) {
-	if (buf.substr(0, 5) == command)
-		return buf.substr(5, buf.size() - 1);
-	return "";
-}
-
 void	IRC::Server::addChannel(IRC::Channel& channel)
 {
 	channels.push_back(channel);
@@ -366,7 +365,7 @@ void IRC::Server::removeChannel(IRC::Channel channel)
 	
 }
 
-int IRC::Server::saveIP(void)
+int IRC::Server::saveIp(void)
 {
 	char host[256];
 	struct hostent *host_entry;
@@ -384,7 +383,7 @@ int IRC::Server::saveIP(void)
 	return 0;
 }
 
-std::string IRC::Server::getIP(void)
+std::string IRC::Server::getIp(void)
 {
 	return this->ip;
 }

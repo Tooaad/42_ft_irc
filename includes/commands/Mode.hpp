@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:00:31 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 10:52:17 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:50:01 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ namespace IRC
 		
 		private:
 			std::string		printChannelMax(IRC::Channel recept);
-			std::string		printPass(IRC::Channel recept);
+			std::string		printPassword(IRC::Channel recept);
 	};
 }

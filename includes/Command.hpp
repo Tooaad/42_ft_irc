@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 19:53:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:13:14 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 #include "Server.hpp"
 #include "User.hpp"
 
-
-/*
-
-RPL_TOPIC
-*/
 
 namespace IRC
 {
@@ -76,18 +71,15 @@ namespace IRC
 				RPL_CHANNELMODEIS=324
 			};
 	
-		
 		protected:
-
 			std::string		command;
 			std::string		args;
-			int				replyNo;
 			std::string		replyMsg;
-			int				errorNo;
 			std::string		errorMsg;
-			
-			//int				id;
-			//int				argc;
+			int				replyNo;
+			int				errorNo;
+			// int			id;
+			// int			argc;
 		
 		private:
 			static	std::map<std::string, Command*> cmd_map;
@@ -96,17 +88,21 @@ namespace IRC
 			Command();
 			Command(std::string str);
 			Command(const Command& other);
-			Command& operator=(const Command& other);
 			virtual ~Command();
+			Command& operator=(const Command& other);
 
-			Command*		find(std::string key) const;
+			/* -- Setters -- */
+			void			setError(ErrorNos errorNo, Server server, User user, int n, ...);
+			void			setReply(ReplyNos replyNo, Server server, User user, int n, ...);
+			
+			/* -- Member functions */
 			void			detectCommand(Server* server, User& user);
+		
+		private:
+			/* -- Member functions */
+			Command*		find(std::string key) const;
 			virtual void	exec(Server* server, User& user);
 			void			answer(User& user);
-			void			setError(ErrorNos errorNo, Server server, User user, int n, ...);
-			void 			setReply(ReplyNos replyNo, Server server, User user, int n, ...);
-			
-		private:
 			std::string		expandMessage(int argCount, va_list vaList, std::string errorStr);
 	};
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:25:00 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:34:05 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void						IRC::Channel::setPassword(std::string password) { this->password = pas
 bool						IRC::Channel::isInviteOnly() const { return inviteOnlyMode; }
 void						IRC::Channel::changeInviteOnly() { inviteOnlyMode = !inviteOnlyMode; }
 bool						IRC::Channel::hasMax() const { return this->maxUsers > 0; }
-bool						IRC::Channel::hasPass() const { return this->password.size() > 0; }
+bool						IRC::Channel::hasPassword() const { return this->password.size() > 0; }
 
 
 void	IRC::Channel::changeSecrecy() { this->secretMode = !this->secretMode; }
@@ -180,7 +180,7 @@ bool	IRC::Channel::isFull(void) const
 
 void	IRC::Channel::broadcastAction(IRC::Server* server, IRC::User user, std::string command)
 {
-	std::string str = ":" + user.getNick() + "!" + user.getUser() + "@" + server->getIP();
+	std::string str = ":" + user.getNick() + "!" + user.getUser() + "@" + server->getIp();
 	str += " " + command + " :" + this->getName();
 	str += "\n";
 	

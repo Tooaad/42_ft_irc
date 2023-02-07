@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Username.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:54:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/06 20:04:49 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:47:48 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ IRC::Username::~Username() {}
 
 void IRC::Username::exec(IRC::Server* server, IRC::User& user)
 {
-	if (server->getPWD().size() > 0 && user.getPassword() != server->getPWD())
+	if (server->getPassword().size() > 0 && user.getPassword() != server->getPassword())
 		return ;
 	std::vector<std::string> argSplit = splitString(this->args, " ", 3);
 	if (argSplit.size() < 4)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/06 18:25:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:36:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sys/socket.h>
 #include "User.hpp"
 #include "Server.hpp"
+
 
 namespace IRC
 {
@@ -34,18 +35,18 @@ namespace IRC
 			};
 		
 		private:
-			std::string					name;
-			std::vector<User>			operators;
-			std::vector<User>			moderators;
-			std::vector<User>			users;
-			std::string					topic;
-			std::string					password;
-			bool						inviteOnlyMode;
-			bool						secretMode;
-			bool						freeTopicMode;
-			bool						publicMsgMode;
-			bool						moderatedMode;
-			int							maxUsers;
+			std::string				name;
+			std::vector<User>		operators;
+			std::vector<User>		moderators;
+			std::vector<User>		users;
+			std::string				topic;
+			std::string				password;
+			bool					inviteOnlyMode;
+			bool					secretMode;
+			bool					freeTopicMode;
+			bool					publicMsgMode;
+			bool					moderatedMode;
+			int						maxUsers;
 
 		public:
 			Channel();
@@ -54,49 +55,57 @@ namespace IRC
 			~Channel();
 			Channel& operator=(const Channel& other);
 
-			void						setMaxUsers(int size);
-			int							getMaxUsers(void);
-			bool						isFull(void) const;
-			void						addUser(User& user);
-			bool						existsUser(User user);
-			void						removeUser(User user);
-			std::string					getName() const;
-			std::string					getUsersString(void);
-			std::vector<User>			getOperators() const;
-			void						addOperator(IRC::User user);
-			void						removeOperator(IRC::User user);
-			std::vector<User>			getModerators() const;
-			void						addModerator(IRC::User user);
-			void						removeModerator(IRC::User user);
-			bool						isSecret() const;
-			void						changeSecrecy();
-			bool						isFreeTopic() const;
-			void						changeFreeTopic();
-			bool						isPublicMsg() const;
-			void						changePublicMsg();
-			bool						isModerated() const;
-			void						changeModerated();
-			std::vector<User>			getUsers() const;
-			std::string					getTopic() const;
-			std::string					getPassword() const;
-			void						setPassword(std::string password);
-			void						setTopic(std::string newTopic);
-			void						setName(std::string newName);
-			bool						checkPassword(std::string pass) const;
-			bool						isInviteOnly() const;
-			void						changeInviteOnly();
-			void						sendMessageToOperators(std::string message);
-			void						sendMessageToModerators(std::string message);
-			void						sendMessageToUsers(std::string message);
-			void						broadcastAction(IRC::Server* server, IRC::User user, std::string command);
-			bool						isOperator(IRC::User user);
-			bool						isModerator(IRC::User user);
-			bool						isEmpty(void);
-			bool						hasPass(void) const;
-			bool						hasMax(void) const;
+			/* -- Getters -- */
+			std::string				getName() const;
+			std::vector<User>		getOperators() const;
+			std::vector<User>		getModerators() const;
+			std::vector<User>		getUsers() const;
+			std::string				getTopic() const;
+			std::string				getPassword() const;
+			bool					isInviteOnly() const;
+			bool					isSecret() const;
+			bool					isFreeTopic() const;
+			bool					isPublicMsg() const;
+			bool					isModerated() const;
+			int						getMaxUsers(void);
+
+			/* -- Setters -- */
+			void					setName(std::string newName);
+			void					setTopic(std::string newTopic);
+			void					setPassword(std::string password);
+			void					changeInviteOnly();
+			void					changeSecrecy();
+			void					changeFreeTopic();
+			void					changePublicMsg();
+			void					changeModerated();
+			void					setMaxUsers(int size);
+			
+			/* -- Modifiers -- */
+			void					addOperator(IRC::User user);
+			void					removeOperator(IRC::User user);
+			void					addModerator(IRC::User user);
+			void					removeModerator(IRC::User user);
+			void					addUser(User& user);
+			void					removeUser(User user);
+
+			/* -- Member functions */
+			bool					isOperator(IRC::User user);
+			bool					isModerator(IRC::User user);
+			bool					existsUser(User user);
+			std::string				getUsersString(void);
+			bool					hasPassword(void) const;
+			bool					checkPassword(std::string pass) const;
+			bool					hasMax(void) const;
+			bool					isFull(void) const;
+			bool					isEmpty(void);
+			void					sendMessageToOperators(std::string message);
+			void					sendMessageToModerators(std::string message);
+			void					sendMessageToUsers(std::string message);
+			void					broadcastAction(IRC::Server* server, IRC::User user, std::string command);
 	};
+
+	/* -- Non-member functions */
 	bool	operator== (const Channel lhs, const Channel rhs);
-	
 	void	printChannels(std::vector<Channel>& channels);
 	void	printChannel(Channel& channel);
 }
