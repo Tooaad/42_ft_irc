@@ -6,13 +6,13 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:12:02 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:37:10 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/utils.hpp"
 
-
+/*
 std::string		trimEndl(std::string str)
 {
 	std::string::iterator found = std::find(str.begin(), str.end(), '\n');
@@ -22,6 +22,7 @@ std::string		trimEndl(std::string str)
 
 	return str;
 }
+*/
 
 /*
 	- Splits the "str" string by a given "delim" delimiter.
