@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:41:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:09:19 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,18 +146,18 @@ std::string	IRC::Channel::getUsersString(void) const // TODO: CAMBIAR
 {
 	std::string usersString = "";
 
-	for (std::vector<IRC::User>::const_iterator user_it = this->users.begin(); user_it != this->users.end(); ++user_it)
+	for (std::vector<IRC::User>::const_iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
 	{
 		if (usersString.size() > 0)
 			usersString += " ";
 
-		if (isOperator(*user_it))
+		if (isOperator(*userIt))
 			usersString += "@";
 			
-		if (isModerator(*user_it))
+		if (isModerator(*userIt))
 			usersString += "+";
 	
-		usersString += user_it->getNick();
+		usersString += userIt->getNick();
 	}
 
 	return usersString;

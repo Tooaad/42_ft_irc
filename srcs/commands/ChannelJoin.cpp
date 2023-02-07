@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:03:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:04:41 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ IRC::Channel*	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::
 
 IRC::Channel*	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, IRC::Server* server)
 {
-	// TODO: Cuidado leaks
 	IRC::Channel* newChannel = new Channel(channelName, user);
 	server->addChannel(*newChannel);
 	user.addJoinedChannel(*newChannel);

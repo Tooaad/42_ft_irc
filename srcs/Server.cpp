@@ -132,60 +132,60 @@ int IRC::Server::createNetwork(std::string *args)
 
 int IRC::Server::loop(void)
 {
-	int	new_events;
+	int	newEvents;
 
 	// Server loop
 	while (true)
 	{
-		if ((new_events = kevent(getKq(), NULL, 0, getEvent(), 1, NULL)) == -1)
+		if ((newEvents = kevent(getKq(), NULL, 0, getEvent(), 1, NULL)) == -1)
 		{
 			perror("kevent");
 			return -1;
 		}
 
 		// kqueue events loop
-		for (int i = 0; i < new_events; i++)
+		for (int i = 0; i < newEvents; i++)
 		{
-			int event_fd = getEvent()[i].ident;
+			int eventFd = getEvent()[i].ident;
 
 			// Client disconnected
 			if (getEvent()[i].flags & EV_EOF)
-				clientDisconnected(event_fd, "Quit: Connection closed");
+				clientDisconnected(eventFd, "Quit: Connection closed");
 
 			// New client connected
-			else if (event_fd == getSocket())
+			else if (eventFd == getSocket())
 				clientConnected();
 
 			// New message from client
 			else if (getEvent()[i].filter & EVFILT_READ)
-				receiveMessage(event_fd);
+				receiveMessage(eventFd);
 		}
 	}
 
 	return 0;
 }
 
-void	IRC::Server::closeConnection(int event_fd, std::string message)
+void	IRC::Server::closeConnection(int eventFd, std::string message)
 {
-	clientDisconnected(event_fd, message);
+	clientDisconnected(eventFd, message);
 }
 
 /* -- Private Member functions */
 int		IRC::Server::saveIp(void)
 {
 	char				host[256];
-	struct hostent*		host_entry;
+	struct hostent*		hostEntry;
 
 	if (gethostname(host, sizeof(host)) == -1)
 	{
 		perror("Error getting ip: gethostname");
 		return -1;
 	}
-	host_entry = gethostbyname(host);
-	if (!host_entry)
+	hostEntry = gethostbyname(host);
+	if (!hostEntry)
 		this->ip = "127.0.0.1";
 	else
-		this->ip = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
+		this->ip = inet_ntoa(*((struct in_addr*) hostEntry->h_addr_list[0]));
 	
 	return 0;
 }
@@ -206,37 +206,37 @@ int		IRC::Server::clientConnected(void)
 	return 0;
 }
 
-void	IRC::Server::clientDisconnected(int event_fd, std::string message)
+void	IRC::Server::clientDisconnected(int eventFd, std::string message)
 {
-	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), User(event_fd));
+	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), User(eventFd));
 	if (found != this->users.end())
 	{
 		std::cout << message << std::endl;
 		this->users.erase(found);
 	}
 
-	close(event_fd); // TODO: ver errores o si es bloqueante
+	close(eventFd); // TODO: ver errores o si es bloqueante
 }
 
-int		IRC::Server::receiveMessage(int event_fd)
+int		IRC::Server::receiveMessage(int eventFd)
 {
 	char buf[4096];
 	int bytesRec;
 
 	memset(buf, 0, 4096);
-	if (fcntl(event_fd, F_SETFL, O_NONBLOCK) < 0)
+	if (fcntl(eventFd, F_SETFL, O_NONBLOCK) < 0)
 	{
 		perror("Error making client socket non blocking");
 		return -1;
 	}
 
-	if ((bytesRec = recv(event_fd, buf, 4096, 0)) == -1)
+	if ((bytesRec = recv(eventFd, buf, 4096, 0)) == -1)
 	{
 		std::cout << "Error in recv(). Quitting" << std::endl;
 		return -1;
 	}
 
-	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), User(event_fd));
+	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), User(eventFd));
 	if (found == this->users.end()) // TODO: que hacer si no encontramos usuario
 		return -1;
 
@@ -267,7 +267,6 @@ int		IRC::Server::receiveMessage(int event_fd)
 		messageSplit.erase(messageSplit.end() - 1);
 	}
 
-	user.setPassword("12"); // TODO: Remove
 	for (std::vector<std::string>::iterator it = messageSplit.begin(); it != messageSplit.end(); it++)
 	{
 		//std::cout << "*** Split: '" << *it << "'" << std::endl;
@@ -295,7 +294,7 @@ int		IRC::Server::receiveMessage(int event_fd)
 		return -1;
 	}
 	*/
-	// std::cout << "Msg from " << event_fd << ": " << std::string(buf, 0, bytesRec) << std::endl;
+	// std::cout << "Msg from " << eventFd << ": " << std::string(buf, 0, bytesRec) << std::endl;
 
 	/*
 	for (size_t i = 0; i < users.size(); i++)
@@ -313,13 +312,13 @@ void IRC::Server::registration(IRC::User& user, std::string message)
 	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
 	{
 		user.changeAuthenticated(); 				// true
-		std::string error_msg = "You have been authenticated!\n";
-		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
+		std::string errorMsg = "You have been authenticated!\n";
+		send(user.getSocket(), errorMsg.c_str(), errorMsg.size(), 0);
 	}
 
 	// if (user.isAuthenticated() == false)
 	// {
-	// 	std::string error_msg = "Not authenticated! Provide PASS, NICK and USER\n";
-	// 	send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
+	// 	std::string errorMsg = "Not authenticated! Provide PASS, NICK and USER\n";
+	// 	send(user.getSocket(), errorMsg.c_str(), errorMsg.size(), 0);
 	// }
 }

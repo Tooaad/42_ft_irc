@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:25:21 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:11:45 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,10 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 {
 	std::string channelsString = "";
 	
-	for (std::vector<IRC::Channel>::const_iterator channel_it = this->joinedChannels.begin(); channel_it != this->joinedChannels.end(); ++channel_it)
+	for (std::vector<IRC::Channel>::const_iterator channelIt = this->joinedChannels.begin(); channelIt != this->joinedChannels.end(); ++channelIt)
 	{
-		channelsString += channel_it->getName();
-		if (channel_it + 1 != this->joinedChannels.end())
+		channelsString += channelIt->getName();
+		if (channelIt + 1 != this->joinedChannels.end())
 			channelsString += " ";
 	}
 

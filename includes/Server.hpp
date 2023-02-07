@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:25:03 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:08:10 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ namespace IRC
 			void							connectNetwork(std::string *args);
 			int								createNetwork(std::string *args);
 			int								loop(void);
-			void 							closeConnection(int event_fd, std::string message);
+			void 							closeConnection(int eventFd, std::string message);
 			
 		private:
 			/* -- Member functions -- */
 			int								saveIp(void);
 			int								clientConnected(void);
-			void							clientDisconnected(int event_fd, std::string message);
-			int								receiveMessage(int event_fd);
+			void							clientDisconnected(int eventFd, std::string message);
+			int								receiveMessage(int eventFd);
 			void							registration(IRC::User& user, std::string password);
 			// void serverClose(void);
 	};
