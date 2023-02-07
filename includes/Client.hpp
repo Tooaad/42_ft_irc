@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:08 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 11:45:25 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:38:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ namespace IRC
 	{
 		private:
 			sockaddr_in		address;
-			socklen_t		size;
 			int				cSocket;
+			socklen_t		size;
 
 		public:
 			Client();
@@ -39,11 +39,11 @@ namespace IRC
 			Client& operator= (const Client& other);
 
 			/* -- Getters -- */
-			sockaddr_in		getAddress() const;
-			socklen_t		getSize() const;
-			int				getSocket() const;
+			sockaddr_in		getAddress(void) const;
+			int				getSocket(void) const;
+			socklen_t		getSize(void) const;
 
-			/* -- Member functions */
-			void			setup() const;
+			/* -- Member functions -- */
+			void			setup(void);
 	};
 }

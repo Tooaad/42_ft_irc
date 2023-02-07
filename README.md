@@ -97,6 +97,17 @@ nc irc.irc-hispano.org 6667
 lsof -t -i tcp:6667 | xargs kill
 
 
+Refactor .cpp:
+-> doble espacio tras includes
+-> Orden igual que en el HPP
+-> Comentarios secciones
+-> Alinear tabs
+-> Const en getters y printers
+-> This en variables de la clase, no en funciones
+-> Void en funciones sin argumentos
+
+
+
 /*
 > join #jeje
 	:karisti1!karisti1@0G6.n4M.2Cld1O.virtual JOIN :#jeje

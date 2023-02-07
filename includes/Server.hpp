@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 11:47:03 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:25:03 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ namespace IRC
 	class Server
 	{
 		private:
+			std::string						ip;
 			int								sSocket;
 			int								kq;
 			std::string 					password;
@@ -48,7 +49,7 @@ namespace IRC
 			std::vector<IRC::User>			users;
 			std::vector<std::string>		commands;
 			std::vector<IRC::Channel>		channels;
-			std::string						ip;
+			
 
 			// //			◦ If host, port_network and password_network aren’t given, you must create a new IRC network
 			// //			◦ host is the hostname on which IRC must connect to join a already existing network
@@ -70,6 +71,7 @@ namespace IRC
 			Server &operator=(const Server &other);
 
 			/* -- Getters -- */
+			std::string						getIp(void) const;
 			int								getSocket(void) const;
 			int								getKq(void) const;
 			std::string						getPassword(void) const;
@@ -79,20 +81,19 @@ namespace IRC
 			std::vector<User>&				getUsers(void);
 			std::vector<Channel>&			getChannels(void);
 			std::vector<Channel>::iterator	getChannelIt(std::string name);
-			std::string						getIp(void);
 
 			/* -- Modifiers -- */
 			void							addChannel(Channel& channel);
 			void							removeChannel(Channel channel);
 
-			/* -- Member functions */
-			int								createNetwork(std::string *args);
+			/* -- Member functions -- */
 			void							connectNetwork(std::string *args);
+			int								createNetwork(std::string *args);
 			int								loop(void);
 			void 							closeConnection(int event_fd, std::string message);
 			
 		private:
-			/* -- Member functions */
+			/* -- Member functions -- */
 			int								saveIp(void);
 			int								clientConnected(void);
 			void							clientDisconnected(int event_fd, std::string message);

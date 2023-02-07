@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 11:27:05 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:38:31 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ namespace IRC
 			void					setRealname(std::string realname);
 			void					setHostname(std::string realname);
 			void					setServername(std::string realname);
-			void					changeAuthenticated();
-			void					changeInvisibility();
-			void					deOp(); // TOTO: Nombre funcion??
-			void					changeSubscription();
+			void					changeAuthenticated(void);
+			void					changeInvisibility(void);
+			void					deOp(void); // TOTO: Nombre funcion??
+			void					changeSubscription(void);
 			void					setTimeout(time_t timeout);
 
 			/* -- Modifiers -- */
@@ -82,12 +82,12 @@ namespace IRC
 			void					appendBuffer(std::string str);
 			void					clearBuffer(void);
 
-			/* -- Member functions */
-			std::string				getJoinedChannelsString(void);
-			bool					isInChannel(Channel channel);
+			/* -- Member functions -- */
+			std::string				getJoinedChannelsString(void) const;
+			bool					isInChannel(Channel channel) const;
 	};
 	
-	/* -- Non-member functions */
+	/* -- Non-member functions -- */
 	bool								operator== (const User lhs, const User rhs);
 	std::vector<IRC::User>::iterator	findUser(std::vector<User>& users, std::string nick);
 	void								printUser(User user);

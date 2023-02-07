@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/01/26 19:17:37 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:39:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 #include "../includes/Client.hpp"
 #include "../includes/utils.hpp"
 
+
 void saveArgs(std::string *args, int argc, char **argv)
 {
 	for (int i = 1; i < argc; i++)
 		args[i - 1] = argv[i];
 }
 
-void cleaks() {
+void cleaks(void)
+{
 	system("leaks ircserv");
 }
 

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 11:36:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:38:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,28 +56,28 @@ namespace IRC
 			Channel& operator=(const Channel& other);
 
 			/* -- Getters -- */
-			std::string				getName() const;
-			std::vector<User>		getOperators() const;
-			std::vector<User>		getModerators() const;
-			std::vector<User>		getUsers() const;
-			std::string				getTopic() const;
-			std::string				getPassword() const;
-			bool					isInviteOnly() const;
-			bool					isSecret() const;
-			bool					isFreeTopic() const;
-			bool					isPublicMsg() const;
-			bool					isModerated() const;
-			int						getMaxUsers(void);
+			std::string				getName(void) const;
+			std::vector<User>		getOperators(void) const;
+			std::vector<User>		getModerators(void) const;
+			std::vector<User>		getUsers(void) const;
+			std::string				getTopic(void) const;
+			std::string				getPassword(void) const;
+			bool					isInviteOnly(void) const;
+			bool					isSecret(void) const;
+			bool					isFreeTopic(void) const;
+			bool					isPublicMsg(void) const;
+			bool					isModerated(void) const;
+			int						getMaxUsers(void) const;
 
 			/* -- Setters -- */
 			void					setName(std::string newName);
 			void					setTopic(std::string newTopic);
 			void					setPassword(std::string password);
-			void					changeInviteOnly();
-			void					changeSecrecy();
-			void					changeFreeTopic();
-			void					changePublicMsg();
-			void					changeModerated();
+			void					changeInviteOnly(void);
+			void					changeSecrecy(void);
+			void					changeFreeTopic(void);
+			void					changePublicMsg(void);
+			void					changeModerated(void);
 			void					setMaxUsers(int size);
 			
 			/* -- Modifiers -- */
@@ -88,23 +88,23 @@ namespace IRC
 			void					addUser(User& user);
 			void					removeUser(User user);
 
-			/* -- Member functions */
-			bool					isOperator(IRC::User user);
-			bool					isModerator(IRC::User user);
-			bool					existsUser(User user);
-			std::string				getUsersString(void);
+			/* -- Member functions -- */
+			bool					isOperator(IRC::User user) const;
+			bool					isModerator(IRC::User user) const;
+			bool					existsUser(User user) const;
+			std::string				getUsersString(void) const;
 			bool					hasPassword(void) const;
 			bool					checkPassword(std::string pass) const;
 			bool					hasMax(void) const;
 			bool					isFull(void) const;
-			bool					isEmpty(void);
+			bool					isEmpty(void) const;
 			void					sendMessageToOperators(std::string message);
 			void					sendMessageToModerators(std::string message);
 			void					sendMessageToUsers(std::string message);
 			void					broadcastAction(IRC::Server* server, IRC::User user, std::string command);
 	};
 
-	/* -- Non-member functions */
+	/* -- Non-member functions -- */
 	bool	operator== (const Channel lhs, const Channel rhs);
 	void	printChannels(std::vector<Channel>& channels);
 	void	printChannel(Channel& channel);

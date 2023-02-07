@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 11:43:51 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:25:03 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,37 @@
 #include "../includes/commands/ChannelNames.hpp"
 #include "../includes/commands/ChannelList.hpp"
 
-IRC::Command::Command() :  replyMsg(""), errorMsg(""), replyNo(0), errorNo(0) {}
-IRC::Command::Command(const IRC::Command& other) { *this = other; }
-IRC::Command::~Command() {}
 
-// TODO: Quitar el / inicial en los comandos antes de guardar y tambien para comprobar
-std::map<std::string, IRC::Command*> IRC::Command::cmd_map;
-IRC::Command::Command(std::string str) : replyMsg(""), errorMsg(""), replyNo(0), errorNo(0)
+IRC::Command::Command()
 {
+	this->replyMsg = "";
+	this->errorMsg = "";
+	this->replyNo = 0;
+	this->errorNo = 0;
+}
+
+std::map<std::string, IRC::Command*> IRC::Command::cmd_map;
+IRC::Command::Command(std::string str)
+{
+	this->replyMsg = "";
+	this->errorMsg = "";
+	this->replyNo = 0;
+	this->errorNo = 0;
+	
 	if (cmd_map.empty())
 	{
-		cmd_map["PASS"] = new IRC::Pass();
-		cmd_map["NICK"] = new IRC::Nick();
-		cmd_map["USER"] = new IRC::Username();
-		cmd_map["PRIVMSG"] = new IRC::PrivMsg();
-		cmd_map["NOTICE"] = new IRC::Notice();
-		cmd_map["MODE"] = new IRC::Mode();
-		cmd_map["JOIN"] = new IRC::ChannelJoin();
-		cmd_map["PART"] = new IRC::ChannelPart();
-		cmd_map["TOPIC"] = new IRC::ChannelTopic();
-		cmd_map["NAMES"] = new IRC::ChannelNames();
-		cmd_map["LIST"] = new IRC::ChannelList();
-		cmd_map["QUIT"] = new IRC::Quit();
+		this->cmd_map["PASS"] = new IRC::Pass();
+		this->cmd_map["NICK"] = new IRC::Nick();
+		this->cmd_map["USER"] = new IRC::Username();
+		this->cmd_map["PRIVMSG"] = new IRC::PrivMsg();
+		this->cmd_map["NOTICE"] = new IRC::Notice();
+		this->cmd_map["MODE"] = new IRC::Mode();
+		this->cmd_map["JOIN"] = new IRC::ChannelJoin();
+		this->cmd_map["PART"] = new IRC::ChannelPart();
+		this->cmd_map["TOPIC"] = new IRC::ChannelTopic();
+		this->cmd_map["NAMES"] = new IRC::ChannelNames();
+		this->cmd_map["LIST"] = new IRC::ChannelList();
+		this->cmd_map["QUIT"] = new IRC::Quit();
 	}
 
 	std::vector<std::string> argsArray = splitString(str, " ", 1);
@@ -61,72 +70,23 @@ IRC::Command::Command(std::string str) : replyMsg(""), errorMsg(""), replyNo(0),
 	std::cout << "-------------------------------" << std::endl;
 }
 
+IRC::Command::Command(const IRC::Command& other) { *this = other; }
+IRC::Command::~Command() {}
+
 IRC::Command& IRC::Command::operator=(const IRC::Command& other)
 {
 	this->command = other.command;
 	this->args = other.args;
-	this->replyNo = other.replyNo;
 	this->replyMsg = other.replyMsg;
-	this->errorNo = other.errorNo;
 	this->errorMsg = other.errorMsg;
+	this->replyNo = other.replyNo;
+	this->errorNo = other.errorNo;
 	
 	return *this;
 }
 
-IRC::Command* IRC::Command::find(std::string key) const
-{
-	std::map<std::string, Command*>::const_iterator found = cmd_map.find(key);
-	
-	if (found != cmd_map.end())
-		return found->second;
-	
-	return NULL;
-}
-
-void IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
-{
-// >>>>PROTEGER<<<<
-	IRC::Command* t = find(this->command);
-	
-	if (!t)
-		return ;
-    
-    // if (dynamic_cast <IRC::Pass *> (t))
-    //     continue ;
-    // else if (dynamic_cast <IRC::User *> (t) || dynamic_cast <IRC::Nick *> (t))
-    //     condicion
-    // else
-    //     condicion autenticado
-
-
-	*t = *this;
-	
-	// std::cout << typeid(t).name() <<  std::endl;
-	// std::cout << t->args <<  std::endl;
-	
-	t->exec(server, user);
-	t->answer(user);
-}
-
-void IRC::Command::exec(IRC::Server* server, IRC::User& user)
-{
-	std::cout << "GUAU" <<  std::endl;
-	(void)server;
-	(void)user;
-}
-
-void IRC::Command::answer(IRC::User& user)
-{
-	replyMsg = replyMsg + "\n";
-	errorMsg = errorMsg + "\n";
-	
-	if (this->errorNo != 0)
-		send(user.getSocket(), errorMsg.c_str(), errorMsg.size(), 0);
-	else if (this->replyNo != 0)
-		send(user.getSocket(), replyMsg.c_str(), replyMsg.size(), 0);
-}
-
-void IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User user, int n, ...)
+/* -- Setters -- */
+void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User user, int n, ...)
 {
 	std::stringstream ss;
 
@@ -175,7 +135,6 @@ void IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User user
 		case RPL_CHANNELMODEIS:
 			this->replyMsg += expandMessage(n, vaList, "% % % % % % %");
 			break;
-		
 		default:
 			break;
 	}
@@ -183,7 +142,7 @@ void IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User user
 	va_end(vaList);
 }
 
-void IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User user, int n, ...)
+void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User user, int n, ...)
 {
 	std::stringstream ss;
 	
@@ -278,7 +237,62 @@ void IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User user
 	va_end(vaList);
 }
 
-std::string IRC::Command::expandMessage(int argCount, va_list vaList, std::string errorStr)
+/* -- Member functions -- */
+void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
+{
+// >>>>PROTEGER<<<<
+	IRC::Command* t = find(this->command);
+	
+	if (!t)
+		return ;
+    
+    // if (dynamic_cast <IRC::Pass *> (t))
+    //     continue ;
+    // else if (dynamic_cast <IRC::User *> (t) || dynamic_cast <IRC::Nick *> (t))
+    //     condicion
+    // else
+    //     condicion autenticado
+
+
+	*t = *this;
+	
+	// std::cout << typeid(t).name() <<  std::endl;
+	// std::cout << t->args <<  std::endl;
+	
+	t->exec(server, user);
+	t->answer(user);
+}
+
+/* -- Private member functions */
+IRC::Command*	IRC::Command::find(std::string key) const
+{
+	std::map<std::string, Command*>::const_iterator found = this->cmd_map.find(key);
+	
+	if (found != this->cmd_map.end())
+		return found->second;
+	
+	return NULL;
+}
+
+void			IRC::Command::exec(IRC::Server* server, IRC::User& user)
+{
+	std::cout << "GUAU" <<  std::endl;
+	(void)server;
+	(void)user;
+}
+
+void			IRC::Command::answer(IRC::User& user)
+{
+	this->replyMsg = this->replyMsg + "\n";
+	this->errorMsg = this->errorMsg + "\n";
+	
+	if (this->errorNo != 0)
+		send(user.getSocket(), this->errorMsg.c_str(), this->errorMsg.size(), 0);
+	else if (this->replyNo != 0)
+		send(user.getSocket(), this->replyMsg.c_str(), this->replyMsg.size(), 0);
+}
+
+std::string		IRC::Command::expandMessage(int argCount, va_list vaList, std::string errorStr) const
 {
 	size_t startPos;
 	std::string vaValue;
