@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 15:41:05 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:54:26 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ bool	IRC::Channel::hasPassword(void) const
 
 bool	IRC::Channel::checkPassword(std::string pass) const
 {
-	if (this->password.size() == 0 || this->password.compare(pass) == 0)
+	if (!hasPassword() || this->password.compare(pass) == 0)
 		return true;
 	return false;
 }
