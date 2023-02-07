@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:07:58 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 10:52:51 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:00:44 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include "../Command.hpp"
 #include <algorithm>
 
+
 #define MAX_CHANNELS 10
+
 
 namespace IRC
 {
