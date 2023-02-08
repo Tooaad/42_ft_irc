@@ -380,7 +380,7 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 
 
 /*
-
+TODO: remove
 pass 12
 nick karisti
 user karisti 0 * :Kepa
