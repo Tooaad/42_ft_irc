@@ -158,7 +158,7 @@ int IRC::Server::loop(void)
 	return 0;
 }
 
-void	IRC::Server::closeClient(IRC::User user, std::string message)
+void	IRC::Server::closeClient(IRC::User& user, std::string message)
 {
 	// TODO: Tener en cuenta tambien referencias de MP
 
@@ -170,14 +170,6 @@ void	IRC::Server::closeClient(IRC::User user, std::string message)
 		printUser(*it);
 	}
 
-	// TODO: corregir, no funciona por algun problema con referencias
-	for (std::vector<IRC::Channel>::iterator channelIt = user.getJoinedChannels().begin(); channelIt != user.getJoinedChannels().end(); channelIt++)
-	{
-		channelIt.base()->removeModerator(user);
-		channelIt.base()->removeOperator(user);
-		channelIt.base()->removeUser(*this, user);
-	}
-
 	if (close(user.getSocket()) == -1)
 		throwError("Client close error");
 	else
@@ -187,12 +179,26 @@ void	IRC::Server::closeClient(IRC::User user, std::string message)
 }
 
 /* -- Private Member functions */
-void	IRC::Server::removeUser(IRC::User user)
+void	IRC::Server::removeUser(IRC::User& user)
 {
 	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
 	
-	if (found != this->users.end())
-		this->users.erase(found);
+	if (found == this->users.end())
+		return ;
+
+	/*
+		TODO now: por algun problema con referencias no se borra el usuario de los vectores
+	*/
+	std::vector<IRC::Channel>::iterator channel;
+	for (std::vector<IRC::Channel>::iterator channelIt = user.getJoinedChannels().begin(); channelIt != user.getJoinedChannels().end(); channelIt++)
+	{
+		channel = getChannelIt(channelIt->getName());
+		channel->removeModerator(user);
+		channel->removeOperator(user);
+		channel->removeUser(*this, user);
+	}
+	
+	this->users.erase(found);
 }
 
 int		IRC::Server::saveIp(void)
