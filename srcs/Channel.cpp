@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:29:09 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:55:27 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,13 @@ void	IRC::Channel::addUser(IRC::User& user)
 		this->users.push_back(user);
 }
 
-void	IRC::Channel::removeUser(IRC::Server& server, IRC::User user)
+void	IRC::Channel::removeUser(IRC::Server& server, IRC::User& user)
 {
 	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
 	if (found != this->users.end())
 		this->users.erase(found);
+
+	user.removeJoinedChannel(*this);
 
 	if (isEmpty())
 		server.removeChannel(*this);
