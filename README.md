@@ -93,6 +93,7 @@ Lista de prioridades:
 - Probar comandos parciales + input ./ircserv
 - Revisar todo y explicarnoslo
 
+- Arreglar quit, no borra usuario del canal (cambio no persistente por algo de referencias)
 - Control de errores y leaks
 - Cambiar arrays a maps para hacer mas eficiente?
 
