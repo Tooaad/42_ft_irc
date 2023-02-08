@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:38:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 10:17:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ namespace IRC
 			void					addModerator(IRC::User user);
 			void					removeModerator(IRC::User user);
 			void					addUser(User& user);
-			void					removeUser(User user);
+			void					removeUser(Server& server, User user);
 
 			/* -- Member functions -- */
 			bool					isOperator(IRC::User user) const;
