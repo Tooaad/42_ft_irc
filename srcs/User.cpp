@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/08 12:00:52 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:38:50 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ void						IRC::User::setTimeout(time_t timeout) { this->timeout = timeout; }
 /* -- Modifiers -- */
 void	IRC::User::addJoinedChannel(IRC::Channel& channel)
 {
-	std::vector<IRC::Channel>::iterator found = std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel);
-	
-	if (found == this->joinedChannels.end())
+	if (!this->isInChannel(channel))
 		this->joinedChannels.push_back(channel);
 	
 }
