@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:46:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:01:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 12:12:06 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	IRC::Quit::exec(IRC::Server* server, IRC::User& user)
 		
 	server->closeClient(user, message);
 }
-
 
 /*
 TODO: solo se muestra 1
