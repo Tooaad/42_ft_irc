@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:38:31 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:46:35 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ namespace IRC
 			bool					isOp(void) const;
 			bool					isSubscribed(void) const;
 			time_t					getTimeout(void) const;
-			std::vector<Channel>	getJoinedChannels(void) const;
+			std::vector<Channel>&	getJoinedChannels(void);
 			std::string				getBuffer(void) const;
 			
 			/* -- Setters -- */
@@ -85,6 +85,7 @@ namespace IRC
 			/* -- Member functions -- */
 			std::string				getJoinedChannelsString(void) const;
 			bool					isInChannel(Channel channel) const;
+			void					sendMessage(std::string message) const;
 	};
 	
 	/* -- Non-member functions -- */

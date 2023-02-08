@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 16:14:55 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:31:10 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 	if (server->getPassword().size() > 0 && user.getPassword().compare(server->getPassword()) != 0)
 	{
 		std::string error_msg = "<client> :Password incorrect\n";
-		send(user.getSocket(), error_msg.c_str(), error_msg.size(), 0);
-		server->closeClient(user.getSocket(), "Quit: Password incorrect");
+		user.sendMessage(error_msg);
+		server->closeClient(user, "Quit: Password incorrect");
 	}
 }

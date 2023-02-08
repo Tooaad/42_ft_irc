@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/08 10:18:57 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:29:09 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,19 +200,19 @@ bool	IRC::Channel::isEmpty(void) const
 void	IRC::Channel::sendMessageToOperators(std::string message)
 {
 	for (std::vector<IRC::User>::iterator it = this->operators.begin(); it != this->operators.end(); it++)
-		send(it->getSocket(), message.c_str(), message.size(), 0);
+		it->sendMessage(message);
 }
 
 void	IRC::Channel::sendMessageToModerators(std::string message)
 {
 	for (std::vector<IRC::User>::iterator it = this->moderators.begin(); it != this->moderators.end(); it++)
-		send(it->getSocket(), message.c_str(), message.size(), 0);
+		it->sendMessage(message);
 }
 
 void	IRC::Channel::sendMessageToUsers(std::string message)
 {
 	for (std::vector<IRC::User>::iterator it = this->users.begin(); it != this->users.end(); it++)
-		send(it->getSocket(), message.c_str(), message.size(), 0);
+		it->sendMessage(message);
 }
 
 void	IRC::Channel::broadcastAction(IRC::Server* server, IRC::User user, std::string command)

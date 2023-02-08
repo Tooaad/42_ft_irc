@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:25:03 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:29:48 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,9 +287,9 @@ void			IRC::Command::answer(IRC::User& user)
 	this->errorMsg = this->errorMsg + "\n";
 	
 	if (this->errorNo != 0)
-		send(user.getSocket(), this->errorMsg.c_str(), this->errorMsg.size(), 0);
+		user.sendMessage(errorMsg);
 	else if (this->replyNo != 0)
-		send(user.getSocket(), this->replyMsg.c_str(), this->replyMsg.size(), 0);
+		user.sendMessage(replyMsg);
 }
 
 std::string		IRC::Command::expandMessage(int argCount, va_list vaList, std::string errorStr) const

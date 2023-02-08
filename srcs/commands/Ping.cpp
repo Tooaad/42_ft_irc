@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 14:10:21 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:31:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	IRC::Ping::exec(IRC::Server* server, IRC::User& user)
 	if (receptor == server->getUsers().end())
 		return ;
 	
-	send(receptor->getSocket(), "PING", 4, 0);
+	receptor->sendMessage("PING");
 
 	// user.setTimeout() = time(0);
 	(void)server;
