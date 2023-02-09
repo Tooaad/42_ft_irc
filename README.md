@@ -93,8 +93,27 @@ Lista de prioridades:
 - Probar comandos parciales + input ./ircserv
 - Revisar todo y explicarnoslo
 
+- Arreglar quit, no borra usuario del canal (cambio no persistente por algo de referencias)
 - Control de errores y leaks
 - Cambiar arrays a maps para hacer mas eficiente?
+
+> PROBAR ERROR:
+pass 12
+nick gpernas
+user gpernas 0 * :Gonzalo
+joiYou have been authenticated!
+n #a,#c
+:gpernas!gpernas@10.11.15.6 JOIN :#a
+:gpernas!gpernas@10.11.15.6 JOIN :#c
+:10.11.15.6 331 gpernas #a :No topic is set
+:10.11.15.6 353 gpernas = #a :@karisti gpernas
+:10.11.15.6 366 gpernas #a :End of /NAMES list
+:10.11.15.6 331 gpernas #c :No topic is set
+:10.11.15.6 353 gpernas = #c :@gpernas
+:10.11.15.6 366 gpernas #c :End of /NAMES list
+part #a
+:gpernas!gpernas@10.11.15.6 PART :#a
+^C
 
 nc irc.irc-hispano.org 6667
 lsof -t -i tcp:6667 | xargs kill
@@ -163,7 +182,9 @@ list #viva42
 */
 
 
+
 /*
+
 pass 12
 nick karisti
 user karisti 0 * :Kepa
