@@ -161,3 +161,18 @@ list #viva42
 323     RPL_LISTEND
                         ":End of /LIST"
 */
+
+
+/*
+pass 12
+nick karisti
+user karisti 0 * :Kepa
+join #a,#b
+
+
+pass 12
+nick gpernas
+user gpernas 0 * :Gonzalo
+join #a,#c
+
+*/

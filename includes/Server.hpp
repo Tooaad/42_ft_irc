@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:55:29 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:51:00 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ namespace IRC
 			void							connectNetwork(std::string *args);
 			int								createNetwork(std::string *args);
 			int								loop(void);
-			void 							closeClient(User user, std::string message);
+			void							closeClient(User user, std::string message);
 			void							terminateServer(void);
 			
 		private:
