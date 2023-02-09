@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 15:54:26 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:00:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,16 @@ void	IRC::Channel::addUser(IRC::User& user)
 		this->users.push_back(user);
 }
 
-void	IRC::Channel::removeUser(IRC::User user)
+void	IRC::Channel::removeUser(IRC::Server& server, IRC::User& user)
 {
 	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
 	if (found != this->users.end())
 		this->users.erase(found);
+
+	user.removeJoinedChannel(*this);
+	
+	if (isEmpty())
+		server.removeChannel(*this);
 }
 
 /* -- Member functions -- */
@@ -146,7 +151,7 @@ std::string	IRC::Channel::getUsersString(void) const // TODO: CAMBIAR
 {
 	std::string usersString = "";
 
-	for (std::vector<IRC::User>::const_iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
+	for (std::vector<IRC::User>::const_iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
 	{
 		if (usersString.size() > 0)
 			usersString += " ";
@@ -197,19 +202,19 @@ bool	IRC::Channel::isEmpty(void) const
 void	IRC::Channel::sendMessageToOperators(std::string message)
 {
 	for (std::vector<IRC::User>::iterator it = this->operators.begin(); it != this->operators.end(); it++)
-		send(it->getSocket(), message.c_str(), message.size(), 0);
+		it->sendMessage(message);
 }
 
 void	IRC::Channel::sendMessageToModerators(std::string message)
 {
 	for (std::vector<IRC::User>::iterator it = this->moderators.begin(); it != this->moderators.end(); it++)
-		send(it->getSocket(), message.c_str(), message.size(), 0);
+		it->sendMessage(message);
 }
 
 void	IRC::Channel::sendMessageToUsers(std::string message)
 {
 	for (std::vector<IRC::User>::iterator it = this->users.begin(); it != this->users.end(); it++)
-		send(it->getSocket(), message.c_str(), message.size(), 0);
+		it->sendMessage(message);
 }
 
 void	IRC::Channel::broadcastAction(IRC::Server* server, IRC::User user, std::string command)

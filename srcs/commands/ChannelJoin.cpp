@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 14:04:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:01:21 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,3 +128,23 @@ IRC::Channel*	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::U
 
 	return newChannel;
 }
+
+/*
+ TODO:
+join #a,#b,#c,#d
+:kepa!kepa@1Sb.j18.j49ElA.virtual JOIN :#a
+:glencoe.chathispano.com 353 kepa = #a :@Guest48 kepa
+:glencoe.chathispano.com 366 kepa #a :End of /NAMES list.
+:kepa!kepa@1Sb.j18.j49ElA.virtual JOIN :#b
+:glencoe.chathispano.com 353 kepa = #b :@Guest48 kepa
+:glencoe.chathispano.com 366 kepa #b :End of /NAMES list.
+:kepa!kepa@1Sb.j18.j49ElA.virtual JOIN :#c
+:glencoe.chathispano.com 332 kepa #c :https://www.technovelty.org/c/relocation-truncated-to-fit-wtf.html // Resuenan las llamadas a funcion, chirrian los bucles, retumban los return, soplan vapor los punteros.
+:glencoe.chathispano.com 333 kepa #c makemake.chathispano.com :1455528292
+:glencoe.chathispano.com 353 kepa = #c :@Dreg GertY-3000 beastie PouJohn @micronn Guest48 bbb_ sinkmanu R2-D2 kepa
+:glencoe.chathispano.com 366 kepa #c :End of /NAMES list.
+:glencoe.chathispano.com NOTICE kepa :Bienvenido al canal de programacion en lenguaje C. Foro del canal: http://canalc.hispla.com
+:kepa!kepa@1Sb.j18.j49ElA.virtual JOIN :#d
+:glencoe.chathispano.com 353 kepa = #d :@Guest48 kepa
+:glencoe.chathispano.com 366 kepa #d :End of /NAMES list.
+*/

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:13:36 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:06:47 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:30:46 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ void	IRC::Notice::exec(IRC::Server *server, IRC::User& user)
 			return ;
 	
 		argSplit[1] = ":" + user.getNick() + " NOTICE " + receptor->getNick() + " " + argSplit[1] + "\n";
-		send(receptor->getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
+		receptor->sendMessage(argSplit[1]);
 	}
 }

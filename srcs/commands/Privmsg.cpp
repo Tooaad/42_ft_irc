@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:05:13 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:31:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 			return setError(ERR_NOSUCHNICK, *server, user, 1, argSplit[0].c_str());
 	
 		argSplit[1] = ":" + user.getNick() + " PRIVMSG " + receptor->getNick() + " " + argSplit[1] + "\n";
-		send(receptor->getSocket(), argSplit[1].c_str(), argSplit[1].size(), 0);
+		receptor->sendMessage(argSplit[1]);
 	}
 }

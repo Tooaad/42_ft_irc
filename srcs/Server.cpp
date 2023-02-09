@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   this->cpp                                         :+:      :+:    :+:   */
+/*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 20:43:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/01/19 12:22:31 by karisti-         ###   ########.fr       */
+/*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
+/*   Updated: 2023/02/09 19:50:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int IRC::Server::loop(void)
 
 			// Client disconnected
 			if (getEvent()[i].flags & EV_EOF)
-				clientDisconnected(eventFd, "Quit: Connection closed");
+				clientDisconnected(eventFd);
 
 			// New client connected
 			else if (eventFd == getSocket())
@@ -163,12 +163,52 @@ int IRC::Server::loop(void)
 	return 0;
 }
 
-void	IRC::Server::closeClient(int eventFd, std::string message)
+void	IRC::Server::closeClient(IRC::User& user, std::string message)
 {
-	clientDisconnected(eventFd, message);
+	// TODO: Tener en cuenta tambien referencias de MP
+
+	std::vector<IRC::User> referencedUsers = getReferencedUsers(user);
+
+	for (std::vector<IRC::User>::iterator it = referencedUsers.begin(); it != referencedUsers.end(); it++)
+		it->sendMessage(":" + user.getNick() + " QUIT :" + message + "\n");
+
+	// TODO now: ??
+	if (close(user.getSocket()) == -1)
+		throwError("Client close error");
+	else
+		std::cout << user.getSocket() << " closed" << std::endl;
+
+	removeUser(user);
 }
 
 /* -- Private Member functions */
+void	IRC::Server::removeUser(IRC::User& user)
+{
+	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
+
+	if (found == this->users.end())
+		return ;
+
+	// TODO now: ??
+	// TODO: corregir, no funciona por algun problema con referencias
+
+	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
+	{
+		channelIt->removeModerator(user);
+		channelIt->removeOperator(user);
+		channelIt->removeUser(*this, user);
+	}
+	/*
+	for (std::vector<IRC::Channel>::iterator channelIt = found->getJoinedChannels().begin(); channelIt != found->getJoinedChannels().end(); channelIt++)
+	{
+		channelIt->removeModerator(*found);
+		channelIt->removeOperator(*found);
+		channelIt->removeUser(*this, *found);
+	}*/
+
+	this->users.erase(found);
+}
+
 int		IRC::Server::saveIp(void)
 {
 	char				host[256];
@@ -208,17 +248,13 @@ int		IRC::Server::clientConnected(void)
 	return 0;
 }
 
-void	IRC::Server::clientDisconnected(int eventFd, std::string message)
+void	IRC::Server::clientDisconnected(int eventFd)
 {
-	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), User(eventFd));
-	if (found != this->users.end())
-	{
-		std::cout << message << std::endl;
-		this->users.erase(found);
-	}
+	std::vector<IRC::User>::iterator userIt = std::find(this->users.begin(), this->users.end(), User(eventFd));
+	if (userIt == this->users.end())
+		return ;
 
-	if (close(eventFd) == -1)
-		throwError("Client close error");
+	closeClient(*userIt, "Quit: Connection closed");
 }
 
 int		IRC::Server::receiveMessage(int eventFd)
@@ -240,7 +276,7 @@ int		IRC::Server::receiveMessage(int eventFd)
 	if (found == this->users.end()) // TODO: que hacer si no encontramos usuario
 		return -1;
 
-	IRC::User& user = *found.base();
+	IRC::User& user = *found; // TODO: .base()
 
 	std::string message(buf);
 
@@ -313,13 +349,13 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 	{
 		user.changeAuthenticated(); 				// true
 		std::string errorMsg = "You have been authenticated!\n";
-		send(user.getSocket(), errorMsg.c_str(), errorMsg.size(), 0);
+		user.sendMessage(errorMsg);
 	}
 
 	// if (user.isAuthenticated() == false)
 	// {
 	// 	std::string errorMsg = "Not authenticated! Provide PASS, NICK and USER\n";
-	// 	send(user.getSocket(), errorMsg.c_str(), errorMsg.size(), 0);
+	// 	user.sendMessage(errorMsg);
 	// }
 }
 
@@ -327,4 +363,28 @@ int		IRC::Server::throwError(std::string message)
 {
 	perror(message.c_str());
 	return -1;
+}
+
+std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
+{
+	std::vector<IRC::User> referencedUsers;
+
+	for (std::vector<IRC::User>::iterator itUser = this->users.begin(); itUser != this->users.end(); itUser++)
+	{
+		if (*itUser == user)
+			continue ;
+		for (std::vector<IRC::Channel>::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); itChannel++)
+		{
+			if (itUser->isInChannel(*itChannel))
+			{
+				referencedUsers.push_back(*itUser);
+				break ;
+			}
+			/*
+				TODO: Usuarios referenciados por MP tambien hay que tener en cuenta
+			*/
+		}
+	}
+
+	return referencedUsers;
 }

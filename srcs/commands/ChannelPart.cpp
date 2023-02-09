@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelPart.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:08:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/09 17:39:43 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,7 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 			return setError(ERR_NOTONCHANNEL, *server, user, 1, (*it).c_str());
 		
 		channelIt->broadcastAction(server, user, "PART");
-		channelIt->removeUser(user);
-		user.removeJoinedChannel(*channelIt);
-		
-		if (channelIt->isEmpty())
-			server->removeChannel(*channelIt);
+		channelIt->removeUser(*server, user);
 	}
 }
 

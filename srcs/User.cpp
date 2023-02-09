@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 14:11:45 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/09 17:50:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool						IRC::User::isInvisible(void) const { return this->invisible; }
 bool						IRC::User::isOp(void) const { return this->op; }
 bool						IRC::User::isSubscribed(void) const { return this->subscribe; }
 time_t						IRC::User::getTimeout(void) const { return this->timeout; }
-std::vector<IRC::Channel>	IRC::User::getJoinedChannels(void) const { return this->joinedChannels; }
+std::vector<IRC::Channel>&	IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
 std::string					IRC::User::getBuffer(void) const { return this->buffer; }
 
 /* -- Setters -- */
@@ -87,11 +87,8 @@ void						IRC::User::setTimeout(time_t timeout) { this->timeout = timeout; }
 /* -- Modifiers -- */
 void	IRC::User::addJoinedChannel(IRC::Channel& channel)
 {
-	std::vector<IRC::Channel>::iterator found = std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel);
-	
-	if (found == this->joinedChannels.end())
+	if (!this->isInChannel(channel))
 		this->joinedChannels.push_back(channel);
-	
 }
 
 void	IRC::User::removeJoinedChannel(IRC::Channel channel)
@@ -125,6 +122,11 @@ bool			IRC::User::isInChannel(IRC::Channel channel) const
 	if (std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel) != this->joinedChannels.end())
 		return true;
 	return false;
+}
+
+void			IRC::User::sendMessage(std::string message) const
+{
+	send(getSocket(), message.c_str(), message.size(), 0);
 }
 
 /* -- Non-member functions -- */
