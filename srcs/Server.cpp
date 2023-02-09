@@ -189,16 +189,25 @@ void	IRC::Server::removeUser(IRC::User& user)
 	/*
 		TODO now: por algun problema con referencias no se borra el usuario de los vectores
 	*/
-	std::vector<IRC::Channel>::iterator channel;
-	for (std::vector<IRC::Channel>::iterator channelIt = user.getJoinedChannels().begin(); channelIt != user.getJoinedChannels().end(); channelIt++)
+	// std::vector<IRC::Channel>::iterator channel;
+	// std::vector<IRC::Channel>& channels = user.getJoinedChannels();
+
+	// channels.pop_back();
+	// this->channels.erase(this->channels.begin());
+
+	// std::cout << &(*channels.begin()) << std::endl;
+	// std::cout << &(*this->channels.begin()) << std::endl;
+
+	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
 	{
-		channel = getChannelIt(channelIt->getName());
-		channel->removeModerator(user);
-		channel->removeOperator(user);
-		channel->removeUser(*this, user);
+		// channel = getChannelIt(channelIt->getName());
+		channelIt->removeModerator(*found);
+		channelIt->removeOperator(*found);
+		// channelIt->removeUser(*this, *found);
 	}
-	
-	this->users.erase(found);
+
+
+	// this->users.erase(found);
 }
 
 int		IRC::Server::saveIp(void)
@@ -243,7 +252,7 @@ void	IRC::Server::clientDisconnected(int eventFd)
 	if (userIt == this->users.end())
 		return ;
 
-	closeClient(*userIt, "Quit: Connection closed");
+	closeClient(*userIt.base(), "Quit: Connection closed");
 }
 
 int		IRC::Server::receiveMessage(int eventFd)
@@ -265,7 +274,7 @@ int		IRC::Server::receiveMessage(int eventFd)
 	if (found == this->users.end()) // TODO: que hacer si no encontramos usuario
 		return -1;
 
-	IRC::User& user = *found.base();
+	IRC::User& user = *found; // TODO: .base()
 
 	std::string message(buf);
 
