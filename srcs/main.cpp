@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 16:16:55 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:40:24 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 	// 	return -1;
 	// }
 	
-	// atexit(cleaks);
+	atexit(cleaks);
 	
 	std::string args[argc - 1];
 	saveArgs(args, argc, argv);

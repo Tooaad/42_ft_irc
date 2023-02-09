@@ -103,6 +103,10 @@ int IRC::Server::createNetwork(std::string *args)
 	// hint.sin_addr.s_addr = INADDR_ANY;
 	hint.sin_port = htons(atoi(args[0].c_str())); // Little Endian (for bigger numbers) | Host To Network Short
 	inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
+	int yes = 1;
+	
+	if (setsockopt(this->sSocket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
+		return throwError("Error could not reuse address");
 
 	if (bind(this->sSocket, (struct sockaddr *)&hint, sizeof(hint)) < 0)
 		return throwError("Error binding socket");
@@ -131,10 +135,12 @@ int IRC::Server::loop(void)
 	int	newEvents;
 
 	// Server loop
-	while (true)
+	catchSignal();
+	while (!socketKiller)
 	{
 		if ((newEvents = kevent(getKq(), NULL, 0, getEvent(), 1, NULL)) == -1)
-			return throwError("kevent 2");
+			if (!socketKiller)
+				return throwError("kevent 2");
 
 		// kqueue events loop
 		for (int i = 0; i < newEvents; i++)
@@ -154,7 +160,6 @@ int IRC::Server::loop(void)
 				receiveMessage(eventFd);
 		}
 	}
-
 	return 0;
 }
 
@@ -183,6 +188,9 @@ int		IRC::Server::saveIp(void)
 
 void	IRC::Server::terminateServer(void)
 {
+	for (size_t i = 0; i < getUsers().size(); i++)
+		close(this->users.at(i).getSocket());
+	
 	if (close(getSocket()) == -1)
 		throwError("Server close error");
 }

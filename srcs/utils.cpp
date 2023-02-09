@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 15:37:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:18:40 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,21 @@ std::vector<std::string>	splitString(std::string str, std::string delim, int cou
 	*/
 	
 	return tokens;
+}
+
+bool socketKiller = false;
+
+void sig_handle(int sig) {
+	if (sig == SIGINT || sig == SIGQUIT)
+	{
+		socketKiller = true;
+	}	
+}
+
+void catchSignal(void) {
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = sig_handle;
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
 }
