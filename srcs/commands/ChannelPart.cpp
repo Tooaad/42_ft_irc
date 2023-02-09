@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 17:01:46 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/09 17:39:43 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 		
 		channelIt->broadcastAction(server, user, "PART");
 		channelIt->removeUser(*server, user);
-		// TODO now: remove and put inside removeUser
-		user.removeJoinedChannel(*channelIt);
 	}
 }
 
