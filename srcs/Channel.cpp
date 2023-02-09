@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 17:39:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/09 20:00:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ std::string	IRC::Channel::getUsersString(void) const // TODO: CAMBIAR
 {
 	std::string usersString = "";
 
-	for (std::vector<IRC::User>::const_iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
+	for (std::vector<IRC::User>::const_iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
 	{
 		if (usersString.size() > 0)
 			usersString += " ";

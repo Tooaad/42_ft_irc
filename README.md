@@ -96,6 +96,7 @@ Lista de prioridades:
 - Arreglar quit, no borra usuario del canal (cambio no persistente por algo de referencias)
 - Control de errores y leaks
 - Cambiar arrays a maps para hacer mas eficiente?
+- Error cuando Ctrl + C se hace en segundo usuario, en el primero va bien
 
 > PROBAR ERROR:
 pass 12
