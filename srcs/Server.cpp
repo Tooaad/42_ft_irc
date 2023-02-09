@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 17:36:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:05:27 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,16 +167,13 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 	for (std::vector<IRC::User>::iterator it = referencedUsers.begin(); it != referencedUsers.end(); it++)
 		it->sendMessage(":" + user.getNick() + " QUIT :" + message + "\n");
 
-	/* TODO now: ??
+	// TODO now: ??
 	if (close(user.getSocket()) == -1)
 		throwError("Client close error");
 	else
 		std::cout << user.getSocket() << " closed" << std::endl;
 
 	removeUser(user);
-
-
-	*/
 }
 
 /* -- Private Member functions */
@@ -187,19 +184,24 @@ void	IRC::Server::removeUser(IRC::User& user)
 	if (found == this->users.end())
 		return ;
 
-	/* TODO now: ??
+	// TODO now: ??
 	// TODO: corregir, no funciona por algun problema con referencias
-	std::vector<IRC::Channel>::iterator channel;
-	for (std::vector<IRC::Channel>::iterator channelIt = user.getJoinedChannels().begin(); channelIt != user.getJoinedChannels().end(); channelIt++)
+
+	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
 	{
-		channel = getChannelIt(channelIt->getName());
-		channel->removeModerator(user);
-		channel->removeOperator(user);
-		channel->removeUser(*this, user);
+		channelIt->removeModerator(user);
+		channelIt->removeOperator(user);
+		channelIt->removeUser(*this, user);
 	}
+	/*
+	for (std::vector<IRC::Channel>::iterator channelIt = found->getJoinedChannels().begin(); channelIt != found->getJoinedChannels().end(); channelIt++)
+	{
+		channelIt->removeModerator(*found);
+		channelIt->removeOperator(*found);
+		channelIt->removeUser(*this, *found);
+	}*/
 
 	this->users.erase(found);
-	*/
 }
 
 int		IRC::Server::saveIp(void)
