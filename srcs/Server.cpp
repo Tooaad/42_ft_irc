@@ -169,6 +169,14 @@ void	IRC::Server::closeClient(IRC::User user, std::string message)
 }
 
 /* -- Private Member functions */
+void	IRC::Server::removeUser(IRC::User user)
+{
+	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
+
+	if (found != this->users.end())
+		this->users.erase(found);
+}
+
 int		IRC::Server::saveIp(void)
 {
 	char				host[256];
@@ -348,6 +356,8 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 
 	for (std::vector<IRC::User>::iterator itUser = this->users.begin(); itUser != this->users.end(); itUser++)
 	{
+		if (*itUser == user)
+			continue ;
 		for (std::vector<IRC::Channel>::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); itChannel++)
 		{
 			if (itUser->isInChannel(*itChannel))
