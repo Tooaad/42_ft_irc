@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 18:05:27 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:50:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ int		IRC::Server::receiveMessage(int eventFd)
 	if (found == this->users.end()) // TODO: que hacer si no encontramos usuario
 		return -1;
 
-	IRC::User& user = *found.base();
+	IRC::User& user = *found; // TODO: .base()
 
 	std::string message(buf);
 
