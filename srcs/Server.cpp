@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 19:50:34 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:46:28 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,20 +184,20 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 /* -- Private Member functions */
 void	IRC::Server::removeUser(IRC::User& user)
 {
+	
 	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
 
 	if (found == this->users.end())
 		return ;
-
-	// TODO now: ??
-	// TODO: corregir, no funciona por algun problema con referencias
-
-	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
+		
+	for (size_t i = 0; i < this->channels.size(); i++)
 	{
-		channelIt->removeModerator(user);
-		channelIt->removeOperator(user);
-		channelIt->removeUser(*this, user);
+		this->channels[i].removeModerator(*found);
+		this->channels[i].removeOperator(*found);
+		this->channels[i].removeUser(*this, *found);
 	}
+	
+	// TODO now: ??
 	/*
 	for (std::vector<IRC::Channel>::iterator channelIt = found->getJoinedChannels().begin(); channelIt != found->getJoinedChannels().end(); channelIt++)
 	{
@@ -205,7 +205,7 @@ void	IRC::Server::removeUser(IRC::User& user)
 		channelIt->removeOperator(*found);
 		channelIt->removeUser(*this, *found);
 	}*/
-
+	
 	this->users.erase(found);
 }
 

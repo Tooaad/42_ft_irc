@@ -6,14 +6,25 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 20:00:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:46:16 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
 
-IRC::Channel::Channel() {}
+IRC::Channel::Channel()
+{
+	this->name = "";
+	this->topic = "";
+	this->password = "";
+	this->inviteOnlyMode = false;
+	this->secretMode = false;
+	this->freeTopicMode = true;
+	this->publicMsgMode = false;
+	this->moderatedMode = false;
+	this->maxUsers = 0;
+}
 
 IRC::Channel::Channel(std::string name, IRC::User createdBy)
 {
