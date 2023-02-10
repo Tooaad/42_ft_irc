@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 17:39:43 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:59:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,35 @@ IRC::ChannelPart &IRC::ChannelPart::operator=(const IRC::ChannelPart &other)
 	return *this;
 }
 
-void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
+void	IRC::ChannelPart::exec(Server* server, User* user)
 {
 	/** CHECK AUTHENTICATION **/
-	if (!user.isAuthenticated())
-		return setError(ERR_NOTREGISTERED, *server, user, 0);
+	if (!user->isAuthenticated())
+		return setError(ERR_NOTREGISTERED, server, user, 0);
 
 	/** PARSE ARGS (channels and passwords) **/
-	if (parseArgs(*server, user) < 0)
+	if (parseArgs(server, user) < 0)
 		return ;
 
-	std::vector<Channel>::iterator channelIt;
+	std::vector<Channel*>::iterator channelIt;
 	/** ITERATE EACH PARSED CHANNEL **/
 	for (std::vector<std::string>::iterator it = channelsArray.begin(); it != channelsArray.end(); it++)
 	{
-		channelIt = server->getChannelIt(*it);
+		channelIt = server->getChannelIt(*it); // TODO now; error si no existe el canal, no se detecta
 		if (channelIt == server->getChannels().end())
-			return setError(ERR_NOSUCHCHANNEL, *server, user, 1, (*it).c_str());
+			return setError(ERR_NOSUCHCHANNEL, server, user, 1, (*it).c_str());
 		
-		if (!channelIt->existsUser(user))
-			return setError(ERR_NOTONCHANNEL, *server, user, 1, (*it).c_str());
+		if (!(*channelIt)->existsUser(user))
+			return setError(ERR_NOTONCHANNEL, server, user, 1, (*it).c_str());
 		
-		channelIt->broadcastAction(server, user, "PART");
-		channelIt->removeUser(*server, user);
+		(*channelIt)->broadcastAction(server, *user, "PART");
+		(*channelIt)->removeUser(server, user);
+		
+		std::cout << "VAMOS BIEN" << std::endl;
 	}
 }
 
-int		IRC::ChannelPart::parseArgs(IRC::Server server, IRC::User user)
+int		IRC::ChannelPart::parseArgs(IRC::Server* server, IRC::User* user)
 {
 	std::vector<std::string> argsArray = splitString(args, " ");
 	

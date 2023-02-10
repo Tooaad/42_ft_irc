@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Quit.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:46:08 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:01:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:34:35 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ namespace IRC
 			Quit();
 			virtual ~Quit();
 
-			void	exec(Server* server, User& user);
+			void	exec(Server* server, User* user);
 	};
 }

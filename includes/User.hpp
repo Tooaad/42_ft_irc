@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:46:35 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:39:25 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace IRC
 			bool					op;
 			bool					subscribe;
 			time_t					timeout;
-			std::vector<Channel>	joinedChannels;
+			std::vector<Channel*>	joinedChannels;
 			std::string				buffer;
 
 		public:
@@ -60,7 +60,7 @@ namespace IRC
 			bool					isOp(void) const;
 			bool					isSubscribed(void) const;
 			time_t					getTimeout(void) const;
-			std::vector<Channel>&	getJoinedChannels(void);
+			std::vector<Channel*>&	getJoinedChannels(void);
 			std::string				getBuffer(void) const;
 			
 			/* -- Setters -- */
@@ -77,20 +77,21 @@ namespace IRC
 			void					setTimeout(time_t timeout);
 
 			/* -- Modifiers -- */
-			void					addJoinedChannel(Channel& channel);
-			void					removeJoinedChannel(Channel channel);
+			void					addJoinedChannel(Channel* channel);
+			void					removeJoinedChannel(Channel* channel);
 			void					appendBuffer(std::string str);
 			void					clearBuffer(void);
 
 			/* -- Member functions -- */
 			std::string				getJoinedChannelsString(void) const;
-			bool					isInChannel(Channel channel) const;
+			bool					isInChannel(Channel* channel) const;
 			void					sendMessage(std::string message) const;
 	};
 	
 	/* -- Non-member functions -- */
 	bool								operator== (const User lhs, const User rhs);
-	std::vector<IRC::User>::iterator	findUser(std::vector<User>& users, std::string nick);
+	std::vector<User*>::iterator		findUser(std::vector<User*> users, std::string nick);
+	std::vector<User*>::iterator		findUser(std::vector<User*> users, int fd);
 	void								printUser(User user);
-	void								printUsers(std::vector<User> users);
+	void								printUsers(std::vector<User*> users);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:07:58 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:00:44 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:46:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ namespace IRC
 			virtual ~ChannelJoin();
 			ChannelJoin& operator=(const ChannelJoin& other);
 
-			void	exec(IRC::Server* server, IRC::User& user);
+			void	exec(Server* server, User* user);
 
 		private:
-			int				parseArgs(IRC::Server server, IRC::User user);
-			IRC::Channel*	joinExistingChannel(IRC::Channel& channel, IRC::Server server, IRC::User &user);
-			IRC::Channel*	createNewChannel(std::string channelName, IRC::User& user, IRC::Server* server);
+			int				parseArgs(IRC::Server* server, IRC::User* user);
+			IRC::Channel*	joinExistingChannel(IRC::Channel* channel, IRC::Server* server, IRC::User* user);
+			IRC::Channel*	createNewChannel(std::string channelName, IRC::User* user, IRC::Server* server);
 	};
 }

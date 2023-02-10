@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelList.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:09:00 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:01:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ IRC::ChannelList &IRC::ChannelList::operator=(const IRC::ChannelList &other)
 	return *this;
 }
 
-void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
+void	IRC::ChannelList::exec(Server* server, User* user)
 {
-	if (!user.isAuthenticated())
-		return setError(ERR_NOTREGISTERED, *server, user, 0);
+	if (!user->isAuthenticated())
+		return setError(ERR_NOTREGISTERED, server, user, 0);
 	
 	parseArgs(server);
 	
 	if (this->channelsArray.size() > 0)
-		printNames(*server, user, this->channelsArray.begin(), this->channelsArray.end());
+		printNames(server, user, this->channelsArray.begin(), this->channelsArray.end());
 	else
-		printNames(*server, user, server->getChannels().begin(), server->getChannels().end());
+		printNames(server, user, server->getChannels().begin(), server->getChannels().end());
 }
 
 void	IRC::ChannelList::parseArgs(IRC::Server* server)
@@ -42,7 +42,7 @@ void	IRC::ChannelList::parseArgs(IRC::Server* server)
 	std::vector<std::string> argsArray = splitString(args, " ");
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");
 
-	std::vector<Channel>::iterator channelIt;
+	std::vector<Channel*>::iterator channelIt;
 	for (std::vector<std::string>::iterator it = channelsArrayStr.begin(); it != channelsArrayStr.end(); it++)
 	{
 		channelIt = server->getChannelIt(*it);
@@ -52,11 +52,11 @@ void	IRC::ChannelList::parseArgs(IRC::Server* server)
 	}
 }
 
-void	IRC::ChannelList::printNames(IRC::Server server, IRC::User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd)
+void	IRC::ChannelList::printNames(IRC::Server* server, IRC::User* user, std::vector<Channel*>::iterator itBegin, std::vector<Channel*>::iterator itEnd)
 {
 	setReply(RPL_LISTSTART, server, user, 0);
 	
-	for (std::vector<Channel>::iterator it = itBegin; it != itEnd; it++)
+	for (std::vector<Channel*>::iterator it = itBegin; it != itEnd; it++)
 	{
 		/*
 		TODO: Private  channels  are  listed  (without  their
@@ -64,14 +64,14 @@ void	IRC::ChannelList::printNames(IRC::Server server, IRC::User user, std::vecto
 		actually on that channel.
 		*/
 		
-		if (it->isSecret())
+		if ((*it)->isSecret())
 			continue ;
 		
 		std::stringstream ss;
-		ss << it->getUsers().size();
+		ss << (*it)->getUsers().size();
 		std::string sizeStr = ss.str();
 		
-		setReply(RPL_LIST, server, user, 3, it->getName().c_str(), sizeStr.c_str(), it->getTopic().c_str());
+		setReply(RPL_LIST, server, user, 3, (*it)->getName().c_str(), sizeStr.c_str(), (*it)->getTopic().c_str());
 	}
 	
 	setReply(RPL_LISTEND, server, user, 0);

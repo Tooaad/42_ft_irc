@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:07:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:44:19 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ IRC::Mode::Mode() {}
 IRC::Mode::~Mode() {}
 
 // TODO: Proteger todas las llamadas a findUser
-void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
+void	IRC::Mode::exec(Server* server, User* user)
 {
-	if (!user.isAuthenticated())
-		return setError(ERR_NOTREGISTERED, *server, user, 0);
+	if (!user->isAuthenticated())
+		return setError(ERR_NOTREGISTERED, server, user, 0);
 
 	if (this->args.size() == 0)
-		setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
+		setError(ERR_NEEDMOREPARAMS, server, user, 1, command.c_str());
 
 	if (this->args.at(0) == '#' || this->args.at(0) == '&')
 	{
@@ -37,15 +37,15 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		// NoSuchChannel
 		
 		std::vector<std::string> argSplit = splitString(this->args, " ");
-		std::vector<IRC::Channel>::iterator receptor = server->getChannelIt(argSplit[0]);
+		std::vector<IRC::Channel*>::iterator receptor = server->getChannelIt(argSplit[0]);
 		if (receptor.base() == NULL)
-			return setError(ERR_NOSUCHCHANNEL, *server, user, 1, argSplit[0].c_str());
+			return setError(ERR_NOSUCHCHANNEL, server, user, 1, argSplit[0].c_str());
 		
-		if (!user.isInChannel(*receptor))
-			return setError(ERR_NOTONCHANNEL, *server, user, 1, argSplit[1].c_str()); //revisar
+		if (!user->isInChannel(*receptor))
+			return setError(ERR_NOTONCHANNEL, server, user, 1, argSplit[1].c_str()); //revisar
 
-		if(!receptor->isOperator(user))
-			return setError(ERR_CHANOPRIVSNEEDED, *server, user, 1, argSplit[1].c_str());
+		if(!(*receptor)->isOperator(user))
+			return setError(ERR_CHANOPRIVSNEEDED, server, user, 1, argSplit[1].c_str());
 
 		if (argSplit.size() > 1)
 		{
@@ -54,100 +54,100 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 				if (argSplit[1].at(i) == 'o')
 				{
 					if (argSplit.size() < 2)
-						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
+						return setError(ERR_NEEDMOREPARAMS, server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
-						receptor->addOperator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						(*receptor)->addOperator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 					else if (argSplit[1].at(0) == '-')
-						receptor->removeOperator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						(*receptor)->removeOperator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 				}
 				else if (argSplit[1].at(i) == 's')
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isSecret())
-						receptor->changeSecrecy();
-					else if (argSplit[1].at(0) == '-' && receptor->isSecret())
-						receptor->changeSecrecy();
+					if (argSplit[1].at(0) == '+' && !(*receptor)->isSecret())
+						(*receptor)->changeSecrecy();
+					else if (argSplit[1].at(0) == '-' && (*receptor)->isSecret())
+						(*receptor)->changeSecrecy();
 				}
 				else if (argSplit[1].at(i) == 'i')
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isInviteOnly())
-						receptor->changeInviteOnly();
-					else if (argSplit[1].at(0) == '-' && receptor->isInviteOnly())
-						receptor->changeInviteOnly();
+					if (argSplit[1].at(0) == '+' && !(*receptor)->isInviteOnly())
+						(*receptor)->changeInviteOnly();
+					else if (argSplit[1].at(0) == '-' && (*receptor)->isInviteOnly())
+						(*receptor)->changeInviteOnly();
 				}
 				else if (argSplit[1].at(i) == 't')
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isFreeTopic())
-						receptor->changeFreeTopic();
-					else if (argSplit[1].at(0) == '-' && receptor->isFreeTopic())
-						receptor->changeFreeTopic();
+					if (argSplit[1].at(0) == '+' && !(*receptor)->isFreeTopic())
+						(*receptor)->changeFreeTopic();
+					else if (argSplit[1].at(0) == '-' && (*receptor)->isFreeTopic())
+						(*receptor)->changeFreeTopic();
 				}
 				else if (argSplit[1].at(i) == 'n')	// NO FUNCIONA??
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isPublicMsg())
-						receptor->changePublicMsg();
-					else if (argSplit[1].at(0) == '-' && receptor->isPublicMsg())
-						receptor->changePublicMsg();
+					if (argSplit[1].at(0) == '+' && !(*receptor)->isPublicMsg())
+						(*receptor)->changePublicMsg();
+					else if (argSplit[1].at(0) == '-' && (*receptor)->isPublicMsg())
+						(*receptor)->changePublicMsg();
 				}
 				else if (argSplit[1].at(i) == 'm')
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isModerated())
-						receptor->changeModerated();
-					else if (argSplit[1].at(0) == '-' && receptor->isModerated())
-						receptor->changeModerated();
+					if (argSplit[1].at(0) == '+' && !(*receptor)->isModerated())
+						(*receptor)->changeModerated();
+					else if (argSplit[1].at(0) == '-' && (*receptor)->isModerated())
+						(*receptor)->changeModerated();
 				}
 				else if (argSplit[1].at(i) == 'l')
 				{
 					if (argSplit.size() < 2)
-						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
+						return setError(ERR_NEEDMOREPARAMS, server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
-						receptor->setMaxUsers(atoi(argSplit[2].c_str())); 
+						(*receptor)->setMaxUsers(atoi(argSplit[2].c_str())); 
 					else if (argSplit[1].at(0) == '-')
-						receptor->setMaxUsers(0);
+						(*receptor)->setMaxUsers(0);
 			// else if (argSplit[1].at(i) == 'b')
 				}
 				else if (argSplit[1].at(i) == 'v')
 				{
 					if (argSplit.size() < 2)
-						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
+						return setError(ERR_NEEDMOREPARAMS, server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
-						receptor->addModerator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						(*receptor)->addModerator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 					else if (argSplit[1].at(0) == '-')
-						receptor->removeModerator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						(*receptor)->removeModerator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
 				}
 				else if (argSplit[1].at(i) == 'k')
 				{
 					if (argSplit.size() < 2)
-						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
+						return setError(ERR_NEEDMOREPARAMS, server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
-						receptor->setPassword(argSplit[2]);		// gestionar 2o arg
+						(*receptor)->setPassword(argSplit[2]);		// gestionar 2o arg
 					else if (argSplit[1].at(0) == '-')
-						receptor->setPassword(argSplit[2]);
+						(*receptor)->setPassword(argSplit[2]);
 				}
 				else
-					return setError(ERR_UNKNOWNMODE, *server, user, 1, argSplit[i].c_str());
+					return setError(ERR_UNKNOWNMODE, server, user, 1, argSplit[i].c_str());
 			}
 		}
 		else
-			setReply(RPL_CHANNELMODEIS, *server, user, 7,
-						receptor->isSecret()? "+s ":"",
-						receptor->isInviteOnly()? "+i ":"",
-						receptor->isFreeTopic()? "+t ":"",
-						receptor->isPublicMsg()? "+n ":"",
-						receptor->isModerated()? "+m ":"",
-						receptor->hasMax()? printChannelMax(*receptor).c_str():"",
-						receptor->hasPassword()? printPassword(*receptor).c_str():"");
+			setReply(RPL_CHANNELMODEIS, server, user, 7,
+						(*receptor)->isSecret()? "+s ":"",
+						(*receptor)->isInviteOnly()? "+i ":"",
+						(*receptor)->isFreeTopic()? "+t ":"",
+						(*receptor)->isPublicMsg()? "+n ":"",
+						(*receptor)->isModerated()? "+m ":"",
+						(*receptor)->hasMax()? printChannelMax(**receptor).c_str():"",
+						(*receptor)->hasPassword()? printPassword(**receptor).c_str():"");
 	}
 	else
 	{
 		std::vector<std::string> argSplit = splitString(this->args, " ", 1);
 		// if (argSplit.size() < 2)
 		// 	return setError(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
-		std::vector<IRC::User>::iterator receptor = findUser(server->getUsers(), argSplit[0]);
+		std::vector<IRC::User*>::iterator receptor = findUser(server->getUsers(), argSplit[0]);
 		if (receptor == server->getUsers().end())
-			return setError(ERR_NOSUCHNICK, *server, user, 1, argSplit[0].c_str());
+			return setError(ERR_NOSUCHNICK, server, user, 1, argSplit[0].c_str());
 			
 		if (!(*receptor == user))
-			return setError(ERR_USERSDONTMATCH, *server, user, 0);
+			return setError(ERR_USERSDONTMATCH, server, user, 0);
 	
 		if (argSplit.size() > 1)
 		{
@@ -155,31 +155,31 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			{
 				if (argSplit[1].at(i) == 'i')
 				{
-					if(argSplit[1].at(0) == '+' && !user.isInvisible())
-						user.changeInvisibility();
-					else if (argSplit[1].at(0) == '-' && user.isInvisible())
-						user.changeInvisibility();
+					if(argSplit[1].at(0) == '+' && !user->isInvisible())
+						user->changeInvisibility();
+					else if (argSplit[1].at(0) == '-' && user->isInvisible())
+						user->changeInvisibility();
 				}
 				else if (argSplit[1].at(i) == 's')
 				{
-					if(argSplit[1].at(0) == '+' && !user.isSubscribed())
-						user.changeSubscription();
-					else if (argSplit[1].at(0) == '-' && user.isSubscribed())
-						user.changeSubscription();
+					if(argSplit[1].at(0) == '+' && !user->isSubscribed())
+						user->changeSubscription();
+					else if (argSplit[1].at(0) == '-' && user->isSubscribed())
+						user->changeSubscription();
 				}
 				else if (argSplit[1].at(i) == 'o')
 				{
 					if(argSplit[1].at(0) == '+')
 						return ;
 					else if (argSplit[1].at(0) == '-')
-						user.deOp();
+						user->deOp();
 				}
 				else 
-					return setError(ERR_UMODEUNKNOWNFLAG, *server, user, 0);
+					return setError(ERR_UMODEUNKNOWNFLAG, server, user, 0);
 			}
 		}
 		else
-			setReply(RPL_UMODEIS, *server, user, 3, user.isInvisible()? "+i":"", user.isSubscribed()? "+s":"", user.isOp()? "+o":"");
+			setReply(RPL_UMODEIS, server, user, 3, user->isInvisible()? "+i":"", user->isSubscribed()? "+s":"", user->isOp()? "+o":"");
 	}
 }
 

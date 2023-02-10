@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:46:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 16:50:08 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:34:49 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 IRC::Quit::Quit() {}
 IRC::Quit::~Quit() {}
 
-void	IRC::Quit::exec(IRC::Server* server, IRC::User& user)
+void	IRC::Quit::exec(Server* server, User* user)
 {
 	std::string message;
 	

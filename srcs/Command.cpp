@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:29:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:50:06 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ IRC::Command& IRC::Command::operator=(const IRC::Command& other)
 }
 
 /* -- Setters -- */
-void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User user, int n, ...)
+void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server* server, IRC::User* user, int n, ...)
 {
 	std::stringstream ss;
 
@@ -101,7 +101,7 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 	ss << replyNo;
 	std::string replyNoStr = ss.str();
 	// :127.0.0.1 353 karisti = #jeje :@karisti
-	this->replyMsg += ":" + server.getIp() + " " + replyNoStr + " " + user.getNick() + " ";
+	this->replyMsg += ":" + server->getIp() + " " + replyNoStr + " " + user->getNick() + " ";
 	
 	switch (replyNo)
 	{
@@ -142,7 +142,7 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 	va_end(vaList);
 }
 
-void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User user, int n, ...)
+void		IRC::Command::setError(ErrorNos errorNo, IRC::Server* server, IRC::User* user, int n, ...)
 {
 	std::stringstream ss;
 	
@@ -154,7 +154,7 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 	ss << errorNo;
 	std::string errorNoStr = ss.str();
 	// :127.0.0.1 353 karisti = #jeje :@karisti
-	this->errorMsg = ":" + server.getIp() + " " + errorNoStr + " " + user.getNick() + " ";
+	this->errorMsg = ":" + server->getIp() + " " + errorNoStr + " " + user->getNick() + " ";
 	
 	switch (errorNo)
 	{
@@ -238,7 +238,7 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 }
 
 /* -- Member functions -- */
-void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
+void		IRC::Command::detectCommand(IRC::Server* server, IRC::User* user)
 {
 // >>>>PROTEGER<<<<
 	IRC::Command* t = find(this->command);
@@ -274,22 +274,22 @@ IRC::Command*	IRC::Command::find(std::string key) const
 	return NULL;
 }
 
-void			IRC::Command::exec(IRC::Server* server, IRC::User& user)
+void			IRC::Command::exec(IRC::Server* server, IRC::User* user)
 {
 	std::cout << "GUAU" <<  std::endl;
 	(void)server;
 	(void)user;
 }
 
-void			IRC::Command::answer(IRC::User& user)
+void			IRC::Command::answer(IRC::User* user)
 {
 	this->replyMsg = this->replyMsg + "\n";
 	this->errorMsg = this->errorMsg + "\n";
 	
 	if (this->errorNo != 0)
-		user.sendMessage(errorMsg);
+		user->sendMessage(errorMsg);
 	else if (this->replyNo != 0)
-		user.sendMessage(replyMsg);
+		user->sendMessage(replyMsg);
 }
 
 std::string		IRC::Command::expandMessage(int argCount, va_list vaList, std::string errorStr) const

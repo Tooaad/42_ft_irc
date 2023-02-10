@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 16:59:24 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:59:03 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ namespace IRC
 		
 		private:
 			std::string				name;
-			std::vector<User>		operators;
-			std::vector<User>		moderators;
-			std::vector<User>		users;
+			std::vector<User*>		operators;
+			std::vector<User*>		moderators;
+			std::vector<User*>		users;
 			std::string				topic;
 			std::string				password;
 			bool					inviteOnlyMode;
@@ -50,16 +50,16 @@ namespace IRC
 
 		public:
 			Channel();
-			Channel(std::string name, User createdBy);
+			Channel(std::string name, User* createdBy);
 			Channel(const Channel& other);
 			~Channel();
 			Channel& operator=(const Channel& other);
 
 			/* -- Getters -- */
 			std::string				getName(void) const;
-			std::vector<User>		getOperators(void) const;
-			std::vector<User>		getModerators(void) const;
-			std::vector<User>		getUsers(void) const;
+			std::vector<User*>		getOperators(void) const;
+			std::vector<User*>		getModerators(void) const;
+			std::vector<User*>		getUsers(void) const;
 			std::string				getTopic(void) const;
 			std::string				getPassword(void) const;
 			bool					isInviteOnly(void) const;
@@ -81,17 +81,17 @@ namespace IRC
 			void					setMaxUsers(int size);
 			
 			/* -- Modifiers -- */
-			void					addOperator(IRC::User user);
-			void					removeOperator(IRC::User user);
-			void					addModerator(IRC::User user);
-			void					removeModerator(IRC::User user);
-			void					addUser(User& user);
-			void					removeUser(Server& server, User& user);
+			void					addOperator(IRC::User* user);
+			void					removeOperator(IRC::User* user);
+			void					addModerator(IRC::User* user);
+			void					removeModerator(IRC::User* user);
+			void					addUser(User* user);
+			void					removeUser(Server* server, User* user);
 
 			/* -- Member functions -- */
-			bool					isOperator(IRC::User user) const;
-			bool					isModerator(IRC::User user) const;
-			bool					existsUser(User user) const;
+			bool					isOperator(IRC::User* user) const;
+			bool					isModerator(IRC::User* user) const;
+			bool					existsUser(User* user) const;
 			std::string				getUsersString(void) const;
 			bool					hasPassword(void) const;
 			bool					checkPassword(std::string pass) const;
@@ -105,7 +105,8 @@ namespace IRC
 	};
 
 	/* -- Non-member functions -- */
-	bool	operator== (const Channel lhs, const Channel rhs);
-	void	printChannels(std::vector<Channel>& channels);
-	void	printChannel(Channel& channel);
+	bool								operator== (const Channel lhs, const Channel rhs);
+	std::vector<Channel*>::iterator		findChannel(std::vector<Channel*> channels, std::string name);
+	void								printChannels(std::vector<Channel*> channels);
+	void								printChannel(Channel& channel);
 }

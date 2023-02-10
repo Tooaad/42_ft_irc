@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 17:29:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:36:07 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ namespace IRC
 			struct kevent					changeEvent[4];		// TODO: hay que ampliar? vector
 			struct kevent					event[4];			// TODO: hay que ampliar? vector
 			time_t							timeout;
-			std::vector<User>				users;
+			std::vector<User*>				users;
 			std::vector<std::string>		commands;
-			std::vector<Channel>			channels;
+			std::vector<Channel*>			channels;
 			
 
 			// //			◦ If host, port_network and password_network aren’t given, you must create a new IRC network
@@ -78,31 +78,30 @@ namespace IRC
 			struct kevent					*getChangeEvent(void);
 			struct kevent					*getEvent(void);
 			time_t							getTimeout(void) const;
-			std::vector<User>&				getUsers(void);
-			std::vector<Channel>&			getChannels(void);
-			std::vector<Channel>::iterator	getChannelIt(std::string name);
+			std::vector<User*>				getUsers(void);
+			std::vector<Channel*>			getChannels(void);
+			std::vector<Channel*>::iterator	getChannelIt(std::string name);
 
 			/* -- Modifiers -- */
-			void							addChannel(Channel& channel);
-			void							removeChannel(Channel channel);
+			void							addChannel(Channel* channel);
+			void							removeChannel(Channel* channel);
 
 			/* -- Member functions -- */
 			void							connectNetwork(std::string *args);
 			int								createNetwork(std::string *args);
 			int								loop(void);
-			void							closeClient(User& user, std::string message);
-			void							terminateServer(void);
+			void							closeClient(User* user, std::string message);
 			
 		private:
 			/* -- Member functions -- */
-			void							removeUser(User& user);
+			void							removeUser(User* user);
 			int								saveIp(void);
 			int								clientConnected(void);
 			void							clientDisconnected(int eventFd);
 			int								receiveMessage(int eventFd);
-			void							registration(User& user, std::string password);
+			void							registration(User* user, std::string password);
 			int								throwError(std::string message);
-			std::vector<IRC::User>			getReferencedUsers(User user);
+			std::vector<IRC::User*>			getReferencedUsers(User* user);
 			// void serverClose(void);
 	};
 }

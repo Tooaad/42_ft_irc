@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:25:03 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:49:55 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,17 @@ namespace IRC
 			Command& operator=(const Command& other);
 
 			/* -- Setters -- */
-			void			setReply(ReplyNos replyNo, Server server, User user, int n, ...);
-			void			setError(ErrorNos errorNo, Server server, User user, int n, ...);
+			void			setReply(ReplyNos replyNo, Server* server, User* user, int n, ...);
+			void			setError(ErrorNos errorNo, Server* server, User* user, int n, ...);
 			
 			/* -- Member functions -- */
-			void			detectCommand(Server* server, User& user);
+			void			detectCommand(Server* server, User* user);
 		
 		private:
 			/* -- Member functions -- */
 			Command*		find(std::string key) const;
-			virtual void	exec(Server* server, User& user);
-			void			answer(User& user);
+			virtual void	exec(Server* server, User* user);
+			void			answer(User* user);
 			std::string		expandMessage(int argCount, va_list vaList, std::string errorStr) const;
 	};
 }

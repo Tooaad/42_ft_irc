@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelNames.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:06 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:00:49 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:58:28 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace IRC
 	class ChannelNames : public Command
 	{
 		private:
-			std::vector<Channel> channelsArray;
+			std::vector<Channel*> channelsArray;
 
 		public:
 			ChannelNames();
@@ -30,10 +30,10 @@ namespace IRC
 			virtual ~ChannelNames();
 			ChannelNames& operator=(const ChannelNames& other);
 
-			void	exec(Server* server, User& user);
+			void	exec(Server* server, User* user);
 
 		private:
 			void	parseArgs(Server* server);
-			void	printNames(Server server, User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd);
+			void	printNames(Server* server, User* user, std::vector<Channel*>::iterator itBegin, std::vector<Channel*>::iterator itEnd);
 	};
 }

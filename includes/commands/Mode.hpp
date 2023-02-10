@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:00:31 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:01:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:34:49 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace IRC
 			Mode();
 			virtual ~Mode();
 
-			void	exec(IRC::Server* server, IRC::User& user);
+			void	exec(Server* server, User* user);
 		
 		private:
 			std::string		printChannelMax(IRC::Channel recept);

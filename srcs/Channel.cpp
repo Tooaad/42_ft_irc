@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/10 13:46:16 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 19:02:16 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ IRC::Channel::Channel()
 	this->maxUsers = 0;
 }
 
-IRC::Channel::Channel(std::string name, IRC::User createdBy)
+IRC::Channel::Channel(std::string name, IRC::User* createdBy)
 {
 	this->name = name;
 	this->topic = "";
@@ -38,8 +38,11 @@ IRC::Channel::Channel(std::string name, IRC::User createdBy)
 	this->moderatedMode = false;
 	this->maxUsers = 0;
 	
-	addUser(createdBy);
-	addOperator(createdBy);
+	if (createdBy)
+	{
+		addUser(createdBy);
+		addOperator(createdBy);
+	}
 }
 
 IRC::Channel::Channel(const IRC::Channel &other) { *this = other; }
@@ -68,9 +71,9 @@ IRC::Channel &IRC::Channel::operator=(const IRC::Channel &other)
 
 /* -- Getters -- */
 std::string					IRC::Channel::getName(void) const { return this->name; }
-std::vector<IRC::User>		IRC::Channel::getOperators(void) const { return this->operators; }
-std::vector<IRC::User>		IRC::Channel::getModerators(void) const { return this->moderators; }
-std::vector<IRC::User>		IRC::Channel::getUsers(void) const { return this->users; }
+std::vector<IRC::User*>		IRC::Channel::getOperators(void) const { return this->operators; }
+std::vector<IRC::User*>		IRC::Channel::getModerators(void) const { return this->moderators; }
+std::vector<IRC::User*>		IRC::Channel::getUsers(void) const { return this->users; }
 std::string					IRC::Channel::getTopic(void) const { return this->topic; }
 std::string					IRC::Channel::getPassword(void) const { return this->password; }
 bool						IRC::Channel::isInviteOnly(void) const { return this->inviteOnlyMode; }
@@ -92,66 +95,71 @@ void						IRC::Channel::changeModerated(void) { this->moderatedMode = !this->mod
 void						IRC::Channel::setMaxUsers(int size) { this->maxUsers = size; }
 
 /* -- Modifiers -- */
-void	IRC::Channel::addOperator(IRC::User user)
+void	IRC::Channel::addOperator(IRC::User* user)
 {
 	if (!isOperator(user))
 		this->operators.push_back(user);
 }
 
-void	IRC::Channel::removeOperator(IRC::User user)
+void	IRC::Channel::removeOperator(IRC::User* user)
 {
-	std::vector<IRC::User>::iterator found = std::find(this->operators.begin(), this->operators.end(), user);
+	std::vector<IRC::User*>::iterator found = std::find(this->operators.begin(), this->operators.end(), user);
 	if (found != this->operators.end())
 		this->operators.erase(found);
 }
 
-void	IRC::Channel::addModerator(IRC::User user)
+void	IRC::Channel::addModerator(IRC::User* user)
 {
 	if (!isModerator(user))
 		this->moderators.push_back(user);
 }
 
-void	IRC::Channel::removeModerator(IRC::User user)
+void	IRC::Channel::removeModerator(IRC::User* user)
 {
-	std::vector<IRC::User>::iterator found = std::find(this->moderators.begin(), this->moderators.end(), user);
+	std::vector<IRC::User*>::iterator found = std::find(this->moderators.begin(), this->moderators.end(), user);
 	if (found != this->moderators.end())
 		this->moderators.erase(found);
 }
 
-void	IRC::Channel::addUser(IRC::User& user)
+void	IRC::Channel::addUser(IRC::User* user)
 {
 	if (!existsUser(user))
 		this->users.push_back(user);
 }
 
-void	IRC::Channel::removeUser(IRC::Server& server, IRC::User& user)
+void	IRC::Channel::removeUser(IRC::Server* server, IRC::User* user)
 {
-	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
-	if (found != this->users.end())
-		this->users.erase(found);
-
-	user.removeJoinedChannel(*this);
+	std::cout << ">> Trying to erase " << user->getNick() << " from " << this->getName() << " channel" << std::endl;
 	
-	if (isEmpty())
-		server.removeChannel(*this);
+	std::vector<IRC::User*>::iterator found = findUser(this->users, user->getSocket());
+	if (found != this->users.end())
+	{
+		std::cout << ">> Erasing " << (*found)->getNick() << " from " << this->getName() << " channel" << std::endl;
+		// this->users.erase(found);
+	}
+
+	//user->removeJoinedChannel(this);
+	
+	if (!isEmpty())
+		server->removeChannel(this);
 }
 
 /* -- Member functions -- */
-bool	IRC::Channel::isOperator(IRC::User user) const
+bool	IRC::Channel::isOperator(IRC::User* user) const
 {
 	if (std::find(this->operators.begin(), this->operators.end(), user) != this->operators.end())
 		return true;
 	return false;
 }
 
-bool	IRC::Channel::isModerator(IRC::User user) const
+bool	IRC::Channel::isModerator(IRC::User* user) const
 {
 	if (std::find(this->moderators.begin(), this->moderators.end(), user) != this->moderators.end())
 		return true;
 	return false;
 }
 
-bool	IRC::Channel::existsUser(IRC::User user) const
+bool	IRC::Channel::existsUser(IRC::User* user) const
 {
 	if (std::find(this->users.begin(), this->users.end(), user) != this->users.end())
 		return true;
@@ -162,7 +170,7 @@ std::string	IRC::Channel::getUsersString(void) const // TODO: CAMBIAR
 {
 	std::string usersString = "";
 
-	for (std::vector<IRC::User>::const_iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
+	for (std::vector<IRC::User*>::const_iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
 	{
 		if (usersString.size() > 0)
 			usersString += " ";
@@ -173,7 +181,7 @@ std::string	IRC::Channel::getUsersString(void) const // TODO: CAMBIAR
 		if (isModerator(*userIt))
 			usersString += "+";
 	
-		usersString += userIt->getNick();
+		usersString += (*userIt)->getNick();
 	}
 
 	return usersString;
@@ -212,20 +220,20 @@ bool	IRC::Channel::isEmpty(void) const
 
 void	IRC::Channel::sendMessageToOperators(std::string message)
 {
-	for (std::vector<IRC::User>::iterator it = this->operators.begin(); it != this->operators.end(); it++)
-		it->sendMessage(message);
+	for (std::vector<IRC::User*>::iterator it = this->operators.begin(); it != this->operators.end(); it++)
+		(*it)->sendMessage(message);
 }
 
 void	IRC::Channel::sendMessageToModerators(std::string message)
 {
-	for (std::vector<IRC::User>::iterator it = this->moderators.begin(); it != this->moderators.end(); it++)
-		it->sendMessage(message);
+	for (std::vector<IRC::User*>::iterator it = this->moderators.begin(); it != this->moderators.end(); it++)
+		(*it)->sendMessage(message);
 }
 
 void	IRC::Channel::sendMessageToUsers(std::string message)
 {
-	for (std::vector<IRC::User>::iterator it = this->users.begin(); it != this->users.end(); it++)
-		it->sendMessage(message);
+	for (std::vector<IRC::User*>::iterator it = this->users.begin(); it != this->users.end(); it++)
+		(*it)->sendMessage(message);
 }
 
 void	IRC::Channel::broadcastAction(IRC::Server* server, IRC::User user, std::string command)
@@ -245,13 +253,25 @@ bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 	return false;
 }
 
-void	IRC::printChannels(std::vector<IRC::Channel>& channels)
+std::vector<IRC::Channel*>::iterator	IRC::findChannel(std::vector<IRC::Channel*> channels, std::string name)
+{
+	std::vector<IRC::Channel*>::iterator it;
+	
+	for (it = channels.begin(); it != channels.end(); it++)
+	{
+		if ((*it)->getName().compare(name) == 0)
+			return it;
+	}
+	return it;
+}
+
+void	IRC::printChannels(std::vector<IRC::Channel*> channels)
 {
 	if (channels.size() == 0)
 		return ;
 	std::cout << "------- Channels -------" << std::endl;
-	for (std::vector<IRC::Channel>::iterator it = channels.begin(); it != channels.end(); ++it)
-		printChannel(*it);
+	for (std::vector<IRC::Channel*>::iterator it = channels.begin(); it != channels.end(); ++it)
+		printChannel(**it);
 	std::cout << "------------------------" << std::endl;
 }
 

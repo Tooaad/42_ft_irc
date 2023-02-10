@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelTopic.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:32 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:00:57 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:34:49 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ namespace IRC
 			ChannelTopic();
 			virtual ~ChannelTopic();
 
-			void	exec(IRC::Server* server, IRC::User& user);
+			void	exec(Server* server, User* user);
 	};
 }

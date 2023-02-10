@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 17:50:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:39:46 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,12 @@ IRC::User::User(int socket)
 }
 
 IRC::User::User(const IRC::User& other) { *this = other; }
-IRC::User::~User() {}
+
+IRC::User::~User()
+{
+	for (std::vector<IRC::Channel*>::iterator channelIt = this->joinedChannels.begin(); channelIt != this->joinedChannels.end(); channelIt++)
+		this->joinedChannels.erase(channelIt);
+}
 
 IRC::User& IRC::User::operator=(const IRC::User &other)
 {
@@ -68,7 +73,7 @@ bool						IRC::User::isInvisible(void) const { return this->invisible; }
 bool						IRC::User::isOp(void) const { return this->op; }
 bool						IRC::User::isSubscribed(void) const { return this->subscribe; }
 time_t						IRC::User::getTimeout(void) const { return this->timeout; }
-std::vector<IRC::Channel>&	IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
+std::vector<IRC::Channel*>&	IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
 std::string					IRC::User::getBuffer(void) const { return this->buffer; }
 
 /* -- Setters -- */
@@ -85,16 +90,16 @@ void						IRC::User::changeSubscription(void) { this->subscribe = !subscribe; }
 void						IRC::User::setTimeout(time_t timeout) { this->timeout = timeout; }
 
 /* -- Modifiers -- */
-void	IRC::User::addJoinedChannel(IRC::Channel& channel)
+void	IRC::User::addJoinedChannel(IRC::Channel* channel)
 {
 	if (!this->isInChannel(channel))
 		this->joinedChannels.push_back(channel);
 }
 
-void	IRC::User::removeJoinedChannel(IRC::Channel channel)
+void	IRC::User::removeJoinedChannel(IRC::Channel* channel)
 {
-	std::vector<IRC::Channel>::iterator found = std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel);
 	
+	std::vector<IRC::Channel*>::iterator found = findChannel(this->joinedChannels, channel->getName());
 	if (found != this->joinedChannels.end())
 		this->joinedChannels.erase(found);
 }
@@ -107,9 +112,9 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 {
 	std::string channelsString = "";
 	
-	for (std::vector<IRC::Channel>::const_iterator channelIt = this->joinedChannels.begin(); channelIt != this->joinedChannels.end(); ++channelIt)
+	for (std::vector<IRC::Channel*>::const_iterator channelIt = this->joinedChannels.begin(); channelIt != this->joinedChannels.end(); ++channelIt)
 	{
-		channelsString += channelIt->getName();
+		channelsString += (*channelIt)->getName();
 		if (channelIt + 1 != this->joinedChannels.end())
 			channelsString += " ";
 	}
@@ -117,7 +122,7 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 	return channelsString;
 }
 
-bool			IRC::User::isInChannel(IRC::Channel channel) const
+bool			IRC::User::isInChannel(IRC::Channel* channel) const
 {
 	if (std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel) != this->joinedChannels.end())
 		return true;
@@ -137,14 +142,26 @@ bool	IRC::operator== (const IRC::User lhs, const IRC::User rhs)
 	return true;
 }
 
-std::vector<IRC::User>::iterator	IRC::findUser(std::vector<IRC::User>& users, std::string nick)
+std::vector<IRC::User*>::iterator	IRC::findUser(std::vector<IRC::User*> users, std::string nick)
 {
-	std::vector<IRC::User>::iterator it;
+	std::vector<IRC::User*>::iterator it;
 	
 	for (it = users.begin(); it != users.end(); it++)
 	{
-		std::cout << it->getNick();
-		if (it->getNick().compare(nick) == 0)
+		std::cout << (*it)->getNick();
+		if ((*it)->getNick().compare(nick) == 0)
+			return it;
+	}
+	return it;
+}
+
+std::vector<IRC::User*>::iterator	IRC::findUser(std::vector<IRC::User*> users, int fd)
+{
+	std::vector<IRC::User*>::iterator it;
+	
+	for (it = users.begin(); it != users.end(); it++)
+	{
+		if ((*it)->getSocket() == fd)
 			return it;
 	}
 	return it;
@@ -162,14 +179,14 @@ void	IRC::printUser(IRC::User user)
 	std::cout << std::endl;
 }
 
-void	IRC::printUsers(std::vector<IRC::User> users)
+void	IRC::printUsers(std::vector<IRC::User*> users)
 {
 	if (users.size() == 0)
 		return ;
 
 	std::cout << "------- Users -------" << std::endl;
-	std::vector<IRC::User>::iterator it = users.begin();
+	std::vector<IRC::User*>::iterator it = users.begin();
 	for (; it != users.end(); it++)
-		printUser(*it);
+		printUser(**it);
 	std::cout << "---------------------" << std::endl;
 }
