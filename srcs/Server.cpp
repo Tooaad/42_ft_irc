@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/10 13:46:28 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/10 20:18:01 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 	for (std::vector<IRC::User>::iterator it = referencedUsers.begin(); it != referencedUsers.end(); it++)
 		it->sendMessage(":" + user.getNick() + " QUIT :" + message + "\n");
 
-	// TODO now: ??
 	if (close(user.getSocket()) == -1)
 		throwError("Client close error");
 	else
@@ -196,15 +195,6 @@ void	IRC::Server::removeUser(IRC::User& user)
 		this->channels[i].removeOperator(*found);
 		this->channels[i].removeUser(*this, *found);
 	}
-	
-	// TODO now: ??
-	/*
-	for (std::vector<IRC::Channel>::iterator channelIt = found->getJoinedChannels().begin(); channelIt != found->getJoinedChannels().end(); channelIt++)
-	{
-		channelIt->removeModerator(*found);
-		channelIt->removeOperator(*found);
-		channelIt->removeUser(*this, *found);
-	}*/
 	
 	this->users.erase(found);
 }
