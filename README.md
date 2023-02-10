@@ -93,10 +93,8 @@ Lista de prioridades:
 - Probar comandos parciales + input ./ircserv
 - Revisar todo y explicarnoslo
 
-- Arreglar quit, no borra usuario del canal (cambio no persistente por algo de referencias)
 - Control de errores y leaks
 - Cambiar arrays a maps para hacer mas eficiente?
-- Error cuando Ctrl + C se hace en segundo usuario, en el primero va bien
 
 
 nc irc.irc-hispano.org 6667
