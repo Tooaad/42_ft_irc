@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/12 19:36:21 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:43:42 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ void	IRC::Channel::broadcastAction(IRC::Server* server, IRC::User user, std::str
 	str += " " + command + " :" + getName();
 	str += "\n";
 	
-	sendMessageToUsers(user, str);
+	sendMessageToUsers(User(), str);
 }
 
 /* -- Non-member functions -- */

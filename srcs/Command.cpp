@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:29:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/12 20:05:58 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,18 +174,18 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 			this->errorMsg += expandMessage(n, vaList, "% :Cannot join channel (+k)");
 			break;
 		case ERR_NOSUCHCHANNEL:
-			this->errorMsg += expandMessage(n, vaList, "% :No such channel");
+			this->errorMsg += expandMessage(n, vaList, "% :No such channel");					//
 			break;
 		case ERR_NOTONCHANNEL:
 			this->errorMsg += expandMessage(n, vaList, "% :You're not on that channel");
 			break;
-		case ERR_NONICKNAMEGIVEN:
+		case ERR_NONICKNAMEGIVEN:																//
 			this->errorMsg += expandMessage(n, vaList, " :No nickname given");
 			break;
-		case ERR_ERRONEUSNICKNAME:
+		case ERR_ERRONEUSNICKNAME:																//
 			this->errorMsg += expandMessage(n, vaList, "% :Erroneus nickname");
 			break;
-		case ERR_NICKNAMEINUSE:
+		case ERR_NICKNAMEINUSE:																	//
 			this->errorMsg += expandMessage(n, vaList, "% :Nickname is already in use");
 			break;
 		case ERR_ALREADYREGISTRED:
@@ -197,10 +197,7 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 		case ERR_CANNOTSENDTOCHAN:
 			this->errorMsg += expandMessage(n, vaList, "% :Cannot send to channel");
 			break;
-		case ERR_WILDTOPLEVEL:
-			this->errorMsg += expandMessage(n, vaList, "% :Wildcard in toplevel");
-			break;
-		case ERR_NOSUCHNICK:
+		case ERR_NOSUCHNICK:																	//
 			this->errorMsg += expandMessage(n, vaList, "% :No such nick/channel");
 			break;
 		case ERR_NOTEXTTOSEND:
@@ -276,7 +273,6 @@ IRC::Command*	IRC::Command::find(std::string key) const
 
 void			IRC::Command::exec(IRC::Server* server, IRC::User& user)
 {
-	std::cout << "GUAU" <<  std::endl;
 	(void)server;
 	(void)user;
 }

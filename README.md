@@ -164,7 +164,6 @@ list #viva42
 */
 
 
-
 /*
 
 pass 12
@@ -179,3 +178,12 @@ user gpernas 0 * :Gonzalo
 join #a,#c
 
 */
+
+
+/------
+* Mandar PRIVMSG al mismo usuario que lo manda
+* Proteger caracteres desconocidos en los canales y usuarios
+
+:karisti PRIVMSG #bird :hola gonzalo
+:karisti PRIVMSG #bird :hola privmsg
+
