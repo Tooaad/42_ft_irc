@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:01:21 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/12 18:15:03 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,24 @@ void			IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 
 		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE. **/
 		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i], User()));
-		IRC::Channel* newChannel;
+		IRC::Channel newChannel;
 		if (found != server->getChannels().end())
 			newChannel = joinExistingChannel(*found, *server, user);
 		else
 			newChannel = createNewChannel(channelsArray[i], user, server);
 
-		if (newChannel != NULL)
-		{
-			newChannel->broadcastAction(server, user, "JOIN");
+		if (newChannel == Channel())
+			return ;
+		
+		newChannel.broadcastAction(server, user, "JOIN");
+		
+		if (newChannel.getTopic().size() == 0)
+			setReply(RPL_NOTOPIC, *server, user, 1, newChannel.getName().c_str());
+		else
+			setReply(RPL_TOPIC, *server, user, 2, newChannel.getName().c_str(), newChannel.getTopic().c_str());
 			
-			if (newChannel->getTopic().size() == 0)
-				setReply(RPL_NOTOPIC, *server, user, 1, newChannel->getName().c_str());
-			else
-				setReply(RPL_TOPIC, *server, user, 2, newChannel->getName().c_str(), newChannel->getTopic().c_str());
-				
-			setReply(RPL_NAMREPLY, *server, user, 2, newChannel->getName().c_str(), newChannel->getUsersString().c_str());
-			setReply(RPL_ENDOFNAMES, *server, user, 1, newChannel->getName().c_str());
-		}
+		setReply(RPL_NAMREPLY, *server, user, 2, newChannel.getName().c_str(), newChannel.getUsersString().c_str());
+		setReply(RPL_ENDOFNAMES, *server, user, 1, newChannel.getName().c_str());
 	}
 }
 
@@ -87,12 +87,12 @@ int				IRC::ChannelJoin::parseArgs(IRC::Server server, IRC::User user)
 	return 0;
 }
 
-IRC::Channel*	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::Server server, IRC::User& user)
+IRC::Channel	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::Server server, IRC::User& user)
 {
 	if (channel.isInviteOnly())
 	{
 		setError(ERR_INVITEONLYCHAN, server, user, 1, channel.getName().c_str());
-		return NULL;
+		return Channel();
 	}
 
 	// TODO: ERR_BANNEDFROMCHAN: the user's nick/username/hostname must not match any active bans;
@@ -100,7 +100,7 @@ IRC::Channel*	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::
 	if (!channel.checkPassword("") && (passwordsArray.size() <= 0 || !channel.checkPassword(passwordsArray.at(0))))
 	{
 		setError(ERR_BADCHANNELKEY, server, user, 1, channel.getName().c_str());
-		return NULL;
+		return Channel();
 	}
 	else if (passwordsArray.size() > 0)
 		passwordsArray.erase(passwordsArray.begin());
@@ -108,23 +108,23 @@ IRC::Channel*	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::
 	if (channel.isFull())
 	{
 		setError(ERR_CHANNELISFULL, server, user, 1, channel.getName().c_str());
-		return NULL;
+		return Channel();
 	}
 
 	if (channel.existsUser(user))
-		return NULL;
+		return Channel();
 
 	channel.addUser(user);
 	user.addJoinedChannel(channel);
 	
-	return &channel;
+	return channel;
 }
 
-IRC::Channel*	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, IRC::Server* server)
+IRC::Channel	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, IRC::Server* server)
 {
-	IRC::Channel* newChannel = new Channel(channelName, user);
-	server->addChannel(*newChannel);
-	user.addJoinedChannel(*newChannel);
+	IRC::Channel newChannel = Channel(channelName, user);
+	server->addChannel(newChannel);
+	user.addJoinedChannel(newChannel);
 
 	return newChannel;
 }
