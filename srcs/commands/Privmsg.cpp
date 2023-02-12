@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:31:52 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:35:31 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if((!user.isInChannel(*receptor) && !receptor->isPublicMsg()) && (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
 			return setError(ERR_CANNOTSENDTOCHAN, *server, user, 1, argSplit[1].c_str());
 
-		receptor->sendMessageToUsers(":" + user.getNick() + " PRIVMSG " + argSplit[0] + " " + argSplit[1] + "\n");
+		receptor->sendMessageToUsers(user, ":" + user.getNick() + " PRIVMSG " + argSplit[0] + " " + argSplit[1] + "\n");
 	}
 	else
 	{

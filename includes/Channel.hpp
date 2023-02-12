@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 16:59:24 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:35:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ namespace IRC
 			bool					isEmpty(void) const;
 			void					sendMessageToOperators(std::string message);
 			void					sendMessageToModerators(std::string message);
-			void					sendMessageToUsers(std::string message);
+			void					sendMessageToUsers(User sender, std::string message);
 			void					broadcastAction(IRC::Server* server, IRC::User user, std::string command);
 	};
 

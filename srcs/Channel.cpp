@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/10 13:46:16 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:36:21 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,10 +222,13 @@ void	IRC::Channel::sendMessageToModerators(std::string message)
 		it->sendMessage(message);
 }
 
-void	IRC::Channel::sendMessageToUsers(std::string message)
+void	IRC::Channel::sendMessageToUsers(IRC::User sender, std::string message)
 {
 	for (std::vector<IRC::User>::iterator it = this->users.begin(); it != this->users.end(); it++)
-		it->sendMessage(message);
+	{
+		if (!(*it == sender))
+			it->sendMessage(message);
+	}
 }
 
 void	IRC::Channel::broadcastAction(IRC::Server* server, IRC::User user, std::string command)
@@ -234,7 +237,7 @@ void	IRC::Channel::broadcastAction(IRC::Server* server, IRC::User user, std::str
 	str += " " + command + " :" + getName();
 	str += "\n";
 	
-	sendMessageToUsers(str);
+	sendMessageToUsers(user, str);
 }
 
 /* -- Non-member functions -- */
