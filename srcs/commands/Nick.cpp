@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:21:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:07:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/13 11:09:59 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	IRC::Nick::exec(IRC::Server* server, IRC::User& user)
 			setError(ERR_NONICKNAMEGIVEN, *server, user, 0);
 			return ;
 		}
+	std::transform(this->args.begin(), this->args.end(), this->args.begin(), ::tolower);   // transform command type to lower anyways
 	for (size_t i = 0; i != this->args.size(); i++)
 		if (!std::isprint(this->args.at(i)) || this->args.at(i) == '#')
 			{
