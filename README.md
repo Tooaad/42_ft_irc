@@ -89,6 +89,7 @@ Kqueue
 Lista de prioridades:
 - Revisar Modes + Derivados Modes (PrivMSG/List/Channels)
 - Revisar todo y explicarnoslo
+- Cuando un nick se cambia, cambiar en lista de usuarios de los canales
 
 - Control de errores y leaks
 - Cambiar arrays a maps para hacer mas eficiente?
