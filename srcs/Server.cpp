@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/10 20:18:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:51:09 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,12 @@ int		IRC::Server::saveIp(void)
 void	IRC::Server::terminateServer(void)
 {
 	for (size_t i = 0; i < getUsers().size(); i++)
-		close(this->users.at(i).getSocket());
+	{
+		if (close(this->users.at(i).getSocket()) == -1)
+			throwError("Client close error");
+		else
+			std::cout << this->users.at(i).getSocket() << " closed" << std::endl;
+	}
 	
 	if (close(getSocket()) == -1)
 		throwError("Server close error");

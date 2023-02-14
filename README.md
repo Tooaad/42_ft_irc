@@ -71,15 +71,14 @@ Kqueue
 [-] quit
 
 
-[ ] Cerrar puerto correctamente
-
-[ ] invite
 [ ] Ping
 [ ] Pong
-[ ] oper
-[ ] 
-[ ] 
 
+
+
+
+[ ] invite
+[ ] oper
 [ ] whois
 [ ] motd
 [ ] kick
@@ -88,9 +87,7 @@ Kqueue
 [ ] who
 
 Lista de prioridades:
-- Notice + Quit + Cerrar puerto correctamente
 - Revisar Modes + Derivados Modes (PrivMSG/List/Channels)
-- Probar comandos parciales + input ./ircserv
 - Revisar todo y explicarnoslo
 
 - Control de errores y leaks
