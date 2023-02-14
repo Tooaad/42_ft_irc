@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/14 17:51:09 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:31:01 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,17 @@ void	IRC::Server::removeChannel(IRC::Channel channel)
 	
 	if (found != this->channels.end())
 		this->channels.erase(found);
+}
+
+// TODO: fix esta mierda que peta con bad alloc
+void	IRC::Server::updateChannelsNicks(IRC::User user, std::string newNick)
+{
+	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt < this->channels.end(); channelIt++)
+	{
+		std::vector<IRC::User>::iterator found = std::find(channelIt->getUsers().begin(), channelIt->getUsers().end(), user);
+		if (found != this->users.end())
+			found->setNick(newNick);
+	}
 }
 
 /* -- Member functions -- */

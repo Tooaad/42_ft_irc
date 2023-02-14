@@ -167,7 +167,7 @@ list #viva42
 pass 12
 nick karisti
 user karisti 0 * :Kepa
-join #a,#b
+join #aaaa,#bbbb
 
 
 pass 12
