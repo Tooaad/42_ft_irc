@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:46:35 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:04:46 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ namespace IRC
 	
 	/* -- Non-member functions -- */
 	bool								operator== (const User lhs, const User rhs);
+	std::vector<IRC::User>::iterator	findUserFD(std::vector<IRC::User>& users, int fd);
 	std::vector<IRC::User>::iterator	findUser(std::vector<User>& users, std::string nick);
 	void								printUser(User user);
 	void								printUsers(std::vector<User> users);

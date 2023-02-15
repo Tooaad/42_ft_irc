@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/10 20:18:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:11:52 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ int IRC::Server::loop(void)
 			// New message from client
 			else if (getEvent()[i].filter & EVFILT_READ)
 				receiveMessage(eventFd);
+			
+			catchPing(eventFd);
 		}
 	}
 	return 0;
@@ -377,4 +379,17 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 	}
 
 	return referencedUsers;
+}
+
+void IRC::Server::catchPing(int fd) {
+	User user = *findUserFD(getUsers(), fd);
+	
+	if (user.isAuthenticated())
+	{
+
+	}
+	else 
+	{
+		if(user.getTimeout() )
+	}
 }

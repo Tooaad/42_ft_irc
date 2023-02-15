@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/12 19:33:47 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:04:07 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,19 @@ bool	IRC::operator== (const IRC::User lhs, const IRC::User rhs)
 	if (lhs.getSocket() != rhs.getSocket())
 		return false;
 	return true;
+}
+
+std::vector<IRC::User>::iterator	IRC::findUserFD(std::vector<IRC::User>& users, int fd)
+{
+	std::vector<IRC::User>::iterator it;
+	
+	for (it = users.begin(); it != users.end(); it++)
+	{
+		std::cout << it->getSocket();
+		if (it->getSocket() == fd)
+			return it;
+	}
+	return it;
 }
 
 std::vector<IRC::User>::iterator	IRC::findUser(std::vector<IRC::User>& users, std::string nick)

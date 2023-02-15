@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/09 17:29:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:01:17 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ namespace IRC
 			int								loop(void);
 			void							closeClient(User& user, std::string message);
 			void							terminateServer(void);
+			void							catchPing(int eventFd);
 			
 		private:
 			/* -- Member functions -- */
