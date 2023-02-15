@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 11:38:09 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:50:21 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 #include "utils.hpp"
 #include "Channel.hpp"
 
-#define PING_TIMEOUT 100
-#define REG_TIMEOUT 20
+#define PING_TIMEOUT 10
+#define REG_TIMEOUT 10
 
 
 namespace IRC
@@ -94,7 +94,7 @@ namespace IRC
 			int								loop(void);
 			void							closeClient(User& user, std::string message);
 			void							terminateServer(void);
-			void							catchPing(int eventFd);
+			void							catchPing(void);
 			
 		private:
 			/* -- Member functions -- */
