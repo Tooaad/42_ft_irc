@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 12:39:35 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:55:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ IRC::User::User(int socket)
 	this->timeout = 0;
 	this->buffer = "";
 	this->pingReq = false;
+	this->timeout = time(NULL);
 }
 
 IRC::User::User(const IRC::User& other) { *this = other; }

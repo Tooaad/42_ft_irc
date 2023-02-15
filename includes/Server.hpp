@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 17:50:21 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:50:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@
 #include "utils.hpp"
 #include "Channel.hpp"
 
-#define PING_TIMEOUT 10
-#define REG_TIMEOUT 10
+#define PING_TIMEOUT 100
+#define REG_TIMEOUT 30
+#define KQUEUE_TIMEOUT 3
 
 
 namespace IRC

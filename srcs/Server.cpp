@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 17:53:28 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 19:29:36 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,9 @@ int IRC::Server::loop(void)
 	catchSignal();
 	while (!socketKiller)
 	{
-		if ((newEvents = kevent(getKq(), NULL, 0, getEvent(), 1, NULL)) == -1)
+		struct timespec keventTime = {KQUEUE_TIMEOUT, 0};
+		
+		if ((newEvents = kevent(getKq(), NULL, 0, getEvent(), 1, &keventTime)) == -1)
 			if (!socketKiller)
 				return throwError("kevent 2");
 
@@ -400,19 +402,26 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 	return referencedUsers;
 }
 
-void IRC::Server::catchPing(void) {
-	for(std::vector<IRC::User>::iterator user = this->users.begin(); user != this->users.end(); user++)
-	{	
-		if (user->isPinged() && time(NULL) - user->getTimeout() > PING_TIMEOUT)
-			closeClient(*user, "PING ERROR");
+// TODO: Revisar y ajustar tiempos
+void	IRC::Server::catchPing(void)
+{
+	std::cout << "> Catch Ping: " << std::endl;
+
+	for (size_t i = 0; i < this->users.size(); i++)
+	{
+		std::cout << users[i].getNick() << " (" << users[i].getSocket() << ") -> " << REG_TIMEOUT + users[i].getTimeout() - time(NULL) << "s / "<< PING_TIMEOUT + users[i].getTimeout() - time(NULL) << "s" << std::endl;
+		if (users[i].isPinged() && time(NULL) - users[i].getTimeout() > PING_TIMEOUT)
+			closeClient(users[i], "PING ERROR");
 			
-		else if (!user->isPinged() && time(NULL) - user->getTimeout() > REG_TIMEOUT)
+		else if (!users[i].isPinged() && time(NULL) - users[i].getTimeout() > REG_TIMEOUT)
 		{
-			user->setPingKey("1234\n");
-			user->changeRequest(true);
-			user->sendMessage("PING: " + user->getPingKey());
+			if (!users[i].isAuthenticated())
+				closeClient(users[i], "REGISTRATION TIMEOUT");
+			
+			users[i].setPingKey("1234");
+			users[i].changeRequest(true);
+			users[i].sendMessage("PING: " + users[i].getPingKey() + "\n");
 		}
 		// 	if(user.getTimeout() + REG_TIMEOUT <= time(NULL))
 	}
-
 }

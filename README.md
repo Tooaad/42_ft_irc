@@ -71,8 +71,7 @@ Kqueue
 [-] quit
 
 
-[ ] Ping
-[ ] Pong
+[ ] Ping, [ ] Pong --> revisar tiempos
 
 
 
