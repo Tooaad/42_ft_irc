@@ -173,7 +173,7 @@ join #aaaa,#bbbb
 pass 12
 nick gpernas
 user gpernas 0 * :Gonzalo
-join #a,#c
+join #aaaa,#bbbb
 
 */
 

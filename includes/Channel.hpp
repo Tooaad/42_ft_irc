@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/12 19:35:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:43:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ namespace IRC
 
 			/* -- Getters -- */
 			std::string				getName(void) const;
-			std::vector<User>		getOperators(void) const;
-			std::vector<User>		getModerators(void) const;
-			std::vector<User>		getUsers(void) const;
+			std::vector<User>&		getOperators(void);
+			std::vector<User>&		getModerators(void);
+			std::vector<User>&		getUsers(void);
 			std::string				getTopic(void) const;
 			std::string				getPassword(void) const;
 			bool					isInviteOnly(void) const;

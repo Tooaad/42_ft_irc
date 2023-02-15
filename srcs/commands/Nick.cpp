@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:21:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/14 18:28:08 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:10:24 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	IRC::Nick::exec(IRC::Server* server, IRC::User& user)
 	}
 	std::string newNick = splitString(this->args, " ").at(0);
 	// TODO:
-	//server->updateChannelsNicks(user, newNick);
+	server->updateChannelsNicks(user, newNick);
 	user.setNick(newNick);
 	
 	
