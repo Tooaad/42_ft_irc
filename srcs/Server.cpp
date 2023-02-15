@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 10:56:36 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:04:31 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,21 @@ void	IRC::Server::removeChannel(IRC::Channel channel)
 		this->channels.erase(found);
 }
 
-void	IRC::Server::updateChannelsNicks(std::string prevNick, std::string newNick)
+void	IRC::Server::updateUserInChannels(std::string prevNick, IRC::User user)
 {
 	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
 	{
 		std::vector<IRC::User>::iterator operIt = findUser(channelIt->getOperators(), prevNick);
 		if (operIt != channelIt->getOperators().end())
-			operIt->setNick(newNick);
+			*operIt = user;
 
 		std::vector<IRC::User>::iterator modIt = findUser(channelIt->getModerators(), prevNick);
 		if (modIt != channelIt->getModerators().end())
-			modIt->setNick(newNick);
+			*modIt = user;
 
 		std::vector<IRC::User>::iterator userIt = findUser(channelIt->getUsers(), prevNick);
 		if (userIt != channelIt->getUsers().end())
-			userIt->setNick(newNick);
+			*userIt = user;
 	}
 }
 
