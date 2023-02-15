@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 10:47:16 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:56:36 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,21 @@ void	IRC::Server::removeChannel(IRC::Channel channel)
 		this->channels.erase(found);
 }
 
-// TODO: fix esta mierda que peta con bad alloc
-void	IRC::Server::updateChannelsNicks(IRC::User user, std::string newNick)
+void	IRC::Server::updateChannelsNicks(std::string prevNick, std::string newNick)
 {
 	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
 	{
-		std::cout << "> Channel IT: " << channelIt->getName() << std::endl;
-		for (std::vector<IRC::User>::iterator userIt = channelIt->getUsers().begin(); userIt != channelIt->getUsers().end(); userIt++)
-		{
-			std::cout << "> User before: " << userIt->getNick() << std::endl;
-			if (*userIt == user)
-			{
-				userIt->setNick(newNick);
-				std::cout << "> User after: " << userIt->getNick() << std::endl;
-			}
-		}
+		std::vector<IRC::User>::iterator operIt = findUser(channelIt->getOperators(), prevNick);
+		if (operIt != channelIt->getOperators().end())
+			operIt->setNick(newNick);
+
+		std::vector<IRC::User>::iterator modIt = findUser(channelIt->getModerators(), prevNick);
+		if (modIt != channelIt->getModerators().end())
+			modIt->setNick(newNick);
+
+		std::vector<IRC::User>::iterator userIt = findUser(channelIt->getUsers(), prevNick);
+		if (userIt != channelIt->getUsers().end())
+			userIt->setNick(newNick);
 	}
 }
 
