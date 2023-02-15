@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 12:13:55 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:23:46 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
 
 	user.setTimeout(time(NULL));
 	user.changeRequest(false);
+	std::cout << user.getTimeout() << std::endl;
 	*t = *this;
 	
 	// std::cout << typeid(t).name() <<  std::endl;

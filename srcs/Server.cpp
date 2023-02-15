@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 12:39:10 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:25:07 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,12 +405,13 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 void IRC::Server::catchPing(int fd) {
 	User& user = *findUserFD(getUsers(), fd);
 	
-	if (user.isPinged() && user.getTimeout() + PING_TIMEOUT > time(NULL))
+	if (user.isPinged() && time(NULL) - user.getTimeout() > PING_TIMEOUT)
 		closeClient(user, "PING ERROR");
 		
-	else if (!user.isPinged() && user.getTimeout() + REG_TIMEOUT > time(NULL))
+	else if (!user.isPinged() && time(NULL) - user.getTimeout() > REG_TIMEOUT)
 	{
-		user.setPingKey("1234");
+		user.setPingKey("1234\n");
+		user.changeRequest(true);
 		user.sendMessage("PING: " + user.getPingKey());
 	}
 	// 	if(user.getTimeout() + REG_TIMEOUT <= time(NULL))
