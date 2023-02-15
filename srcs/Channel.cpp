@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/12 19:43:42 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:43:44 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ IRC::Channel &IRC::Channel::operator=(const IRC::Channel &other)
 
 /* -- Getters -- */
 std::string					IRC::Channel::getName(void) const { return this->name; }
-std::vector<IRC::User>		IRC::Channel::getOperators(void) const { return this->operators; }
-std::vector<IRC::User>		IRC::Channel::getModerators(void) const { return this->moderators; }
-std::vector<IRC::User>		IRC::Channel::getUsers(void) const { return this->users; }
+std::vector<IRC::User>&		IRC::Channel::getOperators(void) { return this->operators; }
+std::vector<IRC::User>&		IRC::Channel::getModerators(void) { return this->moderators; }
+std::vector<IRC::User>&		IRC::Channel::getUsers(void) { return this->users; }
 std::string					IRC::Channel::getTopic(void) const { return this->topic; }
 std::string					IRC::Channel::getPassword(void) const { return this->password; }
 bool						IRC::Channel::isInviteOnly(void) const { return this->inviteOnlyMode; }

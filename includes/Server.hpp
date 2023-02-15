@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 11:01:17 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:23:28 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ namespace IRC
 			/* -- Modifiers -- */
 			void							addChannel(Channel& channel);
 			void							removeChannel(Channel channel);
+			void							updateUserInChannels(std::string prevNick, IRC::User user);
 
 			/* -- Member functions -- */
 			void							connectNetwork(std::string *args);

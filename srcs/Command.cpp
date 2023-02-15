@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/12 20:05:58 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:19:24 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../includes/commands/Username.hpp"
 #include "../includes/commands/Privmsg.hpp"
 #include "../includes/commands/Notice.hpp"
+#include "../includes/commands/Ping.hpp"
+#include "../includes/commands/Pong.hpp"
 #include "../includes/commands/Mode.hpp"
 #include "../includes/commands/Quit.hpp"
 #include "../includes/commands/ChannelJoin.hpp"
@@ -55,6 +57,8 @@ IRC::Command::Command(std::string str)
 		this->cmd_map["NAMES"] = new IRC::ChannelNames();
 		this->cmd_map["LIST"] = new IRC::ChannelList();
 		this->cmd_map["QUIT"] = new IRC::Quit();
+		this->cmd_map["PING"] = new IRC::Ping();
+		this->cmd_map["PONG"] = new IRC::Pong();
 	}
 
 	std::vector<std::string> argsArray = splitString(str, " ", 1);

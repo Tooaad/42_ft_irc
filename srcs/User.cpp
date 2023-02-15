@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 11:04:07 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:23:21 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ std::vector<IRC::User>::iterator	IRC::findUser(std::vector<IRC::User>& users, st
 	
 	for (it = users.begin(); it != users.end(); it++)
 	{
-		std::cout << it->getNick();
 		if (it->getNick().compare(nick) == 0)
 			return it;
 	}

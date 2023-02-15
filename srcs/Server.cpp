@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 11:11:52 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:23:14 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,24 @@ void	IRC::Server::removeChannel(IRC::Channel channel)
 	
 	if (found != this->channels.end())
 		this->channels.erase(found);
+}
+
+void	IRC::Server::updateUserInChannels(std::string prevNick, IRC::User user)
+{
+	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
+	{
+		std::vector<IRC::User>::iterator operIt = findUser(channelIt->getOperators(), prevNick);
+		if (operIt != channelIt->getOperators().end())
+			*operIt = user;
+
+		std::vector<IRC::User>::iterator modIt = findUser(channelIt->getModerators(), prevNick);
+		if (modIt != channelIt->getModerators().end())
+			*modIt = user;
+
+		std::vector<IRC::User>::iterator userIt = findUser(channelIt->getUsers(), prevNick);
+		if (userIt != channelIt->getUsers().end())
+			*userIt = user;
+	}
 }
 
 /* -- Member functions -- */
@@ -221,7 +239,12 @@ int		IRC::Server::saveIp(void)
 void	IRC::Server::terminateServer(void)
 {
 	for (size_t i = 0; i < getUsers().size(); i++)
-		close(this->users.at(i).getSocket());
+	{
+		if (close(this->users.at(i).getSocket()) == -1)
+			throwError("Client close error");
+		else
+			std::cout << this->users.at(i).getSocket() << " closed" << std::endl;
+	}
 	
 	if (close(getSocket()) == -1)
 		throwError("Server close error");

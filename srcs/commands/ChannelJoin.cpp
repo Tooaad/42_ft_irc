@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/13 11:12:36 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:00:33 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void			IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 		if (user.getJoinedChannels().size() >= MAX_CHANNELS)
 			return setError(ERR_TOOMANYCHANNELS, *server, user, 1, channelsArray[i].c_str());
 
-		std::transform(this->channelsArray[i].begin(), this->channelsArray[i].end(), this->channelsArray[i].begin(), ::tolower);   // transform command type to lower anyways
+		// TODO now:
+		// std::transform(this->channelsArray[i].begin(), this->channelsArray[i].end(), this->channelsArray[i].begin(), ::tolower);   // transform command type to lower anyways
 
 		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE. **/
 		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i], User()));
