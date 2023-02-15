@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 11:23:21 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:39:35 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ IRC::User::User(int socket)
 	this->subscribe = false;
 	this->timeout = 0;
 	this->buffer = "";
+	this->pingReq = false;
 }
 
 IRC::User::User(const IRC::User& other) { *this = other; }
@@ -51,6 +52,7 @@ IRC::User& IRC::User::operator=(const IRC::User &other)
 	this->timeout = other.timeout;
 	this->joinedChannels = other.joinedChannels;
 	this->buffer = other.buffer;
+	this->pingReq = other.pingReq;
 	
 	return *this;
 }
@@ -67,6 +69,8 @@ bool						IRC::User::isAuthenticated(void) const { return this->authenticated; }
 bool						IRC::User::isInvisible(void) const { return this->invisible; }
 bool						IRC::User::isOp(void) const { return this->op; }
 bool						IRC::User::isSubscribed(void) const { return this->subscribe; }
+bool						IRC::User::isPinged(void) const { return this->pingReq; }
+std::string					IRC::User::getPingKey(void) const { return this->pingKey; }
 time_t						IRC::User::getTimeout(void) const { return this->timeout; }
 std::vector<IRC::Channel>&	IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
 std::string					IRC::User::getBuffer(void) const { return this->buffer; }
@@ -83,6 +87,7 @@ void						IRC::User::changeInvisibility(void) { this->invisible = !invisible; }
 void						IRC::User::deOp(void) { this->op = false; }
 void						IRC::User::changeSubscription(void) { this->subscribe = !subscribe; }
 void						IRC::User::setTimeout(time_t timeout) { this->timeout = timeout; }
+void						IRC::User::setPingKey(std::string key) { this->pingKey = key; }
 
 /* -- Modifiers -- */
 void	IRC::User::addJoinedChannel(IRC::Channel& channel)
@@ -184,4 +189,9 @@ void	IRC::printUsers(std::vector<IRC::User> users)
 	for (; it != users.end(); it++)
 		printUser(*it);
 	std::cout << "---------------------" << std::endl;
+}
+
+void	IRC::User::changeRequest(bool req)
+{
+	this->pingReq = req;
 }

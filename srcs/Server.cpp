@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 11:23:14 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:39:10 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ IRC::Server::Server() {}
 
 IRC::Server::Server(std::string password)
 {
-	this->timeout = 10;
 	this->password = password;
 }
 
@@ -40,7 +39,6 @@ IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 		this->sSocket = other.sSocket;
 		this->kq = other.kq;
 		this->password = other.password;
-		this->timeout = other.timeout;
 		this->users = other.users;
 		this->commands = other.commands;
 		this->channels = other.channels;
@@ -56,7 +54,6 @@ int										IRC::Server::getKq(void) const { return this->kq; }
 std::string								IRC::Server::getPassword(void) const { return this->password; }
 struct kevent*							IRC::Server::getChangeEvent(void) { return &this->changeEvent[0]; }
 struct kevent*							IRC::Server::getEvent(void) { return &this->event[0]; }
-time_t									IRC::Server::getTimeout(void) const { return this->timeout; }
 std::vector<IRC::User>&					IRC::Server::getUsers(void) { return this->users; }
 std::vector<IRC::Channel>&				IRC::Server::getChannels(void) { return this->channels; }
 
@@ -175,9 +172,10 @@ int IRC::Server::loop(void)
 
 			// New message from client
 			else if (getEvent()[i].filter & EVFILT_READ)
+			{
 				receiveMessage(eventFd);
-			
-			catchPing(eventFd);
+				catchPing(eventFd);
+			}
 		}
 	}
 	return 0;
@@ -405,14 +403,16 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 }
 
 void IRC::Server::catchPing(int fd) {
-	User user = *findUserFD(getUsers(), fd);
+	User& user = *findUserFD(getUsers(), fd);
 	
-	if (user.isAuthenticated())
+	if (user.isPinged() && user.getTimeout() + PING_TIMEOUT > time(NULL))
+		closeClient(user, "PING ERROR");
+		
+	else if (!user.isPinged() && user.getTimeout() + REG_TIMEOUT > time(NULL))
 	{
+		user.setPingKey("1234");
+		user.sendMessage("PING: " + user.getPingKey());
+	}
+	// 	if(user.getTimeout() + REG_TIMEOUT <= time(NULL))
 
-	}
-	else 
-	{
-		if(user.getTimeout() )
-	}
 }

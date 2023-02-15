@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/14 17:19:24 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:13:55 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
 {
 // >>>>PROTEGER<<<<
 	IRC::Command* t = find(this->command);
+	 
 	
 	if (!t)
 		return ;
@@ -254,7 +255,8 @@ void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
     // else
     //     condicion autenticado
 
-
+	user.setTimeout(time(NULL));
+	user.changeRequest(false);
 	*t = *this;
 	
 	// std::cout << typeid(t).name() <<  std::endl;
