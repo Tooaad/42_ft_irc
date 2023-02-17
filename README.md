@@ -69,9 +69,8 @@ Kqueue
 [-] list
 [-] mode
 [-] quit
-
-
-[ ] Ping, [ ] Pong --> revisar tiempos
+[ ] Ping
+[ ] Pong
 
 
 
@@ -182,4 +181,3 @@ join #aaaa,#bbbb
 
 :karisti PRIVMSG #bird :hola gonzalo
 :karisti PRIVMSG #bird :hola privmsg
-
