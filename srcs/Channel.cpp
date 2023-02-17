@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 10:43:44 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:59:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,15 +229,6 @@ void	IRC::Channel::sendMessageToUsers(IRC::User sender, std::string message)
 		if (!(*it == sender))
 			it->sendMessage(message);
 	}
-}
-
-void	IRC::Channel::broadcastAction(IRC::Server* server, IRC::User user, std::string command)
-{
-	std::string str = ":" + user.getNick() + "!" + user.getUser() + "@" + server->getIp();
-	str += " " + command + " :" + getName();
-	str += "\n";
-	
-	sendMessageToUsers(User(), str);
 }
 
 /* -- Non-member functions -- */

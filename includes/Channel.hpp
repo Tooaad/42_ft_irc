@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 10:43:53 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:18:10 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ namespace IRC
 			void					sendMessageToOperators(std::string message);
 			void					sendMessageToModerators(std::string message);
 			void					sendMessageToUsers(User sender, std::string message);
-			void					broadcastAction(IRC::Server* server, IRC::User user, std::string command);
 	};
 
 	/* -- Non-member functions -- */
