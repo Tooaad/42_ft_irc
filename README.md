@@ -69,9 +69,8 @@ Kqueue
 [-] list
 [-] mode
 [-] quit
-
-
-[ ] Ping, [ ] Pong --> revisar tiempos
+[ ] Ping
+[ ] Pong
 
 
 
