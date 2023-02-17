@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:25:03 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:27:26 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 #include <map>
 #include "Server.hpp"
 #include "User.hpp"
+#include "Channel.hpp"
 
 
 namespace IRC
 {
 	class Server;
 	class User;
+	class Channel;
 	
 	class Command
 	{
@@ -94,6 +96,7 @@ namespace IRC
 			/* -- Setters -- */
 			void			setReply(ReplyNos replyNo, Server server, User user, int n, ...);
 			void			setError(ErrorNos errorNo, Server server, User user, int n, ...);
+			void			setActionInReply(Server server, User user, Channel channel, std::string action);
 			
 			/* -- Member functions -- */
 			void			detectCommand(Server* server, User& user);

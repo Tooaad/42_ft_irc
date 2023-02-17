@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 18:53:06 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:25:29 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,19 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 	va_end(vaList);
 }
 
+void		IRC::Command::setActionInReply(IRC::Server server, IRC::User user, IRC::Channel channel, std::string action)
+{
+	std::string str = ":" + user.getNick() + "!" + user.getUser() + "@" + server.getIp();
+	str += " " + action + " :" + channel.getName();
+
+	channel.sendMessageToUsers(user, str + "\n");
+
+	if (!this->replyMsg.empty())
+		this->replyMsg += "\n";
+	
+	this->replyMsg += str;
+}
+
 /* -- Member functions -- */
 void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
 {
@@ -288,14 +301,11 @@ void			IRC::Command::exec(IRC::Server* server, IRC::User& user)
 }
 
 void			IRC::Command::answer(IRC::User& user)
-{
-	this->replyMsg = this->replyMsg + "\n";
-	this->errorMsg = this->errorMsg + "\n";
-	
+{	
 	if (this->errorNo != 0)
-		user.sendMessage(errorMsg);
-	else if (this->replyNo != 0)
-		user.sendMessage(replyMsg);
+		user.sendMessage(this->errorMsg + "\n");
+	else if (this->replyMsg.size() > 0)
+		user.sendMessage(this->replyMsg + "\n");
 }
 
 std::string		IRC::Command::expandMessage(int argCount, va_list vaList, std::string errorStr) const
