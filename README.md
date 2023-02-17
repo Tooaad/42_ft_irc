@@ -108,31 +108,6 @@ Refactor .cpp:
 
 
 
-/*
-> join #jeje
-	:karisti1!karisti1@0G6.n4M.2Cld1O.virtual JOIN :#jeje
-	:glencoe.chathispano.com 332 karisti1 #jeje :teeeeeeeeeest
-	:glencoe.chathispano.com 333 karisti1 #jeje Guest53 :1675104783
-	:glencoe.chathispano.com 353 karisti1 = #jeje :karisti1 @Guest53
-	:glencoe.chathispano.com 366 karisti1 #jeje :End of /NAMES list.
-
-
-> part #jeje
-	:karisti1!karisti1@0G6.n4M.2Cld1O.virtual PART :#jeje
-*/
-/*
-> join #jeje
-	:karisti!Kepa@127.0.0.1 JOIN :#jeje
-	:127.0.0.1 331 karisti #jeje :No topic is set
-	:127.0.0.1 353 karisti = #jeje :@karisti
-	:127.0.0.1 366 karisti #jeje :End of /NAMES list.
-	
-> part #jeje
-	:karisti!Kepa@127.0.0.1 PART #jeje :
-
-	:karisti!Kepa@127.0.0.1 PART #jeje :
-	:Nick!user@hostname
-*/
 
 /*
 con contraseña:
@@ -182,4 +157,3 @@ join #aaaa,#bbbb
 
 :karisti PRIVMSG #bird :hola gonzalo
 :karisti PRIVMSG #bird :hola privmsg
-
