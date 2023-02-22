@@ -190,9 +190,32 @@ Host1: c1r14s6.42madrid.com connected on port 56925
 :toad!toad@Kb5.j18.j49ElA.virtual JOIN :#prueba (gonzalo)
 
 
+join #prueba
+:karisti!karisti@Mv6.j18.j49ElA.virtual JOIN :#prueba
+:aberdeen.chathispano.com 353 karisti = #prueba :@karisti
+:aberdeen.chathispano.com 366 karisti #prueba :End of /NAMES list.
+
 -------
 
-:toadddd!toadddd@c1r14s4.42madrid.com JOIN :#test
-:toadddd!toadddd@c1r14s4.42madrid.com JOIN :#test
+join #prueba
+:karisti!karisti@Mv6.j18.j49ElA.virtual JOIN :#prueba
+:aberdeen.chathispano.com 353 karisti = #prueba :@karisti
+:aberdeen.chathispano.com 366 karisti #prueba :End of /NAMES list.
+
+join #test
+:gpernas1!gpernas2@localhost JOIN :#test
+:c1r14s6.42madrid.com 331 gpernas1 #test :No topic is set
+:c1r14s6.42madrid.com 353 gpernas1 = #test :@gpernas1
+:c1r14s6.42madrid.com 366 gpernas1 #test :End of /NAMES list.
 
 https://modern.ircdocs.horse/#rplnamreply-353
+https://modern.ircdocs.horse/#connection-setup
+
+
+:aberdeen.chathispano.com 001 karisti1 :Welcome to the IRC-Hispano IRC Network karisti1!karisti2@195.55.210.181
+:aberdeen.chathispano.com 002 karisti1 :Your host is aberdeen.chathispano.com, running version InspIRCd-3
+:aberdeen.chathispano.com 003 karisti1 :This server was created 10:58:01 Jan 15 2023
+:aberdeen.chathispano.com 004 karisti1 aberdeen.chathispano.com InspIRCd-3 BDHIJKNPRSTVchiknorsvwxz CEFHJKMNOQRSTVWbdefijklmnoprstuvxyz :EFHJVbdefjklovxy
+:aberdeen.chathispano.com 005 karisti1 AWAYLEN=200 CASEMAPPING=ascii CHANLIMIT=#:20 CHANMODES=be,k,EFHJdfjlxy,CKMNOQRSTWimnprstuz CHANNELLEN=64 CHANTYPES=# ELIST=CMNTU ESILENCE=CcdiNnPpTtx EXCEPTS=e EXTBAN=,CGNSTUXagjmrwz HOSTLEN=64 KEYLEN=32 :are supported by this server
+:aberdeen.chathispano.com 005 karisti1 KICKLEN=255 LINELEN=512 MAXLIST=b:200,e:200 MAXTARGETS=1 MODES=6 NAMELEN=128 NETWORK=IRC-Hispano NICKLEN=30 PREFIX=(oVv)@%+ SAFELIST SILENCE=32 STATUSMSG=@%+ TOPICLEN=307 :are supported by this server
+:aberdeen.chathispano.com 005 karisti1 USERLEN=10 USERMODES=,,s,BDHIJKNPRSTVchiknorvwxz WATCH=30 WHOX :are supported by this server
