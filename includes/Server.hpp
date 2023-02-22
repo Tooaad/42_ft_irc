@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 18:50:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:34:39 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ namespace IRC
 			std::vector<User>				users;
 			std::vector<std::string>		commands;
 			std::vector<Channel>			channels;
+			std::string						hostname;
 			
 
 			// //			◦ If host, port_network and password_network aren’t given, you must create a new IRC network
@@ -82,9 +83,11 @@ namespace IRC
 			struct kevent					*getEvent(void);
 			std::vector<User>&				getUsers(void);
 			std::vector<Channel>&			getChannels(void);
+			std::string						getHostname(void) const;
 			std::vector<Channel>::iterator	getChannelIt(std::string name);
 
 			/* -- Modifiers -- */
+			void							setHostname(std::string hostname);
 			void							addChannel(Channel& channel);
 			void							removeChannel(Channel channel);
 			void							updateUserInChannels(std::string prevNick, IRC::User user);

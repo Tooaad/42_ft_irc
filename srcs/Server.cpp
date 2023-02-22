@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 11:25:45 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:41:31 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 		this->users = other.users;
 		this->commands = other.commands;
 		this->channels = other.channels;
+		this->hostname = other.hostname;
 	}
 
 	return *this;
@@ -56,6 +57,7 @@ struct kevent*							IRC::Server::getChangeEvent(void) { return &this->changeEve
 struct kevent*							IRC::Server::getEvent(void) { return &this->event[0]; }
 std::vector<IRC::User>&					IRC::Server::getUsers(void) { return this->users; }
 std::vector<IRC::Channel>&				IRC::Server::getChannels(void) { return this->channels; }
+std::string								IRC::Server::getHostname(void) const { return this->hostname; }
 
 std::vector<IRC::Channel>::iterator		IRC::Server::getChannelIt(std::string name)
 {
@@ -70,6 +72,11 @@ std::vector<IRC::Channel>::iterator		IRC::Server::getChannelIt(std::string name)
 }
 
 /* -- Modifiers -- */
+void	IRC::Server::setHostname(std::string hostname)
+{
+	this->hostname = hostname;
+}
+
 void	IRC::Server::addChannel(IRC::Channel& channel)
 {
 	this->channels.push_back(channel);
@@ -188,7 +195,7 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 	std::vector<IRC::User> referencedUsers = getReferencedUsers(user);
 
 	for (std::vector<IRC::User>::iterator it = referencedUsers.begin(); it != referencedUsers.end(); it++)
-		it->sendMessage(":" + user.getNick() + " QUIT :" + message + "\n");
+		it->sendMessage(":" + user.getNick() + " QUIT :" + message);
 
 	if (close(user.getSocket()) == -1)
 		throwError("Client close error");
@@ -227,9 +234,19 @@ int		IRC::Server::saveIp(void)
 	
 	hostEntry = gethostbyname(host);
 	if (!hostEntry)
+	{
 		this->ip = "127.0.0.1";
+		this->hostname = "localhost";
+	}
 	else
+	{
 		this->ip = inet_ntoa(*((struct in_addr*) hostEntry->h_addr_list[0]));
+
+		std::cout << ">> Hostname: " << hostEntry->h_name << std::endl;
+		std::string s(hostEntry->h_name);
+		this->hostname = s;
+		
+	}
 	
 	return 0;
 }
@@ -420,7 +437,7 @@ void	IRC::Server::catchPing(void)
 			
 			users[i].setPingKey("1234");
 			users[i].changeRequest(true);
-			users[i].sendMessage("PING: " + users[i].getPingKey() + "\n");
+			users[i].sendMessage("PING: " + users[i].getPingKey());
 		}
 		// 	if(user.getTimeout() + REG_TIMEOUT <= time(NULL))
 	}
