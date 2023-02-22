@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 12:29:11 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/22 11:25:04 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace IRC
 			std::string				nick;
 			std::string				user;
 			std::string				realname;
-			std::string				hostname;
+			char 					*hostname;
 			std::string				servername;
 			bool					authenticated;
 			bool					invisible;
@@ -45,6 +45,7 @@ namespace IRC
 		public:
 			User();
 			User(int socket);
+			User(int socket, char *hostname);
 			User(const User& other);
 			~User();
 			User &operator=(const User &other);
@@ -55,7 +56,7 @@ namespace IRC
 			std::string				getNick(void) const;
 			std::string				getUser(void) const;
 			std::string				getRealname(void) const;
-			std::string				getHostname(void) const;
+			char					*getHostname(void) const;
 			std::string				getServername(void) const;
 			bool					isAuthenticated(void) const;
 			bool					isInvisible(void) const;
@@ -72,7 +73,7 @@ namespace IRC
 			void					setNick(std::string nick);
 			void					setUser(std::string user);
 			void					setRealname(std::string realname);
-			void					setHostname(std::string realname);
+			void					setHostname(char *realname);
 			void					setServername(std::string realname);
 			void					changeAuthenticated(void);
 			void					changeInvisibility(void);

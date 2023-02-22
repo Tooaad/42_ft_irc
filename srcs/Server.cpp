@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 19:29:36 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/22 11:25:45 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ int		IRC::Server::clientConnected(void)
 	if (kevent(this->kq, this->changeEvent, 1, NULL, 0, NULL) < 0)
 		return throwError("kevent 3");
 
-	this->users.push_back(IRC::User(client.getSocket()));
+	this->users.push_back(IRC::User(client.getSocket(), client.getHostname()));
 	return 0;
 }
 

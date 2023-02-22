@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 12:03:43 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:40:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/22 11:34:24 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ IRC::Client &IRC::Client::operator=(const IRC::Client &other)
 		this->address = other.address;
 		this->cSocket = other.cSocket;
 		this->size = other.size;
+		this->hostname = other.hostname;
+		
 	}
 	
 	return *this;
@@ -43,6 +45,9 @@ IRC::Client &IRC::Client::operator=(const IRC::Client &other)
 sockaddr_in		IRC::Client::getAddress(void) const { return this->address; }
 int				IRC::Client::getSocket(void) const { return this->cSocket; }
 socklen_t		IRC::Client::getSize(void) const { return this->size; }
+char			*IRC::Client::getHostname(void) const { return this->hostname; }
+
+void			IRC::Client::setHostname(char *hostname) { this->hostname = hostname; }
 
 /* -- Member functions -- */
 void	IRC::Client::setup(void)
@@ -59,4 +64,5 @@ void	IRC::Client::setup(void)
 		inet_ntop(AF_INET, &this->address.sin_addr, host, NI_MAXHOST);
 		std::cout << "Host: " << host << " connected on port " << ntohs(this->address.sin_port) << std::endl;
 	}
+	this->setHostname(host);
 }

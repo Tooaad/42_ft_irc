@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/15 18:55:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/22 11:28:35 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ IRC::User::User(int socket)
 	this->nick = "";
 	this->user = "";
 	this->realname = "";
-	this->hostname = "";
+	this->hostname = NULL;
 	this->servername = "";
 	this->authenticated = false;
 	this->invisible = false;
@@ -33,6 +33,26 @@ IRC::User::User(int socket)
 	this->pingReq = false;
 	this->timeout = time(NULL);
 }
+
+IRC::User::User(int socket, char *hostname)
+{
+	this->socket = socket;
+	this->password = "";
+	this->nick = "";
+	this->user = "";
+	this->realname = "";
+	this->hostname = hostname;
+	this->servername = "";
+	this->authenticated = false;
+	this->invisible = false;
+	this->op = false;
+	this->subscribe = false;
+	this->timeout = 0;
+	this->buffer = "";
+	this->pingReq = false;
+	this->timeout = time(NULL);
+}
+
 
 IRC::User::User(const IRC::User& other) { *this = other; }
 IRC::User::~User() {}
@@ -64,7 +84,7 @@ std::string					IRC::User::getPassword(void) const { return this->password; }
 std::string					IRC::User::getNick(void) const { return this->nick; }
 std::string					IRC::User::getUser(void) const { return this->user; }
 std::string					IRC::User::getRealname(void) const { return this->realname; }
-std::string					IRC::User::getHostname(void) const { return this->hostname; }
+char						*IRC::User::getHostname(void) const { return this->hostname; }
 std::string					IRC::User::getServername(void) const { return this->servername; }
 bool						IRC::User::isAuthenticated(void) const { return this->authenticated; }
 bool						IRC::User::isInvisible(void) const { return this->invisible; }
@@ -81,7 +101,7 @@ void						IRC::User::setPassword(std::string password) { this->password = passwo
 void						IRC::User::setNick(std::string nick) { this->nick = nick; }
 void						IRC::User::setUser(std::string user) { this->user = user; }
 void						IRC::User::setRealname(std::string realname) { this->realname = realname; }
-void						IRC::User::setHostname(std::string hostname) { this->hostname = hostname; }
+void						IRC::User::setHostname(char *hostname) { this->hostname = hostname; }
 void						IRC::User::setServername(std::string servername) { this->servername = servername; }
 void						IRC::User::changeAuthenticated(void) { this->authenticated = !authenticated; }
 void						IRC::User::changeInvisibility(void) { this->invisible = !invisible; }
