@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/17 17:25:29 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:50:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 	ss << replyNo;
 	std::string replyNoStr = ss.str();
 	// :127.0.0.1 353 karisti = #jeje :@karisti
-	this->replyMsg += ":" + server.getIp() + " " + replyNoStr + " " + user.getNick() + " ";
+	this->replyMsg += ":" + server.getHostname() + " " + replyNoStr + " " + user.getNick() + " ";
 	
 	switch (replyNo)
 	{
 		case RPL_NAMREPLY:
-			this->replyMsg += expandMessage(n, vaList, "= % :%");
+			this->replyMsg += expandMessage(n, vaList, "% :%");
 			break;
 		case RPL_ENDOFNAMES:
 			this->replyMsg += expandMessage(n, vaList, "% :End of /NAMES list");
@@ -122,7 +122,7 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 			this->replyMsg += expandMessage(n, vaList, "% :No topic is set");
 			break;
 		case RPL_TOPIC:
-			this->replyMsg += expandMessage(n, vaList, "% :%");
+			this->replyMsg += expandMessage(n, vaList, "% %");
 			break;
 		case RPL_UMODEIS:
 			this->replyMsg += expandMessage(n, vaList, "% % %");
@@ -158,7 +158,7 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 	ss << errorNo;
 	std::string errorNoStr = ss.str();
 	// :127.0.0.1 353 karisti = #jeje :@karisti
-	this->errorMsg = ":" + server.getIp() + " " + errorNoStr + " " + user.getNick() + " ";
+	this->errorMsg = ":" + server.getHostname() + " " + errorNoStr + " " + user.getNick() + " ";
 	
 	switch (errorNo)
 	{
@@ -240,10 +240,10 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 
 void		IRC::Command::setActionInReply(IRC::Server server, IRC::User user, IRC::Channel channel, std::string action)
 {
-	std::string str = ":" + user.getNick() + "!" + user.getUser() + "@" + server.getIp();
-	str += " " + action + " :" + channel.getName();
+	(void)server;
+	std::string str = ":" + user.getNick() + "!" + user.getUser() + "@" + user.getHostname() + " " + action;
 
-	channel.sendMessageToUsers(user, str + "\n");
+	channel.sendMessageToUsers(user, str);
 
 	if (!this->replyMsg.empty())
 		this->replyMsg += "\n";
@@ -303,9 +303,9 @@ void			IRC::Command::exec(IRC::Server* server, IRC::User& user)
 void			IRC::Command::answer(IRC::User& user)
 {	
 	if (this->errorNo != 0)
-		user.sendMessage(this->errorMsg + "\n");
+		user.sendMessage(this->errorMsg);
 	else if (this->replyMsg.size() > 0)
-		user.sendMessage(this->replyMsg + "\n");
+		user.sendMessage(this->replyMsg);
 }
 
 std::string		IRC::Command::expandMessage(int argCount, va_list vaList, std::string errorStr) const
