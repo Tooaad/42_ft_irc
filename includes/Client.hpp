@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:08 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 11:27:05 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/22 12:12:00 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace IRC
 			sockaddr_in		address;
 			int				cSocket;
 			socklen_t		size;
-			char 			*hostname;
+			std::string 	hostname;
 
 		public:
 			Client();
@@ -43,10 +43,10 @@ namespace IRC
 			sockaddr_in		getAddress(void) const;
 			int				getSocket(void) const;
 			socklen_t		getSize(void) const;
-			char			*getHostname(void) const;
+			std::string		getHostname(void) const;
 
 			/* -- Member functions -- */
 			void			setup(void);
-			void			setHostname(char *hostname);
+			void			setHostname(std::string hostname);
 	};
 }
