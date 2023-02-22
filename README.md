@@ -105,6 +105,7 @@ Refactor .cpp:
 -> This en variables de la clase, no en funciones
 -> Void en funciones sin argumentos
 
+TODO: @+ en names, usuario puede ser operador y administrador a la vez
 
 
 
@@ -149,6 +150,13 @@ join #aaaa,#bbbb
 
 */
 
+pass 12
+nick karisti1
+user karisti2 0 * :Kepa
+
+:edinburgh.chathispano.com 396 karisti1 Mv6.j18.j49ElA.virtual :is now your displayed host
+:karisti1!karisti2@Mv6.j18.j49ElA.virtual JOIN :#test
+
 
 /------
 * Mandar PRIVMSG al mismo usuario que lo manda
@@ -156,3 +164,35 @@ join #aaaa,#bbbb
 
 :karisti PRIVMSG #bird :hola gonzalo
 :karisti PRIVMSG #bird :hola privmsg
+
+
+:karisti!karisti@Mv6.j18.j49ElA.virtual JOIN :#test
+
+
+pass 12
+nick gpernas1
+user gpernas2 0 * :Gonzalo
+
+:gpernas1!gpernas2@10.11.14.6 JOIN :#test
+Host1: c1r14s6.42madrid.com connected on port 56925
+
+
+
+:karisti!karisti1@c1r14s6.42madrid.com JOIN :#test
+:karisti!karisti1@c1r14s6.42madrid.com JOIN :#abc
+:totoadd!Tototoadd1@c1r14s4.42madrid.com JOIN :#test
+
+
+:glencoe.chathispano.com 396 karisti Mv6.j18.j49ElA.virtual :is now your displayed host
+:toad!toad@Kb5.j18.j49ElA.virtual JOIN :#prueba (mio)
+
+:edinburgh.chathispano.com 396 toad Kb5.j18.j49ElA.virtual :is now your displayed host
+:toad!toad@Kb5.j18.j49ElA.virtual JOIN :#prueba (gonzalo)
+
+
+-------
+
+:toadddd!toadddd@c1r14s4.42madrid.com JOIN :#test
+:toadddd!toadddd@c1r14s4.42madrid.com JOIN :#test
+
+https://modern.ircdocs.horse/#rplnamreply-353
