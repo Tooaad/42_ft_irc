@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/17 17:27:26 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:49:35 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ namespace IRC
 			};
 
 			enum ReplyNos {
+				/*
+				RPL_WELCOME=001,
+				RPL_YOURHOST=002,
+				RPL_CREATED=003,
+				RPL_MYINFO=004,
+				RPL_ISUPPORT=005,
+				*/
 				RPL_NAMREPLY=353,
 				RPL_ENDOFNAMES=366,
 				RPL_AWAY=301,

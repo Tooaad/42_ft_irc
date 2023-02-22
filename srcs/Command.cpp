@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 13:50:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:26:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 	this->replyNo = replyNo;
 	
 	if (!this->replyMsg.empty())
-		this->replyMsg += "\n";
+		this->replyMsg += "\r\n";
 
 	ss << replyNo;
 	std::string replyNoStr = ss.str();
@@ -109,11 +109,28 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 	
 	switch (replyNo)
 	{
+		/*
+		case RPL_WELCOME:
+			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
+			break;
+		case RPL_YOURHOST:
+			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
+			break;
+		case RPL_CREATED:
+			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
+			break;
+		case RPL_MYINFO:
+			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
+			break;
+		case RPL_ISUPPORT:
+			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
+			break;
+		*/
 		case RPL_NAMREPLY:
-			this->replyMsg += expandMessage(n, vaList, "% :%");
+			this->replyMsg += expandMessage(n, vaList, "= % :%");
 			break;
 		case RPL_ENDOFNAMES:
-			this->replyMsg += expandMessage(n, vaList, "% :End of /NAMES list");
+			this->replyMsg += expandMessage(n, vaList, "% :End of /NAMES list.");
 			break;
 		case RPL_AWAY:
 			this->replyMsg += expandMessage(n, vaList, "% :%<AWAY MSG>");
@@ -154,6 +171,9 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 	va_start(vaList, n);
 
 	this->errorNo = errorNo;
+
+	if (!this->errorMsg.empty())
+		this->errorMsg += "\r\n";
 
 	ss << errorNo;
 	std::string errorNoStr = ss.str();

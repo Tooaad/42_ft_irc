@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 13:41:31 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:47:00 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,6 @@ int		IRC::Server::saveIp(void)
 		std::cout << ">> Hostname: " << hostEntry->h_name << std::endl;
 		std::string s(hostEntry->h_name);
 		this->hostname = s;
-		
 	}
 	
 	return 0;
@@ -380,6 +379,14 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 		user.changeAuthenticated(); 				// true
 		std::string errorMsg = "You have been authenticated!\n";
 		user.sendMessage(errorMsg);
+		
+		// TODO now: https://modern.ircdocs.horse/#connection-setup
+		user.sendMessage(":" + this->getHostname() + " 001 " + user.getNick() + " :Welcome to the <networkname> Network, " + user.getNick() + "!" + user.getUser() + "@195.55.210.181");
+		user.sendMessage(":" + this->getHostname() + " 002 " + user.getNick() + " :Your host is " + this->getHostname() + ", running version 1");
+		user.sendMessage(":" + this->getHostname() + " 003 " + user.getNick() + " :This server was created 10:58:01 Jan 15 2023");
+		
+		user.sendMessage(":" + this->getHostname() + " 004 " + user.getNick() + " " + this->getHostname() + " 1 o b k");
+		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " <1-13 tokens>" + " :are supported by this server");
 	}
 
 	// if (user.isAuthenticated() == false)
