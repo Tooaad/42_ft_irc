@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ping.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/15 11:38:23 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:31:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	IRC::Ping::exec(IRC::Server* server, IRC::User& user)
 {
 	if (args.size() > 0)
 	{
-		args = ":" + server->getIp() +  " PONG " + this->args;
+		args = ":" + server->getHostname() +  " PONG " + this->args;
 		user.sendMessage(args);
 	}
 }
