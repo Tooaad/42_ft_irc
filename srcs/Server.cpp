@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 15:47:00 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:59:26 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,16 +377,17 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
 	{
 		user.changeAuthenticated(); 				// true
+		/*
 		std::string errorMsg = "You have been authenticated!\n";
 		user.sendMessage(errorMsg);
+		*/
 		
 		// TODO now: https://modern.ircdocs.horse/#connection-setup
-		user.sendMessage(":" + this->getHostname() + " 001 " + user.getNick() + " :Welcome to the <networkname> Network, " + user.getNick() + "!" + user.getUser() + "@195.55.210.181");
-		user.sendMessage(":" + this->getHostname() + " 002 " + user.getNick() + " :Your host is " + this->getHostname() + ", running version 1");
+		user.sendMessage(":" + this->getHostname() + " 001 " + user.getNick() + " :Welcome to the <networkname> Network, " + user.getNick() + "!" + user.getUser() + "@" + user.getHostname());
+		user.sendMessage(":" + this->getHostname() + " 002 " + user.getNick() + " :Your host is ircserv, running version 1.0");
 		user.sendMessage(":" + this->getHostname() + " 003 " + user.getNick() + " :This server was created 10:58:01 Jan 15 2023");
-		
-		user.sendMessage(":" + this->getHostname() + " 004 " + user.getNick() + " " + this->getHostname() + " 1 o b k");
-		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " <1-13 tokens>" + " :are supported by this server");
+		user.sendMessage(":" + this->getHostname() + " 004 " + user.getNick() + " :ircserv 1.0 ositmlvk iso");
+		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " :CASEMAPPING=<ascii> CHANMODES=A,B,C,D HOSTLEN=64 NICKLEN=9 :are supported by this server");
 	}
 
 	// if (user.isAuthenticated() == false)
