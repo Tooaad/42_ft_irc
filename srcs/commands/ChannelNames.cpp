@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:09:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:16:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 	parseArgs(server);
 	
 	if (this->channelsArray.size() > 0)
-		printNames(*server, user,this->channelsArray.begin(), this->channelsArray.end());
+		printNames(*server, user, this->channelsArray.begin(), this->channelsArray.end());
 	else
 		printNames(*server, user, server->getChannels().begin(), server->getChannels().end());
 }
