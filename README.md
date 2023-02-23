@@ -219,3 +219,14 @@ https://modern.ircdocs.horse/#connection-setup
 :aberdeen.chathispano.com 005 karisti1 AWAYLEN=200 CASEMAPPING=ascii CHANLIMIT=#:20 CHANMODES=be,k,EFHJdfjlxy,CKMNOQRSTWimnprstuz CHANNELLEN=64 CHANTYPES=# ELIST=CMNTU ESILENCE=CcdiNnPpTtx EXCEPTS=e EXTBAN=,CGNSTUXagjmrwz HOSTLEN=64 KEYLEN=32 :are supported by this server
 :aberdeen.chathispano.com 005 karisti1 KICKLEN=255 LINELEN=512 MAXLIST=b:200,e:200 MAXTARGETS=1 MODES=6 NAMELEN=128 NETWORK=IRC-Hispano NICKLEN=30 PREFIX=(oVv)@%+ SAFELIST SILENCE=32 STATUSMSG=@%+ TOPICLEN=307 :are supported by this server
 :aberdeen.chathispano.com 005 karisti1 USERLEN=10 USERMODES=,,s,BDHIJKNPRSTVchiknorvwxz WATCH=30 WHOX :are supported by this server
+
+Command: '
+
+PROTOCTL NAMESX
+
+
+CAP REQ MULTI-PREFIX
+'
+
+https://hmong.es/wiki/List_of_Internet_Relay_Chat_commands
+https://ircv3.net/specs/extensions/capability-negotiation.html
