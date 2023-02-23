@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/23 12:49:03 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/23 20:00:50 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if (receptor == server->getChannels().end())
 			return setError(ERR_NOSUCHCHANNEL, *server, user, 1, argSplit[0].c_str());
 
-		// TODO: REVISAR CONDICION
-		if((!user.isInChannel(*receptor) && !receptor->isPublicMsg()) && (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
+		// Moderated Channel Case
+		if (receptor->isModerated() && (!receptor->isOperator(user) && !receptor->isModerator(user)))
+			return setError(ERR_CANNOTSENDTOCHAN, *server, user, 1, argSplit[1].c_str());
+
+		// Channel is not Public
+		if((!user.isInChannel(*receptor) && !receptor->isPublicMsg()))
 			return setError(ERR_CANNOTSENDTOCHAN, *server, user, 1, argSplit[1].c_str());
 
 		receptor->sendMessageToUsers(user, ":" + user.getNick() + " PRIVMSG " + argSplit[0] + " " + argSplit[1]);
