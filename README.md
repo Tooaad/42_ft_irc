@@ -147,6 +147,11 @@ nick gpernas1
 user gpernas2 0 * :Gonzalo
 join #aaaa,#bbbb
 
+pass 12
+nick gpernas1
+user gpernas2 0 * :Gonzalo
+join #test
+
 */
 
 

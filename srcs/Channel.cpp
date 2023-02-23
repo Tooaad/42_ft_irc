@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/17 16:59:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/23 19:09:36 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void						IRC::Channel::changeSecrecy(void) { this->secretMode = !this->secretMo
 void						IRC::Channel::changeFreeTopic(void) { this->freeTopicMode = !this->freeTopicMode; }
 void						IRC::Channel::changePublicMsg(void) { this->publicMsgMode = !this->publicMsgMode; }
 void						IRC::Channel::changeModerated(void) { this->moderatedMode = !this->moderatedMode; }
-void						IRC::Channel::setMaxUsers(int size) { this->maxUsers = size; }
+void						IRC::Channel::setMaxUsers(int size) { if (size < 0) { size = 0; } this->maxUsers = size; }
 
 /* -- Modifiers -- */
 void	IRC::Channel::addOperator(IRC::User user)
