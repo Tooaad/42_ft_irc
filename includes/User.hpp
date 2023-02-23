@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 12:12:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:32:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ namespace IRC
 			std::string				pingKey;
 			time_t					timeout;
 			std::vector<Channel>	joinedChannels;
+			std::vector<User>		privateConvers;
 			std::string				buffer;
 
 		public:
@@ -66,6 +67,7 @@ namespace IRC
 			std::string				getPingKey(void) const;
 			time_t					getTimeout(void) const;
 			std::vector<Channel>&	getJoinedChannels(void);
+			std::vector<User>&		getPrivateConvers(void);
 			std::string				getBuffer(void) const;
 			
 			/* -- Setters -- */
@@ -86,12 +88,16 @@ namespace IRC
 			/* -- Modifiers -- */
 			void					addJoinedChannel(Channel& channel);
 			void					removeJoinedChannel(Channel channel);
+			void					addPrivateConvers(User& user);
+			void					removePrivateConvers(User user);
 			void					appendBuffer(std::string str);
 			void					clearBuffer(void);
 
 			/* -- Member functions -- */
 			std::string				getJoinedChannelsString(void) const;
+			std::string				getPrivateConversString(void) const;
 			bool					isInChannel(Channel channel) const;
+			bool					isInPrivateConvers(User user) const;
 			void					sendMessage(std::string message) const;
 	};
 	

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 12:34:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:40:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ IRC::User& IRC::User::operator=(const IRC::User &other)
 	this->subscribe = other.subscribe;
 	this->timeout = other.timeout;
 	this->joinedChannels = other.joinedChannels;
+	this->privateConvers = other.privateConvers;
 	this->buffer = other.buffer;
 	this->pingReq = other.pingReq;
 	
@@ -94,6 +95,7 @@ bool						IRC::User::isPinged(void) const { return this->pingReq; }
 std::string					IRC::User::getPingKey(void) const { return this->pingKey; }
 time_t						IRC::User::getTimeout(void) const { return this->timeout; }
 std::vector<IRC::Channel>&	IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
+std::vector<IRC::User>&		IRC::User::getPrivateConvers(void) { return this->privateConvers; }
 std::string					IRC::User::getBuffer(void) const { return this->buffer; }
 
 /* -- Setters -- */
@@ -125,6 +127,22 @@ void	IRC::User::removeJoinedChannel(IRC::Channel channel)
 		this->joinedChannels.erase(found);
 }
 
+void	IRC::User::addPrivateConvers(User& user)
+{
+	if (!this->isInPrivateConvers(user))
+		this->privateConvers.push_back(user);
+}
+
+void	IRC::User::removePrivateConvers(User user)
+{
+	std::cout << "removePrivateConvers" << std::endl;
+	
+	std::vector<IRC::User>::iterator found = std::find(this->privateConvers.begin(), this->privateConvers.end(), user);
+	
+	if (found != this->privateConvers.end())
+		this->privateConvers.erase(found);
+}
+
 void	IRC::User::appendBuffer(std::string str) { this->buffer.append(str); }
 void	IRC::User::clearBuffer(void) { this->buffer.clear(); }
 
@@ -143,9 +161,30 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 	return channelsString;
 }
 
+std::string		IRC::User::getPrivateConversString(void) const
+{
+	std::string privConvString = "";
+	
+	for (std::vector<IRC::User>::const_iterator userIt = this->privateConvers.begin(); userIt != this->privateConvers.end(); ++userIt)
+	{
+		privConvString += userIt->getNick();
+		if (userIt + 1 != this->privateConvers.end())
+			privConvString += " ";
+	}
+
+	return privConvString;
+}
+
 bool			IRC::User::isInChannel(IRC::Channel channel) const
 {
 	if (std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel) != this->joinedChannels.end())
+		return true;
+	return false;
+}
+
+bool			IRC::User::isInPrivateConvers(IRC::User user) const
+{
+	if (std::find(this->privateConvers.begin(), this->privateConvers.end(), user) != this->privateConvers.end())
 		return true;
 	return false;
 }
@@ -198,6 +237,7 @@ void	IRC::printUser(IRC::User user)
 	std::cout << ", Real name: " << user.getRealname();
 	std::cout << ", Authenticated: " << user.isAuthenticated();
 	std::cout << ", Channels: " << user.getJoinedChannelsString();
+	std::cout << ", Private convers: " << user.getPrivateConversString();
 	std::cout << std::endl;
 }
 
