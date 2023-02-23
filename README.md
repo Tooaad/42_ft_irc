@@ -85,7 +85,8 @@ Kqueue
 [ ] who
 
 Lista de prioridades:
-- Revisar Modes + Derivados Modes (PrivMSG/List/Channels)
+- En el caso que no haya operadores de un canal, en la shell, al hacer names el usuario que creo el canal sigue apareciendo como operador
+- Cambiar Mode set_rply
 - Revisar todo y explicarnoslo
 
 - Control de errores y leaks

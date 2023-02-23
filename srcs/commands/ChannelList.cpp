@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelList.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:09:00 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:17:32 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	IRC::ChannelList::printNames(IRC::Server server, IRC::User user, std::vecto
 		topics)  as channel "Prv" unless the client generating the query is
 		actually on that channel.
 		*/
-		
-		if (it->isSecret())
-			continue ;
+
+		if (it->isSecret() && !user.isInChannel(*it))
+				continue ;
 		
 		std::stringstream ss;
 		ss << it->getUsers().size();

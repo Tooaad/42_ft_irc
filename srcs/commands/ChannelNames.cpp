@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelNames.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/23 11:16:53 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:44:52 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,15 @@ void	IRC::ChannelNames::printNames(IRC::Server server, IRC::User user, std::vect
 {
 	for (std::vector<Channel>::iterator it = itBegin; it != itEnd; it++)
 	{
-		// TODO: private (+p) check
+		// TODO: private (+i (user)) check
 		
 		if (it->isSecret() && !user.isInChannel(*it))
-			continue;
-		setReply(RPL_NAMREPLY, server, user, 2, it->getName().c_str(), it->getUsersString().c_str());
+			continue ;
+
+		if (user.isInChannel(*it))
+			setReply(RPL_NAMREPLY, server, user, 2, it->getName().c_str(), it->getUsersString().c_str());
+		else
+			setReply(RPL_NAMREPLY, server, user, 2, it->getName().c_str(), it->getUsersStringVisible().c_str());
 		setReply(RPL_ENDOFNAMES, server, user, 1, it->getName().c_str());
 	}
 }

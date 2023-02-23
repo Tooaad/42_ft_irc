@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/23 19:09:36 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:43:26 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,30 @@ std::string	IRC::Channel::getUsersString(void) const // TODO: CAMBIAR
 
 	for (std::vector<IRC::User>::const_iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
 	{
+		if (usersString.size() > 0)
+			usersString += " ";
+
+		if (isOperator(*userIt))
+			usersString += "@";
+			
+		if (isModerator(*userIt))
+			usersString += "+";
+	
+		usersString += userIt->getNick();
+	}
+
+	return usersString;
+}
+
+std::string	IRC::Channel::getUsersStringVisible(void) const
+{
+	std::string usersString = "";
+
+	for (std::vector<IRC::User>::const_iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
+	{
+		if(userIt->isInvisible())
+			continue ;
+
 		if (usersString.size() > 0)
 			usersString += " ";
 

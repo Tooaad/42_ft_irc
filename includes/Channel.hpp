@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/17 17:18:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:42:38 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ namespace IRC
 			bool					isModerator(IRC::User user) const;
 			bool					existsUser(User user) const;
 			std::string				getUsersString(void) const;
+			std::string				getUsersStringVisible(void) const;
 			bool					hasPassword(void) const;
 			bool					checkPassword(std::string pass) const;
 			bool					hasMax(void) const;
