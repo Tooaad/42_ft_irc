@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 15:26:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:31:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,7 +279,20 @@ void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
 	 
 	
 	if (!t)
-		return ;
+		return;
+	/*
+	{
+		if (command.compare("PROTOCTL") == 0 && args.compare("NAMESX") == 0)
+			t = this->cmd_map["NAMES"];
+		else if (command.compare("CAP") == 0 && args.compare("REQ MULTI-PREFIX") == 0)
+		{
+			user.sendMessage("CAP * ACK multi-prefix");
+			return ;
+		}
+		else
+			return ;
+	}
+	*/
     
     // if (dynamic_cast <IRC::Pass *> (t))
     //     continue ;
