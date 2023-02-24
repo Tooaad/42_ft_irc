@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 19:01:49 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/24 19:14:45 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,7 @@ IRC::Server::Server(std::string password)
 
 IRC::Server::Server(const IRC::Server &other) { *this = other; }
 
-IRC::Server::~Server()
-{
-	/*
-		TODO:
-		- Cerrar todas las conexiones de clentes.
-		- Liberar todo.
-	*/
-}
+IRC::Server::~Server() {}
 
 IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 {
@@ -190,8 +183,6 @@ int IRC::Server::loop(void)
 
 void	IRC::Server::closeClient(IRC::User& user, std::string message)
 {
-	// TODO: Tener en cuenta tambien referencias de MP
-
 	std::vector<IRC::User> referencedUsers = getReferencedUsers(user);
 
 	for (std::vector<IRC::User>::iterator it = referencedUsers.begin(); it != referencedUsers.end(); it++)
@@ -305,10 +296,10 @@ int		IRC::Server::receiveMessage(int eventFd)
 	}
 
 	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), User(eventFd));
-	if (found == this->users.end()) // TODO: que hacer si no encontramos usuario
+	if (found == this->users.end())
 		return -1;
 
-	IRC::User& user = *found; // TODO: .base()
+	IRC::User& user = *found;
 
 	std::string message(buf);
 
@@ -436,7 +427,6 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 	return referencedUsers;
 }
 
-// TODO: Revisar y ajustar tiempos
 void	IRC::Server::catchPing(void)
 {
 	std::cout << "> Catch Ping: " << std::endl;
@@ -456,6 +446,5 @@ void	IRC::Server::catchPing(void)
 			users[i].changeRequest(true);
 			users[i].sendMessage("PING: " + users[i].getPingKey());
 		}
-		// 	if(user.getTimeout() + REG_TIMEOUT <= time(NULL))
 	}
 }

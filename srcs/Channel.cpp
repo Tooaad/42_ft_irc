@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 19:02:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/24 19:12:14 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ bool	IRC::Channel::existsUser(IRC::User user) const
 	return false;
 }
 
-std::string	IRC::Channel::getUsersString(void) const // TODO: CAMBIAR
+std::string	IRC::Channel::getUsersString(void) const
 {
 	std::string usersString = "";
 

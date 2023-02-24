@@ -85,6 +85,7 @@ Kqueue
 [ ] who
 
 Lista de prioridades:
+- Juntar cliente y user
 - Revisar todo y explicarnoslo
 
 - Control de errores y leaks
