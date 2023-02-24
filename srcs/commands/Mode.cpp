@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/24 14:15:08 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/24 18:13:17 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 
 	if (this->args.at(0) == '#' || this->args.at(0) == '&')
-	{
-		// NeedMoreParams
-		// ChannelModeIs
-		// ChaNoPrivsNeeded
-		// NoTonChannel
-		// RPL_BANLIST
-		// RPL_ENDOFBANLIST
-		// Unknownmode
-		// NoSuchChannel
-		
+	{	
 		std::vector<std::string> argSplit = splitString(this->args, " ");
 		std::vector<IRC::Channel>::iterator receptor = server->getChannelIt(argSplit[0]);
 		if (receptor.base() == NULL)
@@ -67,13 +58,6 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					else if (argSplit[1].at(0) == '-' && receptor->isSecret())
 						receptor->changeSecrecy();
 				}
-				// else if (argSplit[1].at(i) == 'i')
-				// {
-				// 	if (argSplit[1].at(0) == '+' && !receptor->isInviteOnly())
-				// 		receptor->changeInviteOnly();
-				// 	else if (argSplit[1].at(0) == '-' && receptor->isInviteOnly())
-				// 		receptor->changeInviteOnly();
-				// }
 				else if (argSplit[1].at(i) == 't')
 				{
 					if (argSplit[1].at(0) == '+' && !receptor->isFreeTopic())
@@ -81,7 +65,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					else if (argSplit[1].at(0) == '-' && receptor->isFreeTopic())
 						receptor->changeFreeTopic();
 				}
-				else if (argSplit[1].at(i) == 'n')	// NO FUNCIONA??
+				else if (argSplit[1].at(i) == 'n')
 				{
 					if (argSplit[1].at(0) == '+' && !receptor->isPublicMsg())
 						receptor->changePublicMsg();
@@ -103,7 +87,6 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						receptor->setMaxUsers(atoi(argSplit[2].c_str())); 
 					else if (argSplit[1].at(0) == '-')
 						receptor->setMaxUsers(0);
-			// else if (argSplit[1].at(i) == 'b')
 				}
 				else if (argSplit[1].at(i) == 'v')
 				{
@@ -129,41 +112,18 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		}
 		else
 		{
-			// int i = 0;
-			std::string mode;
-			if (receptor->isSecret())
-			{	
-				// i++;
-				mode += " +s,";
-			}
-			if (receptor->isFreeTopic())
+			std::string mode = "";
+			receptor->isSecret()? mode += " +s,": "";
+			receptor->isFreeTopic()? mode += " +t,": "";
+			receptor->isPublicMsg()? mode += " +n,": "";
+			receptor->isModerated()? mode += " +m,": "";
+			receptor->hasMax()? mode += printChannelMax(*receptor): "";
+			receptor->hasPassword()? mode += printPassword(*receptor): ""; 
+			if (mode.length() > 0)
 			{
-				// i++;
-				mode += " +t,";
+				mode.erase(0, 1);
+				mode.erase(mode.length() - 1, 1);
 			}
-			if (receptor->isPublicMsg())
-			{
-				// i++;
-				mode += " +n,";
-			}
-			if (receptor->isModerated())
-			{
-				// i++;
-				mode += " +m,";
-			}
-			if (receptor->hasMax())
-			{
-				// i++;
-				mode += printChannelMax(*receptor);
-			}
-			if (receptor->hasPassword())
-			{
-				// i++;
-				mode += printPassword(*receptor);
-			}
-			// Dependiendo de los i poner comas
-			mode.erase(mode.at(0));
-			mode.erase(mode.at(mode.length()));
 			setReply(RPL_CHANNELMODEIS, *server, user, 1, mode.c_str());			
 		}
 	}
