@@ -108,34 +108,6 @@ Refactor .cpp:
 
 
 /*
-LIST
-
-con contraseña:
-
-list #viva42
-:edinburgh.chathispano.com 321 kepa Channel :Users Name
-:edinburgh.chathispano.com 322 kepa #viva42 1 :[+knt <key>] atsdasd asd asd
-:edinburgh.chathispano.com 323 kepa :End of channel list.
-
-
-sin pass:
-list #viva42
-:edinburgh.chathispano.com 321 kepa Channel :Users Name
-:edinburgh.chathispano.com 322 kepa #viva42 2 :[+knt adasdads] atsdasd asd asd
-:edinburgh.chathispano.com 323 kepa :End of channel list.
-
-<channel> <client count> :<topic>
-
-321     RPL_LISTSTART
-                        "Channel :Users  Name"
-322     RPL_LIST
-                        "<channel> <# visible> :<topic>"
-323     RPL_LISTEND
-                        ":End of /LIST"
-*/
-
-
-/*
 
 pass 12
 nick karisti1
@@ -151,7 +123,6 @@ join #aaaa,#bbbb
 pass 12
 nick gpernas1
 user gpernas2 0 * :Gonzalo
-join #test
 
 */
 
