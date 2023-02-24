@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/22 12:49:29 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/24 14:22:06 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void			IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 		// std::transform(this->channelsArray[i].begin(), this->channelsArray[i].end(), this->channelsArray[i].begin(), ::tolower);   // transform command type to lower anyways
 
 		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE. **/
-		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i], User()));
+		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i]));
 		IRC::Channel newChannel;
 		if (found != server->getChannels().end())
 			newChannel = joinExistingChannel(*found, *server, user);
@@ -125,7 +125,7 @@ IRC::Channel	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::S
 
 IRC::Channel	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, IRC::Server* server)
 {
-	IRC::Channel newChannel = Channel(channelName, user);
+	IRC::Channel newChannel = Channel(channelName, user, server);
 	server->addChannel(newChannel);
 	user.addJoinedChannel(newChannel);
 

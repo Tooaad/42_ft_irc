@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/23 22:14:47 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/24 14:15:08 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					if (argSplit.size() < 2)
 						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
-						receptor->addOperator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						receptor->addOperator(*findUser(server->getUsers(), argSplit[2]), server); // gestionar 2o arg 
 					else if (argSplit[1].at(0) == '-')
-						receptor->removeOperator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						receptor->removeOperator(*findUser(server->getUsers(), argSplit[2]), server); // gestionar 2o arg 
 				}
 				else if (argSplit[1].at(i) == 's')
 				{
@@ -110,9 +110,9 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					if (argSplit.size() < 2)
 						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
-						receptor->addModerator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						receptor->addModerator(*findUser(server->getUsers(), argSplit[2]), server); // gestionar 2o arg 
 					else if (argSplit[1].at(0) == '-')
-						receptor->removeModerator(*findUser(server->getUsers(), argSplit[2])); // gestionar 2o arg 
+						receptor->removeModerator(*findUser(server->getUsers(), argSplit[2]), server); // gestionar 2o arg 
 				}
 				else if (argSplit[1].at(i) == 'k')
 				{

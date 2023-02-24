@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/23 12:47:57 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/24 14:15:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,19 @@ void	IRC::Server::removeChannel(IRC::Channel channel)
 		this->channels.erase(found);
 }
 
-void	IRC::Server::updateUserInChannels(std::string prevNick, IRC::User user)
+void	IRC::Server::updateUserInChannels(IRC::User user)
 {
 	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
 	{
-		std::vector<IRC::User>::iterator operIt = findUser(channelIt->getOperators(), prevNick);
+		std::vector<IRC::User>::iterator operIt = findUserFD(channelIt->getOperators(), user.getSocket());
 		if (operIt != channelIt->getOperators().end())
 			*operIt = user;
 
-		std::vector<IRC::User>::iterator modIt = findUser(channelIt->getModerators(), prevNick);
+		std::vector<IRC::User>::iterator modIt = findUserFD(channelIt->getModerators(), user.getSocket());
 		if (modIt != channelIt->getModerators().end())
 			*modIt = user;
 
-		std::vector<IRC::User>::iterator userIt = findUser(channelIt->getUsers(), prevNick);
+		std::vector<IRC::User>::iterator userIt = findUserFD(channelIt->getUsers(), user.getSocket());
 		if (userIt != channelIt->getUsers().end())
 			*userIt = user;
 	}
@@ -216,8 +216,8 @@ void	IRC::Server::removeUser(IRC::User& user)
 		
 	for (size_t i = 0; i < this->channels.size(); i++)
 	{
-		this->channels[i].removeModerator(*found);
-		this->channels[i].removeOperator(*found);
+		this->channels[i].removeModerator(*found, this);
+		this->channels[i].removeOperator(*found, this);
 		this->channels[i].removeUser(*this, *found);
 	}
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 13:34:39 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/24 14:07:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ namespace IRC
 			void							setHostname(std::string hostname);
 			void							addChannel(Channel& channel);
 			void							removeChannel(Channel channel);
-			void							updateUserInChannels(std::string prevNick, IRC::User user);
+			void							updateUserInChannels(IRC::User user);
 
 			/* -- Member functions -- */
 			void							connectNetwork(std::string *args);

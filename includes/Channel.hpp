@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/23 21:42:38 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/24 14:21:46 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ namespace IRC
 
 		public:
 			Channel();
-			Channel(std::string name, User createdBy);
+			Channel(std::string name);
+			Channel(std::string name, User createdBy, Server* server);
 			Channel(const Channel& other);
 			~Channel();
 			Channel& operator=(const Channel& other);
@@ -81,16 +82,16 @@ namespace IRC
 			void					setMaxUsers(int size);
 			
 			/* -- Modifiers -- */
-			void					addOperator(IRC::User user);
-			void					removeOperator(IRC::User user);
-			void					addModerator(IRC::User user);
-			void					removeModerator(IRC::User user);
+			void					addOperator(User user, Server* server);
+			void					removeOperator(User user, Server* server);
+			void					addModerator(User user, Server* server);
+			void					removeModerator(User user, Server* server);
 			void					addUser(User& user);
 			void					removeUser(Server& server, User& user);
 
 			/* -- Member functions -- */
-			bool					isOperator(IRC::User user) const;
-			bool					isModerator(IRC::User user) const;
+			bool					isOperator(User user) const;
+			bool					isModerator(User user) const;
 			bool					existsUser(User user) const;
 			std::string				getUsersString(void) const;
 			std::string				getUsersStringVisible(void) const;

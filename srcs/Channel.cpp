@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/23 21:43:26 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/24 14:22:22 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,20 @@ IRC::Channel::Channel()
 	this->maxUsers = 0;
 }
 
-IRC::Channel::Channel(std::string name, IRC::User createdBy)
+IRC::Channel::Channel(std::string name)
+{
+	this->name = name;
+	this->topic = "";
+	this->password = "";
+	this->inviteOnlyMode = false;
+	this->secretMode = false;
+	this->freeTopicMode = true;
+	this->publicMsgMode = false;
+	this->moderatedMode = false;
+	this->maxUsers = 0;
+}
+
+IRC::Channel::Channel(std::string name, IRC::User createdBy, IRC::Server* server)
 {
 	this->name = name;
 	this->topic = "";
@@ -39,7 +52,7 @@ IRC::Channel::Channel(std::string name, IRC::User createdBy)
 	this->maxUsers = 0;
 	
 	addUser(createdBy);
-	addOperator(createdBy);
+	addOperator(createdBy, server);
 }
 
 IRC::Channel::Channel(const IRC::Channel &other) { *this = other; }
@@ -92,30 +105,38 @@ void						IRC::Channel::changeModerated(void) { this->moderatedMode = !this->mod
 void						IRC::Channel::setMaxUsers(int size) { if (size < 0) { size = 0; } this->maxUsers = size; }
 
 /* -- Modifiers -- */
-void	IRC::Channel::addOperator(IRC::User user)
+void	IRC::Channel::addOperator(IRC::User user, IRC::Server* server)
 {
 	if (!isOperator(user))
 		this->operators.push_back(user);
+	
+	server->updateUserInChannels(user);
 }
 
-void	IRC::Channel::removeOperator(IRC::User user)
+void	IRC::Channel::removeOperator(IRC::User user, IRC::Server* server)
 {
 	std::vector<IRC::User>::iterator found = std::find(this->operators.begin(), this->operators.end(), user);
 	if (found != this->operators.end())
 		this->operators.erase(found);
+
+	server->updateUserInChannels(user);
 }
 
-void	IRC::Channel::addModerator(IRC::User user)
+void	IRC::Channel::addModerator(IRC::User user, IRC::Server* server)
 {
 	if (!isModerator(user))
 		this->moderators.push_back(user);
+
+	server->updateUserInChannels(user);
 }
 
-void	IRC::Channel::removeModerator(IRC::User user)
+void	IRC::Channel::removeModerator(IRC::User user, IRC::Server* server)
 {
 	std::vector<IRC::User>::iterator found = std::find(this->moderators.begin(), this->moderators.end(), user);
 	if (found != this->moderators.end())
 		this->moderators.erase(found);
+
+	server->updateUserInChannels(user);
 }
 
 void	IRC::Channel::addUser(IRC::User& user)
