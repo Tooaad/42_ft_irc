@@ -69,8 +69,8 @@ Kqueue
 [-] list
 [-] mode
 [-] quit
-[ ] Ping
-[ ] Pong
+[-] Ping
+[-] Pong
 
 
 
@@ -85,8 +85,6 @@ Kqueue
 [ ] who
 
 Lista de prioridades:
-- En el caso que no haya operadores de un canal, en la shell, al hacer names el usuario que creo el canal sigue apareciendo como operador
-- Cambiar Mode set_rply
 - Revisar todo y explicarnoslo
 
 - Control de errores y leaks
@@ -127,13 +125,7 @@ user gpernas2 0 * :Gonzalo
 */
 
 
-/------
-* Mandar PRIVMSG al mismo usuario que lo manda
-* Proteger caracteres desconocidos en los canales y usuarios
 
-
-
-https://modern.ircdocs.horse/#rplnamreply-353
 https://modern.ircdocs.horse/#connection-setup
 
 
@@ -145,13 +137,3 @@ https://modern.ircdocs.horse/#connection-setup
 :aberdeen.chathispano.com 005 karisti1 KICKLEN=255 LINELEN=512 MAXLIST=b:200,e:200 MAXTARGETS=1 MODES=6 NAMELEN=128 NETWORK=IRC-Hispano NICKLEN=30 PREFIX=(oVv)@%+ SAFELIST SILENCE=32 STATUSMSG=@%+ TOPICLEN=307 :are supported by this server
 :aberdeen.chathispano.com 005 karisti1 USERLEN=10 USERMODES=,,s,BDHIJKNPRSTVchiknorvwxz WATCH=30 WHOX :are supported by this server
 
-Command: '
-
-PROTOCTL NAMESX
-
-
-CAP REQ MULTI-PREFIX
-'
-
-https://hmong.es/wiki/List_of_Internet_Relay_Chat_commands
-https://ircv3.net/specs/extensions/capability-negotiation.html
