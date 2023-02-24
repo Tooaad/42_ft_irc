@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/23 12:40:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/24 19:07:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,6 @@ void	IRC::User::addPrivateConvers(User& user)
 
 void	IRC::User::removePrivateConvers(User user)
 {
-	std::cout << "removePrivateConvers" << std::endl;
-	
 	std::vector<IRC::User>::iterator found = std::find(this->privateConvers.begin(), this->privateConvers.end(), user);
 	
 	if (found != this->privateConvers.end())

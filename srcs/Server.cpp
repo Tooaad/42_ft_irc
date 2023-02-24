@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 18:40:42 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/24 19:01:49 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void	IRC::Server::removeUser(IRC::User& user)
 	{
 		this->channels[i].removeModerator(*found, this);
 		this->channels[i].removeOperator(*found, this);
-		this->channels[i].removeUser(*this, *found);
+		this->channels[i].removeUser(this, *found);
 	}
 
 	for (size_t i = 0; i < this->users.size(); i++)
