@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelList.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/23 21:17:32 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/24 17:37:35 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 	parseArgs(server);
 	
 	if (this->channelsArray.size() > 0)
-		printNames(*server, user, this->channelsArray.begin(), this->channelsArray.end());
+		printList(*server, user, this->channelsArray.begin(), this->channelsArray.end());
 	else
-		printNames(*server, user, server->getChannels().begin(), server->getChannels().end());
+		printList(*server, user, server->getChannels().begin(), server->getChannels().end());
 }
 
 void	IRC::ChannelList::parseArgs(IRC::Server* server)
@@ -52,20 +52,14 @@ void	IRC::ChannelList::parseArgs(IRC::Server* server)
 	}
 }
 
-void	IRC::ChannelList::printNames(IRC::Server server, IRC::User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd)
+void	IRC::ChannelList::printList(IRC::Server server, IRC::User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd)
 {
 	setReply(RPL_LISTSTART, server, user, 0);
 	
 	for (std::vector<Channel>::iterator it = itBegin; it != itEnd; it++)
 	{
-		/*
-		TODO: Private  channels  are  listed  (without  their
-		topics)  as channel "Prv" unless the client generating the query is
-		actually on that channel.
-		*/
-
 		if (it->isSecret() && !user.isInChannel(*it))
-				continue ;
+			continue ;
 		
 		std::stringstream ss;
 		ss << it->getUsers().size();
