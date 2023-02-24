@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/14 17:48:25 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/24 18:29:45 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,14 @@ void catchSignal(void)
     sa.sa_handler = sig_handle;
     sigaction(SIGINT, &sa, NULL);
     sigaction(SIGQUIT, &sa, NULL);
+}
+
+std::string		pingGenerator(const int &size) {
+	std::string	nums = "0123456789";
+	std::string	randstr;
+	srand(std::time(NULL));
+
+	for (int i = 0; i < size; i++)
+		randstr += nums[rand() % nums.length()];
+	return randstr;
 }

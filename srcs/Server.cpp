@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 14:15:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/24 18:40:42 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -452,7 +452,7 @@ void	IRC::Server::catchPing(void)
 			if (!users[i].isAuthenticated())
 				closeClient(users[i], "REGISTRATION TIMEOUT");
 			
-			users[i].setPingKey("1234");
+			users[i].setPingKey(pingGenerator(5));
 			users[i].changeRequest(true);
 			users[i].sendMessage("PING: " + users[i].getPingKey());
 		}
