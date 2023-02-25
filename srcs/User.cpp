@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 19:07:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 09:55:47 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,9 +203,9 @@ bool	IRC::operator== (const IRC::User lhs, const IRC::User rhs)
 
 std::vector<IRC::User>::iterator	IRC::findUserFD(std::vector<IRC::User>& users, int fd)
 {
-	std::vector<IRC::User>::iterator it;
+	std::vector<IRC::User>::iterator it = users.begin();
 	
-	for (it = users.begin(); it != users.end(); it++)
+	for (; it != users.end(); it++)
 	{
 		std::cout << it->getSocket();
 		if (it->getSocket() == fd)
@@ -216,9 +216,9 @@ std::vector<IRC::User>::iterator	IRC::findUserFD(std::vector<IRC::User>& users, 
 
 std::vector<IRC::User>::iterator	IRC::findUser(std::vector<IRC::User>& users, std::string nick)
 {
-	std::vector<IRC::User>::iterator it;
+	std::vector<IRC::User>::iterator it = users.begin();
 	
-	for (it = users.begin(); it != users.end(); it++)
+	for (; it != users.end(); it++)
 	{
 		if (it->getNick().compare(nick) == 0)
 			return it;
