@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/22 15:49:35 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 11:57:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ namespace IRC
 	{
 		public:
 			enum ErrorNos {
+				ERR_PASSWDMISMATCH=464,
 				ERR_NOTREGISTERED=451,
 				ERR_BADCHANMASK=476,
 				ERR_NEEDMOREPARAMS=461,

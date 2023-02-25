@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/08 11:31:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 12:13:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 IRC::Pass::Pass() {}
 IRC::Pass::~Pass() {}
 
-// Block message if password is not provide
 void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 {
 	if (this->args.size() < 1)
@@ -30,10 +29,7 @@ void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 		return ;
 	}
 	user.setPassword(args.substr(0, args.find(" ")));
+	
 	if (server->getPassword().size() > 0 && user.getPassword().compare(server->getPassword()) != 0)
-	{
-		std::string error_msg = "<client> :Password incorrect\n";
-		user.sendMessage(error_msg);
-		server->closeClient(user, "Quit: Password incorrect");
-	}
+		setError(ERR_PASSWDMISMATCH, *server, user, 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/23 11:31:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 12:07:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,9 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 	
 	switch (errorNo)
 	{
+		case ERR_PASSWDMISMATCH:
+			this->errorMsg += expandMessage(n, vaList, ":Password incorrect");
+			break;
 		case ERR_BADCHANMASK:
 			this->errorMsg += expandMessage(n, vaList, "% :Bad Channel Mask");
 			break;
