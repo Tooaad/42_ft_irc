@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Notice.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:13:36 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/22 12:32:16 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 10:14:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	IRC::Notice::exec(IRC::Server *server, IRC::User& user)
 	if (argSplit[0].at(0) == '#')
 	{
 		std::vector<IRC::Channel>::iterator receptor = server->getChannelIt(argSplit[0]);
-		if (receptor.base() == NULL)
+		if (receptor == server->getChannels().end())
 			return ;
 			
 		if(!user.isInChannel(*receptor) || !receptor->isPublicMsg() || (receptor->isModerated() && !receptor->isOperator(user) && !receptor->isModerator(user)))
