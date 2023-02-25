@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 19:14:45 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 11:43:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,15 @@ void	IRC::Server::updateUserInChannels(IRC::User user)
 {
 	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
 	{
-		std::vector<IRC::User>::iterator operIt = findUserFD(channelIt->getOperators(), user.getSocket());
+		std::vector<IRC::User>::iterator operIt = findUserFd(channelIt->getOperators(), user.getSocket());
 		if (operIt != channelIt->getOperators().end())
 			*operIt = user;
 
-		std::vector<IRC::User>::iterator modIt = findUserFD(channelIt->getModerators(), user.getSocket());
+		std::vector<IRC::User>::iterator modIt = findUserFd(channelIt->getModerators(), user.getSocket());
 		if (modIt != channelIt->getModerators().end())
 			*modIt = user;
 
-		std::vector<IRC::User>::iterator userIt = findUserFD(channelIt->getUsers(), user.getSocket());
+		std::vector<IRC::User>::iterator userIt = findUserFd(channelIt->getUsers(), user.getSocket());
 		if (userIt != channelIt->getUsers().end())
 			*userIt = user;
 	}
@@ -260,20 +260,21 @@ void	IRC::Server::terminateServer(void)
 
 int		IRC::Server::clientConnected(void)
 {
-	IRC::Client client(this->sSocket);
-	client.setup();
+	IRC::User user;
+	
+	user.startListeningSocket(this->sSocket);
 
-	EV_SET(this->changeEvent, client.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
+	EV_SET(this->changeEvent, user.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
 	if (kevent(this->kq, this->changeEvent, 1, NULL, 0, NULL) < 0)
 		return throwError("kevent 3");
 
-	this->users.push_back(IRC::User(client.getSocket(), client.getHostname()));
+	this->users.push_back(user);
 	return 0;
 }
 
 void	IRC::Server::clientDisconnected(int eventFd)
 {
-	std::vector<IRC::User>::iterator userIt = std::find(this->users.begin(), this->users.end(), User(eventFd));
+	std::vector<IRC::User>::iterator userIt = findUserFd(this->users, eventFd);
 	if (userIt == this->users.end())
 		return ;
 
@@ -295,7 +296,7 @@ int		IRC::Server::receiveMessage(int eventFd)
 		return -1;
 	}
 
-	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), User(eventFd));
+	std::vector<IRC::User>::iterator found = findUserFd(this->users, eventFd);
 	if (found == this->users.end())
 		return -1;
 

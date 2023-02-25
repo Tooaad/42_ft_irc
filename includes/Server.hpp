@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 14:07:57 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 11:30:16 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 #include <sys/event.h> // kqueue
 #include <vector>
 #include "User.hpp"
-#include "Client.hpp"
 #include "Command.hpp"
 #include "utils.hpp"
 #include "Channel.hpp"

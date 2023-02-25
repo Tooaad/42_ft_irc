@@ -6,18 +6,16 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/25 09:55:47 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 11:43:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/User.hpp"
 
 
-IRC::User::User(void) { User(0); }
-
-IRC::User::User(int socket)
+IRC::User::User(void)
 {
-	this->socket = socket;
+	this->socket = 0;
 	this->password = "";
 	this->nick = "";
 	this->user = "";
@@ -28,37 +26,17 @@ IRC::User::User(int socket)
 	this->invisible = false;
 	this->op = false;
 	this->subscribe = false;
-	this->timeout = 0;
 	this->buffer = "";
 	this->pingReq = false;
 	this->timeout = time(NULL);
 }
-
-IRC::User::User(int socket, std::string hostname)
-{
-	this->socket = socket;
-	this->password = "";
-	this->nick = "";
-	this->user = "";
-	this->realname = "";
-	this->hostname = hostname;
-	this->servername = "";
-	this->authenticated = false;
-	this->invisible = false;
-	this->op = false;
-	this->subscribe = false;
-	this->timeout = 0;
-	this->buffer = "";
-	this->pingReq = false;
-	this->timeout = time(NULL);
-}
-
 
 IRC::User::User(const IRC::User& other) { *this = other; }
 IRC::User::~User() {}
 
 IRC::User& IRC::User::operator=(const IRC::User &other)
 {
+	this->address = other.address;
 	this->socket = other.socket;
 	this->password = other.password;
 	this->nick = other.nick;
@@ -80,6 +58,7 @@ IRC::User& IRC::User::operator=(const IRC::User &other)
 }
 
 /* -- Getters -- */
+sockaddr_in					IRC::User::getAddress(void) const { return this->address; }
 int							IRC::User::getSocket(void) const { return this->socket; }
 std::string					IRC::User::getPassword(void) const { return this->password; }
 std::string					IRC::User::getNick(void) const { return this->nick; }
@@ -145,6 +124,31 @@ void	IRC::User::appendBuffer(std::string str) { this->buffer.append(str); }
 void	IRC::User::clearBuffer(void) { this->buffer.clear(); }
 
 /* -- Member functions -- */
+void			IRC::User::startListeningSocket(int serverSocket)
+{
+	char host[NI_MAXHOST];
+	char service[NI_MAXSERV];
+	memset(host, 0, NI_MAXHOST);
+	memset(service, 0, NI_MAXSERV);
+	
+	socklen_t addressSize = sizeof(this->address);
+	
+	this->socket = accept(serverSocket, (struct sockaddr *)&this->address, &addressSize);
+	if (this->socket == -1)
+		perror("Accept socket error");
+
+	if (getnameinfo((struct sockaddr *) &this->address, addressSize, host, NI_MAXHOST, service, NI_MAXSERV, 0) == 0)
+		std::cout << "Host1: " << host << " connected on port " << service << std::endl;
+	else 
+	{
+		inet_ntop(AF_INET, &this->address.sin_addr, host, NI_MAXHOST);
+		std::cout << "Host: " << host << " connected on port " << ntohs(this->address.sin_port) << std::endl;
+	}
+	
+	std::string s(host);
+	this->hostname = s;
+}
+
 std::string		IRC::User::getJoinedChannelsString(void) const
 {
 	std::string channelsString = "";
@@ -201,7 +205,7 @@ bool	IRC::operator== (const IRC::User lhs, const IRC::User rhs)
 	return true;
 }
 
-std::vector<IRC::User>::iterator	IRC::findUserFD(std::vector<IRC::User>& users, int fd)
+std::vector<IRC::User>::iterator	IRC::findUserFd(std::vector<IRC::User>& users, int fd)
 {
 	std::vector<IRC::User>::iterator it = users.begin();
 	
