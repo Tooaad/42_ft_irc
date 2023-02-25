@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/25 10:34:05 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 12:36:48 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			receptor->isModerated()? mode += " +m,": "";
 			receptor->hasMax()? mode += printChannelMax(*receptor): "";
 			receptor->hasPassword()? mode += printPassword(*receptor): "";
-
 			if (mode.length() > 0)
 			{
 				mode.erase(0, 1);

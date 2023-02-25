@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/25 12:13:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/25 12:35:23 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,9 @@ IRC::Pass::~Pass() {}
 void IRC::Pass::exec(IRC::Server* server, IRC::User& user)
 {
 	if (this->args.size() < 1)
-	{
-		setError(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
-		return ;
-	}
+		return setError(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
 	if (user.isAuthenticated())
-	{
-		setError(ERR_ALREADYREGISTRED, *server, user, 0);
-		return ;
-	}
+		return setError(ERR_ALREADYREGISTRED, *server, user, 0);
 	user.setPassword(args.substr(0, args.find(" ")));
 	
 	if (server->getPassword().size() > 0 && user.getPassword().compare(server->getPassword()) != 0)
