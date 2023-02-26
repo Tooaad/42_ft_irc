@@ -80,7 +80,8 @@ Kqueue
 [ ] who
 
 
-
+--- Si haces OPER cambiar linea 178 del Mode para que haga +o
+--- CIRC no imprime los modes del canal
 --- Mirar Notice
 
 Lista de prioridades:
@@ -133,3 +134,5 @@ lsof -t -i tcp:6667 | xargs kill
 :aberdeen.chathispano.com 005 karisti1 KICKLEN=255 LINELEN=512 MAXLIST=b:200,e:200 MAXTARGETS=1 MODES=6 NAMELEN=128 NETWORK=IRC-Hispano NICKLEN=30 PREFIX=(oVv)@%+ SAFELIST SILENCE=32 STATUSMSG=@%+ TOPICLEN=307 :are supported by this server
 :aberdeen.chathispano.com 005 karisti1 USERLEN=10 USERMODES=,,s,BDHIJKNPRSTVchiknorvwxz WATCH=30 WHOX :are supported by this server
 
+
+https://github.com/abambi-abambi/irc_server/blob/master/additional_materials/checklist_ft_irc_en.pdf
