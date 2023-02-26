@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/25 12:07:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:56:39 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 			this->replyMsg += expandMessage(n, vaList, "% %");
 			break;
 		case RPL_UMODEIS:
-			this->replyMsg += expandMessage(n, vaList, "% % %");
+			this->replyMsg += expandMessage(n, vaList, "%%%");
 			break;
 		case RPL_LISTSTART:
 			this->replyMsg += expandMessage(n, vaList, "Channel :Users  Name");

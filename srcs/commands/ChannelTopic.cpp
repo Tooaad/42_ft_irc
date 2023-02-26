@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/23 18:45:31 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:37:20 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ void	IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 	
 	std::vector<std::string> argsArray = splitString(args, " ", 1);
 	
-	if (argsArray.size() < 1 || argsArray[0].size() == 0 || argsArray[1].size() == 0)
+	if (argsArray.size() < 1 || argsArray[0].size() == 0)
 		return setError(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
 		
 	std::vector<IRC::Channel>::iterator channel = server->getChannelIt(argsArray[0]);
+	if (channel == server->getChannels().end())
+		return setError(ERR_NOSUCHCHANNEL, *server, user, 1, argsArray[0].c_str());
+		
 	if (argsArray.size() == 1)
 	{
 		if (channel->getTopic().size() == 0)

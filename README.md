@@ -73,26 +73,21 @@ Kqueue
 [-] Pong
 
 
-
-
-[ ] invite
 [ ] oper
 [ ] whois
-[ ] motd
 [ ] kick
-[ ] ison
 [ ] kill
 [ ] who
 
+
+
+--- Argumento  de input 1 rango de puertos
+--- varios espacios da error cuando deberia borrarlos y coger bien los argumentos
+--- Mirar Notice
+
 Lista de prioridades:
 - Revisar todo y explicarnoslo
-
-- Control de errores y leaks
 - Cambiar arrays a maps para hacer mas eficiente?
-
-
-nc irc.irc-hispano.org 6667
-lsof -t -i tcp:6667 | xargs kill
 
 
 Refactor .cpp:
@@ -127,6 +122,9 @@ user gpernas2 0 * :Gonzalo
 
 
 https://modern.ircdocs.horse/#connection-setup
+
+nc irc.irc-hispano.org 6667
+lsof -t -i tcp:6667 | xargs kill
 
 
 :aberdeen.chathispano.com 001 karisti1 :Welcome to the IRC-Hispano IRC Network karisti1!karisti2@195.55.210.181
