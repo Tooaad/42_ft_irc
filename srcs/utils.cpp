@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 19:11:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/26 19:18:53 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,23 @@ std::vector<std::string>	splitString(std::string str, std::string delim, int cou
 	while (count != 0 && (pos = str.find(delim)) != std::string::npos)
 	{
 		if (!str.substr(0, pos).empty())
+		{
 			tokens.push_back(str.substr(0, pos));
-		
+			count--;
+		}
 		str.erase(0, pos + 1);
-		count--;
 	}
 	
 	tokens.push_back(str);
+
+	std::cout << ">>> splitString: [";
+	for (std::vector<std::string>::iterator it = tokens.begin(); it != tokens.end(); it++)
+	{
+		std::cout << "'" << *it << "'";
+		if (it + 1 != tokens.end())
+			std::cout << ", ";
+	}
+	std::cout << "]" << std::endl;
 	
 	return tokens;
 }

@@ -82,7 +82,6 @@ Kqueue
 
 
 --- Argumento  de input 1 rango de puertos
---- varios espacios da error cuando deberia borrarlos y coger bien los argumentos
 --- Mirar Notice
 
 Lista de prioridades:
