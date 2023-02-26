@@ -81,7 +81,6 @@ Kqueue
 
 
 
---- Argumento  de input 1 rango de puertos
 --- Mirar Notice
 
 Lista de prioridades:
