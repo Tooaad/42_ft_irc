@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/25 11:30:27 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/26 19:44:29 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,27 @@ void saveArgs(std::string *args, int argc, char **argv)
 		args[i - 1] = argv[i];
 }
 
+int		checkArgs(std::string *args, int argc)
+{
+	int	serverPort = atoi(args[0].c_str());
+	
+	if (argc != 3 && argc != 4)
+	{
+		std::cout << "./ircserv <PORT> <SEVER_PASS>" << std::endl;
+		return 1;
+	}
+	
+	if (serverPort < 0 || serverPort > 65535)
+	{
+		std::cout << "Server port must be between 0 and 65535" << std::endl;
+		return 1;
+	}
+	
+	return 0;
+}
+
+
+
 void cleaks(void)
 {
 	system("leaks ircserv");
@@ -27,16 +48,13 @@ void cleaks(void)
 
 int main(int argc, char **argv)
 {
-	// if (argc != 3 || argc != 4)
-	// {
-	// 	std::cout << "error bad arguments" << std::endl;
-	// 	return -1;
-	// }
-	
 	atexit(cleaks);
 	
 	std::string args[argc - 1];
 	saveArgs(args, argc, argv);
+
+	if (checkArgs(args, argc))
+		return 0;
 
 	IRC::Server server(args[1]);
 	if (argc == 3)
