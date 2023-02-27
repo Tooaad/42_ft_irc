@@ -64,6 +64,7 @@ Kqueue
 [-] notice
 [-] Join
 [-] Part
+[-] kick
 [-] topic
 [-] names
 [-] list
@@ -73,7 +74,7 @@ Kqueue
 [-] Pong
 
 
-[ ] kick
+
 [ ] invite
 
 
@@ -85,7 +86,6 @@ Kqueue
 --- CIRC no imprime los modes del canal
 
 Lista de prioridades:
-- hacer kick
 - hacer invite
 - Revisar todo y explicarnoslo
 - Cambiar arrays a maps para hacer mas eficiente?
