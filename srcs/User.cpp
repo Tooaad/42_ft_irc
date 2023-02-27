@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 14:17:30 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 19:58:11 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,8 @@ void	IRC::printUser(IRC::User user)
 	std::cout << ", User: " << user.getUser();
 	std::cout << ", Real name: " << user.getRealname();
 	std::cout << ", Authenticated: " << user.isAuthenticated();
+	std::cout << ", Invisible: " << user.isInvisible();
+	std::cout << ", Suscribe: " << user.isSubscribed();
 	std::cout << ", Channels: " << user.getJoinedChannelsString();
 	std::cout << std::endl;
 }

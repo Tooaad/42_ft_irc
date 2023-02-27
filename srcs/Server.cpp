@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:44:40 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:19:02 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,21 +328,6 @@ int		IRC::Server::receiveMessage(int eventFd)
 	
 	messageSplit.clear();
 
-	/* 
-	// Todo: Comprobar si ocurre alguna vez para borrar sino
-	if (bytesRec == 0)
-	{
-		std::cout << "Client disconnected " << std::endl;
-		return -1;
-	}
-	*/
-	// std::cout << "Msg from " << eventFd << ": " << std::string(buf, 0, bytesRec) << std::endl;
-
-	/*
-	for (size_t i = 0; i < users.size(); i++)
-		send(users[i].getSocket(), buf, bytesRec + 1, 0);
-	*/
-
 	return 0;
 }
 
@@ -356,10 +341,10 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 		user.changeAuthenticated();
 		
 		// TODO now: https://modern.ircdocs.horse/#connection-setup
-		user.sendMessage(":" + this->getHostname() + " 001 " + user.getNick() + " :Welcome to the <networkname> Network, " + user.getNick() + "!" + user.getUser() + "@" + user.getHostname());
+		user.sendMessage(":" + this->getHostname() + " 001 " + user.getNick() + " :Welcome to the 42 IRC Network, " + user.getNick() + "!" + user.getUser() + "@" + user.getHostname());
 		user.sendMessage(":" + this->getHostname() + " 002 " + user.getNick() + " :Your host is ircserv, running version 1.0");
 		user.sendMessage(":" + this->getHostname() + " 003 " + user.getNick() + " :This server was created " + this->creationTimestamp);
-		user.sendMessage(":" + this->getHostname() + " 004 " + user.getNick() + " :ircserv 1.0 ositmlvk iso");
+		user.sendMessage(":" + this->getHostname() + " 004 " + user.getNick() + " :ircserv 1.0 ositnmlvk iso");
 		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " :CASEMAPPING=<ascii> CHANMODES=A,B,C,D HOSTLEN=64 NICKLEN=9 :are supported by this server");
 	}
 }
@@ -408,7 +393,7 @@ void	IRC::Server::catchPing(void)
 			
 			users[i].setPingKey(pingGenerator(5));
 			users[i].changeRequest(true);
-			users[i].sendMessage("PING: " + users[i].getPingKey());
+			users[i].sendMessage("PING " + users[i].getPingKey());
 		}
 	}
 }

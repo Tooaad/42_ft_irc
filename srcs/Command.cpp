@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 17:48:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:11:20 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,9 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 			break;
 		case ERR_USERONCHANNEL:
 			this->errorMsg += expandMessage(n, vaList, "% % :is already on channel");
+			break;
+		case ERR_CHANNELISFULL:
+			this->errorMsg += expandMessage(n, vaList, "% :Cannot join channel (+l)");
 			break;
 		default:
 			break;
