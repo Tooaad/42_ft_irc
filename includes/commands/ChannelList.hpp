@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:06 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 17:37:17 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:06:36 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,13 @@ namespace IRC
 
 	class ChannelList : public Command
 	{
-		private:
-			std::vector<Channel> channelsArray;
-
 		public:
 			ChannelList();
-			ChannelList(const ChannelList& other);
 			virtual ~ChannelList();
-			ChannelList& operator=(const ChannelList& other);
 
 			void	exec(Server* server, User& user);
 
 		private:
-			void	parseArgs(Server* server);
 			void	printList(Server server, User user, std::vector<Channel>::iterator itBegin, std::vector<Channel>::iterator itEnd);
 	};
 }
