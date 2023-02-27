@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 14:07:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:39:59 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ namespace IRC
 			std::string				hostname;
 			std::string				servername;
 			bool					authenticated;
-			bool					invisible;
-			bool					op;
-			bool					subscribe;
 			bool					pingReq;
 			std::string				pingKey;
 			time_t					timeout;
@@ -65,9 +62,6 @@ namespace IRC
 			std::string				getHostname(void) const;
 			std::string				getServername(void) const;
 			bool					isAuthenticated(void) const;
-			bool					isInvisible(void) const;
-			bool					isOp(void) const;
-			bool					isSubscribed(void) const;
 			bool					isPinged(void) const;
 			std::string				getPingKey(void) const;
 			time_t					getTimeout(void) const;
@@ -83,9 +77,6 @@ namespace IRC
 			void					setHostname(std::string realname);
 			void					setServername(std::string realname);
 			void					changeAuthenticated(void);
-			void					changeInvisibility(void);
-			void					deOp(void);
-			void					changeSubscription(void);
 			void					changeRequest(bool req);
 			void					setPingKey(std::string key);
 			void					setTimeout(time_t timeout);

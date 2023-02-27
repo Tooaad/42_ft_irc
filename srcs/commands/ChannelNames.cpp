@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelNames.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 20:28:31 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:43:07 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,7 @@ void	IRC::ChannelNames::printNames(IRC::Server server, IRC::User user, std::vect
 			continue ;
 
 		if (it->getUsers().size() > 0)
-		{
-			if (user.isInChannel(*it))
-			{
-				std::cout << ">>> In channel" << std::endl;
-				setReply(RPL_NAMREPLY, server, user, 2, it->getName().c_str(), it->getUsersString().c_str());
-			}
-			else
-			{
-				std::cout << ">>> Not in channel" << std::endl;
-				setReply(RPL_NAMREPLY, server, user, 2, it->getName().c_str(), it->getUsersStringVisible().c_str());
-			}
-		}
+			setReply(RPL_NAMREPLY, server, user, 2, it->getName().c_str(), it->getUsersString().c_str());
 
 		setReply(RPL_ENDOFNAMES, server, user, 1, it->getName().c_str());
 	}

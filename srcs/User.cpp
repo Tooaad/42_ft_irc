@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 19:58:11 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:39:43 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ IRC::User::User(void)
 	this->hostname =  "";
 	this->servername = "";
 	this->authenticated = false;
-	this->invisible = false;
-	this->op = false;
-	this->subscribe = false;
 	this->buffer = "";
 	this->pingReq = false;
 	this->timeout = time(NULL);
@@ -45,9 +42,6 @@ IRC::User& IRC::User::operator=(const IRC::User &other)
 	this->hostname = other.hostname;
 	this->servername = other.servername;
 	this->authenticated = other.authenticated;
-	this->invisible = other.invisible;
-	this->op = other.op;
-	this->subscribe = other.subscribe;
 	this->timeout = other.timeout;
 	this->joinedChannels = other.joinedChannels;
 	this->buffer = other.buffer;
@@ -66,9 +60,6 @@ std::string					IRC::User::getRealname(void) const { return this->realname; }
 std::string					IRC::User::getHostname(void) const { return this->hostname; }
 std::string					IRC::User::getServername(void) const { return this->servername; }
 bool						IRC::User::isAuthenticated(void) const { return this->authenticated; }
-bool						IRC::User::isInvisible(void) const { return this->invisible; }
-bool						IRC::User::isOp(void) const { return this->op; }
-bool						IRC::User::isSubscribed(void) const { return this->subscribe; }
 bool						IRC::User::isPinged(void) const { return this->pingReq; }
 std::string					IRC::User::getPingKey(void) const { return this->pingKey; }
 time_t						IRC::User::getTimeout(void) const { return this->timeout; }
@@ -84,9 +75,6 @@ void						IRC::User::setRealname(std::string realname) { this->realname = realna
 void						IRC::User::setHostname(std::string hostname) { this->hostname = hostname; }
 void						IRC::User::setServername(std::string servername) { this->servername = servername; }
 void						IRC::User::changeAuthenticated(void) { this->authenticated = !authenticated; }
-void						IRC::User::changeInvisibility(void) { this->invisible = !invisible; }
-void						IRC::User::deOp(void) { this->op = false; }
-void						IRC::User::changeSubscription(void) { this->subscribe = !subscribe; }
 void						IRC::User::setTimeout(time_t timeout) { this->timeout = timeout; }
 void						IRC::User::setPingKey(std::string key) { this->pingKey = key; }
 
@@ -224,8 +212,6 @@ void	IRC::printUser(IRC::User user)
 	std::cout << ", User: " << user.getUser();
 	std::cout << ", Real name: " << user.getRealname();
 	std::cout << ", Authenticated: " << user.isAuthenticated();
-	std::cout << ", Invisible: " << user.isInvisible();
-	std::cout << ", Suscribe: " << user.isSubscribed();
 	std::cout << ", Channels: " << user.getJoinedChannelsString();
 	std::cout << std::endl;
 }

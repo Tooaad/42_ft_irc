@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:19:46 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:39:17 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					{
 						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
-							receptor->addOperator(*userIt, server); // gestionar 2o arg
+							receptor->addOperator(*userIt, server);
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
 						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
-							receptor->removeOperator(*userIt, server); // gestionar 2o arg
+							receptor->removeOperator(*userIt, server);
 					}
 				}
 				else if (argSplit[1].at(i) == 's')
@@ -110,13 +110,13 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					{
 						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
-							receptor->addModerator(*userIt, server); // gestionar 2o arg
+							receptor->addModerator(*userIt, server);
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
 						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
-							receptor->removeModerator(*userIt, server); // gestionar 2o arg
+							receptor->removeModerator(*userIt, server);
 					}
 				}
 				else if (argSplit[1].at(i) == 'k')
@@ -124,7 +124,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					if (argSplit.size() < 2)
 						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
-						receptor->setPassword(argSplit[2]);		// gestionar 2o arg
+						receptor->setPassword(argSplit[2]);
 					else if (argSplit[1].at(0) == '-')
 						receptor->setPassword(argSplit[2]);
 				}
@@ -149,50 +149,6 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			}
 			setReply(RPL_CHANNELMODEIS, *server, user, 1, mode.c_str());
 		}
-	}
-	else
-	{
-		std::vector<std::string> argSplit = splitString(this->args, " ", 1);
-		// if (argSplit.size() < 2)
-		// 	return setError(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
-		std::vector<IRC::User>::iterator receptor = findUser(server->getUsers(), argSplit[0]);
-		if (receptor == server->getUsers().end())
-			return setError(ERR_NOSUCHNICK, *server, user, 1, argSplit[0].c_str());
-			
-		if (!(*receptor == user))
-			return setError(ERR_USERSDONTMATCH, *server, user, 0);
-	
-		if (argSplit.size() > 1)
-		{
-			for (size_t i = 1 ; i < argSplit[1].size(); i++)
-			{
-				if (argSplit[1].at(i) == 'i')
-				{
-					if(argSplit[1].at(0) == '+' && !user.isInvisible())
-						user.changeInvisibility();
-					else if (argSplit[1].at(0) == '-' && user.isInvisible())
-						user.changeInvisibility();
-				}
-				else if (argSplit[1].at(i) == 's')
-				{
-					if(argSplit[1].at(0) == '+' && !user.isSubscribed())
-						user.changeSubscription();
-					else if (argSplit[1].at(0) == '-' && user.isSubscribed())
-						user.changeSubscription();
-				}
-				else if (argSplit[1].at(i) == 'o')
-				{
-					if(argSplit[1].at(0) == '+')
-						return ;
-					else if (argSplit[1].at(0) == '-')
-						user.deOp();
-				}
-				else 
-					return setError(ERR_UMODEUNKNOWNFLAG, *server, user, 0);
-			}
-		}
-		else
-			setReply(RPL_UMODEIS, *server, user, 3, user.isInvisible()? "+i":"", user.isSubscribed()? "+s":"", user.isOp()? "+o":"");
 	}
 }
 
