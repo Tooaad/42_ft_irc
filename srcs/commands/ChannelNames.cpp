@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 17:23:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:01:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 	{
 		if (it->size() == 0)
 			continue ;
-		channelIt = server->getChannelIt(*it);
+		channelIt = server->findChannel(*it);
 		if (channelIt == server->getChannels().end())
 			channelsArray.push_back(Channel(*it));
 		else

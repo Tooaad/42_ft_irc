@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 15:20:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:01:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:14:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 
 namespace IRC
 {
-	class Server;
-	class Command;
-
 	class Pass : public Command
 	{
 		public:

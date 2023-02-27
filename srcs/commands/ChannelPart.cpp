@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 17:10:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:01:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 	{
 		// TODO now:
 		// std::transform(it->begin(), it->end(), it->begin(), ::tolower);
-		channelIt = server->getChannelIt(*it);
+		channelIt = server->findChannel(*it);
 		if (channelIt == server->getChannels().end())
 			return setError(ERR_NOSUCHCHANNEL, *server, user, 1, (*it).c_str());
 		

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelInvite.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:20:01 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 14:11:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:01:33 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	IRC::ChannelInvite::exec(IRC::Server* server, IRC::User& user)
 	if (argsArray.size() < 2)
 		return setError(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
 
-	std::vector<IRC::Channel>::iterator channel = server->getChannelIt(argsArray[1]);
+	std::vector<IRC::Channel>::iterator channel = server->findChannel(argsArray[1]);
 	if (channel == server->getChannels().end())
 		return setError(ERR_NOSUCHCHANNEL, *server, user, 1, argsArray[1].c_str());
 
