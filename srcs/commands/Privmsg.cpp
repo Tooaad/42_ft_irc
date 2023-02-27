@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/27 10:48:51 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:50:06 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		std::vector<IRC::User>::iterator receptor = findUser(server->getUsers(), argSplit[0]);
 		if (receptor == server->getUsers().end())
 			return setError(ERR_NOSUCHNICK, *server, user, 1, argSplit[0].c_str());
-	
-		receptor->addPrivateConvers(user);
-		user.addPrivateConvers(*receptor);
 		
 		argSplit[1] = ":" + user.getNick() + " PRIVMSG " + receptor->getNick() + " " + argSplit[1];
 		receptor->sendMessage(argSplit[1]);

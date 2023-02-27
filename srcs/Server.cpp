@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/25 11:43:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:50:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,9 +211,6 @@ void	IRC::Server::removeUser(IRC::User& user)
 		this->channels[i].removeOperator(*found, this);
 		this->channels[i].removeUser(this, *found);
 	}
-
-	for (size_t i = 0; i < this->users.size(); i++)
-		this->users[i].removePrivateConvers(user);
 	
 	this->users.erase(found);
 }
@@ -409,15 +406,6 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 		for (std::vector<IRC::Channel>::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); itChannel++)
 		{
 			if (itUser->isInChannel(*itChannel))
-			{
-				referencedUsers.push_back(*itUser);
-				break ;
-			}
-		}
-		
-		for (std::vector<IRC::User>::iterator itUser = user.getPrivateConvers().begin(); itUser != user.getPrivateConvers().end(); itUser++)
-		{
-			if (itUser->isInPrivateConvers(user))
 			{
 				referencedUsers.push_back(*itUser);
 				break ;
