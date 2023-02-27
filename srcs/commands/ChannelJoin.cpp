@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/27 14:12:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:00:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ IRC::ChannelJoin &IRC::ChannelJoin::operator=(const IRC::ChannelJoin &other)
 
 void			IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 {
-	/** CHECK AUTHENTICATION **/
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);
 
-	/** PARSE ARGS (channels and passwords) **/
-	if (parseArgs(*server, user) < 0)
-		return ;
+	std::vector<std::string> argsArray = splitString(args, " ");
+	if (argsArray.size() < 1)
+		return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
+	
+	channelsArray = splitString(argsArray[0], ",");
+	if (argsArray.size() > 1)
+		passwordsArray = splitString(argsArray[1], ",");
 
 	/** ITERATE EACH PARSED CHANNEL **/
 	for (size_t i = 0; i < channelsArray.size(); i++)
@@ -67,24 +70,6 @@ void			IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 		setReply(RPL_NAMREPLY, *server, user, 2, newChannel.getName().c_str(), newChannel.getUsersString().c_str());
 		setReply(RPL_ENDOFNAMES, *server, user, 1, newChannel.getName().c_str());
 	}
-}
-
-int				IRC::ChannelJoin::parseArgs(IRC::Server server, IRC::User user)
-{
-	std::vector<std::string> argsArray = splitString(args, " ");
-	
-	if (argsArray.size() < 1 || argsArray[0].size() == 0)
-	{
-		setError(ERR_NEEDMOREPARAMS, server, user, 1, command.c_str());
-		return -1;
-	}
-	
-	channelsArray = splitString(argsArray[0], ",");
-	
-	if (argsArray.size() > 1)
-		passwordsArray = splitString(argsArray[1], ",");
-
-	return 0;
 }
 
 IRC::Channel	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::Server server, IRC::User& user)
