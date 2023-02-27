@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 11:42:39 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:51:22 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ std::vector<std::string>	splitString(std::string str, std::string delim, int cou
 {
 	size_t pos = 0;
 	std::vector<std::string> tokens;
+	
 	while (count != 0 && (pos = str.find(delim)) != std::string::npos)
 	{
 		if (!str.substr(0, pos).empty())
@@ -37,7 +38,7 @@ std::vector<std::string>	splitString(std::string str, std::string delim, int cou
 
 bool socketKiller = false;
 
-void sig_handle(int sig)
+void			sig_handle(int sig)
 {
 	if (sig == SIGINT || sig == SIGQUIT)
 	{
@@ -45,21 +46,25 @@ void sig_handle(int sig)
 	}
 }
 
-void catchSignal(void)
+void			catchSignal(void)
 {
-    struct sigaction sa;
-    memset(&sa, 0, sizeof(sa));
-    sa.sa_handler = sig_handle;
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGQUIT, &sa, NULL);
+	struct sigaction sa;
+	
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = sig_handle;
+	
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
 std::string		pingGenerator(const int &size) {
 	std::string	nums = "0123456789";
 	std::string	randstr;
+	
 	srand(std::time(NULL));
 
 	for (int i = 0; i < size; i++)
 		randstr += nums[rand() % nums.length()];
+	
 	return randstr;
 }
