@@ -58,7 +58,6 @@ Kqueue
 
 
 Lista de prioridades:
-- CIRC no imprime los modes del canal
 - Prints a ver como dejamos en server
 - Revisar todo y explicarnoslo
 

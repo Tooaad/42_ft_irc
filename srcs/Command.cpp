@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 20:11:20 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 21:15:11 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 			this->replyMsg += expandMessage(n, vaList, ":End of /LIST");
 			break;
 		case RPL_CHANNELMODEIS:
-			this->replyMsg += expandMessage(n, vaList, "% % % % % % %");
+			this->replyMsg += expandMessage(n, vaList, "% % %");
 			break;
 		case RPL_INVITING:
 			this->replyMsg += expandMessage(n, vaList, "% %");

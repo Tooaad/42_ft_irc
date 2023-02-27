@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/27 21:01:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 21:17:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 				mode.erase(0, 1);
 				mode.erase(mode.length() - 1, 1);
 			}
-			setReply(RPL_CHANNELMODEIS, *server, user, 1, mode.c_str());
+			setReply(RPL_CHANNELMODEIS, *server, user, 2, receptor->getName().c_str(), mode.c_str());
 		}
 	}
 }
