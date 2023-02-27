@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 17:29:11 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:48:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,23 +112,6 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 	
 	switch (replyNo)
 	{
-		/*
-		case RPL_WELCOME:
-			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
-			break;
-		case RPL_YOURHOST:
-			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
-			break;
-		case RPL_CREATED:
-			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
-			break;
-		case RPL_MYINFO:
-			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
-			break;
-		case RPL_ISUPPORT:
-			this->replyMsg += expandMessage(n, vaList, ":Welcome to the Crueda IRC Network karisti1!karisti2@195.55.210.181");
-			break;
-		*/
 		case RPL_NAMREPLY:
 			this->replyMsg += expandMessage(n, vaList, "= % :%");
 			break;
@@ -183,7 +166,7 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 
 	ss << errorNo;
 	std::string errorNoStr = ss.str();
-	// :127.0.0.1 353 karisti = #jeje :@karisti
+	
 	this->errorMsg = ":" + server.getHostname() + " " + errorNoStr + " " + user.getNick() + " ";
 	
 	switch (errorNo)
@@ -291,23 +274,9 @@ void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
 {
 // >>>>PROTEGER<<<<
 	IRC::Command* t = find(this->command);
-	 
-	
+
 	if (!t)
 		return;
-	/*
-	{
-		if (command.compare("PROTOCTL") == 0 && args.compare("NAMESX") == 0)
-			t = this->cmd_map["NAMES"];
-		else if (command.compare("CAP") == 0 && args.compare("REQ MULTI-PREFIX") == 0)
-		{
-			user.sendMessage("CAP * ACK multi-prefix");
-			return ;
-		}
-		else
-			return ;
-	}
-	*/
     
     // if (dynamic_cast <IRC::Pass *> (t))
     //     continue ;
@@ -327,7 +296,6 @@ void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
 	{
 		user.setTimeout(time(NULL));
 		user.changeRequest(false);
-		std::cout << user.getTimeout() << std::endl;
 	}
 }
 
@@ -358,8 +326,8 @@ void			IRC::Command::answer(IRC::User& user)
 
 std::string		IRC::Command::expandMessage(int argCount, va_list vaList, std::string errorStr) const
 {
-	size_t startPos;
-	std::string vaValue;
+	size_t			startPos;
+	std::string		vaValue;
 	
 	while ((startPos = errorStr.find('%')) != std::string::npos)
 	{

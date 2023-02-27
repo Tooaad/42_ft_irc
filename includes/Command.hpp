@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 13:51:06 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:46:39 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,9 @@ namespace IRC
 				ERR_UNKNOWNMODE=472,
 				ERR_USERNOTINCHANNEL=441,
 				ERR_USERONCHANNEL=443
-				// ERR_BANNEDFROMCHAN
 			};
 
 			enum ReplyNos {
-				/*
-				RPL_WELCOME=001,
-				RPL_YOURHOST=002,
-				RPL_CREATED=003,
-				RPL_MYINFO=004,
-				RPL_ISUPPORT=005,
-				*/
 				RPL_NAMREPLY=353,
 				RPL_ENDOFNAMES=366,
 				RPL_AWAY=301,
@@ -91,11 +83,9 @@ namespace IRC
 			std::string		errorMsg;
 			int				replyNo;
 			int				errorNo;
-			// int			id;
-			// int			argc;
 		
 		private:
-			static			std::map<std::string, Command*> cmd_map;
+			static		std::map<std::string, Command*> cmd_map;
 
 		public:
 			Command();
