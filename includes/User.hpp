@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 10:51:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:07:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ namespace IRC
 			std::string				pingKey;
 			time_t					timeout;
 			std::vector<Channel>	joinedChannels;
+			std::vector<Channel>	invitedChannels;
 			std::string				buffer;
 
 		public:
@@ -71,6 +72,7 @@ namespace IRC
 			std::string				getPingKey(void) const;
 			time_t					getTimeout(void) const;
 			std::vector<Channel>&	getJoinedChannels(void);
+			std::vector<Channel>&	getinvitedChannels(void);
 			std::string				getBuffer(void) const;
 			
 			/* -- Setters -- */
@@ -91,6 +93,8 @@ namespace IRC
 			/* -- Modifiers -- */
 			void					addJoinedChannel(Channel& channel);
 			void					removeJoinedChannel(Channel channel);
+			void					addInvitedChannel(Channel& channel);
+			void					removeInvitedChannel(Channel channel);
 			void					appendBuffer(std::string str);
 			void					clearBuffer(void);
 
@@ -98,6 +102,7 @@ namespace IRC
 			void					startListeningSocket(int serverSocket);
 			std::string				getJoinedChannelsString(void) const;
 			bool					isInChannel(Channel channel) const;
+			bool					isInvitedToChannel(Channel channel) const;
 			void					sendMessage(std::string message) const;
 	};
 	

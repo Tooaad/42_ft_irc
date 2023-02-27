@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 12:45:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:50:03 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,9 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 		case RPL_CHANNELMODEIS:
 			this->replyMsg += expandMessage(n, vaList, "% % % % % % %");
 			break;
+		case RPL_INVITING:
+			this->replyMsg += expandMessage(n, vaList, "% %");
+			break;
 		default:
 			break;
 	}
@@ -260,6 +263,9 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 			break;
 		case ERR_USERNOTINCHANNEL:
 			this->errorMsg += expandMessage(n, vaList, "% % :They aren't on that channel");
+			break;
+		case ERR_USERONCHANNEL:
+			this->errorMsg += expandMessage(n, vaList, "% % :is already on channel");
 			break;
 		default:
 			break;

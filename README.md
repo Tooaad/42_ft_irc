@@ -65,6 +65,7 @@ Kqueue
 [-] Join
 [-] Part
 [-] kick
+[-] invite
 [-] topic
 [-] names
 [-] list
@@ -72,10 +73,6 @@ Kqueue
 [-] quit
 [-] Ping
 [-] Pong
-
-
-
-[ ] invite
 
 
 [ ] whois
@@ -86,7 +83,7 @@ Kqueue
 --- CIRC no imprime los modes del canal
 
 Lista de prioridades:
-- hacer invite
+- recuperar mode invite only
 - Revisar todo y explicarnoslo
 - Cambiar arrays a maps para hacer mas eficiente?
 

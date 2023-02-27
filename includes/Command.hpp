@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 12:43:49 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:51:06 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ namespace IRC
 				ERR_UMODEUNKNOWNFLAG=501,
 				ERR_CHANOPRIVSNEEDED=482,
 				ERR_UNKNOWNMODE=472,
-				ERR_USERNOTINCHANNEL=441
+				ERR_USERNOTINCHANNEL=441,
+				ERR_USERONCHANNEL=443
 				// ERR_BANNEDFROMCHAN
 			};
 
@@ -79,7 +80,8 @@ namespace IRC
 				RPL_LISTSTART=321,
 				RPL_LIST=322,
 				RPL_LISTEND=323,
-				RPL_CHANNELMODEIS=324
+				RPL_CHANNELMODEIS=324,
+				RPL_INVITING=341
 			};
 	
 		protected:

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 11:39:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:17:30 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ bool						IRC::User::isPinged(void) const { return this->pingReq; }
 std::string					IRC::User::getPingKey(void) const { return this->pingKey; }
 time_t						IRC::User::getTimeout(void) const { return this->timeout; }
 std::vector<IRC::Channel>&	IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
+std::vector<IRC::Channel>&	IRC::User::getinvitedChannels(void) { return this->invitedChannels; }
 std::string					IRC::User::getBuffer(void) const { return this->buffer; }
 
 /* -- Setters -- */
@@ -94,6 +95,8 @@ void	IRC::User::addJoinedChannel(IRC::Channel& channel)
 {
 	if (!this->isInChannel(channel))
 		this->joinedChannels.push_back(channel);
+
+	removeInvitedChannel(channel);
 }
 
 void	IRC::User::removeJoinedChannel(IRC::Channel channel)
@@ -102,6 +105,20 @@ void	IRC::User::removeJoinedChannel(IRC::Channel channel)
 	
 	if (found != this->joinedChannels.end())
 		this->joinedChannels.erase(found);
+}
+
+void	IRC::User::addInvitedChannel(IRC::Channel& channel)
+{
+	if (!this->isInvitedToChannel(channel))
+		this->invitedChannels.push_back(channel);
+}
+
+void	IRC::User::removeInvitedChannel(IRC::Channel channel)
+{
+	std::vector<IRC::Channel>::iterator found = std::find(this->invitedChannels.begin(), this->invitedChannels.end(), channel);
+	
+	if (found != this->invitedChannels.end())
+		this->invitedChannels.erase(found);
 }
 
 void	IRC::User::appendBuffer(std::string str) { this->buffer.append(str); }
@@ -150,6 +167,13 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 bool			IRC::User::isInChannel(IRC::Channel channel) const
 {
 	if (std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel) != this->joinedChannels.end())
+		return true;
+	return false;
+}
+
+bool			IRC::User::isInvitedToChannel(IRC::Channel channel) const
+{
+	if (std::find(this->invitedChannels.begin(), this->invitedChannels.end(), channel) != this->invitedChannels.end())
 		return true;
 	return false;
 }

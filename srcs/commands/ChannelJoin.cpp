@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/25 12:37:54 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:12:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int				IRC::ChannelJoin::parseArgs(IRC::Server server, IRC::User user)
 
 IRC::Channel	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::Server server, IRC::User& user)
 {
-	if (channel.isInviteOnly())
+	if (channel.isInviteOnly() && !user.isInvitedToChannel(channel))
 	{
 		setError(ERR_INVITEONLYCHAN, server, user, 1, channel.getName().c_str());
 		return Channel();
