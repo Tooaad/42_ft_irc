@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/25 12:36:48 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:00:55 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						receptor->changeSecrecy();
 					else if (argSplit[1].at(0) == '-' && receptor->isSecret())
 						receptor->changeSecrecy();
+				}
+				else if (argSplit[1].at(i) == 'i')
+				{
+					if (argSplit[1].at(0) == '+' && !receptor->isInviteOnly())
+						receptor->changeInviteOnly();
+					else if (argSplit[1].at(0) == '-' && receptor->isInviteOnly())
+						receptor->changeInviteOnly();
 				}
 				else if (argSplit[1].at(i) == 't')
 				{
@@ -132,6 +139,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			receptor->isFreeTopic()? mode += " +t,": "";
 			receptor->isPublicMsg()? mode += " +n,": "";
 			receptor->isModerated()? mode += " +m,": "";
+			receptor->isInviteOnly()? mode += " +i,": "";
 			receptor->hasMax()? mode += printChannelMax(*receptor): "";
 			receptor->hasPassword()? mode += printPassword(*receptor): "";
 			if (mode.length() > 0)
