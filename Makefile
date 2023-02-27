@@ -1,7 +1,6 @@
-# Project compilation files and directoriesclear
+# Project compilation files and directories
 
-
-NAME					=	ircserv 
+NAME					=	ircserv
 
 SRCS					=	main.cpp \
 							Server.cpp \

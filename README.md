@@ -87,17 +87,6 @@ Lista de prioridades:
 - Revisar todo y explicarnoslo
 - Cambiar arrays a maps para hacer mas eficiente?
 
-
-Refactor .cpp:
--> doble espacio tras includes
--> Orden igual que en el HPP
--> Comentarios secciones
--> Alinear tabs
--> Const en getters y printers
--> This en variables de la clase, no en funciones
--> Void en funciones sin argumentos
-
-
 /*
 
 pass 12
