@@ -6,11 +6,14 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 17:51:22 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:42:08 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <ctime>
+#include <cstdio>
 #include "../includes/utils.hpp"
+
 
 /*
 	- Splits the "str" string by a given "delim" delimiter.
@@ -67,4 +70,14 @@ std::string		pingGenerator(const int &size) {
 		randstr += nums[rand() % nums.length()];
 	
 	return randstr;
+}
+
+std::string		getCurrentTimestamp()
+{
+	time_t now = time(0);
+	struct tm* timeinfo = localtime(&now);
+	char buffer[80];
+	
+	strftime(buffer, 80, "%H:%M:%S %b %d %Y", timeinfo);
+	return std::string(buffer);
 }

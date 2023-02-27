@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:38:25 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:44:40 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ IRC::Server::Server() {}
 IRC::Server::Server(std::string password)
 {
 	this->password = password;
+	this->creationTimestamp = getCurrentTimestamp();
 }
 
 IRC::Server::Server(const IRC::Server &other) { *this = other; }
@@ -357,7 +358,7 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 		// TODO now: https://modern.ircdocs.horse/#connection-setup
 		user.sendMessage(":" + this->getHostname() + " 001 " + user.getNick() + " :Welcome to the <networkname> Network, " + user.getNick() + "!" + user.getUser() + "@" + user.getHostname());
 		user.sendMessage(":" + this->getHostname() + " 002 " + user.getNick() + " :Your host is ircserv, running version 1.0");
-		user.sendMessage(":" + this->getHostname() + " 003 " + user.getNick() + " :This server was created 10:58:01 Jan 15 2023");
+		user.sendMessage(":" + this->getHostname() + " 003 " + user.getNick() + " :This server was created " + this->creationTimestamp);
 		user.sendMessage(":" + this->getHostname() + " 004 " + user.getNick() + " :ircserv 1.0 ositmlvk iso");
 		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " :CASEMAPPING=<ascii> CHANMODES=A,B,C,D HOSTLEN=64 NICKLEN=9 :are supported by this server");
 	}
