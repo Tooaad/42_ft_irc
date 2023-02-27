@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 10:50:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 11:39:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,6 @@ std::vector<IRC::User>::iterator	IRC::findUserFd(std::vector<IRC::User>& users, 
 	
 	for (; it != users.end(); it++)
 	{
-		std::cout << it->getSocket();
 		if (it->getSocket() == fd)
 			return it;
 	}
