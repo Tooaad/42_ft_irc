@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:01:34 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:28:20 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ namespace IRC
 			int								sSocket;
 			int								kq;
 			std::string 					password;
-			struct kevent					changeEvent[4];		// TODO: hay que ampliar? vector
-			struct kevent					event[4];			// TODO: hay que ampliar? vector
+			struct kevent					changeEvent[10];
+			struct kevent					event[10];
 			std::vector<User>				users;
 			std::vector<std::string>		commands;
 			std::vector<Channel>			channels;
@@ -63,10 +63,7 @@ namespace IRC
 			/* -- Getters -- */
 			std::string						getIp(void) const;
 			int								getSocket(void) const;
-			int								getKq(void) const;
 			std::string						getPassword(void) const;
-			struct kevent					*getChangeEvent(void);
-			struct kevent					*getEvent(void);
 			std::vector<User>&				getUsers(void);
 			std::vector<Channel>&			getChannels(void);
 			std::string						getHostname(void) const;

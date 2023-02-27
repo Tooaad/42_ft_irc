@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:03:59 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:29:51 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 /* -- Getters -- */
 std::string								IRC::Server::getIp(void) const { return this->ip; }
 int										IRC::Server::getSocket(void) const { return this->sSocket; }
-int										IRC::Server::getKq(void) const { return this->kq; }
 std::string								IRC::Server::getPassword(void) const { return this->password; }
-struct kevent*							IRC::Server::getChangeEvent(void) { return &this->changeEvent[0]; }
-struct kevent*							IRC::Server::getEvent(void) { return &this->event[0]; }
 std::vector<IRC::User>&					IRC::Server::getUsers(void) { return this->users; }
 std::vector<IRC::Channel>&				IRC::Server::getChannels(void) { return this->channels; }
 std::string								IRC::Server::getHostname(void) const { return this->hostname; }
@@ -155,17 +152,17 @@ int IRC::Server::loop(void)
 	{
 		struct timespec keventTime = {KQUEUE_TIMEOUT, 0};
 		
-		if ((newEvents = kevent(getKq(), NULL, 0, getEvent(), 1, &keventTime)) == -1)
+		if ((newEvents = kevent(this->kq, NULL, 0, this->event, 1, &keventTime)) == -1)
 			if (!socketKiller)
 				return throwError("kevent 2");
 
 		// kqueue events loop
 		for (int i = 0; i < newEvents; i++)
 		{
-			int eventFd = getEvent()[i].ident;
+			int eventFd = this->event[i].ident;
 
 			// Client disconnected
-			if (getEvent()[i].flags & EV_EOF)
+			if (this->event[i].flags & EV_EOF)
 				clientDisconnected(eventFd);
 
 			// New client connected
@@ -173,7 +170,7 @@ int IRC::Server::loop(void)
 				clientConnected();
 
 			// New message from client
-			else if (getEvent()[i].filter & EVFILT_READ)
+			else if (this->event[i].filter & EVFILT_READ)
 				receiveMessage(eventFd);
 		}
 		catchPing();
