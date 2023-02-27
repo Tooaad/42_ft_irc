@@ -73,18 +73,20 @@ Kqueue
 [-] Pong
 
 
-[ ] oper
-[ ] whois
 [ ] kick
-[ ] kill
+[ ] invite
+
+
+[ ] whois
 [ ] who
 
 
 --- Si haces OPER cambiar linea 178 del Mode para que haga +o
 --- CIRC no imprime los modes del canal
---- Mirar Notice
 
 Lista de prioridades:
+- hacer kick
+- hacer invite
 - Revisar todo y explicarnoslo
 - Cambiar arrays a maps para hacer mas eficiente?
 
