@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 19:03:16 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:10:19 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,18 @@
 
 
 IRC::ChannelPart::ChannelPart() {}
-IRC::ChannelPart::ChannelPart(const IRC::ChannelPart &other) { *this = other; }
 IRC::ChannelPart::~ChannelPart() {}
-
-IRC::ChannelPart &IRC::ChannelPart::operator=(const IRC::ChannelPart &other)
-{
-	if (this != &other)
-		channelsArray = other.channelsArray;
-	return *this;
-}
 
 void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 {
-	/** CHECK AUTHENTICATION **/
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);
 
-	/** PARSE ARGS (channels and passwords) **/
-	if (parseArgs(*server, user) < 0)
-		return ;
+	std::vector<std::string> argsArray = splitString(args, " ");
+	if (argsArray.size() < 1)
+		return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
+	
+	std::vector<std::string> channelsArray = splitString(argsArray[0], ",");
 
 	std::vector<Channel>::iterator channelIt;
 	/** ITERATE EACH PARSED CHANNEL **/
@@ -51,19 +44,4 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 		
 		channelIt->removeUser(server, user);
 	}
-}
-
-int		IRC::ChannelPart::parseArgs(IRC::Server server, IRC::User user)
-{
-	std::vector<std::string> argsArray = splitString(args, " ");
-	
-	if (argsArray.size() < 1 || argsArray[0].size() == 0)
-	{
-		setError(ERR_NEEDMOREPARAMS, server, user, 1, command.c_str());
-		return -1;
-	}
-	
-	channelsArray = splitString(argsArray[0], ",");
-
-	return 0;
 }
