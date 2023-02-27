@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelTopic.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/26 18:37:20 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/27 11:17:22 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,3 @@ void	IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 		setActionInReply(*server, user, *channel, "TOPIC " + channel->getName() + " " + channel->getTopic());
 	}
 }
-
-// :karisti!kepa@Mv6.j18.j49ElA.virtual TOPIC #prueba :Bienvenido al canal
-// :totoadd!Tototoadd1@c1r14s4.42madrid.com TOPIC #test::test1
