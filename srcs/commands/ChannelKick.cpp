@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:19:51 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 16:44:40 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:01:33 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	IRC::ChannelKick::exec(IRC::Server* server, IRC::User& user)
 	if (argsArray[0].size() < 2 || argsArray[0].at(0) != '#')
 		return setError(ERR_BADCHANMASK, *server, user, 1, argsArray[0].c_str());
 
-	std::vector<IRC::Channel>::iterator channel = server->getChannelIt(argsArray[0]);
+	std::vector<IRC::Channel>::iterator channel = server->findChannel(argsArray[0]);
 	if (channel == server->getChannels().end())
 		return setError(ERR_NOSUCHCHANNEL, *server, user, 1, argsArray[0].c_str());
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 12:06:42 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:01:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
-#include <fcntl.h>	   // fcntl
+#include <fcntl.h>
 #include <sys/event.h> // kqueue
 #include <vector>
 #include "User.hpp"
 #include "Command.hpp"
 #include "utils.hpp"
 #include "Channel.hpp"
+
 
 #define PING_TIMEOUT 100
 #define REG_TIMEOUT 30
@@ -69,7 +70,7 @@ namespace IRC
 			std::vector<User>&				getUsers(void);
 			std::vector<Channel>&			getChannels(void);
 			std::string						getHostname(void) const;
-			std::vector<Channel>::iterator	getChannelIt(std::string name);
+			std::vector<Channel>::iterator	findChannel(std::string name);
 
 			/* -- Modifiers -- */
 			void							setHostname(std::string hostname);

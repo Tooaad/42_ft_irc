@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/27 17:28:29 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:01:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 	
 	if (argSplit[0].at(0) == '#')
 	{
-		std::vector<IRC::Channel>::iterator receptor = server->getChannelIt(argSplit[0]);
+		std::vector<IRC::Channel>::iterator receptor = server->findChannel(argSplit[0]);
 		if (receptor == server->getChannels().end())
 			return setError(ERR_NOSUCHCHANNEL, *server, user, 1, argSplit[0].c_str());
 

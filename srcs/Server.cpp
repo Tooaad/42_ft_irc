@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 10:50:34 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:03:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ std::vector<IRC::User>&					IRC::Server::getUsers(void) { return this->users; }
 std::vector<IRC::Channel>&				IRC::Server::getChannels(void) { return this->channels; }
 std::string								IRC::Server::getHostname(void) const { return this->hostname; }
 
-std::vector<IRC::Channel>::iterator		IRC::Server::getChannelIt(std::string name)
+std::vector<IRC::Channel>::iterator		IRC::Server::findChannel(std::string name)
 {
 	std::vector<IRC::Channel>::iterator it = this->channels.begin();
 	
@@ -298,17 +298,12 @@ int		IRC::Server::receiveMessage(int eventFd)
 		return -1;
 
 	IRC::User& user = *found;
-
+	
 	std::string message(buf);
 
-	
-	// std::cout << "*** Buffer prev: '" << user.getBuffer() << "'" << std::endl;
-	// std::cout << "*** New buffer: '" << message << "'" << std::endl;
 	message.erase(remove(message.begin(), message.end(), '\r'), message.end());
-	// std::cout << "*** New buffer replaced: '" << message << "'" << std::endl;
 	user.appendBuffer(message);
 	std::cout << "Command: '" << user.getBuffer() << "'" << std::endl;
-
 
 	std::vector<std::string> messageSplit = splitString(user.getBuffer(), "\n");
 	if (messageSplit.size() == 0)
@@ -326,12 +321,10 @@ int		IRC::Server::receiveMessage(int eventFd)
 
 	for (std::vector<std::string>::iterator it = messageSplit.begin(); it != messageSplit.end(); it++)
 	{
-		//std::cout << "*** Split: '" << *it << "'" << std::endl;
 		if (!user.isAuthenticated())
 			registration(user, *it);
 		else
 		{
-			// Detect commands once registered
 			IRC::Command cmd(*it);
 			cmd.detectCommand(this, user);
 		}
@@ -368,11 +361,7 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 
 	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
 	{
-		user.changeAuthenticated(); 				// true
-		/*
-		std::string errorMsg = "You have been authenticated!\n";
-		user.sendMessage(errorMsg);
-		*/
+		user.changeAuthenticated();
 		
 		// TODO now: https://modern.ircdocs.horse/#connection-setup
 		user.sendMessage(":" + this->getHostname() + " 001 " + user.getNick() + " :Welcome to the <networkname> Network, " + user.getNick() + "!" + user.getUser() + "@" + user.getHostname());
@@ -381,12 +370,6 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 		user.sendMessage(":" + this->getHostname() + " 004 " + user.getNick() + " :ircserv 1.0 ositmlvk iso");
 		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " :CASEMAPPING=<ascii> CHANMODES=A,B,C,D HOSTLEN=64 NICKLEN=9 :are supported by this server");
 	}
-
-	// if (user.isAuthenticated() == false)
-	// {
-	// 	std::string errorMsg = "Not authenticated! Provide PASS, NICK and USER\n";
-	// 	user.sendMessage(errorMsg);
-	// }
 }
 
 int		IRC::Server::throwError(std::string message)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/25 12:36:48 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:01:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 	if (this->args.at(0) == '#' || this->args.at(0) == '&')
 	{	
 		std::vector<std::string> argSplit = splitString(this->args, " ");
-		std::vector<IRC::Channel>::iterator receptor = server->getChannelIt(argSplit[0]);
+		std::vector<IRC::Channel>::iterator receptor = server->findChannel(argSplit[0]);
 		if (receptor == server->getChannels().end())
 			return setError(ERR_NOSUCHCHANNEL, *server, user, 1, argSplit[0].c_str());
 		
