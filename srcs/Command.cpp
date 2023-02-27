@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/26 18:56:39 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:45:19 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include "../includes/commands/Quit.hpp"
 #include "../includes/commands/ChannelJoin.hpp"
 #include "../includes/commands/ChannelPart.hpp"
+#include "../includes/commands/ChannelKick.hpp"
+#include "../includes/commands/ChannelInvite.hpp"
 #include "../includes/commands/ChannelTopic.hpp"
 #include "../includes/commands/ChannelNames.hpp"
 #include "../includes/commands/ChannelList.hpp"
@@ -53,6 +55,8 @@ IRC::Command::Command(std::string str)
 		this->cmd_map["MODE"] = new IRC::Mode();
 		this->cmd_map["JOIN"] = new IRC::ChannelJoin();
 		this->cmd_map["PART"] = new IRC::ChannelPart();
+		this->cmd_map["KICK"] = new IRC::ChannelKick();
+		this->cmd_map["INVITE"] = new IRC::ChannelInvite();
 		this->cmd_map["TOPIC"] = new IRC::ChannelTopic();
 		this->cmd_map["NAMES"] = new IRC::ChannelNames();
 		this->cmd_map["LIST"] = new IRC::ChannelList();
@@ -253,6 +257,9 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 			break;
 		case ERR_CHANOPRIVSNEEDED:
 			this->errorMsg += expandMessage(n, vaList, "% :You're not channel operator");
+			break;
+		case ERR_USERNOTINCHANNEL:
+			this->errorMsg += expandMessage(n, vaList, "% % :They aren't on that channel");
 			break;
 		default:
 			break;

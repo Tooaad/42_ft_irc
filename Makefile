@@ -20,6 +20,8 @@ SRCS					=	main.cpp \
 							commands/Quit.cpp \
 							commands/ChannelJoin.cpp \
 							commands/ChannelPart.cpp \
+							commands/ChannelKick.cpp \
+							commands/ChannelInvite.cpp \
 							commands/ChannelTopic.cpp \
 							commands/ChannelNames.cpp \
 							commands/ChannelList.cpp

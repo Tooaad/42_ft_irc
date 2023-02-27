@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/25 11:57:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:43:49 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ namespace IRC
 				ERR_USERSDONTMATCH=502,
 				ERR_UMODEUNKNOWNFLAG=501,
 				ERR_CHANOPRIVSNEEDED=482,
-				ERR_UNKNOWNMODE=472
+				ERR_UNKNOWNMODE=472,
+				ERR_USERNOTINCHANNEL=441
 				// ERR_BANNEDFROMCHAN
 			};
 
