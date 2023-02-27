@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelKick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:19:51 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 13:17:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:44:40 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 IRC::ChannelKick::ChannelKick() {}
 IRC::ChannelKick::~ChannelKick() {}
-
 
 void	IRC::ChannelKick::exec(IRC::Server* server, IRC::User& user)
 {
