@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/27 10:50:06 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:28:29 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if((!user.isInChannel(*receptor) && !receptor->isPublicMsg()))
 			return setError(ERR_CANNOTSENDTOCHAN, *server, user, 1, argSplit[1].c_str());
 
-		receptor->sendMessageToUsers(user, ":" + user.getNick() + " PRIVMSG " + argSplit[0] + " " + argSplit[1]);
+		receptor->sendMessageToUsers(user, ":" + user.getNick() + " " + this->command + " " + argSplit[0] + " " + argSplit[1]);
 	}
 	else
 	{
@@ -50,7 +50,7 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		if (receptor == server->getUsers().end())
 			return setError(ERR_NOSUCHNICK, *server, user, 1, argSplit[0].c_str());
 		
-		argSplit[1] = ":" + user.getNick() + " PRIVMSG " + receptor->getNick() + " " + argSplit[1];
+		argSplit[1] = ":" + user.getNick() + " " + this->command + " " + receptor->getNick() + " " + argSplit[1];
 		receptor->sendMessage(argSplit[1]);
 	}
 }

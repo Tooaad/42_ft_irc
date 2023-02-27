@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:07:51 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/07 12:05:20 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:25:40 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 
 namespace IRC
 {
-	class Server;
-	class Command;
-
 	class PrivMsg : public Command
 	{
 		public:

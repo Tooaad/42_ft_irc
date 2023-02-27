@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 13:50:03 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:29:11 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "../includes/commands/Nick.hpp"
 #include "../includes/commands/Username.hpp"
 #include "../includes/commands/Privmsg.hpp"
-#include "../includes/commands/Notice.hpp"
 #include "../includes/commands/Ping.hpp"
 #include "../includes/commands/Pong.hpp"
 #include "../includes/commands/Mode.hpp"
@@ -51,7 +50,7 @@ IRC::Command::Command(std::string str)
 		this->cmd_map["NICK"] = new IRC::Nick();
 		this->cmd_map["USER"] = new IRC::Username();
 		this->cmd_map["PRIVMSG"] = new IRC::PrivMsg();
-		this->cmd_map["NOTICE"] = new IRC::Notice();
+		this->cmd_map["NOTICE"] = new IRC::PrivMsg();
 		this->cmd_map["MODE"] = new IRC::Mode();
 		this->cmd_map["JOIN"] = new IRC::ChannelJoin();
 		this->cmd_map["PART"] = new IRC::ChannelPart();
