@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/24 19:02:08 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:39:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <sys/socket.h>
 #include "User.hpp"
 #include "Server.hpp"
 
@@ -27,20 +26,13 @@ namespace IRC
 
 	class Channel
 	{
-		public:
-			enum ChannelUserTypes {
-				NORMAL_USER,
-				MODERATOR_USER,
-				OPERATOR_USER
-			};
-		
 		private:
 			std::string				name;
+			std::string				topic;
+			std::string				password;
 			std::vector<User>		operators;
 			std::vector<User>		moderators;
 			std::vector<User>		users;
-			std::string				topic;
-			std::string				password;
 			bool					inviteOnlyMode;
 			bool					secretMode;
 			bool					freeTopicMode;
@@ -58,11 +50,11 @@ namespace IRC
 
 			/* -- Getters -- */
 			std::string				getName(void) const;
+			std::string				getTopic(void) const;
+			std::string				getPassword(void) const;
 			std::vector<User>&		getOperators(void);
 			std::vector<User>&		getModerators(void);
 			std::vector<User>&		getUsers(void);
-			std::string				getTopic(void) const;
-			std::string				getPassword(void) const;
 			bool					isInviteOnly(void) const;
 			bool					isSecret(void) const;
 			bool					isFreeTopic(void) const;
@@ -100,8 +92,6 @@ namespace IRC
 			bool					hasMax(void) const;
 			bool					isFull(void) const;
 			bool					isEmpty(void) const;
-			void					sendMessageToOperators(std::string message);
-			void					sendMessageToModerators(std::string message);
 			void					sendMessageToUsers(User sender, std::string message);
 	};
 

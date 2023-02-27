@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/25 11:41:33 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:41:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ IRC::Channel &IRC::Channel::operator=(const IRC::Channel &other)
 	if (this != &other)
 	{
 		this->name = other.name;
+		this->topic = other.topic;
+		this->password = other.password;
 		this->operators = other.operators;
 		this->moderators = other.moderators;
 		this->users = other.users;
-		this->topic = other.topic;
-		this->password = other.password;
 		this->inviteOnlyMode = other.inviteOnlyMode;
 		this->secretMode = other.secretMode;
 		this->freeTopicMode = other.freeTopicMode;
@@ -81,11 +81,11 @@ IRC::Channel &IRC::Channel::operator=(const IRC::Channel &other)
 
 /* -- Getters -- */
 std::string					IRC::Channel::getName(void) const { return this->name; }
+std::string					IRC::Channel::getTopic(void) const { return this->topic; }
+std::string					IRC::Channel::getPassword(void) const { return this->password; }
 std::vector<IRC::User>&		IRC::Channel::getOperators(void) { return this->operators; }
 std::vector<IRC::User>&		IRC::Channel::getModerators(void) { return this->moderators; }
 std::vector<IRC::User>&		IRC::Channel::getUsers(void) { return this->users; }
-std::string					IRC::Channel::getTopic(void) const { return this->topic; }
-std::string					IRC::Channel::getPassword(void) const { return this->password; }
 bool						IRC::Channel::isInviteOnly(void) const { return this->inviteOnlyMode; }
 bool						IRC::Channel::isSecret(void) const { return this->secretMode; }
 bool						IRC::Channel::isFreeTopic(void) const { return this->freeTopicMode; }
@@ -278,18 +278,6 @@ bool	IRC::Channel::isEmpty(void) const
 	if (this->users.empty())
 		return true;
 	return false;
-}
-
-void	IRC::Channel::sendMessageToOperators(std::string message)
-{
-	for (std::vector<IRC::User>::iterator it = this->operators.begin(); it != this->operators.end(); it++)
-		it->sendMessage(message);
-}
-
-void	IRC::Channel::sendMessageToModerators(std::string message)
-{
-	for (std::vector<IRC::User>::iterator it = this->moderators.begin(); it != this->moderators.end(); it++)
-		it->sendMessage(message);
 }
 
 void	IRC::Channel::sendMessageToUsers(IRC::User sender, std::string message)
