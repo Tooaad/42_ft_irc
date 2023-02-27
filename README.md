@@ -79,13 +79,10 @@ Kqueue
 [ ] who
 
 
---- Si haces OPER cambiar linea 178 del Mode para que haga +o
 --- CIRC no imprime los modes del canal
 
 Lista de prioridades:
-- recuperar mode invite only
 - Revisar todo y explicarnoslo
-- Cambiar arrays a maps para hacer mas eficiente?
 
 /*
 

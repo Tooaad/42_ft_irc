@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:29:51 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:38:25 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,6 @@ void	IRC::Server::updateUserInChannels(IRC::User user)
 		if (userIt != channelIt->getUsers().end())
 			*userIt = user;
 	}
-}
-
-/* -- Member functions -- */
-void IRC::Server::connectNetwork(std::string *args)
-{
-	(void)args;
 }
 
 int IRC::Server::createNetwork(std::string *args)

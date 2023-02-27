@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:28:20 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:38:29 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ namespace IRC
 			void							updateUserInChannels(IRC::User user);
 
 			/* -- Member functions -- */
-			void							connectNetwork(std::string *args);
 			int								createNetwork(std::string *args);
 			int								loop(void);
 			void							closeClient(User& user, std::string message);

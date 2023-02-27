@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/26 19:44:29 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:36:17 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		checkArgs(std::string *args, int argc)
 {
 	int	serverPort = atoi(args[0].c_str());
 	
-	if (argc != 3 && argc != 4)
+	if (argc != 3)
 	{
 		std::cout << "./ircserv <PORT> <SEVER_PASS>" << std::endl;
 		return 1;
@@ -57,11 +57,13 @@ int main(int argc, char **argv)
 		return 0;
 
 	IRC::Server server(args[1]);
-	if (argc == 3)
-		server.createNetwork(args);
-	else if (argc == 4)
-		server.connectNetwork(args);
+	if (argc != 3)
+	{
+		std::cout << "./ircserv <PORT> <SEVER_PASS>" << std::endl;
+		return 1;
+	}
 
+	server.createNetwork(args);
 	server.loop();
 	server.terminateServer();
 
