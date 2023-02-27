@@ -57,31 +57,9 @@ Kqueue
 
 
 
-[-] Pass
-[-] Nick
-[-] Username
-[-] Privsmg
-[-] notice
-[-] Join
-[-] Part
-[-] kick
-[-] invite
-[-] topic
-[-] names
-[-] list
-[-] mode
-[-] quit
-[-] Ping
-[-] Pong
-
-
-[ ] whois
-[ ] who
-
-
---- CIRC no imprime los modes del canal
-
 Lista de prioridades:
+- CIRC no imprime los modes del canal
+- Prints a ver como dejamos en server
 - Revisar todo y explicarnoslo
 
 /*

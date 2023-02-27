@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/27 20:39:17 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/27 21:01:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 
 	if (this->args.at(0) == '#' || this->args.at(0) == '&')
-	{	
+	{
 		std::vector<std::string> argSplit = splitString(this->args, " ");
 		std::vector<IRC::Channel>::iterator receptor = server->findChannel(argSplit[0]);
 		if (receptor == server->getChannels().end())
@@ -37,13 +37,13 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		if(!receptor->isOperator(user))
 			return setError(ERR_CHANOPRIVSNEEDED, *server, user, 1, argSplit[0].c_str());
 
-		if (argSplit.size() > 1)
+		if (argSplit.size() > 1 && argSplit[1].size() > 0)
 		{
 			for (size_t i = 1; i < argSplit[1].size(); i++)
 			{
 				if (argSplit[1].at(i) == 'o')
 				{
-					if (argSplit.size() < 2)
+					if (argSplit.size() < 2) // TODO: Esto? por que aquí si y en el resto no?
 						return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
