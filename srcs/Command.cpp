@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:53:13 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 19:22:27 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,18 +249,11 @@ void		IRC::Command::setActionInReply(IRC::Server server, IRC::User user, IRC::Ch
 /* -- Member functions -- */
 void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
 {
-// >>>>PROTEGER<<<<
 	IRC::Command* t = find(this->command);
 
 	if (!t)
 		return;
     
-    // if (dynamic_cast <IRC::Pass *> (t))
-    //     continue ;
-    // else if (dynamic_cast <IRC::User *> (t) || dynamic_cast <IRC::Nick *> (t))
-    //     condicion
-    // else
-    //     condicion autenticado
 	*t = *this;
 	
 	t->exec(server, user);
