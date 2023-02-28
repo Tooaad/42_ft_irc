@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/28 15:54:14 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:17:06 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 	if (this->args.size() == 0)
 		return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 
-	if (this->args.at(0) == '#' || this->args.at(0) == '&')
+	if (this->args.at(0) == '#')
 	{
 		std::vector<std::string> argSplit = splitString(this->args, " ");
 		std::vector<IRC::Channel>::iterator receptor = server->findChannel(argSplit[0]);
@@ -43,7 +43,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 			{
 				if (argSplit[1].at(i) == 'o')
 				{
-					if (argSplit.size() < 2) // TODO: Esto? por que aquí si y en el resto no?
+					if (argSplit.size() < 3) 
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
@@ -129,7 +129,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 				}
 				else if (argSplit[1].at(i) == 'l')
 				{
-					if (argSplit.size() < 2)
+					if (argSplit.size() < 3)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
@@ -144,7 +144,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 				}
 				else if (argSplit[1].at(i) == 'v')
 				{
-					if (argSplit.size() < 2)
+					if (argSplit.size() < 3)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
@@ -165,7 +165,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 				}
 				else if (argSplit[1].at(i) == 'k')
 				{
-					if (argSplit.size() < 2)
+					if (argSplit.size() < 3)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
