@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 12:35:22 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:49:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,7 +345,7 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 		user.sendMessage(":" + this->getHostname() + " 002 " + user.getNick() + " :Your host is ircserv, running version 1.0");
 		user.sendMessage(":" + this->getHostname() + " 003 " + user.getNick() + " :This server was created " + this->creationTimestamp);
 		user.sendMessage(":" + this->getHostname() + " 004 " + user.getNick() + " :ircserv 1.0 ositnmlvk iso");
-		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " :CASEMAPPING=<ascii> MAXTARGETS=1 CHANLIMIT=#:10 CHANMODES=A,B,C,D HOSTLEN=64 NICKLEN=9 :are supported by this server");
+		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " :CASEMAPPING=<ascii> MAXTARGETS=1 CHANLIMIT=#:10 PREFIX=(ov)@+ CHANMODES=A,B,C,D HOSTLEN=64 NICKLEN=9 :are supported by this server");
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 12:39:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:52:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ IRC::Command::Command(std::string str)
 
 	std::vector<std::string> argsArray = splitString(str, " ", 1);
 	this->command = argsArray.at(0);
-	std::transform(this->command.begin(), this->command.end(), this->command.begin(), ::toupper);   // transform command type to upper anyways
+	std::transform(this->command.begin(), this->command.end(), this->command.begin(), ::toupper);
 
 	if (argsArray.size() > 1)
 		this->args = argsArray.at(1);
@@ -190,18 +190,18 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 			this->errorMsg += expandMessage(n, vaList, "% :Cannot join channel (+k)");
 			break;
 		case ERR_NOSUCHCHANNEL:
-			this->errorMsg += expandMessage(n, vaList, "% :No such channel");					//
+			this->errorMsg += expandMessage(n, vaList, "% :No such channel");
 			break;
 		case ERR_NOTONCHANNEL:
 			this->errorMsg += expandMessage(n, vaList, "% :You're not on that channel");
 			break;
-		case ERR_NONICKNAMEGIVEN:																//
+		case ERR_NONICKNAMEGIVEN:
 			this->errorMsg += expandMessage(n, vaList, " :No nickname given");
 			break;
-		case ERR_ERRONEUSNICKNAME:																//
+		case ERR_ERRONEUSNICKNAME:
 			this->errorMsg += expandMessage(n, vaList, "% :Erroneus nickname");
 			break;
-		case ERR_NICKNAMEINUSE:																	//
+		case ERR_NICKNAMEINUSE:
 			this->errorMsg += expandMessage(n, vaList, "% :Nickname is already in use");
 			break;
 		case ERR_ALREADYREGISTRED:
@@ -213,7 +213,7 @@ void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User use
 		case ERR_CANNOTSENDTOCHAN:
 			this->errorMsg += expandMessage(n, vaList, "% :Cannot send to channel");
 			break;
-		case ERR_NOSUCHNICK:																	//
+		case ERR_NOSUCHNICK:
 			this->errorMsg += expandMessage(n, vaList, "% :No such nick/channel");
 			break;
 		case ERR_NOTEXTTOSEND:
