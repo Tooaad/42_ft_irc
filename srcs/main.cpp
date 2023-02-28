@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:36:17 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/28 09:34:42 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,39 @@ void saveArgs(std::string *args, int argc, char **argv)
 
 int		checkArgs(std::string *args, int argc)
 {
-	int	serverPort = atoi(args[0].c_str());
-	
 	if (argc != 3)
 	{
 		std::cout << "./ircserv <PORT> <SEVER_PASS>" << std::endl;
 		return 1;
 	}
 	
+	if (!isNumber(args[0]))
+	{
+		std::cout << "Server port must be a number between 0 and 65535" << std::endl;
+		return 1;
+	}
+	
+	int	serverPort = atoi(args[0].c_str());
 	if (serverPort < 0 || serverPort > 65535)
 	{
 		std::cout << "Server port must be between 0 and 65535" << std::endl;
+		return 1;
+	}
+
+	if (args[1].size() == 0)
+	{
+		std::cout << "You must provide the IRC Server password" << std::endl;
 		return 1;
 	}
 	
 	return 0;
 }
 
-
-
 void cleaks(void)
 {
 	system("leaks ircserv");
 }
+
 
 int main(int argc, char **argv)
 {

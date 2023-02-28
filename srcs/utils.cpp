@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:42:08 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 09:33:07 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,13 @@ std::string		getCurrentTimestamp()
 	
 	strftime(buffer, 80, "%H:%M:%S %b %d %Y", timeinfo);
 	return std::string(buffer);
+}
+
+bool			isNumber(std::string str)
+{
+	std::string::iterator it = str.begin();
+	while (it != str.end() && std::isdigit(*it))
+		it++;
+	
+	return !str.empty() && it == str.end();
 }
