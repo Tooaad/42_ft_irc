@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelKick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:19:51 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 19:29:21 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 10:06:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ IRC::ChannelKick::~ChannelKick() {}
 
 void	IRC::ChannelKick::exec(IRC::Server* server, IRC::User& user)
 {
+	/** CHECK ALL POSSIBLE ERRORS **/
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);
 
@@ -42,7 +43,7 @@ void	IRC::ChannelKick::exec(IRC::Server* server, IRC::User& user)
 	if (victimIt == server->getUsers().end() || !victimIt->isInChannel(channel->getName()))
 		return setError(ERR_USERNOTINCHANNEL, *server, user, 2, argsArray[1].c_str(), channel->getName().c_str());
 	
-	
+	/** USER IS REMOVED FROM CHANNEL AND REPLY IS SENT **/
 	if (argsArray.size() < 3)
 		setActionInReply(*server, user, *channel, "KICK " + channel->getName() + " " + victimIt->getNick() + " " + user.getNick());
 	else
