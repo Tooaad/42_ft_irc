@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 12:49:53 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:27:47 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int IRC::Server::createNetwork(std::string *args)
 	// Bind the Socket to any free IP / Port
 	sockaddr_in hint;
 	hint.sin_family = AF_INET; // IPv4 type
-	// hint.sin_addr.s_addr = INADDR_ANY;
 	hint.sin_port = htons(atoi(args[0].c_str())); // Little Endian (for bigger numbers) | Host To Network Short
 	inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
 	int yes = 1;
