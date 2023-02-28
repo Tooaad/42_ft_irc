@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:07:58 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 17:00:45 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 11:16:29 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace IRC
 			void	exec(IRC::Server* server, IRC::User& user);
 
 		private:
-			IRC::Channel	joinExistingChannel(IRC::Channel& channel, IRC::Server server, IRC::User &user);
+			bool			joinExistingChannel(IRC::Channel& channel, IRC::Server server, IRC::User &user);
 			IRC::Channel	createNewChannel(std::string channelName, IRC::User& user, IRC::Server* server);
 	};
 }
