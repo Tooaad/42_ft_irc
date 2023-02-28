@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pong.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/15 12:38:36 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:29:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void IRC::Pong::exec(IRC::Server* server, IRC::User& user)
 	if (user.isPinged() == false)
 		return ;
 
+	/** IF KEY IS CORRECT RESET TIMEOUT, ELSE CLOSE CONNECTION **/
 	if (args.compare(user.getPingKey()) == 0)
 	{
 		user.setTimeout(time(NULL));
