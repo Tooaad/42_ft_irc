@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:45:50 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 09:34:42 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:55:27 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void cleaks(void)
 
 int main(int argc, char **argv)
 {
-	atexit(cleaks);
+	// atexit(cleaks);
 	
 	std::string args[argc - 1];
 	saveArgs(args, argc, argv);

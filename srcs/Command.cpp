@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 14:44:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:53:13 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,13 @@ IRC::Command::Command(std::string str)
 	if (argsArray.size() > 1)
 		this->args = argsArray.at(1);
 
-	std::cout << "------- Command parsing -------" << std::endl;
-	std::cout << " Command: '" << command << "'" << std::endl;
-	std::cout << " Args:    '" << args << "'" << std::endl;
-	std::cout << "-------------------------------" << std::endl;
+	if (PRINT_DEBUG)
+	{
+		std::cout << "------- Command parsing -------" << std::endl;
+		std::cout << " Command: '" << command << "'" << std::endl;
+		std::cout << " Args:    '" << args << "'" << std::endl;
+		std::cout << "-------------------------------" << std::endl;
+	}
 }
 
 IRC::Command::Command(const IRC::Command& other) { *this = other; }
@@ -219,6 +222,9 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 			break;
 		case ERR_CHANNELISFULL:
 			this->replyMsg += expandMessage(n, vaList, "% :Cannot join channel (+l)");
+			break;
+		case ERR_TOOMANYCHANNELS:
+			this->replyMsg += expandMessage(n, vaList, "% :You have joined too many channels");
 			break;
 		default:
 			break;

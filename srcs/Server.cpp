@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 15:27:47 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:57:55 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,7 +294,9 @@ int		IRC::Server::receiveMessage(int eventFd)
 
 	message.erase(remove(message.begin(), message.end(), '\r'), message.end());
 	user.appendBuffer(message);
-	std::cout << "Command: '" << user.getBuffer() << "'" << std::endl;
+	
+	if (PRINT_DEBUG)
+		std::cout << "Command: '" << user.getBuffer() << "'" << std::endl;
 
 	std::vector<std::string> messageSplit = splitString(user.getBuffer(), "\n");
 	if (messageSplit.size() == 0)
@@ -319,10 +321,13 @@ int		IRC::Server::receiveMessage(int eventFd)
 			IRC::Command cmd(*it);
 			cmd.detectCommand(this, user);
 		}
-
-		printUsers(users);
-		printChannels(channels);
-		std::cout << std::endl << "*** *** *** *** *** *** *** *** *** *** ***" << std::endl << std::endl;
+		
+		if (PRINT_DEBUG)
+		{
+			printUsers(users);
+			printChannels(channels);
+			std::cout << std::endl << "*** *** *** *** *** *** *** *** *** *** ***" << std::endl << std::endl;
+		}
 	}
 	
 	messageSplit.clear();
@@ -344,7 +349,7 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 		user.sendMessage(":" + this->getHostname() + " 002 " + user.getNick() + " :Your host is ircserv, running version 1.0");
 		user.sendMessage(":" + this->getHostname() + " 003 " + user.getNick() + " :This server was created " + this->creationTimestamp);
 		user.sendMessage(":" + this->getHostname() + " 004 " + user.getNick() + " :ircserv 1.0 ositnmlvk iso");
-		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " :CASEMAPPING=<ascii> MAXTARGETS=1 CHANLIMIT=#:10 PREFIX=(ov)@+ CHANMODES=A,B,C,D HOSTLEN=64 NICKLEN=9 :are supported by this server");
+		user.sendMessage(":" + this->getHostname() + " 005 " + user.getNick() +  " :CASEMAPPING=<ascii> MAXTARGETS=1 CHANLIMIT=#:10 PREFIX=(ov)@+ :are supported by this server");
 	}
 }
 
@@ -377,11 +382,13 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 
 void	IRC::Server::catchPing(void)
 {
-	std::cout << "> Catch Ping: " << std::endl;
+	if (PRINT_DEBUG)
+		std::cout << "> Catch Ping: " << std::endl;
 
 	for (size_t i = 0; i < this->users.size(); i++)
 	{
-		std::cout << users[i].getNick() << " (" << users[i].getSocket() << ") -> " << REG_TIMEOUT + users[i].getTimeout() - time(NULL) << "s" << std::endl;
+		if (PRINT_DEBUG)
+			std::cout << users[i].getNick() << " (" << users[i].getSocket() << ") -> " << REG_TIMEOUT + users[i].getTimeout() - time(NULL) << "s" << std::endl;
 		if (users[i].isPinged() && time(NULL) - users[i].getTimeout() > PING_TIMEOUT)
 			closeClient(users[i], "PING ERROR");
 			

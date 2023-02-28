@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 12:34:02 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:57:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #define PING_TIMEOUT 100
 #define REG_TIMEOUT 30
 #define KQUEUE_TIMEOUT 3
+#define PRINT_DEBUG 0
 
 
 namespace IRC
