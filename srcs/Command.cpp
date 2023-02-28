@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 21:15:11 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:39:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 
 	ss << replyNo;
 	std::string replyNoStr = ss.str();
-	// :127.0.0.1 353 karisti = #jeje :@karisti
+	
 	this->replyMsg += ":" + server.getHostname() + " " + replyNoStr + " " + user.getNick() + " ";
 	
 	switch (replyNo)
@@ -288,9 +288,6 @@ void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
     // else
     //     condicion autenticado
 	*t = *this;
-	
-	// std::cout << typeid(t).name() <<  std::endl;
-	// std::cout << t->args <<  std::endl;
 	
 	t->exec(server, user);
 	t->answer(user);

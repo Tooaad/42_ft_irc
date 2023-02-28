@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelNames.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 20:43:07 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:19:54 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ void	IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 	
 	std::vector<std::string> argsArray = splitString(args, " ");
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");
+
 	std::vector<Channel> channelsArray;
-	
-	std::vector<Channel>::iterator channelIt;
 	for (std::vector<std::string>::iterator it = channelsArrayStr.begin(); it != channelsArrayStr.end(); it++)
 	{
 		if (it->size() == 0)
 			continue ;
-		channelIt = server->findChannel(*it);
+		std::vector<Channel>::iterator channelIt = server->findChannel(*it);
 		if (channelIt == server->getChannels().end())
 			channelsArray.push_back(Channel(*it));
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:44:02 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:34:02 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,5 @@ namespace IRC
 			void							registration(User& user, std::string password);
 			int								throwError(std::string message);
 			std::vector<IRC::User>			getReferencedUsers(User user);
-			// void serverClose(void);
 	};
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelNames.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:06 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 17:21:00 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:15:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 namespace IRC
 {
-	class Command;
-
 	class ChannelNames : public Command
 	{
 		public:

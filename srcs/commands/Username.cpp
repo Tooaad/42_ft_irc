@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Username.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:54:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/22 11:29:47 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:40:27 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	IRC::Username::exec(IRC::Server* server, IRC::User& user)
 			return setError(ERR_ALREADYREGISTRED, *server, user, 0);
 	}
 	user.setUser(argSplit.at(0));
-	// user.setHostname(argSplit.at(1));
+	// user.setHostname(argSplit.at(1)); TODO: esto?
 	user.setServername(argSplit.at(2));
 	if (argSplit.at(3).at(0) == ':')
 		argSplit.at(3).erase(0, 1);
