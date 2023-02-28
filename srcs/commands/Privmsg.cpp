@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:01:34 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 13:11:56 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ IRC::PrivMsg::~PrivMsg() {}
 
 void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 {
+	/** CHECK POSSIBLE ERRORS **/
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);
 	
@@ -25,20 +26,19 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 		return setError(ERR_NORECIPTIENT, *server, user, 1, this->command.c_str());
 
 	std::vector<std::string> argSplit = splitString(this->args, " ", 1);
-	if (argSplit[1].size() == 0)
+	if (argSplit.size() <= 1 || argSplit[1].size() == 0)
 		return setError(ERR_NOTEXTTOSEND, *server, user, 0);
 	
 	if (argSplit[0].at(0) == '#')
 	{
+		/** MESSAGE TO CHANNEL **/
 		std::vector<IRC::Channel>::iterator receptor = server->findChannel(argSplit[0]);
 		if (receptor == server->getChannels().end())
 			return setError(ERR_NOSUCHCHANNEL, *server, user, 1, argSplit[0].c_str());
 
-		// Moderated Channel Case
 		if (receptor->isModerated() && (!receptor->isOperator(user) && !receptor->isModerator(user)))
 			return setError(ERR_CANNOTSENDTOCHAN, *server, user, 1, argSplit[1].c_str());
 
-		// Channel is not Public
 		if((!user.isInChannel(*receptor) && !receptor->isPublicMsg()))
 			return setError(ERR_CANNOTSENDTOCHAN, *server, user, 1, argSplit[1].c_str());
 
@@ -46,6 +46,7 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 	}
 	else
 	{
+		/** PRIVATE MESSAGE **/
 		std::vector<IRC::User>::iterator receptor = findUser(server->getUsers(), argSplit[0]);
 		if (receptor == server->getUsers().end())
 			return setError(ERR_NOSUCHNICK, *server, user, 1, argSplit[0].c_str());
