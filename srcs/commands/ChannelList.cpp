@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 14:44:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:13:24 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@ void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");
 	std::vector<Channel> channelsArray;
 	
-	std::vector<Channel>::iterator channelIt;
 	for (std::vector<std::string>::iterator it = channelsArrayStr.begin(); it != channelsArrayStr.end(); it++)
 	{
-		channelIt = server->findChannel(*it);
-		if (channelIt == server->getChannels().end())
-			continue;
-		channelsArray.push_back(*channelIt);
+		std::vector<Channel>::iterator channelIt = server->findChannel(*it);
+		if (channelIt != server->getChannels().end())
+			channelsArray.push_back(*channelIt);
 	}
 	
 	if (channelsArray.size() > 0)
