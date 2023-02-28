@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 15:47:16 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:38:30 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	IRC::Channel::addOperator(IRC::User user, IRC::Server* server)
 	if (user == User())
 		return ;
 
-	if (user.isInChannel(*this) && !isOperator(user))
+	if (existsUser(user) && !isOperator(user))
 	{
 		this->operators.push_back(user);
 		server->updateUserInChannels(user);
@@ -135,7 +135,7 @@ void	IRC::Channel::addModerator(IRC::User user, IRC::Server* server)
 	if (user == User())
 		return ;
 	
-	if (user.isInChannel(*this) && !isModerator(user))
+	if (existsUser(user) && !isModerator(user))
 	{
 		this->moderators.push_back(user);
 		server->updateUserInChannels(user);

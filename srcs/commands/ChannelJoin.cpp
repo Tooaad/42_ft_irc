@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/28 14:50:12 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:05:29 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ bool	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::Server se
 		setReply(ERR_INVITEONLYCHAN, server, user, 1, channel.getName().c_str());
 		return false;
 	}
-	
-	std::cout << ">>> Channel: " << channel.getName() << std::endl;
-	printStrVector("Passwords 1", passwordsArray);
+
 	if (!channel.checkPassword("") && (passwordsArray.size() <= 0 || !channel.checkPassword(passwordsArray.at(0))))
 	{
 		if (passwordsArray.size() > 0)
@@ -94,8 +92,6 @@ bool	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::Server se
 	}
 	else if (passwordsArray.size() > 0)
 		passwordsArray.erase(passwordsArray.begin());
-		
-	printStrVector("Passwords 2", passwordsArray);
 
 	if (channel.isFull())
 	{
