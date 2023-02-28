@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelInvite.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:20:01 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:01:33 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 10:04:31 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ IRC::ChannelInvite::~ChannelInvite() {}
 
 void	IRC::ChannelInvite::exec(IRC::Server* server, IRC::User& user)
 {
+	/** CHECK ALL POSSIBLE ERRORS **/
 	if (!user.isAuthenticated())
 		return setError(ERR_NOTREGISTERED, *server, user, 0);
 	
@@ -42,7 +43,7 @@ void	IRC::ChannelInvite::exec(IRC::Server* server, IRC::User& user)
 	if (channel->existsUser(*newUserIt))
 		return setError(ERR_USERONCHANNEL, *server, user, 2, newUserIt->getNick().c_str(), channel->getName().c_str());
 
-	
+	/** USER IS INVITED AND REPLY IS SENT **/
 	std::string action = ":" + user.getNick() + "!" + user.getUser() + "@" + user.getHostname() + " INVITE " + newUserIt->getNick() + " :" + channel->getName();
 	newUserIt->addInvitedChannel(*channel);
 	newUserIt->sendMessage(action);
