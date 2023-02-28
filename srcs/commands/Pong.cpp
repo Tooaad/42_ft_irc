@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/28 12:29:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:44:41 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ IRC::Pong::~Pong() {}
 void IRC::Pong::exec(IRC::Server* server, IRC::User& user)
 {
 	if (args.size() < 1)
-		return setError(ERR_NEEDMOREPARAMS, *server, user, 0);
+		return setReply(ERR_NEEDMOREPARAMS, *server, user, 0);
 	
 	if (user.isPinged() == false)
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelList.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 18:01:33 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:44:41 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ IRC::ChannelList::~ChannelList() {}
 void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
-		return setError(ERR_NOTREGISTERED, *server, user, 0);
+		return setReply(ERR_NOTREGISTERED, *server, user, 0);
 	
 	std::vector<std::string> argsArray = splitString(args, " ");
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");

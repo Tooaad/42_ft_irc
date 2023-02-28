@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 11:59:07 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:44:41 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 {
 	/** CHECK POSSIBLE ERRORS **/
 	if (!user.isAuthenticated())
-		return setError(ERR_NOTREGISTERED, *server, user, 0);
+		return setReply(ERR_NOTREGISTERED, *server, user, 0);
 
 	std::vector<std::string> argsArray = splitString(args, " ", 1);
 	if (argsArray.size() < 1)
-		return setError(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
+		return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 	
 	std::vector<std::string> channelsArray = splitString(argsArray[0], ",");
 
@@ -33,10 +33,10 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 	{
 		std::vector<Channel>::iterator channelIt = server->findChannel(*it);
 		if (channelIt == server->getChannels().end())
-			return setError(ERR_NOSUCHCHANNEL, *server, user, 1, (*it).c_str());
+			return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, (*it).c_str());
 		
 		if (!channelIt->existsUser(user))
-			return setError(ERR_NOTONCHANNEL, *server, user, 1, (*it).c_str());
+			return setReply(ERR_NOTONCHANNEL, *server, user, 1, (*it).c_str());
 		
 		/** REMOVE USER FROM CHANNEL **/
 		if (argsArray.size() > 1 && argsArray[1].size() > 0)
