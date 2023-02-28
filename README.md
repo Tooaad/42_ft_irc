@@ -56,6 +56,8 @@ Kqueue
 - TPC Server Mac https://www.youtube.com/watch?v=F3iIGUiW27Q
 
 
+:Guest16!kiwiirccom@35S.OEh.j49ElA.virtual MODE #toad :+i
+:Guest16!kiwiirccom@35S.OEh.j49ElA.virtual MODE #toad +k :hola
 
 Lista de prioridades:
 - Prints a ver como dejamos en server

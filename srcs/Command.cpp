@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 12:52:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:44:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,14 @@
 IRC::Command::Command()
 {
 	this->replyMsg = "";
-	this->errorMsg = "";
 	this->replyNo = 0;
-	this->errorNo = 0;
 }
 
 std::map<std::string, IRC::Command*> IRC::Command::cmd_map;
 IRC::Command::Command(std::string str)
 {
 	this->replyMsg = "";
-	this->errorMsg = "";
 	this->replyNo = 0;
-	this->errorNo = 0;
 	
 	if (cmd_map.empty())
 	{
@@ -85,9 +81,7 @@ IRC::Command& IRC::Command::operator=(const IRC::Command& other)
 	this->command = other.command;
 	this->args = other.args;
 	this->replyMsg = other.replyMsg;
-	this->errorMsg = other.errorMsg;
 	this->replyNo = other.replyNo;
-	this->errorNo = other.errorNo;
 	
 	return *this;
 }
@@ -145,112 +139,86 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 		case RPL_INVITING:
 			this->replyMsg += expandMessage(n, vaList, "% %");
 			break;
-		default:
-			break;
-	}
-	
-	va_end(vaList);
-}
-
-void		IRC::Command::setError(ErrorNos errorNo, IRC::Server server, IRC::User user, int n, ...)
-{
-	std::stringstream ss;
-	
-	va_list vaList;
-	va_start(vaList, n);
-
-	this->errorNo = errorNo;
-
-	if (!this->errorMsg.empty())
-		this->errorMsg += "\r\n";
-
-	ss << errorNo;
-	std::string errorNoStr = ss.str();
-	
-	this->errorMsg = ":" + server.getHostname() + " " + errorNoStr + " " + user.getNick() + " ";
-	
-	switch (errorNo)
-	{
 		case ERR_PASSWDMISMATCH:
-			this->errorMsg += expandMessage(n, vaList, ":Password incorrect");
+			this->replyMsg += expandMessage(n, vaList, ":Password incorrect");
 			break;
 		case ERR_BADCHANMASK:
-			this->errorMsg += expandMessage(n, vaList, "% :Bad Channel Mask");
+			this->replyMsg += expandMessage(n, vaList, "% :Bad Channel Mask");
 			break;
 		case ERR_NOTREGISTERED:
-			this->errorMsg += expandMessage(n, vaList, ":You have not registered");
+			this->replyMsg += expandMessage(n, vaList, ":You have not registered");
 			break;
 		case ERR_NEEDMOREPARAMS:
-			this->errorMsg += expandMessage(n, vaList, "% :Not enough parameters");
+			this->replyMsg += expandMessage(n, vaList, "% :Not enough parameters");
 			break;
 		case ERR_INVITEONLYCHAN:
-			this->errorMsg += expandMessage(n, vaList, "% :Cannot join channel (+i)");
+			this->replyMsg += expandMessage(n, vaList, "% :Cannot join channel (+i)");
 			break;
 		case ERR_BADCHANNELKEY:
-			this->errorMsg += expandMessage(n, vaList, "% :Cannot join channel (+k)");
+			this->replyMsg += expandMessage(n, vaList, "% :Cannot join channel (+k)");
 			break;
 		case ERR_NOSUCHCHANNEL:
-			this->errorMsg += expandMessage(n, vaList, "% :No such channel");
+			this->replyMsg += expandMessage(n, vaList, "% :No such channel");
 			break;
 		case ERR_NOTONCHANNEL:
-			this->errorMsg += expandMessage(n, vaList, "% :You're not on that channel");
+			this->replyMsg += expandMessage(n, vaList, "% :You're not on that channel");
 			break;
 		case ERR_NONICKNAMEGIVEN:
-			this->errorMsg += expandMessage(n, vaList, " :No nickname given");
+			this->replyMsg += expandMessage(n, vaList, " :No nickname given");
 			break;
 		case ERR_ERRONEUSNICKNAME:
-			this->errorMsg += expandMessage(n, vaList, "% :Erroneus nickname");
+			this->replyMsg += expandMessage(n, vaList, "% :Erroneus nickname");
 			break;
 		case ERR_NICKNAMEINUSE:
-			this->errorMsg += expandMessage(n, vaList, "% :Nickname is already in use");
+			this->replyMsg += expandMessage(n, vaList, "% :Nickname is already in use");
 			break;
 		case ERR_ALREADYREGISTRED:
-			this->errorMsg += expandMessage(n, vaList, " :You may not reregister");
+			this->replyMsg += expandMessage(n, vaList, " :You may not reregister");
 			break;
 		case ERR_NORECIPTIENT:
-			this->errorMsg += expandMessage(n, vaList, " :No recipient given %");;
+			this->replyMsg += expandMessage(n, vaList, " :No recipient given %");;
 			break;
 		case ERR_CANNOTSENDTOCHAN:
-			this->errorMsg += expandMessage(n, vaList, "% :Cannot send to channel");
+			this->replyMsg += expandMessage(n, vaList, "% :Cannot send to channel");
 			break;
 		case ERR_NOSUCHNICK:
-			this->errorMsg += expandMessage(n, vaList, "% :No such nick/channel");
+			this->replyMsg += expandMessage(n, vaList, "% :No such nick/channel");
 			break;
 		case ERR_NOTEXTTOSEND:
-			this->errorMsg += expandMessage(n, vaList, " :No text to send");
+			this->replyMsg += expandMessage(n, vaList, " :No text to send");
 			break;
 		case ERR_NOTOPLEVEL:
-			this->errorMsg += expandMessage(n, vaList, "% :No toplevel domain specified");
+			this->replyMsg += expandMessage(n, vaList, "% :No toplevel domain specified");
 			break;
 		case ERR_TOOMANYTARGETS:
-			this->errorMsg += expandMessage(n, vaList, "% :Duplicate recipients. No message");
+			this->replyMsg += expandMessage(n, vaList, "% :Duplicate recipients. No message");
 			break;
 		case ERR_NOORIGIN:
-			this->errorMsg += expandMessage(n, vaList, " :No origin specified");
+			this->replyMsg += expandMessage(n, vaList, " :No origin specified");
 			break;
 		case ERR_NOSUCHSERVER:
-			this->errorMsg += expandMessage(n, vaList, "% :No such server");
+			this->replyMsg += expandMessage(n, vaList, "% :No such server");
 			break;
 		case ERR_USERSDONTMATCH:
-			this->errorMsg += expandMessage(n, vaList, " :Cant change mode for other users");
+			this->replyMsg += expandMessage(n, vaList, " :Cant change mode for other users");
 			break;
 		case ERR_UMODEUNKNOWNFLAG:
-			this->errorMsg += expandMessage(n, vaList, " :Unknown MODE flag");
+			this->replyMsg += expandMessage(n, vaList, " :Unknown MODE flag");
 			break;
 		case ERR_UNKNOWNMODE:
-			this->errorMsg += expandMessage(n, vaList, "% :is unknown mode char to me");
+			this->replyMsg += expandMessage(n, vaList, "% :is unknown mode char to me");
 			break;
 		case ERR_CHANOPRIVSNEEDED:
-			this->errorMsg += expandMessage(n, vaList, "% :You're not channel operator");
+			this->replyMsg += expandMessage(n, vaList, "% :You're not channel operator");
 			break;
 		case ERR_USERNOTINCHANNEL:
-			this->errorMsg += expandMessage(n, vaList, "% % :They aren't on that channel");
+			this->replyMsg += expandMessage(n, vaList, "% % :They aren't on that channel");
 			break;
 		case ERR_USERONCHANNEL:
-			this->errorMsg += expandMessage(n, vaList, "% % :is already on channel");
+			this->replyMsg += expandMessage(n, vaList, "% % :is already on channel");
 			break;
 		case ERR_CHANNELISFULL:
-			this->errorMsg += expandMessage(n, vaList, "% :Cannot join channel (+l)");
+			this->replyMsg += expandMessage(n, vaList, "% :Cannot join channel (+l)");
 			break;
 		default:
 			break;
@@ -318,27 +286,25 @@ void			IRC::Command::exec(IRC::Server* server, IRC::User& user)
 
 void			IRC::Command::answer(IRC::User& user)
 {	
-	if (this->errorNo != 0)
-		user.sendMessage(this->errorMsg);
-	else if (this->replyMsg.size() > 0)
+	if (this->replyMsg.size() > 0)
 		user.sendMessage(this->replyMsg);
 }
 
-std::string		IRC::Command::expandMessage(int argCount, va_list vaList, std::string errorStr) const
+std::string		IRC::Command::expandMessage(int argCount, va_list vaList, std::string replyStr) const
 {
 	size_t			startPos;
 	std::string		vaValue;
 	
-	while ((startPos = errorStr.find('%')) != std::string::npos)
+	while ((startPos = replyStr.find('%')) != std::string::npos)
 	{
 		if (argCount > 0)
 			vaValue = va_arg(vaList, char *);
 		else
 			vaValue = "";
 		
-		errorStr.replace(startPos, 1, vaValue);
+		replyStr.replace(startPos, 1, vaValue);
 		argCount--;
 	}
 
-	return errorStr;
+	return replyStr;
 }

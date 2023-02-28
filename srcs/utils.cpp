@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 10:29:12 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 09:33:07 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:06:38 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,16 @@ bool			isNumber(std::string str)
 		it++;
 	
 	return !str.empty() && it == str.end();
+}
+
+void			printStrVector(std::string name, std::vector<std::string> strs)
+{
+	std::cout << ">>> " << name << ": [";
+	for (std::vector<std::string>::iterator it = strs.begin(); it != strs.end(); it++)
+	{
+		std::cout << "'" << *it << "'";
+		if (it + 1 != strs.end())
+			std::cout << ", ";
+	}
+	std::cout << "]" << std::endl;
 }

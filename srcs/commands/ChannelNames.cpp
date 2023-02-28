@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 12:19:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:44:41 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ IRC::ChannelNames::~ChannelNames() {}
 void	IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 {
 	if (!user.isAuthenticated())
-		return setError(ERR_NOTREGISTERED, *server, user, 0);
+		return setReply(ERR_NOTREGISTERED, *server, user, 0);
 	
 	std::vector<std::string> argsArray = splitString(args, " ");
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");
