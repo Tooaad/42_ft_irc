@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 14:44:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:19:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 	/** ITERATE EACH PARSED CHANNEL **/
 	for (std::vector<std::string>::iterator it = channelsArray.begin(); it != channelsArray.end(); it++)
 	{
-		std::vector<Channel>::iterator channelIt = server->findChannel(*it);
+		std::map<std::string, IRC::Channel>::iterator channelIt = server->findChannel(*it);
 		if (channelIt == server->getChannels().end())
 			return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, (*it).c_str());
 		
-		if (!channelIt->existsUser(user))
+		if (!channelIt->second.existsUser(user))
 			return setReply(ERR_NOTONCHANNEL, *server, user, 1, (*it).c_str());
 		
 		/** REMOVE USER FROM CHANNEL **/
 		if (argsArray.size() > 1 && argsArray[1].size() > 0)
-			setActionInReply(*server, user, *channelIt, "PART " + channelIt->getName() + " :\"" + argsArray[1] + "\"");
+			setActionInReply(*server, user, channelIt->second, "PART " + channelIt->second.getName() + " :\"" + argsArray[1] + "\"");
 		else
-			setActionInReply(*server, user, *channelIt, "PART :" + channelIt->getName());
-		channelIt->removeUser(server, user);
+			setActionInReply(*server, user, channelIt->second, "PART :" + channelIt->second.getName());
+		channelIt->second.removeUser(server, user);
 	}
 }

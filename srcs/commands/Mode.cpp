@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:17:06 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:16:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 	if (this->args.at(0) == '#')
 	{
 		std::vector<std::string> argSplit = splitString(this->args, " ");
-		std::vector<IRC::Channel>::iterator receptor = server->findChannel(argSplit[0]);
+		std::map<std::string, IRC::Channel>::iterator receptor = server->findChannel(argSplit[0]);
 		if (receptor == server->getChannels().end())
 			return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, argSplit[0].c_str());
 		
-		if (!user.isInChannel(*receptor))
+		if (!user.isInChannel(receptor->second))
 			return setReply(ERR_NOTONCHANNEL, *server, user, 1, argSplit[0].c_str());
 
-		if(!receptor->isOperator(user))
+		if(!receptor->second.isOperator(user))
 			return setReply(ERR_CHANOPRIVSNEEDED, *server, user, 1, argSplit[0].c_str());
 
 		if (argSplit.size() > 1 && argSplit[1].size() > 0)
@@ -50,81 +50,81 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 						{
-							receptor->addOperator(*userIt, server);
-							setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " +o :" + argSplit[2]);
+							receptor->second.addOperator(*userIt, server);
+							setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +o :" + argSplit[2]);
 						}
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
 						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
-							receptor->removeOperator(*userIt, server);
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " -o :" + argSplit[2]);
+							receptor->second.removeOperator(*userIt, server);
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -o :" + argSplit[2]);
 					}
 				}
 				else if (argSplit[1].at(i) == 's')
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isSecret())
+					if (argSplit[1].at(0) == '+' && !receptor->second.isSecret())
 					{
-						receptor->changeSecrecy();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " +s :" + receptor->getName());
+						receptor->second.changeSecrecy();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +s :" + receptor->second.getName());
 					}
-					else if (argSplit[1].at(0) == '-' && receptor->isSecret())
+					else if (argSplit[1].at(0) == '-' && receptor->second.isSecret())
 					{
-						receptor->changeSecrecy();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " -s :" + receptor->getName());
+						receptor->second.changeSecrecy();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -s :" + receptor->second.getName());
 					}
 				}
 				else if (argSplit[1].at(i) == 'i')
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isInviteOnly())
+					if (argSplit[1].at(0) == '+' && !receptor->second.isInviteOnly())
 					{
-						receptor->changeInviteOnly();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " +i :" + receptor->getName());
+						receptor->second.changeInviteOnly();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +i :" + receptor->second.getName());
 					}
-					else if (argSplit[1].at(0) == '-' && receptor->isInviteOnly())
+					else if (argSplit[1].at(0) == '-' && receptor->second.isInviteOnly())
 					{
-						receptor->changeInviteOnly();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " -i :" + receptor->getName());
+						receptor->second.changeInviteOnly();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -i :" + receptor->second.getName());
 					}
 				}
 				else if (argSplit[1].at(i) == 't')
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isFreeTopic())
+					if (argSplit[1].at(0) == '+' && !receptor->second.isFreeTopic())
 					{
-						receptor->changeFreeTopic();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " +t :" + receptor->getName());
+						receptor->second.changeFreeTopic();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +t :" + receptor->second.getName());
 					}
-					else if (argSplit[1].at(0) == '-' && receptor->isFreeTopic())
+					else if (argSplit[1].at(0) == '-' && receptor->second.isFreeTopic())
 					{
-						receptor->changeFreeTopic();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " -t :" + receptor->getName());
+						receptor->second.changeFreeTopic();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -t :" + receptor->second.getName());
 					}
 				}
 				else if (argSplit[1].at(i) == 'n')
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isPublicMsg())
+					if (argSplit[1].at(0) == '+' && !receptor->second.isPublicMsg())
 					{
-						receptor->changePublicMsg();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " +n :" + receptor->getName());
+						receptor->second.changePublicMsg();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +n :" + receptor->second.getName());
 					}
-					else if (argSplit[1].at(0) == '-' && receptor->isPublicMsg())
+					else if (argSplit[1].at(0) == '-' && receptor->second.isPublicMsg())
 					{
-						receptor->changePublicMsg();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " -n :" + receptor->getName());
+						receptor->second.changePublicMsg();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -n :" + receptor->second.getName());
 					}
 				}
 				else if (argSplit[1].at(i) == 'm')
 				{
-					if (argSplit[1].at(0) == '+' && !receptor->isModerated())
+					if (argSplit[1].at(0) == '+' && !receptor->second.isModerated())
 					{
-						receptor->changeModerated();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " +m :" + receptor->getName());
+						receptor->second.changeModerated();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +m :" + receptor->second.getName());
 					}
-					else if (argSplit[1].at(0) == '-' && receptor->isModerated())
+					else if (argSplit[1].at(0) == '-' && receptor->second.isModerated())
 					{
-						receptor->changeModerated();
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " -m :" + receptor->getName());
+						receptor->second.changeModerated();
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -m :" + receptor->second.getName());
 					}
 				}
 				else if (argSplit[1].at(i) == 'l')
@@ -133,13 +133,13 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
-						receptor->setMaxUsers(atoi(argSplit[2].c_str())); 
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " +l :" + argSplit[2]);
+						receptor->second.setMaxUsers(atoi(argSplit[2].c_str())); 
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +l :" + argSplit[2]);
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
-						receptor->setMaxUsers(0);
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " -l :" + "0");
+						receptor->second.setMaxUsers(0);
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -l :" + "0");
 					}
 				}
 				else if (argSplit[1].at(i) == 'v')
@@ -151,16 +151,16 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 						{
-							receptor->addModerator(*userIt, server);
-							setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " +v :" + argSplit[2]);
+							receptor->second.addModerator(*userIt, server);
+							setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +v :" + argSplit[2]);
 						}
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
 						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
-							receptor->removeModerator(*userIt, server);
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " -v :" + argSplit[2]);
+							receptor->second.removeModerator(*userIt, server);
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -v :" + argSplit[2]);
 					}
 				}
 				else if (argSplit[1].at(i) == 'k')
@@ -169,13 +169,13 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
-						receptor->setPassword(argSplit[2]);
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " +k :" + argSplit[2]);
+						receptor->second.setPassword(argSplit[2]);
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +k :" + argSplit[2]);
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
-						receptor->setPassword("");
-						setActionInReply(*server, user, *receptor, "MODE " + receptor->getName() + " -k :" + argSplit[2]);
+						receptor->second.setPassword("");
+						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -k :" + argSplit[2]);
 					}
 				}
 				else
@@ -185,19 +185,19 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		else
 		{
 			std::string mode = "";
-			receptor->isSecret()? mode += " +s,": "";
-			receptor->isFreeTopic()? mode += " +t,": "";
-			receptor->isPublicMsg()? mode += " +n,": "";
-			receptor->isModerated()? mode += " +m,": "";
-			receptor->isInviteOnly()? mode += " +i,": "";
-			receptor->hasMax()? mode += printChannelMax(*receptor): "";
-			receptor->hasPassword()? mode += printPassword(*receptor): "";
+			receptor->second.isSecret()? mode += " +s,": "";
+			receptor->second.isFreeTopic()? mode += " +t,": "";
+			receptor->second.isPublicMsg()? mode += " +n,": "";
+			receptor->second.isModerated()? mode += " +m,": "";
+			receptor->second.isInviteOnly()? mode += " +i,": "";
+			receptor->second.hasMax()? mode += printChannelMax(receptor->second): "";
+			receptor->second.hasPassword()? mode += printPassword(receptor->second): "";
 			if (mode.length() > 0)
 			{
 				mode.erase(0, 1);
 				mode.erase(mode.length() - 1, 1);
 			}
-			setReply(RPL_CHANNELMODEIS, *server, user, 2, receptor->getName().c_str(), mode.c_str());
+			setReply(RPL_CHANNELMODEIS, *server, user, 2, receptor->second.getName().c_str(), mode.c_str());
 		}
 	}
 }

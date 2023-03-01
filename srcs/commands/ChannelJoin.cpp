@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/28 17:05:29 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:18:44 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void			IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 
 		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE **/
 		IRC::Channel newChannel;
-		std::vector<IRC::Channel>::iterator found = std::find(server->getChannels().begin(), server->getChannels().end(), Channel(channelsArray[i]));
+		std::map<std::string, IRC::Channel>::iterator found = server->findChannel(channelsArray[i]);
 		if (found != server->getChannels().end())
 		{
-			if (!joinExistingChannel(*found, *server, user))
+			if (!joinExistingChannel(found->second, *server, user))
 				continue;
-			newChannel = *found;
+			newChannel = found->second;
 		}
 		else
 			newChannel = createNewChannel(channelsArray[i], user, server);

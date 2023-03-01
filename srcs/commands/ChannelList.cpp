@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 17:13:24 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:29:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 	
 	std::vector<std::string> argsArray = splitString(args, " ");
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");
-	std::vector<Channel> channelsArray;
+	std::map<std::string, IRC::Channel> channelsArray;
 	
 	for (std::vector<std::string>::iterator it = channelsArrayStr.begin(); it != channelsArrayStr.end(); it++)
 	{
-		std::vector<Channel>::iterator channelIt = server->findChannel(*it);
+		std::map<std::string, IRC::Channel>::iterator channelIt = server->findChannel(*it);
 		if (channelIt != server->getChannels().end())
-			channelsArray.push_back(*channelIt);
+			channelsArray[channelIt->second.getName()] = channelIt->second;
 	}
 	
 	if (channelsArray.size() > 0)
@@ -38,20 +38,20 @@ void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 		printList(*server, user, server->getChannels().begin(), server->getChannels().end());
 }
 
-void	IRC::ChannelList::printList(IRC::Server server, IRC::User user, std::vector<IRC::Channel>::iterator itBegin, std::vector<IRC::Channel>::iterator itEnd)
+void	IRC::ChannelList::printList(IRC::Server server, IRC::User user, std::map<std::string, IRC::Channel>::iterator itBegin, std::map<std::string, IRC::Channel>::iterator itEnd)
 {
 	setReply(RPL_LISTSTART, server, user, 0);
 	
-	for (std::vector<Channel>::iterator it = itBegin; it != itEnd; it++)
+	for (std::map<std::string, IRC::Channel>::iterator it = itBegin; it != itEnd; it++)
 	{
-		if (it->isSecret() && !user.isInChannel(*it))
+		if (it->second.isSecret() && !user.isInChannel(it->second))
 			continue ;
 		
 		std::stringstream ss;
-		ss << it->getUsers().size();
+		ss << it->second.getUsers().size();
 		std::string sizeStr = ss.str();
 		
-		setReply(RPL_LIST, server, user, 3, it->getName().c_str(), sizeStr.c_str(), it->getTopic().c_str());
+		setReply(RPL_LIST, server, user, 3, it->second.getName().c_str(), sizeStr.c_str(), it->second.getTopic().c_str());
 	}
 	
 	setReply(RPL_LISTEND, server, user, 0);

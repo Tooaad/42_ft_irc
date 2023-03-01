@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 10:52:06 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 10:55:18 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <fcntl.h>
 #include <sys/event.h> // kqueue
 #include <vector>
+#include <map>
 #include "User.hpp"
 #include "Command.hpp"
 #include "utils.hpp"
@@ -51,7 +52,7 @@ namespace IRC
 			struct kevent					eventSet;
 			struct kevent					eventList[KQUEUE_SIZE];
 			std::vector<User>				users;
-			std::vector<Channel>			channels;
+			std::map<std::string, Channel>	channels;
 			std::string						hostname;
 			std::string						creationTimestamp;
 
@@ -63,13 +64,13 @@ namespace IRC
 			Server &operator=(const Server &other);
 
 			/* -- Getters -- */
-			std::string						getIp(void) const;
-			int								getSocket(void) const;
-			std::string						getPassword(void) const;
-			std::vector<User>&				getUsers(void);
-			std::vector<Channel>&			getChannels(void);
-			std::string						getHostname(void) const;
-			std::vector<Channel>::iterator	findChannel(std::string name);
+			std::string									getIp(void) const;
+			int											getSocket(void) const;
+			std::string									getPassword(void) const;
+			std::vector<User>&							getUsers(void);
+			std::map<std::string, Channel>&				getChannels(void);
+			std::string									getHostname(void) const;
+			std::map<std::string, Channel>::iterator	findChannel(std::string name);
 
 			/* -- Modifiers -- */
 			void							setHostname(std::string hostname);

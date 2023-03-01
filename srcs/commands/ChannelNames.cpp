@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:06:42 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:24:49 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 		if (it->size() == 0)
 			continue ;
 		
-		std::vector<Channel>::iterator channelIt = server->findChannel(*it);
+		std::map<std::string, IRC::Channel>::iterator channelIt = server->findChannel(*it);
 		if (channelIt != server->getChannels().end())
 		{
-			if (!channelIt->isSecret() || user.isInChannel(*channelIt))
-				setReply(RPL_NAMREPLY, *server, user, 2, channelIt->getName().c_str(), channelIt->getUsersString().c_str());
+			if (!channelIt->second.isSecret() || user.isInChannel(channelIt->second))
+				setReply(RPL_NAMREPLY, *server, user, 2, channelIt->second.getName().c_str(), channelIt->second.getUsersString().c_str());
 		}
 		setReply(RPL_ENDOFNAMES, *server, user, 1, it->c_str());
 	}

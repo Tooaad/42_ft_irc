@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 16:38:30 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:09:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,13 +273,13 @@ bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 	return false;
 }
 
-void	IRC::printChannels(std::vector<IRC::Channel>& channels)
+void	IRC::printChannels(std::map<std::string, IRC::Channel>& channels)
 {
 	if (channels.size() == 0)
 		return ;
 	std::cout << "------- Channels -------" << std::endl;
-	for (std::vector<IRC::Channel>::iterator it = channels.begin(); it != channels.end(); ++it)
-		printChannel(*it);
+	for (std::map<std::string, IRC::Channel>::iterator it = channels.begin(); it != channels.end(); ++it)
+		printChannel(it->second);
 	std::cout << "------------------------" << std::endl;
 }
 

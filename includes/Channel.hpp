@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 17:39:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:08:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ namespace IRC
 
 	/* -- Non-member functions -- */
 	bool	operator== (const Channel lhs, const Channel rhs);
-	void	printChannels(std::vector<Channel>& channels);
+	void	printChannels(std::map<std::string, Channel>& channels);
 	void	printChannel(Channel& channel);
 }

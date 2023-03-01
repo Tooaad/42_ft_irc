@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 10:51:59 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:38:05 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,12 @@ std::string								IRC::Server::getIp(void) const { return this->ip; }
 int										IRC::Server::getSocket(void) const { return this->sSocket; }
 std::string								IRC::Server::getPassword(void) const { return this->password; }
 std::vector<IRC::User>&					IRC::Server::getUsers(void) { return this->users; }
-std::vector<IRC::Channel>&				IRC::Server::getChannels(void) { return this->channels; }
+std::map<std::string, IRC::Channel>&	IRC::Server::getChannels(void) { return this->channels; }
 std::string								IRC::Server::getHostname(void) const { return this->hostname; }
 
-std::vector<IRC::Channel>::iterator		IRC::Server::findChannel(std::string name)
+std::map<std::string, IRC::Channel>::iterator		IRC::Server::findChannel(std::string name)
 {
-	std::vector<IRC::Channel>::iterator it = this->channels.begin();
-	
-	for (; it != this->channels.end(); it++)
-	{
-		if (it->getName().compare(name) == 0)
-			return it;
-	}
-	return it;
+	return this->channels.find(name);
 }
 
 /* -- Modifiers -- */
@@ -69,12 +62,12 @@ void	IRC::Server::setHostname(std::string hostname)
 
 void	IRC::Server::addChannel(IRC::Channel& channel)
 {
-	this->channels.push_back(channel);
+	this->channels[channel.getName()] = channel;
 }
 
 void	IRC::Server::removeChannel(IRC::Channel channel)
 {
-	std::vector<IRC::Channel>::iterator found = std::find(this->channels.begin(), this->channels.end(), channel);
+	std::map<std::string, IRC::Channel>::iterator found = this->channels.find(channel.getName());
 	
 	if (found != this->channels.end())
 		this->channels.erase(found);
@@ -82,18 +75,18 @@ void	IRC::Server::removeChannel(IRC::Channel channel)
 
 void	IRC::Server::updateUserInChannels(IRC::User user)
 {
-	for (std::vector<IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
+	for (std::map<std::string, IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
 	{
-		std::vector<IRC::User>::iterator operIt = findUserFd(channelIt->getOperators(), user.getSocket());
-		if (operIt != channelIt->getOperators().end())
+		std::vector<IRC::User>::iterator operIt = findUserFd(channelIt->second.getOperators(), user.getSocket());
+		if (operIt != channelIt->second.getOperators().end())
 			*operIt = user;
 
-		std::vector<IRC::User>::iterator modIt = findUserFd(channelIt->getModerators(), user.getSocket());
-		if (modIt != channelIt->getModerators().end())
+		std::vector<IRC::User>::iterator modIt = findUserFd(channelIt->second.getModerators(), user.getSocket());
+		if (modIt != channelIt->second.getModerators().end())
 			*modIt = user;
 
-		std::vector<IRC::User>::iterator userIt = findUserFd(channelIt->getUsers(), user.getSocket());
-		if (userIt != channelIt->getUsers().end())
+		std::vector<IRC::User>::iterator userIt = findUserFd(channelIt->second.getUsers(), user.getSocket());
+		if (userIt != channelIt->second.getUsers().end())
 			*userIt = user;
 	}
 }
@@ -191,17 +184,15 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 /* -- Private Member functions */
 void	IRC::Server::removeUser(IRC::User& user)
 {
-	
 	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
-
 	if (found == this->users.end())
 		return ;
 		
-	for (size_t i = 0; i < this->channels.size(); i++)
+	for (size_t i = 0; i < found->getJoinedChannels().size(); i++)
 	{
-		this->channels[i].removeModerator(*found, this);
-		this->channels[i].removeOperator(*found, this);
-		this->channels[i].removeUser(this, *found);
+		std::map<std::string, IRC::Channel>::iterator channelIt = findChannel(found->getJoinedChannels()[i].getName());
+		if (channelIt != this->channels.end())
+			channelIt->second.removeUser(this, *found);
 	}
 	
 	this->users.erase(found);
@@ -328,8 +319,8 @@ int		IRC::Server::receiveMessage(int eventFd)
 		
 		if (PRINT_DEBUG)
 		{
-			printUsers(users);
-			printChannels(channels);
+			printUsers(this->users);
+			printChannels(this->channels);
 			std::cout << std::endl << "*** *** *** *** *** *** *** *** *** *** ***" << std::endl << std::endl;
 		}
 	}
