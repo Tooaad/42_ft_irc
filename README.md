@@ -57,6 +57,7 @@ Kqueue
 
 
 Lista de prioridades:
+- Error con mapa al no closeclient por ping, segfault
 - Mejorar rendimiento con maps?
 - Revisar todo y explicarnoslo
 
