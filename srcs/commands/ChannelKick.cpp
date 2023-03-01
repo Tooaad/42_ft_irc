@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelKick.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:19:51 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 12:07:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 21:45:51 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void	IRC::ChannelKick::exec(IRC::Server* server, IRC::User& user)
 		setActionInReply(*server, user, channel->second, "KICK " + channel->second.getName() + " " + victimIt->second.getNick() + " " + argsArray[2]);
 
 	channel->second.removeUser(server, victimIt->second);
+	victimIt->second.removeJoinedChannel(channel->second);
 }

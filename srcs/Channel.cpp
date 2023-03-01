@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 12:48:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 21:44:46 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,17 +171,12 @@ bool	IRC::Channel::addUser(IRC::User& user)
 
 void	IRC::Channel::removeUser(IRC::Server* server, IRC::User& user)
 {
-	if (user == User())
-		return ;
-	
 	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
 	if (found != this->users.end())
 		this->users.erase(found);
 
 	removeOperator(user, server);
 	removeModerator(user, server);
-
-	user.removeJoinedChannel(*this);
 	
 	if (isEmpty())
 		server->removeChannel(*this);

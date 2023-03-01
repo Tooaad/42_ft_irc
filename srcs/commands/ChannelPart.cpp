@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelPart.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:19:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 21:46:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 		else
 			setActionInReply(*server, user, channelIt->second, "PART :" + channelIt->second.getName());
 		channelIt->second.removeUser(server, user);
+		user.removeJoinedChannel(channelIt->second);
 	}
 }
