@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:51:45 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:01:22 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ IRC::User::User(void)
 	this->hostname =  "";
 	this->servername = "";
 	this->authenticated = false;
-	this->buffer = "";
 	this->pingReq = false;
+	this->pingKey = "";
 	this->timeout = time(NULL);
+	this->buffer = "";
+	
 }
 
 IRC::User::User(const IRC::User& other) { *this = other; }
@@ -42,10 +44,12 @@ IRC::User& IRC::User::operator=(const IRC::User &other)
 	this->hostname = other.hostname;
 	this->servername = other.servername;
 	this->authenticated = other.authenticated;
+	this->pingReq = other.pingReq;
+	this->pingKey = other.pingKey;
 	this->timeout = other.timeout;
 	this->joinedChannels = other.joinedChannels;
+	this->invitedChannels = other.invitedChannels;
 	this->buffer = other.buffer;
-	this->pingReq = other.pingReq;
 	
 	return *this;
 }

@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:08:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:48:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ namespace IRC
 		public:
 			Channel();
 			Channel(std::string name);
-			Channel(std::string name, User createdBy, Server* server);
+			Channel(std::string name, User createdBy);
 			Channel(const Channel& other);
 			~Channel();
 			Channel& operator=(const Channel& other);
@@ -78,7 +78,7 @@ namespace IRC
 			void					removeOperator(User user, Server* server);
 			void					addModerator(User user, Server* server);
 			void					removeModerator(User user, Server* server);
-			void					addUser(User& user);
+			bool					addUser(User& user);
 			void					removeUser(Server* server, User& user);
 
 			/* -- Member functions -- */

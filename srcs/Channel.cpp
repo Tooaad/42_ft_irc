@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:09:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:48:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ IRC::Channel::Channel(std::string name)
 	this->maxUsers = 0;
 }
 
-IRC::Channel::Channel(std::string name, IRC::User createdBy, IRC::Server* server)
+IRC::Channel::Channel(std::string name, IRC::User createdBy)
 {
 	this->name = name;
 	this->topic = "";
@@ -51,8 +51,8 @@ IRC::Channel::Channel(std::string name, IRC::User createdBy, IRC::Server* server
 	this->moderatedMode = false;
 	this->maxUsers = 0;
 	
-	addUser(createdBy);
-	addOperator(createdBy, server);
+	this->users.push_back(createdBy);
+	this->operators.push_back(createdBy);
 }
 
 IRC::Channel::Channel(const IRC::Channel &other) { *this = other; }
@@ -155,13 +155,18 @@ void	IRC::Channel::removeModerator(IRC::User user, IRC::Server* server)
 	}
 }
 
-void	IRC::Channel::addUser(IRC::User& user)
+bool	IRC::Channel::addUser(IRC::User& user)
 {
 	if (user == User())
-		return ;
+		return false;
 	
 	if (!existsUser(user))
+	{
 		this->users.push_back(user);
+		user.addJoinedChannel(*this);
+		return true;
+	}
+	return false;
 }
 
 void	IRC::Channel::removeUser(IRC::Server* server, IRC::User& user)
