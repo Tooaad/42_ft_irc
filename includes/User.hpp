@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 20:39:59 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:59:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #include <unistd.h>
 #include <netdb.h>
 #include <sys/socket.h>
@@ -100,7 +101,7 @@ namespace IRC
 	/* -- Non-member functions -- */
 	bool								operator== (const User lhs, const User rhs);
 	std::vector<IRC::User>::iterator	findUserFd(std::vector<IRC::User>& users, int fd);
-	std::vector<IRC::User>::iterator	findUser(std::vector<User>& users, std::string nick);
+	std::map<int, User>::iterator		findUser(std::map<int, User>& users, std::string nick);
 	void								printUser(User user);
-	void								printUsers(std::vector<User> users);
+	void								printUsers(std::map<int, User> users);
 }

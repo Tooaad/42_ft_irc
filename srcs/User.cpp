@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 00:41:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:51:45 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,13 +201,13 @@ std::vector<IRC::User>::iterator	IRC::findUserFd(std::vector<IRC::User>& users, 
 	return it;
 }
 
-std::vector<IRC::User>::iterator	IRC::findUser(std::vector<IRC::User>& users, std::string nick)
+std::map<int, IRC::User>::iterator	IRC::findUser(std::map<int, IRC::User>& users, std::string nick)
 {
-	std::vector<IRC::User>::iterator it = users.begin();
+	std::map<int, IRC::User>::iterator it = users.begin();
 	
 	for (; it != users.end(); it++)
 	{
-		if (it->getNick().compare(nick) == 0)
+		if (it->second.getNick().compare(nick) == 0)
 			return it;
 	}
 	return it;
@@ -225,15 +225,15 @@ void	IRC::printUser(IRC::User user)
 	std::cout << std::endl;
 }
 
-void	IRC::printUsers(std::vector<IRC::User> users)
+void	IRC::printUsers(std::map<int, IRC::User> users)
 {
 	if (users.size() == 0)
 		return ;
 
 	std::cout << "------- Users -------" << std::endl;
-	std::vector<IRC::User>::iterator it = users.begin();
+	std::map<int, IRC::User>::iterator it = users.begin();
 	for (; it != users.end(); it++)
-		printUser(*it);
+		printUser(it->second);
 	std::cout << "---------------------" << std::endl;
 }
 

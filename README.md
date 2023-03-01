@@ -57,7 +57,6 @@ Kqueue
 
 
 Lista de prioridades:
-- Revisar kqueue y fcntl (https://github.com/ifanzilka/ft_irc/tree/master/ft_irc)
 - Mejorar rendimiento con maps?
 - Revisar todo y explicarnoslo
 

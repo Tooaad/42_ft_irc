@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:20:01 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:22:44 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:08:10 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	IRC::ChannelInvite::exec(IRC::Server* server, IRC::User& user)
 	if (channel == server->getChannels().end())
 		return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, argsArray[1].c_str());
 
-	std::vector<IRC::User>::iterator newUserIt = findUser(server->getUsers(), argsArray[0]);
+	std::map<int, IRC::User>::iterator newUserIt = findUser(server->getUsers(), argsArray[0]);
 	if (newUserIt == server->getUsers().end())
 		return setReply(ERR_NOSUCHNICK, *server, user, 1, argsArray[0].c_str());
 
@@ -40,13 +40,13 @@ void	IRC::ChannelInvite::exec(IRC::Server* server, IRC::User& user)
 	if (channel->second.isInviteOnly() && !channel->second.isOperator(user))
 		return setReply(ERR_CHANOPRIVSNEEDED, *server, user, 1, channel->second.getName().c_str());
 
-	if (channel->second.existsUser(*newUserIt))
-		return setReply(ERR_USERONCHANNEL, *server, user, 2, newUserIt->getNick().c_str(), channel->second.getName().c_str());
+	if (channel->second.existsUser(newUserIt->second))
+		return setReply(ERR_USERONCHANNEL, *server, user, 2, newUserIt->second.getNick().c_str(), channel->second.getName().c_str());
 
 	/** USER IS INVITED AND REPLY IS SENT **/
-	std::string action = ":" + user.getNick() + "!" + user.getUser() + "@" + user.getHostname() + " INVITE " + newUserIt->getNick() + " :" + channel->second.getName();
-	newUserIt->addInvitedChannel(channel->second);
-	newUserIt->sendMessage(action);
+	std::string action = ":" + user.getNick() + "!" + user.getUser() + "@" + user.getHostname() + " INVITE " + newUserIt->second.getNick() + " :" + channel->second.getName();
+	newUserIt->second.addInvitedChannel(channel->second);
+	newUserIt->second.sendMessage(action);
 	
-	setReply(RPL_INVITING, *server, user, 2, newUserIt->getNick().c_str(), channel->second.getName().c_str());
+	setReply(RPL_INVITING, *server, user, 2, newUserIt->second.getNick().c_str(), channel->second.getName().c_str());
 }

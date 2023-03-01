@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:38:05 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:26:14 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 std::string								IRC::Server::getIp(void) const { return this->ip; }
 int										IRC::Server::getSocket(void) const { return this->sSocket; }
 std::string								IRC::Server::getPassword(void) const { return this->password; }
-std::vector<IRC::User>&					IRC::Server::getUsers(void) { return this->users; }
+std::map<int, IRC::User>&				IRC::Server::getUsers(void) { return this->users; }
 std::map<std::string, IRC::Channel>&	IRC::Server::getChannels(void) { return this->channels; }
 std::string								IRC::Server::getHostname(void) const { return this->hostname; }
 
@@ -176,7 +176,7 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 	if (close(user.getSocket()) == -1)
 		throwError("Client close error");
 	else
-		std::cout << user.getSocket() << " closed" << std::endl;
+		std::cout << user.getSocket() << " closed client" << std::endl;
 
 	removeUser(user);
 }
@@ -184,15 +184,15 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 /* -- Private Member functions */
 void	IRC::Server::removeUser(IRC::User& user)
 {
-	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
+	std::map<int, IRC::User>::iterator found = this->users.find(user.getSocket());
 	if (found == this->users.end())
 		return ;
 		
-	for (size_t i = 0; i < found->getJoinedChannels().size(); i++)
+	for (size_t i = 0; i < found->second.getJoinedChannels().size(); i++)
 	{
-		std::map<std::string, IRC::Channel>::iterator channelIt = findChannel(found->getJoinedChannels()[i].getName());
+		std::map<std::string, IRC::Channel>::iterator channelIt = findChannel(found->second.getJoinedChannels()[i].getName());
 		if (channelIt != this->channels.end())
-			channelIt->second.removeUser(this, *found);
+			channelIt->second.removeUser(this, found->second);
 	}
 	
 	this->users.erase(found);
@@ -226,12 +226,12 @@ int		IRC::Server::saveIp(void)
 
 void	IRC::Server::terminateServer(void)
 {
-	for (size_t i = 0; i < getUsers().size(); i++)
+	for (std::map<int, IRC::User>::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
 	{
-		if (close(this->users.at(i).getSocket()) == -1)
+		if (close(userIt->second.getSocket()) == -1)
 			throwError("Client close error");
 		else
-			std::cout << this->users.at(i).getSocket() << " closed" << std::endl;
+			std::cout << userIt->second.getSocket() << " closed" << std::endl;
 	}
 	
 	if (close(getSocket()) == -1)
@@ -249,22 +249,22 @@ int		IRC::Server::clientConnected(void)
 	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
 		return throwError("kevent add client socket");
 
-	this->users.push_back(user);
+	this->users[user.getSocket()] = user;
 	return 0;
 }
 
 void	IRC::Server::clientDisconnected(int eventFd)
 {
-	std::vector<IRC::User>::iterator userIt = findUserFd(this->users, eventFd);
+	std::map<int, IRC::User>::iterator userIt = this->users.find(eventFd);
 	if (userIt == this->users.end())
 		return ;
 
 	// Delete event from kqueue
-	EV_SET(&this->eventSet, userIt->getSocket(), EVFILT_READ, EV_DELETE, 0, 0, NULL);
+	EV_SET(&this->eventSet, userIt->second.getSocket(), EVFILT_READ, EV_DELETE, 0, 0, NULL);
 	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
 		throwError("kevent remove client socket");
 		
-	closeClient(*userIt, "Quit: Connection closed");
+	closeClient(userIt->second, "Quit: Connection closed");
 }
 
 int		IRC::Server::receiveMessage(int eventFd)
@@ -279,11 +279,11 @@ int		IRC::Server::receiveMessage(int eventFd)
 		return -1;
 	}
 
-	std::vector<IRC::User>::iterator found = findUserFd(this->users, eventFd);
+	std::map<int, IRC::User>::iterator found = this->users.find(eventFd);
 	if (found == this->users.end())
 		return -1;
 
-	IRC::User& user = *found;
+	IRC::User& user = found->second;
 	
 	std::string message(buf);
 
@@ -357,15 +357,15 @@ std::vector<IRC::User>	IRC::Server::getReferencedUsers(IRC::User user)
 {
 	std::vector<IRC::User> referencedUsers;
 
-	for (std::vector<IRC::User>::iterator itUser = this->users.begin(); itUser != this->users.end(); itUser++)
+	for (std::map<int, IRC::User>::iterator itUser = this->users.begin(); itUser != this->users.end(); itUser++)
 	{
-		if (*itUser == user)
+		if (itUser->second == user)
 			continue ;
 		for (std::vector<IRC::Channel>::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); itChannel++)
 		{
-			if (itUser->isInChannel(*itChannel))
+			if (itUser->second.isInChannel(*itChannel))
 			{
-				referencedUsers.push_back(*itUser);
+				referencedUsers.push_back(itUser->second);
 				break ;
 			}
 		}
@@ -379,21 +379,21 @@ void	IRC::Server::catchPing(void)
 	if (PRINT_DEBUG)
 		std::cout << "> Catch Ping: " << std::endl;
 
-	for (size_t i = 0; i < this->users.size(); i++)
+	for (std::map<int, IRC::User>::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
 	{
 		if (PRINT_DEBUG)
-			std::cout << users[i].getNick() << " (" << users[i].getSocket() << ") -> " << REG_TIMEOUT + users[i].getTimeout() - time(NULL) << "s" << std::endl;
-		if (users[i].isPinged() && time(NULL) - users[i].getTimeout() > PING_TIMEOUT)
-			closeClient(users[i], "PING ERROR");
+			std::cout << userIt->second.getNick() << " (" << userIt->second.getSocket() << ") -> " << REG_TIMEOUT + userIt->second.getTimeout() - time(NULL) << "s" << std::endl;
+		if (userIt->second.isPinged() && time(NULL) - userIt->second.getTimeout() > PING_TIMEOUT)
+			closeClient(userIt->second, "PING ERROR");
 			
-		else if (!users[i].isPinged() && time(NULL) - users[i].getTimeout() > REG_TIMEOUT)
+		else if (!userIt->second.isPinged() && time(NULL) - userIt->second.getTimeout() > REG_TIMEOUT)
 		{
-			if (!users[i].isAuthenticated())
-				closeClient(users[i], "REGISTRATION TIMEOUT");
+			if (!userIt->second.isAuthenticated())
+				closeClient(userIt->second, "REGISTRATION TIMEOUT");
 			
-			users[i].setPingKey(pingGenerator(5));
-			users[i].changeRequest(true);
-			users[i].sendMessage("PING " + users[i].getPingKey());
+			userIt->second.setPingKey(pingGenerator(5));
+			userIt->second.changeRequest(true);
+			userIt->second.sendMessage("PING " + userIt->second.getPingKey());
 		}
 	}
 }

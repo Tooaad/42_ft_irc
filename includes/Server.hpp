@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 10:55:18 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:43:25 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ namespace IRC
 			std::string 					password;
 			struct kevent					eventSet;
 			struct kevent					eventList[KQUEUE_SIZE];
-			std::vector<User>				users;
+			std::map<int, User>				users;
 			std::map<std::string, Channel>	channels;
 			std::string						hostname;
 			std::string						creationTimestamp;
@@ -67,7 +67,7 @@ namespace IRC
 			std::string									getIp(void) const;
 			int											getSocket(void) const;
 			std::string									getPassword(void) const;
-			std::vector<User>&							getUsers(void);
+			std::map<int, User>&						getUsers(void);
 			std::map<std::string, Channel>&				getChannels(void);
 			std::string									getHostname(void) const;
 			std::map<std::string, Channel>::iterator	findChannel(std::string name);

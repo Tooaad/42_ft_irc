@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:16:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:06:26 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
-						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						std::map<int, IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 						{
-							receptor->second.addOperator(*userIt, server);
+							receptor->second.addOperator(userIt->second, server);
 							setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +o :" + argSplit[2]);
 						}
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
-						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						std::map<int, IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
-							receptor->second.removeOperator(*userIt, server);
+							receptor->second.removeOperator(userIt->second, server);
 						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -o :" + argSplit[2]);
 					}
 				}
@@ -148,18 +148,18 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
-						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						std::map<int, IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 						{
-							receptor->second.addModerator(*userIt, server);
+							receptor->second.addModerator(userIt->second, server);
 							setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " +v :" + argSplit[2]);
 						}
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
-						std::vector<IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						std::map<int, IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
-							receptor->second.removeModerator(*userIt, server);
+							receptor->second.removeModerator(userIt->second, server);
 						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -v :" + argSplit[2]);
 					}
 				}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Username.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:54:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/28 15:54:19 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:04:10 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	IRC::Username::exec(IRC::Server* server, IRC::User& user)
 	std::vector<std::string> argSplit = splitString(this->args, " ", 3);
 	if (argSplit.size() < 4)
 		return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
-	for (std::vector<IRC::User>::iterator it = server->getUsers().begin(); it != server->getUsers().end(); it++)
+	for (std::map<int, IRC::User>::iterator it = server->getUsers().begin(); it != server->getUsers().end(); it++)
 	{	
-		if ((argSplit.at(0)).compare(it.base()->getUser()) == 0)
+		if ((argSplit.at(0)).compare(it->second.getUser()) == 0)
 			return setReply(ERR_ALREADYREGISTRED, *server, user, 0);
 	}
 
