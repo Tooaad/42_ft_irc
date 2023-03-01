@@ -6,7 +6,7 @@
 /*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 13:47:25 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:59:35 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,58 +107,60 @@ void						IRC::Channel::setMaxUsers(int size) { if (size < 0) { size = 0; } this
 /* -- Modifiers -- */
 void	IRC::Channel::addOperator(IRC::User user, IRC::Server* server)
 {
-	if (user == User())
-		return ;
+	// if (user == User())
+	// 	return ;
 
+	// TODO: cambiar update-users
+	(void) server;
 	if (existsUser(user) && !isOperator(user))
 	{
 		this->operators.push_back(user);
-		server->updateUserInChannels(user);
+		// server->updateUserInChannels(user);
 	}
 }
 
 void	IRC::Channel::removeOperator(IRC::User user, IRC::Server* server)
 {
-	if (user == User())
-		return ;
-	
+	// if (user == User())
+	// 	return ;
+		(void) server;
 	std::vector<IRC::User>::iterator found = std::find(this->operators.begin(), this->operators.end(), user);
 	if (found != this->operators.end())
 	{
 		this->operators.erase(found);
-		server->updateUserInChannels(user);
+		// server->updateUserInChannels(user);
 	}
 }
 
 void	IRC::Channel::addModerator(IRC::User user, IRC::Server* server)
 {
-	if (user == User())
-		return ;
-	
+	// if (user == User())
+	// 	return ;
+		(void) server;
 	if (existsUser(user) && !isModerator(user))
 	{
 		this->moderators.push_back(user);
-		server->updateUserInChannels(user);
+		// server->updateUserInChannels(user);
 	}
 }
 
 void	IRC::Channel::removeModerator(IRC::User user, IRC::Server* server)
 {
-	if (user == User())
-		return ;
-	
+	// if (user == User())
+	// 	return ;
+		(void) server;
 	std::vector<IRC::User>::iterator found = std::find(this->moderators.begin(), this->moderators.end(), user);
 	if (found != this->moderators.end())
 	{
 		this->moderators.erase(found);
-		server->updateUserInChannels(user);
+		// server->updateUserInChannels(user);
 	}
 }
 
 void	IRC::Channel::addUser(IRC::User& user)
 {
-	if (user == User())
-		return ;
+	// if (user == User())
+	// 	return ;
 	
 	if (!existsUser(user))
 		this->users.push_back(user);
@@ -166,8 +168,8 @@ void	IRC::Channel::addUser(IRC::User& user)
 
 void	IRC::Channel::removeUser(IRC::Server* server, IRC::User& user)
 {
-	if (user == User())
-		return ;
+	// if (user == User())
+	// 	return ;
 	
 	std::vector<IRC::User>::iterator found = std::find(this->users.begin(), this->users.end(), user);
 	if (found != this->users.end())

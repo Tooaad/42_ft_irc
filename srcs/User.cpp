@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 00:41:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:06:44 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,16 +163,13 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 
 bool			IRC::User::isInChannel(IRC::Channel channel) const
 {
-	if (std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel) != this->joinedChannels.end())
-		return true;
-	return false;
+	// TODOTODO problemon
+	return std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel) != this->joinedChannels.end();
 }
 
 bool			IRC::User::isInvitedToChannel(IRC::Channel channel) const
 {
-	if (std::find(this->invitedChannels.begin(), this->invitedChannels.end(), channel) != this->invitedChannels.end())
-		return true;
-	return false;
+	return std::find(this->invitedChannels.begin(), this->invitedChannels.end(), channel) != this->invitedChannels.end();
 }
 
 void			IRC::User::sendMessage(std::string message) const
@@ -184,9 +181,7 @@ void			IRC::User::sendMessage(std::string message) const
 /* -- Non-member functions -- */
 bool	IRC::operator== (const IRC::User lhs, const IRC::User rhs)
 {
-	if (lhs.getSocket() != rhs.getSocket())
-		return false;
-	return true;
+	return (lhs.getSocket() != rhs.getSocket()); 
 }
 
 std::vector<IRC::User>::iterator	IRC::findUserFd(std::vector<IRC::User>& users, int fd)

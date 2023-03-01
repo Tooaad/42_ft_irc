@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelJoin.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:18:44 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:02:50 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,12 @@ bool	IRC::ChannelJoin::joinExistingChannel(IRC::Channel& channel, IRC::Server se
 
 IRC::Channel	IRC::ChannelJoin::createNewChannel(std::string channelName, IRC::User& user, IRC::Server* server)
 {
+
+	
 	IRC::Channel newChannel = Channel(channelName, user, server);
 	server->addChannel(newChannel);
+
+	// TODO PROBLEMAS
 	user.addJoinedChannel(newChannel);
 
 	return newChannel;

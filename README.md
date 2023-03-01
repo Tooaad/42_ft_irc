@@ -66,7 +66,7 @@ Lista de prioridades:
 pass 12
 nick karisti1
 user karisti2 0 * :Kepa
-join #aaaa,#bbbb
+join #aaaa
 
 
 pass 12
@@ -77,6 +77,7 @@ join #aaaa,#bbbb
 pass 12
 nick gpernas
 user gpernas1 0 * :Gonzalo
+join #1,#2,#3,#4,#5,#6,#7,#8,#9,#10,#11,#12,#13
 
 */
 
