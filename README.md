@@ -62,6 +62,8 @@ Lista de prioridades:
 - Mejorar rendimiento con maps?
 - Revisar todo y explicarnoslo
 
+Therefore, if you plan to remove an object from one map and continue to use it in the other map, you should consider making a copy of the object before removing it from the first map. This way, both maps will have their own copy of the object, and you can safely delete the object when you are done with it.
+
 /*
 
 pass 12
