@@ -57,6 +57,7 @@ Kqueue
 
 
 Lista de prioridades:
+- Canales pares no se borran al hacer closeClient
 - Error con mapa al no closeclient por ping, segfault
 - Mejorar rendimiento con maps?
 - Revisar todo y explicarnoslo
