@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 10:05:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 10:52:06 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ namespace IRC
 			struct kevent					eventSet;
 			struct kevent					eventList[KQUEUE_SIZE];
 			std::vector<User>				users;
-			std::vector<std::string>		commands;
 			std::vector<Channel>			channels;
 			std::string						hostname;
 			std::string						creationTimestamp;

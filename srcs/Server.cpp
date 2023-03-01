@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 10:14:53 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 10:51:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 		this->kq = other.kq;
 		this->password = other.password;
 		this->users = other.users;
-		this->commands = other.commands;
 		this->channels = other.channels;
 		this->hostname = other.hostname;
 	}
