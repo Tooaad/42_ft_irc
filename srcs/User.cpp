@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 13:01:22 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 21:32:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,62 +55,53 @@ IRC::User& IRC::User::operator=(const IRC::User &other)
 }
 
 /* -- Getters -- */
-sockaddr_in					IRC::User::getAddress(void) const { return this->address; }
-int							IRC::User::getSocket(void) const { return this->socket; }
-std::string					IRC::User::getPassword(void) const { return this->password; }
-std::string					IRC::User::getNick(void) const { return this->nick; }
-std::string					IRC::User::getUser(void) const { return this->user; }
-std::string					IRC::User::getRealname(void) const { return this->realname; }
-std::string					IRC::User::getHostname(void) const { return this->hostname; }
-std::string					IRC::User::getServername(void) const { return this->servername; }
-bool						IRC::User::isAuthenticated(void) const { return this->authenticated; }
-bool						IRC::User::isPinged(void) const { return this->pingReq; }
-std::string					IRC::User::getPingKey(void) const { return this->pingKey; }
-time_t						IRC::User::getTimeout(void) const { return this->timeout; }
-std::vector<IRC::Channel>&	IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
-std::vector<IRC::Channel>&	IRC::User::getinvitedChannels(void) { return this->invitedChannels; }
-std::string					IRC::User::getBuffer(void) const { return this->buffer; }
+sockaddr_in								IRC::User::getAddress(void) const { return this->address; }
+int										IRC::User::getSocket(void) const { return this->socket; }
+std::string								IRC::User::getPassword(void) const { return this->password; }
+std::string								IRC::User::getNick(void) const { return this->nick; }
+std::string								IRC::User::getUser(void) const { return this->user; }
+std::string								IRC::User::getRealname(void) const { return this->realname; }
+std::string								IRC::User::getHostname(void) const { return this->hostname; }
+std::string								IRC::User::getServername(void) const { return this->servername; }
+bool									IRC::User::isAuthenticated(void) const { return this->authenticated; }
+bool									IRC::User::isPinged(void) const { return this->pingReq; }
+std::string								IRC::User::getPingKey(void) const { return this->pingKey; }
+time_t									IRC::User::getTimeout(void) const { return this->timeout; }
+std::map<std::string, IRC::Channel>&	IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
+std::map<std::string, IRC::Channel>&	IRC::User::getinvitedChannels(void) { return this->invitedChannels; }
+std::string								IRC::User::getBuffer(void) const { return this->buffer; }
 
 /* -- Setters -- */
-void						IRC::User::setPassword(std::string password) { this->password = password; }
-void						IRC::User::setNick(std::string nick) { this->nick = nick; }
-void						IRC::User::setUser(std::string user) { this->user = user; }
-void						IRC::User::setRealname(std::string realname) { this->realname = realname; }
-void						IRC::User::setHostname(std::string hostname) { this->hostname = hostname; }
-void						IRC::User::setServername(std::string servername) { this->servername = servername; }
-void						IRC::User::changeAuthenticated(void) { this->authenticated = !authenticated; }
-void						IRC::User::setTimeout(time_t timeout) { this->timeout = timeout; }
-void						IRC::User::setPingKey(std::string key) { this->pingKey = key; }
+void	IRC::User::setPassword(std::string password) { this->password = password; }
+void	IRC::User::setNick(std::string nick) { this->nick = nick; }
+void	IRC::User::setUser(std::string user) { this->user = user; }
+void	IRC::User::setRealname(std::string realname) { this->realname = realname; }
+void	IRC::User::setHostname(std::string hostname) { this->hostname = hostname; }
+void	IRC::User::setServername(std::string servername) { this->servername = servername; }
+void	IRC::User::changeAuthenticated(void) { this->authenticated = !authenticated; }
+void	IRC::User::setTimeout(time_t timeout) { this->timeout = timeout; }
+void	IRC::User::setPingKey(std::string key) { this->pingKey = key; }
 
 /* -- Modifiers -- */
 void	IRC::User::addJoinedChannel(IRC::Channel& channel)
 {
-	if (!this->isInChannel(channel))
-		this->joinedChannels.push_back(channel);
-
+	this->joinedChannels[channel.getName()] = channel;
 	removeInvitedChannel(channel);
 }
 
 void	IRC::User::removeJoinedChannel(IRC::Channel channel)
 {
-	std::vector<IRC::Channel>::iterator found = std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel);
-	
-	if (found != this->joinedChannels.end())
-		this->joinedChannels.erase(found);
+	this->joinedChannels.erase(channel.getName());
 }
 
 void	IRC::User::addInvitedChannel(IRC::Channel& channel)
 {
-	if (!this->isInvitedToChannel(channel))
-		this->invitedChannels.push_back(channel);
+	this->invitedChannels[channel.getName()] = channel;
 }
 
 void	IRC::User::removeInvitedChannel(IRC::Channel channel)
 {
-	std::vector<IRC::Channel>::iterator found = std::find(this->invitedChannels.begin(), this->invitedChannels.end(), channel);
-	
-	if (found != this->invitedChannels.end())
-		this->invitedChannels.erase(found);
+	this->invitedChannels.erase(channel.getName());
 }
 
 void	IRC::User::appendBuffer(std::string str) { this->buffer.append(str); }
@@ -155,11 +146,11 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 {
 	std::string channelsString = "";
 	
-	for (std::vector<IRC::Channel>::const_iterator channelIt = this->joinedChannels.begin(); channelIt != this->joinedChannels.end(); ++channelIt)
+	for (std::map<std::string, IRC::Channel>::const_iterator channelIt = this->joinedChannels.begin(); channelIt != this->joinedChannels.end(); ++channelIt)
 	{
-		channelsString += channelIt->getName();
-		if (channelIt + 1 != this->joinedChannels.end())
+		if (channelIt != this->joinedChannels.begin())
 			channelsString += " ";
+		channelsString += channelIt->second.getName();
 	}
 
 	return channelsString;
@@ -167,14 +158,14 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 
 bool			IRC::User::isInChannel(IRC::Channel channel) const
 {
-	if (std::find(this->joinedChannels.begin(), this->joinedChannels.end(), channel) != this->joinedChannels.end())
+	if (this->joinedChannels.find(channel.getName()) != this->joinedChannels.end())
 		return true;
 	return false;
 }
 
 bool			IRC::User::isInvitedToChannel(IRC::Channel channel) const
 {
-	if (std::find(this->invitedChannels.begin(), this->invitedChannels.end(), channel) != this->invitedChannels.end())
+	if (this->invitedChannels.find(channel.getName()) != this->invitedChannels.end())
 		return true;
 	return false;
 }
