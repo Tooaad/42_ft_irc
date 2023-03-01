@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:57:55 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 00:42:37 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,17 +117,18 @@ int IRC::Server::createNetwork(std::string *args)
 	if (bind(this->sSocket, (struct sockaddr *)&hint, sizeof(hint)) < 0)
 		return throwError("Error binding socket");
 
+	listen(this->sSocket, SOMAXCONN);
+
 	if (fcntl(this->sSocket, F_SETFL, O_NONBLOCK) < 0)
 		return throwError("Error making server socket non blocking");
 
-	listen(this->sSocket, SOMAXCONN);
+	if ((this->kq = kqueue()) == -1)
+		return throwError("kqueue");
+		
+	EV_SET(&this->eventSet, this->sSocket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, 0);
 
-	this->kq = kqueue();
-
-	EV_SET(this->changeEvent, this->sSocket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, 0);
-
-	if (kevent(this->kq, this->changeEvent, 1, NULL, 0, NULL) == -1)
-		return throwError("kevent 1");
+	if (kevent(this->kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
+		return throwError("kevent");
 
 	if (saveIp() == -1)
 		return -1;
@@ -146,25 +147,23 @@ int IRC::Server::loop(void)
 	{
 		struct timespec keventTime = {KQUEUE_TIMEOUT, 0};
 		
-		if ((newEvents = kevent(this->kq, NULL, 0, this->event, 1, &keventTime)) == -1)
+		if ((newEvents = kevent(this->kq, NULL, 0, this->eventList, KQUEUE_SIZE, &keventTime)) == -1)
 			if (!socketKiller)
 				return throwError("kevent 2");
 
 		// kqueue events loop
 		for (int i = 0; i < newEvents; i++)
 		{
-			int eventFd = this->event[i].ident;
+			int eventFd = this->eventList[i].ident;
 
 			// Client disconnected
-			if (this->event[i].flags & EV_EOF)
+			if (this->eventList[i].flags & EV_EOF)
 				clientDisconnected(eventFd);
-
 			// New client connected
 			else if (eventFd == getSocket())
 				clientConnected();
-
 			// New message from client
-			else if (this->event[i].filter & EVFILT_READ)
+			else if (this->eventList[i].filter & EVFILT_READ)
 				receiveMessage(eventFd);
 		}
 		catchPing();
@@ -252,9 +251,10 @@ int		IRC::Server::clientConnected(void)
 	
 	user.startListeningSocket(this->sSocket);
 
-	EV_SET(this->changeEvent, user.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
-	if (kevent(this->kq, this->changeEvent, 1, NULL, 0, NULL) < 0)
-		return throwError("kevent 3");
+	struct kevent kv;
+	EV_SET(&kv, user.getSocket(), EVFILT_READ, EV_ADD, 0 , 0, NULL);
+	if (kevent(this->kq, &kv, 1, NULL, 0, NULL) == -1)
+		return throwError("kevent client connected");
 
 	this->users.push_back(user);
 	return 0;
@@ -266,6 +266,11 @@ void	IRC::Server::clientDisconnected(int eventFd)
 	if (userIt == this->users.end())
 		return ;
 
+	struct kevent kv;
+	EV_SET(&kv, userIt->getSocket(), EVFILT_READ, EV_DISABLE, 0 , 0, NULL);
+	if (kevent(this->kq, &kv, 1, NULL, 0, NULL) == -1)
+		throwError("kevent client disconnected");
+		
 	closeClient(*userIt, "Quit: Connection closed");
 }
 
@@ -275,9 +280,6 @@ int		IRC::Server::receiveMessage(int eventFd)
 	int bytesRec;
 
 	memset(buf, 0, 4096);
-	if (fcntl(eventFd, F_SETFL, O_NONBLOCK) < 0)
-		return throwError("Error making client socket non blocking");
-
 	if ((bytesRec = recv(eventFd, buf, 4096, 0)) == -1)
 	{
 		std::cout << "Error in recv(). Quitting" << std::endl;
@@ -344,7 +346,6 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 	{
 		user.changeAuthenticated();
 		
-		// TODO now: https://modern.ircdocs.horse/#connection-setup
 		user.sendMessage(":" + this->getHostname() + " 001 " + user.getNick() + " :Welcome to the 42 IRC Network, " + user.getNick() + "!" + user.getUser() + "@" + user.getHostname());
 		user.sendMessage(":" + this->getHostname() + " 002 " + user.getNick() + " :Your host is ircserv, running version 1.0");
 		user.sendMessage(":" + this->getHostname() + " 003 " + user.getNick() + " :This server was created " + this->creationTimestamp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:57:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 00:44:50 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #define PING_TIMEOUT 100
 #define REG_TIMEOUT 30
 #define KQUEUE_TIMEOUT 3
+#define KQUEUE_SIZE 64
 #define PRINT_DEBUG 0
 
 
@@ -47,8 +48,8 @@ namespace IRC
 			int								sSocket;
 			int								kq;
 			std::string 					password;
-			struct kevent					changeEvent[10];
-			struct kevent					event[10];
+			struct kevent					eventSet;
+			struct kevent					eventList[KQUEUE_SIZE];
 			std::vector<User>				users;
 			std::vector<std::string>		commands;
 			std::vector<Channel>			channels;

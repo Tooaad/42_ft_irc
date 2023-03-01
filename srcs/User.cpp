@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/27 20:39:43 by gpernas-         ###   ########.fr       */
+/*   Updated: 2023/03/01 00:41:50 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,16 @@ void			IRC::User::startListeningSocket(int serverSocket)
 	
 	this->socket = accept(serverSocket, (struct sockaddr *)&this->address, &addressSize);
 	if (this->socket == -1)
+	{
 		perror("Accept socket error");
+		return ;
+	}
+
+	if (fcntl(this->socket, F_SETFL, O_NONBLOCK) < 0)
+	{
+		perror("Error making client socket non blocking");
+		return ;
+	}
 
 	if (getnameinfo((struct sockaddr *) &this->address, addressSize, host, NI_MAXHOST, service, NI_MAXSERV, 0) == 0)
 		std::cout << "Host1: " << host << " connected on port " << service << std::endl;
