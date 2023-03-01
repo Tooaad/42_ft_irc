@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 10:06:52 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 10:14:53 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ int IRC::Server::createNetwork(std::string *args)
 	if (bind(this->sSocket, (struct sockaddr *)&hint, sizeof(hint)) < 0)
 		return throwError("Error binding socket");
 
-	listen(this->sSocket, SOMAXCONN);
+	if (listen(this->sSocket, SOMAXCONN) == -1)
+		return throwError("Error listen");
 
 	if (fcntl(this->sSocket, F_SETFL, O_NONBLOCK) < 0)
 		return throwError("Error making server socket non blocking");
@@ -127,7 +128,6 @@ int IRC::Server::createNetwork(std::string *args)
 		return throwError("kqueue");
 	
 	// Add action to listen for
-	// EV_SET is a macro that simply fills in the kevent structure
 	EV_SET(&this->eventSet, this->sSocket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
 	if (kevent(this->kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
 		return throwError("kevent add server socket");
