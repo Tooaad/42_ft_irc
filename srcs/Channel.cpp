@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpernas- <gpernas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:09:04 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:47:25 by gpernas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,23 +185,17 @@ void	IRC::Channel::removeUser(IRC::Server* server, IRC::User& user)
 /* -- Member functions -- */
 bool	IRC::Channel::isOperator(IRC::User user) const
 {
-	if (std::find(this->operators.begin(), this->operators.end(), user) != this->operators.end())
-		return true;
-	return false;
+	return std::find(this->operators.begin(), this->operators.end(), user) != this->operators.end();
 }
 
 bool	IRC::Channel::isModerator(IRC::User user) const
 {
-	if (std::find(this->moderators.begin(), this->moderators.end(), user) != this->moderators.end())
-		return true;
-	return false;
+	return std::find(this->moderators.begin(), this->moderators.end(), user) != this->moderators.end();
 }
 
 bool	IRC::Channel::existsUser(IRC::User user) const
 {
-	if (std::find(this->users.begin(), this->users.end(), user) != this->users.end())
-		return true;
-	return false;
+	return std::find(this->users.begin(), this->users.end(), user) != this->users.end();
 }
 
 std::string	IRC::Channel::getUsersString(void) const
@@ -232,9 +226,7 @@ bool	IRC::Channel::hasPassword(void) const
 
 bool	IRC::Channel::checkPassword(std::string pass) const
 {
-	if (!hasPassword() || this->password.compare(pass) == 0)
-		return true;
-	return false;
+	return (!hasPassword() || this->password.compare(pass) == 0);
 }
 
 bool	IRC::Channel::hasMax(void) const
