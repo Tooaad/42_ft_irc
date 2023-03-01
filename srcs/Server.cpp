@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 21:24:52 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 22:48:48 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,9 @@ void	IRC::Server::updateUserInChannels(IRC::User user)
 {
 	for (std::map<std::string, IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
 	{
-		std::vector<IRC::User>::iterator operIt = findUserFd(channelIt->second.getOperators(), user.getSocket());
-		if (operIt != channelIt->second.getOperators().end())
-			*operIt = user;
-
-		std::vector<IRC::User>::iterator modIt = findUserFd(channelIt->second.getModerators(), user.getSocket());
-		if (modIt != channelIt->second.getModerators().end())
-			*modIt = user;
-
-		std::vector<IRC::User>::iterator userIt = findUserFd(channelIt->second.getUsers(), user.getSocket());
+		IRC::Channel::channel_users::iterator userIt = channelIt->second.getUsers().find(user.getSocket());
 		if (userIt != channelIt->second.getUsers().end())
-			*userIt = user;
+			userIt->second.first = user;
 	}
 }
 

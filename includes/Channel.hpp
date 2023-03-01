@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 12:48:53 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 22:43:08 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,21 @@ namespace IRC
 
 	class Channel
 	{
+		public:
+			enum UserRol {
+				USER_NORMAL=1,
+				USER_MODERATOR=2,
+				USER_OPERATOR=3,
+				USER_MODOPER=4
+			};
+			
+			typedef std::map<int, std::pair<User, UserRol> >	channel_users;
+
 		private:
 			std::string				name;
 			std::string				topic;
 			std::string				password;
-			std::vector<User>		operators;
-			std::vector<User>		moderators;
-			std::vector<User>		users;
+			channel_users			users;
 			bool					inviteOnlyMode;
 			bool					secretMode;
 			bool					freeTopicMode;
@@ -52,9 +60,7 @@ namespace IRC
 			std::string				getName(void) const;
 			std::string				getTopic(void) const;
 			std::string				getPassword(void) const;
-			std::vector<User>&		getOperators(void);
-			std::vector<User>&		getModerators(void);
-			std::vector<User>&		getUsers(void);
+			channel_users&			getUsers(void);
 			bool					isInviteOnly(void) const;
 			bool					isSecret(void) const;
 			bool					isFreeTopic(void) const;
@@ -82,11 +88,10 @@ namespace IRC
 			void					removeUser(Server* server, User& user);
 
 			/* -- Member functions -- */
-			bool					isOperator(User user) const;
-			bool					isModerator(User user) const;
-			bool					existsUser(User user) const;
-			std::string				getUsersString(void) const;
-			std::string				getUsersStringVisible(void) const;
+			bool					isOperator(User user);
+			bool					isModerator(User user);
+			bool					existsUser(User user);
+			std::string				getUsersString(void);
 			bool					hasPassword(void) const;
 			bool					checkPassword(std::string pass) const;
 			bool					hasMax(void) const;

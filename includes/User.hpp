@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 21:30:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 22:49:19 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ namespace IRC
 	
 	/* -- Non-member functions -- */
 	bool								operator== (const User lhs, const User rhs);
-	std::vector<User>::iterator			findUserFd(std::vector<IRC::User>& users, int fd);
 	std::map<int, User>::iterator		findUser(std::map<int, User>& users, std::string nick);
 	void								printUser(User user);
 	void								printUsers(std::map<int, User> users);

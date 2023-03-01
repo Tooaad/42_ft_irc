@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 21:32:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 23:02:48 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,16 +158,12 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 
 bool			IRC::User::isInChannel(IRC::Channel channel) const
 {
-	if (this->joinedChannels.find(channel.getName()) != this->joinedChannels.end())
-		return true;
-	return false;
+	return (this->joinedChannels.find(channel.getName()) != this->joinedChannels.end());
 }
 
 bool			IRC::User::isInvitedToChannel(IRC::Channel channel) const
 {
-	if (this->invitedChannels.find(channel.getName()) != this->invitedChannels.end())
-		return true;
-	return false;
+	return (this->invitedChannels.find(channel.getName()) != this->invitedChannels.end());
 }
 
 void			IRC::User::sendMessage(std::string message) const
@@ -179,21 +175,7 @@ void			IRC::User::sendMessage(std::string message) const
 /* -- Non-member functions -- */
 bool	IRC::operator== (const IRC::User lhs, const IRC::User rhs)
 {
-	if (lhs.getSocket() != rhs.getSocket())
-		return false;
-	return true;
-}
-
-std::vector<IRC::User>::iterator	IRC::findUserFd(std::vector<IRC::User>& users, int fd)
-{
-	std::vector<IRC::User>::iterator it = users.begin();
-	
-	for (; it != users.end(); it++)
-	{
-		if (it->getSocket() == fd)
-			return it;
-	}
-	return it;
+	return (lhs.getSocket() == rhs.getSocket());
 }
 
 std::map<int, IRC::User>::iterator	IRC::findUser(std::map<int, IRC::User>& users, std::string nick)
