@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 00:42:37 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/01 10:06:52 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,15 @@ int IRC::Server::createNetwork(std::string *args)
 	if (fcntl(this->sSocket, F_SETFL, O_NONBLOCK) < 0)
 		return throwError("Error making server socket non blocking");
 
+	// Initialize a kqueue
 	if ((this->kq = kqueue()) == -1)
 		return throwError("kqueue");
-		
-	EV_SET(&this->eventSet, this->sSocket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, 0);
-
+	
+	// Add action to listen for
+	// EV_SET is a macro that simply fills in the kevent structure
+	EV_SET(&this->eventSet, this->sSocket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
 	if (kevent(this->kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
-		return throwError("kevent");
+		return throwError("kevent add server socket");
 
 	if (saveIp() == -1)
 		return -1;
@@ -147,9 +149,10 @@ int IRC::Server::loop(void)
 	{
 		struct timespec keventTime = {KQUEUE_TIMEOUT, 0};
 		
+		// Waits for events
 		if ((newEvents = kevent(this->kq, NULL, 0, this->eventList, KQUEUE_SIZE, &keventTime)) == -1)
 			if (!socketKiller)
-				return throwError("kevent 2");
+				return throwError("kevent check events");
 
 		// kqueue events loop
 		for (int i = 0; i < newEvents; i++)
@@ -251,10 +254,10 @@ int		IRC::Server::clientConnected(void)
 	
 	user.startListeningSocket(this->sSocket);
 
-	struct kevent kv;
-	EV_SET(&kv, user.getSocket(), EVFILT_READ, EV_ADD, 0 , 0, NULL);
-	if (kevent(this->kq, &kv, 1, NULL, 0, NULL) == -1)
-		return throwError("kevent client connected");
+	// Add action to listen for
+	EV_SET(&this->eventSet, user.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
+	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
+		return throwError("kevent add client socket");
 
 	this->users.push_back(user);
 	return 0;
@@ -266,10 +269,10 @@ void	IRC::Server::clientDisconnected(int eventFd)
 	if (userIt == this->users.end())
 		return ;
 
-	struct kevent kv;
-	EV_SET(&kv, userIt->getSocket(), EVFILT_READ, EV_DISABLE, 0 , 0, NULL);
-	if (kevent(this->kq, &kv, 1, NULL, 0, NULL) == -1)
-		throwError("kevent client disconnected");
+	// Delete event from kqueue
+	EV_SET(&this->eventSet, userIt->getSocket(), EVFILT_READ, EV_DELETE, 0, 0, NULL);
+	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
+		throwError("kevent remove client socket");
 		
 	closeClient(*userIt, "Quit: Connection closed");
 }
