@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:11:16 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 19:39:46 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	IRC::Channel::addModerator(IRC::User user, IRC::Server* server)
 	if (userIt != this->users.end())
 	{
 		if (userIt->second.second == USER_OPERATOR)
-			userIt->second.second = USER_MODERATOR;
+			userIt->second.second = USER_MODOPER;
 		else
 			userIt->second.second = USER_MODERATOR;
 	}
