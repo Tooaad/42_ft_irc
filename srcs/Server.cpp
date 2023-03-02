@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:18:49 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:52:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,17 +157,21 @@ int IRC::Server::loop(void)
 
 void	IRC::Server::closeClient(IRC::User& user, std::string message)
 {
+	// Remove user from joined channels and send QUIT message to them
+	for (IRC::Server::channels_map::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); itChannel++)
+	{
+		IRC::Server::channels_map::iterator channel = this->channels.find(itChannel->second.getName());
+		if (channel != this->channels.end())
+		{
+			channel->second.sendMessageToUsers(user, ":" + user.getNick() + " QUIT :" + message);
+			channel->second.removeUser(this, user);
+		}
+	}
+
 	// Delete event from kqueue
 	EV_SET(&this->eventSet, user.getSocket(), EVFILT_READ, EV_DELETE, 0, 0, NULL);
 	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
 		throwError("kevent remove client socket");
-	
-	// Remove user from joined channels and send QUIT message to them
-	for (IRC::Server::channels_map::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); ++itChannel)
-	{
-		itChannel->second.sendMessageToUsers(user, ":" + user.getNick() + " QUIT :" + message);
-		this->channels[itChannel->second.getName()].removeUser(this, user);
-	}
 
 	// Close client socket
 	if (close(user.getSocket()) == -1)
