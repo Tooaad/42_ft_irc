@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 20:52:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 21:03:25 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,12 +167,7 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 			channel->second.removeUser(this, user);
 		}
 	}
-
-	// Delete event from kqueue
-	EV_SET(&this->eventSet, user.getSocket(), EVFILT_READ, EV_DELETE, 0, 0, NULL);
-	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
-		throwError("kevent remove client socket");
-
+	
 	// Close client socket
 	if (close(user.getSocket()) == -1)
 		throwError("Client close error");
