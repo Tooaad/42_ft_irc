@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 22:48:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 12:07:57 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,11 @@ int IRC::Server::loop(void)
 
 void	IRC::Server::closeClient(IRC::User& user, std::string message)
 {
+	// Delete event from kqueue
+	EV_SET(&this->eventSet, user.getSocket(), EVFILT_READ, EV_DELETE, 0, 0, NULL);
+	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
+		throwError("kevent remove client socket");
+	
 	for (std::map<std::string, IRC::Channel>::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); ++itChannel)
 		itChannel->second.sendMessageToUsers(user, ":" + user.getNick() + " QUIT :" + message);
 
@@ -241,11 +246,6 @@ void	IRC::Server::clientDisconnected(int eventFd)
 	if (userIt == this->users.end())
 		return ;
 
-	// Delete event from kqueue
-	EV_SET(&this->eventSet, userIt->second.getSocket(), EVFILT_READ, EV_DELETE, 0, 0, NULL);
-	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
-		throwError("kevent remove client socket");
-		
 	closeClient(userIt->second, "Quit: Connection closed");
 }
 
@@ -340,21 +340,29 @@ void	IRC::Server::catchPing(void)
 	if (PRINT_DEBUG)
 		std::cout << "> Catch Ping: " << std::endl;
 
+	// Auxiliary vector to store the iterators that need to be removed
+	std::vector<std::pair<std::map<int, IRC::User>::iterator, std::string> > iteratorsToRemove;
 	for (std::map<int, IRC::User>::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
 	{
 		if (PRINT_DEBUG)
 			std::cout << userIt->second.getNick() << " (" << userIt->second.getSocket() << ") -> " << REG_TIMEOUT + userIt->second.getTimeout() - time(NULL) << "s" << std::endl;
+		
 		if (userIt->second.isPinged() && time(NULL) - userIt->second.getTimeout() > PING_TIMEOUT)
-			closeClient(userIt->second, "PING ERROR");
-			
+			iteratorsToRemove.push_back(std::pair<std::map<int, IRC::User>::iterator, std::string>(userIt, "PING ERROR"));
 		else if (!userIt->second.isPinged() && time(NULL) - userIt->second.getTimeout() > REG_TIMEOUT)
 		{
 			if (!userIt->second.isAuthenticated())
-				closeClient(userIt->second, "REGISTRATION TIMEOUT");
-			
-			userIt->second.setPingKey(pingGenerator(5));
-			userIt->second.changeRequest(true);
-			userIt->second.sendMessage("PING " + userIt->second.getPingKey());
+				iteratorsToRemove.push_back(std::pair<std::map<int, IRC::User>::iterator, std::string>(userIt, "REGISTRATION TIMEOUT"));
+			else
+			{
+				userIt->second.setPingKey(pingGenerator(5));
+				userIt->second.changeRequest(true);
+				userIt->second.sendMessage("PING " + userIt->second.getPingKey());
+			}
 		}
 	}
+
+	// remove the iterators that need to be removed from the map
+	for (std::vector<std::pair<std::map<int, IRC::User>::iterator, std::string> >::iterator it = iteratorsToRemove.begin(); it != iteratorsToRemove.end(); ++it)
+		closeClient(it->first->second, it->second);
 }
