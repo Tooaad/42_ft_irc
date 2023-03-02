@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 23:10:27 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/01 12:04:54 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:12:40 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 	if (argSplit[0].at(0) == '#')
 	{
 		/** MESSAGE TO CHANNEL **/
-		std::map<std::string, IRC::Channel>::iterator receptor = server->findChannel(argSplit[0]);
+		IRC::Channel::channels_map::iterator receptor = server->findChannel(argSplit[0]);
 		if (receptor == server->getChannels().end())
 			return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, argSplit[0].c_str());
 
@@ -47,7 +47,7 @@ void	IRC::PrivMsg::exec(IRC::Server *server, IRC::User& user)
 	else
 	{
 		/** PRIVATE MESSAGE **/
-		std::map<int, IRC::User>::iterator receptor = findUser(server->getUsers(), argSplit[0]);
+		IRC::User::users_map::iterator receptor = findUser(server->getUsers(), argSplit[0]);
 		if (receptor == server->getUsers().end())
 			return setReply(ERR_NOSUCHNICK, *server, user, 1, argSplit[0].c_str());
 		

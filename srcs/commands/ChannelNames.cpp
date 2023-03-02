@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 16:13:23 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:05:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 		if (it->size() == 0)
 			continue ;
 		
-		std::map<std::string, IRC::Channel>::iterator channelIt = server->findChannel(*it);
+		IRC::Channel::channels_map::iterator channelIt = server->findChannel(*it);
 		if (channelIt != server->getChannels().end())
 		{
 			if (!channelIt->second.isSecret() || user.isInChannel(channelIt->second))

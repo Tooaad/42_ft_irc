@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 22:49:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:00:21 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ namespace IRC
 	
 	class User
 	{
+		public:
+			typedef std::map<std::string, Channel>	channels_map;
+			typedef std::map<int, User>				users_map;
+			
 		private:
 			sockaddr_in							address;
 			int									socket;
@@ -43,8 +47,8 @@ namespace IRC
 			bool								pingReq;
 			std::string							pingKey;
 			time_t								timeout;
-			std::map<std::string, Channel>		joinedChannels;
-			std::map<std::string, Channel>		invitedChannels;
+			channels_map						joinedChannels;
+			channels_map						invitedChannels;
 			std::string							buffer;
 
 		public:
@@ -66,8 +70,8 @@ namespace IRC
 			bool								isPinged(void) const;
 			std::string							getPingKey(void) const;
 			time_t								getTimeout(void) const;
-			std::map<std::string, Channel>&		getJoinedChannels(void);
-			std::map<std::string, Channel>&		getinvitedChannels(void);
+			channels_map&						getJoinedChannels(void);
+			channels_map&						getinvitedChannels(void);
 			std::string							getBuffer(void) const;
 			
 			/* -- Setters -- */
@@ -100,7 +104,7 @@ namespace IRC
 	
 	/* -- Non-member functions -- */
 	bool								operator== (const User lhs, const User rhs);
-	std::map<int, User>::iterator		findUser(std::map<int, User>& users, std::string nick);
+	IRC::User::users_map::iterator		findUser(IRC::User::users_map& users, std::string nick);
 	void								printUser(User user);
-	void								printUsers(std::map<int, User> users);
+	void								printUsers(IRC::User::users_map users);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelTopic.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:23:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:05:22 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 	if (argsArray.size() < 1 || argsArray[0].size() == 0)
 		return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
 		
-	std::map<std::string, IRC::Channel>::iterator channel = server->findChannel(argsArray[0]);
+	IRC::Channel::channels_map::iterator channel = server->findChannel(argsArray[0]);
 	if (channel == server->getChannels().end())
 		return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, argsArray[0].c_str());
 

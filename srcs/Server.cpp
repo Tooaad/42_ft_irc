@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 12:58:25 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:18:49 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ IRC::Server &IRC::Server::operator=(const IRC::Server &other)
 std::string								IRC::Server::getIp(void) const { return this->ip; }
 int										IRC::Server::getSocket(void) const { return this->sSocket; }
 std::string								IRC::Server::getPassword(void) const { return this->password; }
-std::map<int, IRC::User>&				IRC::Server::getUsers(void) { return this->users; }
-std::map<std::string, IRC::Channel>&	IRC::Server::getChannels(void) { return this->channels; }
+IRC::Server::users_map&					IRC::Server::getUsers(void) { return this->users; }
+IRC::Server::channels_map&				IRC::Server::getChannels(void) { return this->channels; }
 std::string								IRC::Server::getHostname(void) const { return this->hostname; }
 
-std::map<std::string, IRC::Channel>::iterator		IRC::Server::findChannel(std::string name)
+IRC::Server::channels_map::iterator		IRC::Server::findChannel(std::string name)
 {
 	return this->channels.find(name);
 }
@@ -72,9 +72,9 @@ void	IRC::Server::removeChannel(IRC::Channel channel)
 
 void	IRC::Server::updateUserInChannels(IRC::User user)
 {
-	for (std::map<std::string, IRC::Channel>::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
+	for (IRC::Server::channels_map::iterator channelIt = this->channels.begin(); channelIt != this->channels.end(); channelIt++)
 	{
-		IRC::Channel::channel_users::iterator userIt = channelIt->second.getUsers().find(user.getSocket());
+		IRC::Channel::chanusers_map::iterator userIt = channelIt->second.getUsers().find(user.getSocket());
 		if (userIt != channelIt->second.getUsers().end())
 			userIt->second.first = user;
 	}
@@ -163,7 +163,7 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 		throwError("kevent remove client socket");
 	
 	// Remove user from joined channels and send QUIT message to them
-	for (std::map<std::string, IRC::Channel>::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); ++itChannel)
+	for (IRC::Server::channels_map::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); ++itChannel)
 	{
 		itChannel->second.sendMessageToUsers(user, ":" + user.getNick() + " QUIT :" + message);
 		this->channels[itChannel->second.getName()].removeUser(this, user);
@@ -213,7 +213,7 @@ int		IRC::Server::saveIp(void)
 void	IRC::Server::terminateServer(void)
 {
 	// Close client sockets
-	for (std::map<int, IRC::User>::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
+	for (IRC::Server::users_map::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
 	{
 		if (close(userIt->second.getSocket()) == -1)
 			throwError("Client close error");
@@ -245,7 +245,7 @@ int		IRC::Server::clientConnected(void)
 
 void	IRC::Server::clientDisconnected(int eventFd)
 {
-	std::map<int, IRC::User>::iterator userIt = this->users.find(eventFd);
+	IRC::Server::users_map::iterator userIt = this->users.find(eventFd);
 	if (userIt == this->users.end())
 		return ;
 
@@ -264,7 +264,7 @@ int		IRC::Server::receiveMessage(int eventFd)
 		return -1;
 	}
 
-	std::map<int, IRC::User>::iterator found = this->users.find(eventFd);
+	IRC::Server::users_map::iterator found = this->users.find(eventFd);
 	if (found == this->users.end())
 		return -1;
 
@@ -344,18 +344,18 @@ void	IRC::Server::catchPing(void)
 		std::cout << "> Catch Ping: " << std::endl;
 
 	// Auxiliary vector to store the iterators that need to be removed
-	std::vector<std::pair<std::map<int, IRC::User>::iterator, std::string> > iteratorsToRemove;
-	for (std::map<int, IRC::User>::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
+	IRC::Server::user_map_iters_remove iteratorsToRemove;
+	for (IRC::Server::users_map::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
 	{
 		if (PRINT_DEBUG)
 			std::cout << userIt->second.getNick() << " (" << userIt->second.getSocket() << ") -> " << REG_TIMEOUT + userIt->second.getTimeout() - time(NULL) << "s" << std::endl;
 		
 		if (userIt->second.isPinged() && time(NULL) - userIt->second.getTimeout() > PING_TIMEOUT)
-			iteratorsToRemove.push_back(std::pair<std::map<int, IRC::User>::iterator, std::string>(userIt, "PING ERROR"));
+			iteratorsToRemove.push_back(std::pair<IRC::Server::users_map::iterator, std::string>(userIt, "PING ERROR"));
 		else if (!userIt->second.isPinged() && time(NULL) - userIt->second.getTimeout() > REG_TIMEOUT)
 		{
 			if (!userIt->second.isAuthenticated())
-				iteratorsToRemove.push_back(std::pair<std::map<int, IRC::User>::iterator, std::string>(userIt, "REGISTRATION TIMEOUT"));
+				iteratorsToRemove.push_back(std::pair<IRC::Server::users_map::iterator, std::string>(userIt, "REGISTRATION TIMEOUT"));
 			else
 			{
 				userIt->second.setPingKey(pingGenerator(5));
@@ -366,6 +366,6 @@ void	IRC::Server::catchPing(void)
 	}
 
 	// remove the iterators that need to be removed from the map
-	for (std::vector<std::pair<std::map<int, IRC::User>::iterator, std::string> >::iterator it = iteratorsToRemove.begin(); it != iteratorsToRemove.end(); ++it)
+	for (IRC::Server::user_map_iters_remove::iterator it = iteratorsToRemove.begin(); it != iteratorsToRemove.end(); ++it)
 		closeClient(it->first->second, it->second);
 }

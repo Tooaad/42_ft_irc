@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 22:43:08 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:11:16 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ namespace IRC
 				USER_MODOPER=4
 			};
 			
-			typedef std::map<int, std::pair<User, UserRol> >	channel_users;
+			typedef std::map<std::string, Channel> 				channels_map;
+			typedef std::map<int, std::pair<User, UserRol> >	chanusers_map;
 
 		private:
 			std::string				name;
 			std::string				topic;
 			std::string				password;
-			channel_users			users;
+			chanusers_map			users;
 			bool					inviteOnlyMode;
 			bool					secretMode;
 			bool					freeTopicMode;
@@ -60,7 +61,7 @@ namespace IRC
 			std::string				getName(void) const;
 			std::string				getTopic(void) const;
 			std::string				getPassword(void) const;
-			channel_users&			getUsers(void);
+			chanusers_map&			getUsers(void);
 			bool					isInviteOnly(void) const;
 			bool					isSecret(void) const;
 			bool					isFreeTopic(void) const;
@@ -102,6 +103,6 @@ namespace IRC
 
 	/* -- Non-member functions -- */
 	bool	operator== (const Channel lhs, const Channel rhs);
-	void	printChannels(std::map<std::string, Channel>& channels);
+	void	printChannels(IRC::Channel::channels_map& channels);
 	void	printChannel(Channel& channel);
 }

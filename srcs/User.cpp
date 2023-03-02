@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 23:02:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:10:16 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ bool									IRC::User::isAuthenticated(void) const { return this->authenticated
 bool									IRC::User::isPinged(void) const { return this->pingReq; }
 std::string								IRC::User::getPingKey(void) const { return this->pingKey; }
 time_t									IRC::User::getTimeout(void) const { return this->timeout; }
-std::map<std::string, IRC::Channel>&	IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
-std::map<std::string, IRC::Channel>&	IRC::User::getinvitedChannels(void) { return this->invitedChannels; }
+IRC::User::channels_map&				IRC::User::getJoinedChannels(void) { return this->joinedChannels; }
+IRC::User::channels_map&				IRC::User::getinvitedChannels(void) { return this->invitedChannels; }
 std::string								IRC::User::getBuffer(void) const { return this->buffer; }
 
 /* -- Setters -- */
@@ -146,7 +146,7 @@ std::string		IRC::User::getJoinedChannelsString(void) const
 {
 	std::string channelsString = "";
 	
-	for (std::map<std::string, IRC::Channel>::const_iterator channelIt = this->joinedChannels.begin(); channelIt != this->joinedChannels.end(); ++channelIt)
+	for (IRC::User::channels_map::const_iterator channelIt = this->joinedChannels.begin(); channelIt != this->joinedChannels.end(); ++channelIt)
 	{
 		if (channelIt != this->joinedChannels.begin())
 			channelsString += " ";
@@ -178,9 +178,9 @@ bool	IRC::operator== (const IRC::User lhs, const IRC::User rhs)
 	return (lhs.getSocket() == rhs.getSocket());
 }
 
-std::map<int, IRC::User>::iterator	IRC::findUser(std::map<int, IRC::User>& users, std::string nick)
+IRC::User::users_map::iterator	IRC::findUser(IRC::User::users_map& users, std::string nick)
 {
-	std::map<int, IRC::User>::iterator it = users.begin();
+	IRC::User::users_map::iterator it = users.begin();
 	
 	for (; it != users.end(); it++)
 	{
@@ -202,13 +202,13 @@ void	IRC::printUser(IRC::User user)
 	std::cout << std::endl;
 }
 
-void	IRC::printUsers(std::map<int, IRC::User> users)
+void	IRC::printUsers(IRC::User::users_map users)
 {
 	if (users.size() == 0)
 		return ;
 
 	std::cout << "------- Users -------" << std::endl;
-	std::map<int, IRC::User>::iterator it = users.begin();
+	IRC::User::users_map::iterator it = users.begin();
 	for (; it != users.end(); it++)
 		printUser(it->second);
 	std::cout << "---------------------" << std::endl;

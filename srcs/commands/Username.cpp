@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:54:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/02 16:30:56 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:12:34 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	IRC::Username::exec(IRC::Server* server, IRC::User& user)
 	if (argSplit.size() < 4)
 		return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
 	
-	for (std::map<int, IRC::User>::iterator it = server->getUsers().begin(); it != server->getUsers().end(); it++)
+	for (IRC::User::users_map::iterator it = server->getUsers().begin(); it != server->getUsers().end(); it++)
 	{	
 		if ((argSplit.at(0)).compare(it->second.getUser()) == 0)
 			return setReply(ERR_ALREADYREGISTRED, *server, user, 0);

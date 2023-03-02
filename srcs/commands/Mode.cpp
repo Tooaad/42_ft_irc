@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/01 12:06:26 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:12:21 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 	if (this->args.at(0) == '#')
 	{
 		std::vector<std::string> argSplit = splitString(this->args, " ");
-		std::map<std::string, IRC::Channel>::iterator receptor = server->findChannel(argSplit[0]);
+		IRC::Channel::channels_map::iterator receptor = server->findChannel(argSplit[0]);
 		if (receptor == server->getChannels().end())
 			return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, argSplit[0].c_str());
 		
@@ -47,7 +47,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
-						std::map<int, IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						IRC::User::users_map::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 						{
 							receptor->second.addOperator(userIt->second, server);
@@ -56,7 +56,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
-						std::map<int, IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						IRC::User::users_map::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 							receptor->second.removeOperator(userIt->second, server);
 						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -o :" + argSplit[2]);
@@ -148,7 +148,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
-						std::map<int, IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						IRC::User::users_map::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 						{
 							receptor->second.addModerator(userIt->second, server);
@@ -157,7 +157,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
-						std::map<int, IRC::User>::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						IRC::User::users_map::iterator userIt = findUser(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 							receptor->second.removeModerator(userIt->second, server);
 						setActionInReply(*server, user, receptor->second, "MODE " + receptor->second.getName() + " -v :" + argSplit[2]);

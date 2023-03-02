@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelInvite.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:20:01 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 12:08:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:11:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	IRC::ChannelInvite::exec(IRC::Server* server, IRC::User& user)
 	if (argsArray.size() < 2)
 		return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, this->command.c_str());
 
-	std::map<std::string, IRC::Channel>::iterator channel = server->findChannel(argsArray[1]);
+	IRC::Channel::channels_map::iterator channel = server->findChannel(argsArray[1]);
 	if (channel == server->getChannels().end())
 		return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, argsArray[1].c_str());
 
-	std::map<int, IRC::User>::iterator newUserIt = findUser(server->getUsers(), argsArray[0]);
+	IRC::User::users_map::iterator newUserIt = findUser(server->getUsers(), argsArray[0]);
 	if (newUserIt == server->getUsers().end())
 		return setReply(ERR_NOSUCHNICK, *server, user, 1, argsArray[0].c_str());
 

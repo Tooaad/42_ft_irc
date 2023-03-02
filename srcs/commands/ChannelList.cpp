@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 16:11:47 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:06:01 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 	std::vector<std::string> argsArray = splitString(args, " ");
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");
 	
-	std::map<std::string, IRC::Channel> channelsArray;
+	IRC::Channel::channels_map channelsArray;
 	for (std::vector<std::string>::iterator it = channelsArrayStr.begin(); it != channelsArrayStr.end(); it++)
 	{
-		std::map<std::string, IRC::Channel>::iterator channelIt = server->findChannel(*it);
+		IRC::Channel::channels_map::iterator channelIt = server->findChannel(*it);
 		if (channelIt != server->getChannels().end())
 			channelsArray[channelIt->second.getName()] = channelIt->second;
 	}
@@ -38,11 +38,11 @@ void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 		printList(*server, user, server->getChannels().begin(), server->getChannels().end());
 }
 
-void	IRC::ChannelList::printList(IRC::Server server, IRC::User user, std::map<std::string, IRC::Channel>::iterator itBegin, std::map<std::string, IRC::Channel>::iterator itEnd)
+void	IRC::ChannelList::printList(IRC::Server server, IRC::User user, IRC::Channel::channels_map::iterator itBegin, IRC::Channel::channels_map::iterator itEnd)
 {
 	setReply(RPL_LISTSTART, server, user, 0);
 	
-	for (std::map<std::string, IRC::Channel>::iterator it = itBegin; it != itEnd; it++)
+	for (IRC::Channel::channels_map::iterator it = itBegin; it != itEnd; it++)
 	{
 		if (it->second.isSecret() && !user.isInChannel(it->second))
 			continue ;

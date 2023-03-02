@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 21:46:53 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:05:28 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 	/** ITERATE EACH PARSED CHANNEL **/
 	for (std::vector<std::string>::iterator it = channelsArray.begin(); it != channelsArray.end(); it++)
 	{
-		std::map<std::string, IRC::Channel>::iterator channelIt = server->findChannel(*it);
+		IRC::Channel::channels_map::iterator channelIt = server->findChannel(*it);
 		if (channelIt == server->getChannels().end())
 			return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, (*it).c_str());
 		

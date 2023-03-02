@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 23:01:44 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:11:16 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ IRC::Channel &IRC::Channel::operator=(const IRC::Channel &other)
 std::string						IRC::Channel::getName(void) const { return this->name; }
 std::string						IRC::Channel::getTopic(void) const { return this->topic; }
 std::string						IRC::Channel::getPassword(void) const { return this->password; }
-IRC::Channel::channel_users&	IRC::Channel::getUsers(void) { return this->users; }
+IRC::Channel::chanusers_map&	IRC::Channel::getUsers(void) { return this->users; }
 bool							IRC::Channel::isInviteOnly(void) const { return this->inviteOnlyMode; }
 bool							IRC::Channel::isSecret(void) const { return this->secretMode; }
 bool							IRC::Channel::isFreeTopic(void) const { return this->freeTopicMode; }
@@ -104,7 +104,7 @@ void	IRC::Channel::addOperator(IRC::User user, IRC::Server* server)
 {
 	(void) server;
 	
-	IRC::Channel::channel_users::iterator userIt = this->users.find(user.getSocket());
+	IRC::Channel::chanusers_map::iterator userIt = this->users.find(user.getSocket());
 	if (userIt != this->users.end())
 	{
 		if (userIt->second.second == USER_MODERATOR)
@@ -120,7 +120,7 @@ void	IRC::Channel::removeOperator(IRC::User user, IRC::Server* server)
 {
 	(void) server;
 	
-	IRC::Channel::channel_users::iterator userIt = this->users.find(user.getSocket());
+	IRC::Channel::chanusers_map::iterator userIt = this->users.find(user.getSocket());
 	if (userIt != this->users.end())
 	{
 		if (userIt->second.second == USER_MODOPER)
@@ -136,7 +136,7 @@ void	IRC::Channel::addModerator(IRC::User user, IRC::Server* server)
 {
 	(void) server;
 	
-	IRC::Channel::channel_users::iterator userIt = this->users.find(user.getSocket());
+	IRC::Channel::chanusers_map::iterator userIt = this->users.find(user.getSocket());
 	if (userIt != this->users.end())
 	{
 		if (userIt->second.second == USER_OPERATOR)
@@ -152,7 +152,7 @@ void	IRC::Channel::removeModerator(IRC::User user, IRC::Server* server)
 {
 	(void) server;
 	
-	IRC::Channel::channel_users::iterator userIt = this->users.find(user.getSocket());
+	IRC::Channel::chanusers_map::iterator userIt = this->users.find(user.getSocket());
 	if (userIt != this->users.end())
 	{
 		if (userIt->second.second == USER_MODOPER)
@@ -166,7 +166,7 @@ void	IRC::Channel::removeModerator(IRC::User user, IRC::Server* server)
 
 bool	IRC::Channel::addUser(IRC::User& user)
 {
-	std::pair<channel_users::iterator, bool> ret;
+	std::pair<chanusers_map::iterator, bool> ret;
 	ret = this->users.insert(std::pair<int, std::pair<IRC::User, UserRol> >(user.getSocket(), std::pair<IRC::User, UserRol>(user, USER_NORMAL)) );
 	
 	return ret.second;
@@ -183,7 +183,7 @@ void	IRC::Channel::removeUser(IRC::Server* server, IRC::User& user)
 /* -- Member functions -- */
 bool	IRC::Channel::isOperator(IRC::User user)
 {
-	IRC::Channel::channel_users::iterator userIt = this->users.find(user.getSocket());
+	IRC::Channel::chanusers_map::iterator userIt = this->users.find(user.getSocket());
 	if (userIt != this->users.end())
 		return userIt->second.second == USER_MODOPER || userIt->second.second == USER_OPERATOR;
 	return false;
@@ -191,7 +191,7 @@ bool	IRC::Channel::isOperator(IRC::User user)
 
 bool	IRC::Channel::isModerator(IRC::User user)
 {
-	IRC::Channel::channel_users::iterator userIt = this->users.find(user.getSocket());
+	IRC::Channel::chanusers_map::iterator userIt = this->users.find(user.getSocket());
 	if (userIt != this->users.end())
 		return userIt->second.second == USER_MODOPER || userIt->second.second == USER_MODERATOR;
 	return false;
@@ -206,7 +206,7 @@ std::string	IRC::Channel::getUsersString(void)
 {
 	std::string usersString = "";
 
-	for (IRC::Channel::channel_users::iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
+	for (IRC::Channel::chanusers_map::iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
 	{
 		if (userIt != this->users.begin())
 			usersString += " ";
@@ -250,7 +250,7 @@ bool	IRC::Channel::isEmpty(void) const
 
 void	IRC::Channel::sendMessageToUsers(IRC::User sender, std::string message)
 {
-	for (IRC::Channel::channel_users::iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
+	for (IRC::Channel::chanusers_map::iterator userIt = this->users.begin(); userIt != this->users.end(); userIt++)
 	{
 		if (!(userIt->second.first == sender))
 			userIt->second.first.sendMessage(message);
@@ -265,12 +265,12 @@ bool	IRC::operator== (const IRC::Channel lhs, const IRC::Channel rhs)
 	return false;
 }
 
-void	IRC::printChannels(std::map<std::string, IRC::Channel>& channels)
+void	IRC::printChannels(IRC::Channel::channels_map& channels)
 {
 	if (channels.size() == 0)
 		return ;
 	std::cout << "------- Channels -------" << std::endl;
-	for (std::map<std::string, IRC::Channel>::iterator it = channels.begin(); it != channels.end(); ++it)
+	for (IRC::Channel::channels_map::iterator it = channels.begin(); it != channels.end(); ++it)
 		printChannel(it->second);
 	std::cout << "------------------------" << std::endl;
 }

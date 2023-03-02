@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:02 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 21:23:14 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:17:58 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ namespace IRC
 	
 	class Server
 	{
+		public:
+			typedef std::map<std::string, Channel>	channels_map;
+			typedef std::map<int, User>				users_map;
+			typedef std::vector<std::pair<IRC::Server::users_map::iterator, std::string> > user_map_iters_remove;
+		
 		private:
 			std::string						ip;
 			int								sSocket;
@@ -51,8 +56,8 @@ namespace IRC
 			std::string 					password;
 			struct kevent					eventSet;
 			struct kevent					eventList[KQUEUE_SIZE];
-			std::map<int, User>				users;
-			std::map<std::string, Channel>	channels;
+			users_map						users;
+			channels_map					channels;
 			std::string						hostname;
 			std::string						creationTimestamp;
 
@@ -67,10 +72,10 @@ namespace IRC
 			std::string									getIp(void) const;
 			int											getSocket(void) const;
 			std::string									getPassword(void) const;
-			std::map<int, User>&						getUsers(void);
-			std::map<std::string, Channel>&				getChannels(void);
+			users_map&									getUsers(void);
+			channels_map&								getChannels(void);
 			std::string									getHostname(void) const;
-			std::map<std::string, Channel>::iterator	findChannel(std::string name);
+			channels_map::iterator						findChannel(std::string name);
 
 			/* -- Modifiers -- */
 			void							setHostname(std::string hostname);

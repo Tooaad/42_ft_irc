@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:15:21 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/02 12:13:30 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:06:18 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void			IRC::ChannelJoin::exec(IRC::Server* server, IRC::User& user)
 
 		/** IF CHANNEL ALREADY EXIST, JOIN. IF DOESNT EXIST, CREATE **/
 		IRC::Channel newChannel;
-		std::map<std::string, IRC::Channel>::iterator found = server->findChannel(channelsArray[i]);
+		IRC::Channel::channels_map::iterator found = server->findChannel(channelsArray[i]);
 		if (found != server->getChannels().end())
 		{
 			if (!joinExistingChannel(found->second, *server, user))

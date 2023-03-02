@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelList.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:06 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:27:43 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:56:04 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ namespace IRC
 			void	exec(Server* server, User& user);
 
 		private:
-			void	printList(Server server, User user, std::map<std::string, Channel>::iterator itBegin, std::map<std::string, Channel>::iterator itEnd);
+			void	printList(Server server, User user, IRC::Channel::channels_map::iterator itBegin, IRC::Channel::channels_map::iterator itEnd);
 	};
 }
