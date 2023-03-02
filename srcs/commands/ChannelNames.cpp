@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelNames.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:10:20 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/01 11:24:49 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:13:23 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	IRC::ChannelNames::exec(IRC::Server* server, IRC::User& user)
 	if (argsArray.size() == 0)
 		return ;
 	
+	/** PRINT NAMES OF ALL CHANNELS THAT MEET CONDITIONS **/
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");
 	for (std::vector<std::string>::iterator it = channelsArrayStr.begin(); it != channelsArrayStr.end(); it++)
 	{
