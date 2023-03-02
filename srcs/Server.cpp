@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 12:07:57 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 12:58:25 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ void	IRC::Server::addChannel(IRC::Channel& channel)
 
 void	IRC::Server::removeChannel(IRC::Channel channel)
 {
-	std::map<std::string, IRC::Channel>::iterator found = this->channels.find(channel.getName());
-	
-	if (found != this->channels.end())
-		this->channels.erase(found);
+	this->channels.erase(channel.getName());
 }
 
 void	IRC::Server::updateUserInChannels(IRC::User user)
@@ -165,13 +162,18 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
 		throwError("kevent remove client socket");
 	
+	// Remove user from joined channels and send QUIT message to them
 	for (std::map<std::string, IRC::Channel>::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); ++itChannel)
+	{
 		itChannel->second.sendMessageToUsers(user, ":" + user.getNick() + " QUIT :" + message);
+		this->channels[itChannel->second.getName()].removeUser(this, user);
+	}
 
+	// Close client socket
 	if (close(user.getSocket()) == -1)
 		throwError("Client close error");
 	else
-		std::cout << user.getSocket() << " closed client" << std::endl;
+		std::cout << "Client (" << user.getSocket() << ") closed" << std::endl;
 
 	removeUser(user);
 }
@@ -179,9 +181,6 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 /* -- Private Member functions */
 void	IRC::Server::removeUser(IRC::User& user)
 {
-	for (std::map<std::string, IRC::Channel>::iterator joinedChansIt = user.getJoinedChannels().begin(); joinedChansIt != user.getJoinedChannels().end(); ++joinedChansIt)
-		this->channels[joinedChansIt->second.getName()].removeUser(this, user);
-	
 	this->users.erase(user.getSocket());
 }
 
@@ -213,16 +212,20 @@ int		IRC::Server::saveIp(void)
 
 void	IRC::Server::terminateServer(void)
 {
+	// Close client sockets
 	for (std::map<int, IRC::User>::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
 	{
 		if (close(userIt->second.getSocket()) == -1)
 			throwError("Client close error");
 		else
-			std::cout << userIt->second.getSocket() << " closed" << std::endl;
+			std::cout << "Client (" << userIt->second.getSocket() << ") closed" << std::endl;
 	}
 	
+	// Close server socket
 	if (close(getSocket()) == -1)
 		throwError("Server close error");
+	else
+		std::cout << "Server (" << getSocket() << ") closed" << std::endl;
 }
 
 int		IRC::Server::clientConnected(void)
