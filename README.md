@@ -57,9 +57,7 @@ Kqueue
 
 
 Lista de prioridades:
-- Canales pares no se borran al hacer closeClient
-- Error con mapa al no closeclient por ping, segfault
-- Mejorar rendimiento con maps?
+- Revisar add y removes en fors de iterador, invalidan los iteradores y tienen comportamiento indefinido
 - Revisar todo y explicarnoslo
 
 Therefore, if you plan to remove an object from one map and continue to use it in the other map, you should consider making a copy of the object before removing it from the first map. This way, both maps will have their own copy of the object, and you can safely delete the object when you are done with it.
