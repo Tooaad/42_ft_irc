@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:19:51 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:12:10 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:54:05 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	IRC::ChannelKick::exec(IRC::Server* server, IRC::User& user)
 	
 	/** USER IS REMOVED FROM CHANNEL AND REPLY IS SENT **/
 	if (argsArray.size() < 3)
-		setActionInReply(*server, user, channel->second, "KICK " + channel->second.getName() + " " + victimIt->second.getNick() + " " + user.getNick());
+		setActionInReply(user, channel->second, "KICK " + channel->second.getName() + " " + victimIt->second.getNick() + " " + user.getNick());
 	else
-		setActionInReply(*server, user, channel->second, "KICK " + channel->second.getName() + " " + victimIt->second.getNick() + " " + argsArray[2]);
+		setActionInReply(user, channel->second, "KICK " + channel->second.getName() + " " + victimIt->second.getNick() + " " + argsArray[2]);
 
 	channel->second.removeUser(server, victimIt->second);
 	victimIt->second.removeJoinedChannel(channel->second);

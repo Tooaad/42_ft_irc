@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 17:19:43 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:05:28 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:54:05 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	IRC::ChannelPart::exec(IRC::Server* server, IRC::User& user)
 		
 		/** REMOVE USER FROM CHANNEL **/
 		if (argsArray.size() > 1 && argsArray[1].size() > 0)
-			setActionInReply(*server, user, channelIt->second, "PART " + channelIt->second.getName() + " :\"" + argsArray[1] + "\"");
+			setActionInReply(user, channelIt->second, "PART " + channelIt->second.getName() + " :\"" + argsArray[1] + "\"");
 		else
-			setActionInReply(*server, user, channelIt->second, "PART :" + channelIt->second.getName());
+			setActionInReply(user, channelIt->second, "PART :" + channelIt->second.getName());
 		channelIt->second.removeUser(server, user);
 		user.removeJoinedChannel(channelIt->second);
 	}

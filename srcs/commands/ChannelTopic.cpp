@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 18:29:29 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:05:22 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:54:05 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void	IRC::ChannelTopic::exec(IRC::Server* server, IRC::User& user)
 			return setReply(ERR_CHANOPRIVSNEEDED, *server, user, 1, argsArray[1].c_str());
 		
 		channel->second.setTopic(argsArray[1]);
-		setActionInReply(*server, user, channel->second, "TOPIC " + channel->second.getName() + " " + channel->second.getTopic());
+		setActionInReply(user, channel->second, "TOPIC " + channel->second.getName() + " " + channel->second.getTopic());
 	}
 }

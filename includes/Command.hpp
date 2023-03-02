@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by karisti-          #+#    #+#             */
-/*   Updated: 2023/02/28 14:43:05 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:53:29 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ namespace IRC
 
 			/* -- Setters -- */
 			void			setReply(ReplyNos replyNo, Server server, User user, int n, ...);
-			void			setActionInReply(Server server, User user, Channel channel, std::string action);
+			void			setActionInReply(User user, Channel channel, std::string action);
 			
 			/* -- Member functions -- */
 			void			detectCommand(Server* server, User& user);

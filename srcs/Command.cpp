@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 12:29:49 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:53:15 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,9 +233,8 @@ void		IRC::Command::setReply(ReplyNos replyNo, IRC::Server server, IRC::User use
 	va_end(vaList);
 }
 
-void		IRC::Command::setActionInReply(IRC::Server server, IRC::User user, IRC::Channel channel, std::string action)
+void		IRC::Command::setActionInReply(IRC::User user, IRC::Channel channel, std::string action)
 {
-	(void)server; // TODO: remove server from arguments?
 	std::string str = ":" + user.getNick() + "!" + user.getUser() + "@" + user.getHostname() + " " + action;
 
 	channel.sendMessageToUsers(user, str);

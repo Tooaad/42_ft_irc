@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 19:39:46 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:52:59 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ void	IRC::Channel::addOperator(IRC::User user, IRC::Server* server)
 		else
 			userIt->second.second = USER_OPERATOR;
 	}
-	// TODO: update server user
 	server->updateUserInChannels(userIt->second.first);
 }
 
@@ -128,7 +127,6 @@ void	IRC::Channel::removeOperator(IRC::User user, IRC::Server* server)
 		else
 			userIt->second.second = USER_NORMAL;
 	}
-	// TODO: update server user
 	server->updateUserInChannels(userIt->second.first);
 }
 
@@ -144,7 +142,6 @@ void	IRC::Channel::addModerator(IRC::User user, IRC::Server* server)
 		else
 			userIt->second.second = USER_MODERATOR;
 	}
-	// TODO: update server user
 	server->updateUserInChannels(userIt->second.first);
 }
 
@@ -160,7 +157,6 @@ void	IRC::Channel::removeModerator(IRC::User user, IRC::Server* server)
 		else
 			userIt->second.second = USER_NORMAL;
 	}
-	// TODO: update server user
 	server->updateUserInChannels(userIt->second.first);
 }
 
