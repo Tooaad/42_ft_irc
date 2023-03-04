@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:10:16 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:29:50 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	IRC::User::setUser(std::string user) { this->user = user; }
 void	IRC::User::setRealname(std::string realname) { this->realname = realname; }
 void	IRC::User::setHostname(std::string hostname) { this->hostname = hostname; }
 void	IRC::User::setServername(std::string servername) { this->servername = servername; }
-void	IRC::User::changeAuthenticated(void) { this->authenticated = !authenticated; }
+void	IRC::User::setAuthenticated(bool value) { this->authenticated = value; }
 void	IRC::User::setTimeout(time_t timeout) { this->timeout = timeout; }
 void	IRC::User::setPingKey(std::string key) { this->pingKey = key; }
 
@@ -214,7 +214,7 @@ void	IRC::printUsers(IRC::User::users_map users)
 	std::cout << "---------------------" << std::endl;
 }
 
-void	IRC::User::changeRequest(bool req)
+void	IRC::User::setPingRequest(bool req)
 {
 	this->pingReq = req;
 }

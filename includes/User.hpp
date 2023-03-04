@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:00:21 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:29:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ namespace IRC
 			void					setRealname(std::string realname);
 			void					setHostname(std::string realname);
 			void					setServername(std::string realname);
-			void					changeAuthenticated(void);
-			void					changeRequest(bool req);
+			void					setAuthenticated(bool value);
+			void					setPingRequest(bool req);
 			void					setPingKey(std::string key);
 			void					setTimeout(time_t timeout);
 

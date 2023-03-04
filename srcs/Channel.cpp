@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:40 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 20:52:59 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:24:17 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ int								IRC::Channel::getMaxUsers(void) const { return this->maxUsers; }
 void						IRC::Channel::setName(std::string newName) { this->name = newName; }
 void						IRC::Channel::setTopic(std::string newTopic) { this->topic = newTopic; }
 void						IRC::Channel::setPassword(std::string password) { this->password = password; }
-void						IRC::Channel::changeInviteOnly(void) { this->inviteOnlyMode = !this->inviteOnlyMode; }
-void						IRC::Channel::changeSecrecy(void) { this->secretMode = !this->secretMode; }
-void						IRC::Channel::changeFreeTopic(void) { this->freeTopicMode = !this->freeTopicMode; }
-void						IRC::Channel::changePublicMsg(void) { this->publicMsgMode = !this->publicMsgMode; }
-void						IRC::Channel::changeModerated(void) { this->moderatedMode = !this->moderatedMode; }
+void						IRC::Channel::setInviteOnly(bool value) { this->inviteOnlyMode = value; }
+void						IRC::Channel::setSecrecy(bool value) { this->secretMode = value; }
+void						IRC::Channel::setFreeTopic(bool value) { this->freeTopicMode = value; }
+void						IRC::Channel::setPublicMsg(bool value) { this->publicMsgMode = value; }
+void						IRC::Channel::setModerated(bool value) { this->moderatedMode = value; }
 void						IRC::Channel::setMaxUsers(int size) { if (size < 0) { size = 0; } this->maxUsers = size; }
 
 /* -- Modifiers -- */

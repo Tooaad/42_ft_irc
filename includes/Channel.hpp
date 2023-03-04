@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:52:13 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:11:16 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:23:19 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ namespace IRC
 			void					setName(std::string newName);
 			void					setTopic(std::string newTopic);
 			void					setPassword(std::string password);
-			void					changeInviteOnly(void);
-			void					changeSecrecy(void);
-			void					changeFreeTopic(void);
-			void					changePublicMsg(void);
-			void					changeModerated(void);
+			void					setInviteOnly(bool value);
+			void					setSecrecy(bool value);
+			void					setFreeTopic(bool value);
+			void					setPublicMsg(bool value);
+			void					setModerated(bool value);
 			void					setMaxUsers(int size);
 			
 			/* -- Modifiers -- */

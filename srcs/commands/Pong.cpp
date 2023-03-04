@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pong.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karisti- <karisti-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 19:05:45 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/02/28 14:44:41 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:28:25 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void IRC::Pong::exec(IRC::Server* server, IRC::User& user)
 	if (args.compare(user.getPingKey()) == 0)
 	{
 		user.setTimeout(time(NULL));
-		user.changeRequest(false);
+		user.setPingRequest(false);
 	}
 	else
 		server->closeClient(user, "INCORRECT PING");

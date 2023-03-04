@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:23:15 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 20:53:15 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:27:48 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ void		IRC::Command::detectCommand(IRC::Server* server, IRC::User& user)
 	if (user.isAuthenticated())
 	{
 		user.setTimeout(time(NULL));
-		user.changeRequest(false);
+		user.setPingRequest(false);
 	}
 }
 
