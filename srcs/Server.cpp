@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/04 21:32:19 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:57:36 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int IRC::Server::createNetwork(std::string *args)
 	if ((this->sSocket = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 		return throwError("Error opening socket");
 
-	// Bind the Socket to any free IP / Port
+	/** Bind the Socket to any free IP / Port **/
 	sockaddr_in hint;
 	hint.sin_family = AF_INET; // IPv4 type
 	hint.sin_port = htons(atoi(args[0].c_str())); // Little Endian (for bigger numbers) | Host To Network Short
@@ -98,17 +98,18 @@ int IRC::Server::createNetwork(std::string *args)
 	if (bind(this->sSocket, (struct sockaddr *)&hint, sizeof(hint)) < 0)
 		return throwError("Error binding socket");
 
+	/** Listen for new connections **/
 	if (listen(this->sSocket, SOMAXCONN) == -1)
 		return throwError("Error listen");
 
 	if (fcntl(this->sSocket, F_SETFL, O_NONBLOCK) < 0)
 		return throwError("Error making server socket non blocking");
 
-	// Initialize a kqueue
+	/** Initialize a kqueue **/
 	if ((this->kq = kqueue()) == -1)
 		return throwError("kqueue");
 	
-	// Add action to listen for
+	/** Add action to listen for **/
 	EV_SET(&this->eventSet, this->sSocket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
 	if (kevent(this->kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
 		return throwError("kevent add server socket");
@@ -124,29 +125,29 @@ int IRC::Server::loop(void)
 {
 	int	newEvents;
 
-	// Server loop
+	/** SERVER LOOP **/
 	catchSignal();
 	while (!socketKiller)
 	{
 		struct timespec keventTime = {KQUEUE_TIMEOUT, 0};
 		
-		// Waits for events
+		/** Wait for events **/
 		if ((newEvents = kevent(this->kq, NULL, 0, this->eventList, KQUEUE_SIZE, &keventTime)) == -1)
 			if (!socketKiller)
 				return throwError("kevent check events");
 
-		// kqueue events loop
+		/** Kqueue events loop **/
 		for (int i = 0; i < newEvents; i++)
 		{
 			int eventFd = this->eventList[i].ident;
 
-			// Client disconnected
+			/** Client disconnected **/
 			if (this->eventList[i].flags & EV_EOF)
 				clientDisconnected(eventFd);
-			// New client connected
+			/** New client connected **/
 			else if (eventFd == getSocket())
 				clientConnected();
-			// New message from client
+			/** New message from client **/
 			else if (this->eventList[i].filter & EVFILT_READ)
 				receiveMessage(eventFd);
 		}
@@ -157,7 +158,7 @@ int IRC::Server::loop(void)
 
 void	IRC::Server::closeClient(IRC::User& user, std::string message)
 {
-	// Remove user from joined channels and send QUIT message to them
+	/** Remove user from joined channels and send QUIT message to them **/
 	for (IRC::Server::channels_map::iterator itChannel = user.getJoinedChannels().begin(); itChannel != user.getJoinedChannels().end(); itChannel++)
 	{
 		IRC::Server::channels_map::iterator channel = this->channels.find(itChannel->second.getName());
@@ -168,7 +169,7 @@ void	IRC::Server::closeClient(IRC::User& user, std::string message)
 		}
 	}
 	
-	// Close client socket
+	/** Close client socket **/
 	if (close(user.getSocket()) == -1)
 		throwError("Client close error");
 	else
@@ -211,7 +212,7 @@ int		IRC::Server::saveIp(void)
 
 void	IRC::Server::terminateServer(void)
 {
-	// Close client sockets
+	/** Close client sockets **/
 	for (IRC::Server::users_map::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
 	{
 		if (close(userIt->second.getSocket()) == -1)
@@ -220,7 +221,7 @@ void	IRC::Server::terminateServer(void)
 			std::cout << "Client (" << userIt->second.getSocket() << ") closed" << std::endl;
 	}
 	
-	// Close server socket
+	/** Close server socket **/
 	if (close(getSocket()) == -1)
 		throwError("Server close error");
 	else
@@ -233,7 +234,7 @@ int		IRC::Server::clientConnected(void)
 	
 	user.startListeningSocket(this->sSocket);
 
-	// Add action to listen for
+	/** Add action to listen for **/
 	EV_SET(&this->eventSet, user.getSocket(), EVFILT_READ, EV_ADD, 0, 0, NULL);
 	if (kevent(kq, &this->eventSet, 1, NULL, 0, NULL) == -1)
 		return throwError("kevent add client socket");
@@ -257,6 +258,8 @@ int		IRC::Server::receiveMessage(int eventFd)
 	int bytesRec;
 
 	memset(buf, 0, 4096);
+
+	/** Receive data **/
 	if ((bytesRec = recv(eventFd, buf, 4096, 0)) == -1)
 	{
 		std::cout << "Error in recv(). Quitting" << std::endl;
@@ -269,8 +272,8 @@ int		IRC::Server::receiveMessage(int eventFd)
 
 	IRC::User& user = found->second;
 	
+	/** Manage user buffer and split commands **/
 	std::string message(buf);
-
 	message.erase(remove(message.begin(), message.end(), '\r'), message.end());
 	user.appendBuffer(message);
 	
@@ -291,6 +294,7 @@ int		IRC::Server::receiveMessage(int eventFd)
 		messageSplit.erase(messageSplit.end() - 1);
 	}
 
+	/** Manage each command **/
 	for (std::vector<std::string>::iterator it = messageSplit.begin(); it != messageSplit.end(); it++)
 	{
 		if (!user.isAuthenticated())
@@ -319,6 +323,7 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 	IRC::Command cmd(message);
 	cmd.detectCommand(this, user);
 
+	/** Registration completed **/
 	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
 	{
 		user.setAuthenticated(true);
@@ -342,7 +347,7 @@ void	IRC::Server::catchPing(void)
 	if (PRINT_DEBUG)
 		std::cout << "> Catch Ping: " << std::endl;
 
-	// Auxiliary vector to store the iterators that need to be removed
+	/** Auxiliary vector to store the iterators that need to be removed **/
 	IRC::Server::user_map_iters_remove iteratorsToRemove;
 	for (IRC::Server::users_map::iterator userIt = this->users.begin(); userIt != this->users.end(); ++userIt)
 	{
@@ -364,7 +369,7 @@ void	IRC::Server::catchPing(void)
 		}
 	}
 
-	// remove the iterators that need to be removed from the map
+	/** Remove the iterators that need to be removed from the map **/
 	for (IRC::Server::user_map_iters_remove::iterator it = iteratorsToRemove.begin(); it != iteratorsToRemove.end(); ++it)
 		closeClient(it->first->second, it->second);
 }
