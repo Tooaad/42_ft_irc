@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:06:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:26:01 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,18 @@ void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 	std::vector<std::string> argsArray = splitString(args, " ");
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");
 	
-	IRC::Channel::channels_map channelsArray;
+	/** We find channels by its names **/
+	IRC::Channel::channels_map channelsFound;
 	for (std::vector<std::string>::iterator it = channelsArrayStr.begin(); it != channelsArrayStr.end(); it++)
 	{
 		IRC::Channel::channels_map::iterator channelIt = server->findChannel(*it);
 		if (channelIt != server->getChannels().end())
-			channelsArray[channelIt->second.getName()] = channelIt->second;
+			channelsFound[channelIt->second.getName()] = channelIt->second;
 	}
 	
-	if (channelsArray.size() > 0)
-		printList(*server, user, channelsArray.begin(), channelsArray.end());
+	/** We reply found channels list if some exists, all the channels if not **/
+	if (channelsFound.size() > 0)
+		printList(*server, user, channelsFound.begin(), channelsFound.end());
 	else
 		printList(*server, user, server->getChannels().begin(), server->getChannels().end());
 }
