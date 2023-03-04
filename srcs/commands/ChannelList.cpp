@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:46:03 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/04 22:26:01 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:29:51 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 	std::vector<std::string> argsArray = splitString(args, " ");
 	std::vector<std::string> channelsArrayStr = splitString(argsArray[0], ",");
 	
-	/** We find channels by its names **/
+	/** WE FIND ALL CHANNELS FROM ARGS **/
 	IRC::Channel::channels_map channelsFound;
 	for (std::vector<std::string>::iterator it = channelsArrayStr.begin(); it != channelsArrayStr.end(); it++)
 	{
@@ -33,7 +33,7 @@ void	IRC::ChannelList::exec(IRC::Server* server, IRC::User& user)
 			channelsFound[channelIt->second.getName()] = channelIt->second;
 	}
 	
-	/** We reply found channels list if some exists, all the channels if not **/
+	/** WE REPLY FOUND USER LIST OR ALL OF THEM **/
 	if (channelsFound.size() > 0)
 		printList(*server, user, channelsFound.begin(), channelsFound.end());
 	else

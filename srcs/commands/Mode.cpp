@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/04 22:17:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:34:08 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@ IRC::Mode::~Mode() {}
 
 void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 {
+	/** CHECK POSSIBLE ERRORS **/
 	if (!user.isAuthenticated())
 		return setReply(ERR_NOTREGISTERED, *server, user, 0);
 
 	if (this->args.size() == 0)
 		return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 
+	/** CHANNEL MODES **/
 	if (this->args.at(0) == '#')
 	{
+		/** CHANNEL MODE ERRORS **/
 		std::vector<std::string> argSplit = splitString(this->args, " ");
 		IRC::Channel::channels_map::iterator receptor = server->findChannel(argSplit[0]);
 		if (receptor == server->getChannels().end())
@@ -39,11 +42,12 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 
 		if (argSplit.size() > 1 && argSplit[1].size() > 0)
 		{
+			/** MANAGE ALL MODE CHANGES **/
 			for (size_t i = 1; i < argSplit[1].size(); i++)
 			{
 				if (argSplit[1].at(i) == 'o')
 				{
-					if (argSplit.size() < 3) 
+					if (argSplit.size() < 3)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
@@ -184,6 +188,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 		}
 		else
 		{
+			/** SHOW MODES STATUS **/
 			std::string mode = " +";
 			receptor->second.isSecret()? mode += "s": "";
 			receptor->second.isFreeTopic()? mode += "t": "";
