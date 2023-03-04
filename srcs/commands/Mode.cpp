@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:01:18 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/04 21:26:48 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:17:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
-						IRC::User::users_map::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						IRC::User::users_map::iterator userIt = findUserByNick(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 						{
 							receptor->second.addOperator(userIt->second, server);
@@ -56,7 +56,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
-						IRC::User::users_map::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						IRC::User::users_map::iterator userIt = findUserByNick(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 							receptor->second.removeOperator(userIt->second, server);
 						setActionInReply(user, receptor->second, "MODE " + receptor->second.getName() + " -o :" + argSplit[2]);
@@ -148,7 +148,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 						return setReply(ERR_NEEDMOREPARAMS, *server, user, 1, command.c_str());
 					if (argSplit[1].at(0) == '+')
 					{
-						IRC::User::users_map::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						IRC::User::users_map::iterator userIt = findUserByNick(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 						{
 							receptor->second.addModerator(userIt->second, server);
@@ -157,7 +157,7 @@ void	IRC::Mode::exec(IRC::Server* server, IRC::User& user)
 					}
 					else if (argSplit[1].at(0) == '-')
 					{
-						IRC::User::users_map::iterator userIt = findUser(server->getUsers(), argSplit[2]);
+						IRC::User::users_map::iterator userIt = findUserByNick(server->getUsers(), argSplit[2]);
 						if (userIt != server->getUsers().end())
 							receptor->second.removeModerator(userIt->second, server);
 						setActionInReply(user, receptor->second, "MODE " + receptor->second.getName() + " -v :" + argSplit[2]);

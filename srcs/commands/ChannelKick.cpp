@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:19:51 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 20:54:05 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:17:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	IRC::ChannelKick::exec(IRC::Server* server, IRC::User& user)
 	if (!channel->second.isOperator(user))
 		return setReply(ERR_CHANOPRIVSNEEDED, *server, user, 1, channel->second.getName().c_str());
 
-	IRC::User::users_map::iterator victimIt = findUser(server->getUsers(), argsArray[1]);
+	IRC::User::users_map::iterator victimIt = findUserByNick(server->getUsers(), argsArray[1]);
 	if (victimIt == server->getUsers().end() || !victimIt->second.isInChannel(channel->second.getName()))
 		return setReply(ERR_USERNOTINCHANNEL, *server, user, 2, argsArray[1].c_str(), channel->second.getName().c_str());
 	

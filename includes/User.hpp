@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:46 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/04 21:29:32 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:17:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ namespace IRC
 	
 	/* -- Non-member functions -- */
 	bool								operator== (const User lhs, const User rhs);
-	IRC::User::users_map::iterator		findUser(IRC::User::users_map& users, std::string nick);
+	IRC::User::users_map::iterator		findUserByNick(IRC::User::users_map& users, std::string nick);
 	void								printUser(User user);
 	void								printUsers(IRC::User::users_map users);
 }

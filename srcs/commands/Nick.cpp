@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 02:21:33 by gpernas-          #+#    #+#             */
-/*   Updated: 2023/03/02 16:27:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:17:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	IRC::Nick::exec(IRC::Server* server, IRC::User& user)
 		if (!std::isprint(this->args.at(i)) || this->args.at(i) == '#')
 			return setReply(ERR_ERRONEUSNICKNAME, *server, user, 1, this->args.c_str());
 			
-	if (findUser(server->getUsers(), this->args) != server->getUsers().end())
+	if (findUserByNick(server->getUsers(), this->args) != server->getUsers().end())
 		return setReply(ERR_NICKNAMEINUSE, *server, user, 1, this->args.c_str());
 
 	/** UPDATE USER NICK AND ALSO IN CHANNELS USER LISTS **/

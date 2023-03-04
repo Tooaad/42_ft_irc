@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:20:01 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/02 18:11:58 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:17:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	IRC::ChannelInvite::exec(IRC::Server* server, IRC::User& user)
 	if (channel == server->getChannels().end())
 		return setReply(ERR_NOSUCHCHANNEL, *server, user, 1, argsArray[1].c_str());
 
-	IRC::User::users_map::iterator newUserIt = findUser(server->getUsers(), argsArray[0]);
+	IRC::User::users_map::iterator newUserIt = findUserByNick(server->getUsers(), argsArray[0]);
 	if (newUserIt == server->getUsers().end())
 		return setReply(ERR_NOSUCHNICK, *server, user, 1, argsArray[0].c_str());
 

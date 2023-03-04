@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:56:26 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/04 21:29:50 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:17:32 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void			IRC::User::startListeningSocket(int serverSocket)
 	
 	socklen_t addressSize = sizeof(this->address);
 	
+	/** Accept client connection **/
 	this->socket = accept(serverSocket, (struct sockaddr *)&this->address, &addressSize);
 	if (this->socket == -1)
 	{
@@ -124,6 +125,7 @@ void			IRC::User::startListeningSocket(int serverSocket)
 		return ;
 	}
 
+	/** Make non-blocking **/
 	if (fcntl(this->socket, F_SETFL, O_NONBLOCK) < 0)
 	{
 		perror("Error making client socket non blocking");
@@ -178,7 +180,7 @@ bool	IRC::operator== (const IRC::User lhs, const IRC::User rhs)
 	return (lhs.getSocket() == rhs.getSocket());
 }
 
-IRC::User::users_map::iterator	IRC::findUser(IRC::User::users_map& users, std::string nick)
+IRC::User::users_map::iterator	IRC::findUserByNick(IRC::User::users_map& users, std::string nick)
 {
 	IRC::User::users_map::iterator it = users.begin();
 	
