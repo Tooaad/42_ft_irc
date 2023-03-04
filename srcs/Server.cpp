@@ -6,7 +6,7 @@
 /*   By: karisti- <karisti-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:36:07 by karisti-          #+#    #+#             */
-/*   Updated: 2023/03/04 21:28:13 by karisti-         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:32:19 by karisti-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,7 +321,7 @@ void	IRC::Server::registration(IRC::User& user, std::string message)
 
 	if (user.getPassword().size() > 0 && user.getNick().size() > 0 && user.getUser().size() > 0 && !user.isAuthenticated())
 	{
-		user.setAuthenticated();
+		user.setAuthenticated(true);
 		
 		user.sendMessage(":" + this->getHostname() + " 001 " + user.getNick() + " :Welcome to the 42 IRC Network, " + user.getNick() + "!" + user.getUser() + "@" + user.getHostname());
 		user.sendMessage(":" + this->getHostname() + " 002 " + user.getNick() + " :Your host is ircserv, running version 1.0");
