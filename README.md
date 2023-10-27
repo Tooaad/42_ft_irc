@@ -1,6 +1,6 @@
 # ft_irc
 
-[![Image from Gyazo](https://imgur.com/YLOjdAD)](https://imgur.com/YLOjdAD)
+[![Image from Gyazo](https://i.gyazo.com/175f5e05408824fa0f46a7feccb27697.gif)](https://gyazo.com/175f5e05408824fa0f46a7feccb27697)
 
 ## RFC-IRC PROTOCOL
 - https://www.ietf.org/rfc/rfc1459.txt
