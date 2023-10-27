@@ -1,5 +1,7 @@
 # ft_irc
 
+[![Image from Gyazo](https://i.gyazo.com/f7a8a7a47e4d52ec5d50678a817c40e2.gif)](https://gyazo.com/f7a8a7a47e4d52ec5d50678a817c40e2)
+
 ## RFC-IRC PROTOCOL
 - https://www.ietf.org/rfc/rfc1459.txt
 - https://www.rfc-es.org/rfc/rfc1459-es.txt
