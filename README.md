@@ -1,4 +1,4 @@
-# ft_irc
+# ft_irc 💬
 Simple IRC Server following the IRC protocol specifications. Some concepts we learnt were: how to create a server with C++, handle connections in a non-blocking way without using threads.
 Developed by @gpernas- and @karisti-.
 
