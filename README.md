@@ -61,7 +61,6 @@ join #test
 
 */
 
--->
 
 https://modern.ircdocs.horse/#connection-setup
 
@@ -73,3 +72,5 @@ lsof -t -i tcp:6667 | xargs kill
 https://github.com/abambi-abambi/irc_server/blob/master/additional_materials/checklist_ft_irc_en.pdf
 
 join #1,#2,#3,#4,#5,#6,#7,#8,#9,#10,#11,#12,#13
+
+-->
