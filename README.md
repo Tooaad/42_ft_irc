@@ -1,42 +1,30 @@
 # ft_irc
+This project is a basic IRC Server following the IRC protocol details. We will discover how to create a server with C++, receive connections, and do it on a non-blocking manner without using threads for it. Developed by @gpernas- and @karisti-.
 
 [![Image from Gyazo](https://i.gyazo.com/175f5e05408824fa0f46a7feccb27697.gif)](https://gyazo.com/175f5e05408824fa0f46a7feccb27697)
 
-## RFC-IRC PROTOCOL
+## References RFC-IRC PROTOCOL
 - https://www.ietf.org/rfc/rfc1459.txt
 - https://www.rfc-es.org/rfc/rfc1459-es.txt
 - https://modern.ircdocs.horse/#client-to-server
 
-## IRC Clients using on terminal is kinda ugly
-- https://kiwiirc.com/              (Online)
-- https://www.mirc.com/             (Online)
-- https://bitchx.sourceforge.net/
-- http://www.instantbird.com/
-- https://client01.chat.mibbit.com/
+## IRC Clients
+These are some clients we used and are easy to setup
+- [CIRC](https://chrome.google.com/webstore/detail/circ/bebigdkelppomhhjaaianniiifjbgocn) - Only works on Chrome! 
+- [kiwiIRC](https://kiwiirc.com/)
 
+## Resources learnt
+- [TCP/IP Protocol in C++](https://lenngro.github.io/how-to/2021/01/05/Simple-TCPIP-Server-Cpp/)
+- [In-Out events (Poll/Select/Kqueue)](https://nima101.github.io/io_multiplexing)
+- [Kqueue](https://dev.to/frevib/a-tcp-server-with-kqueue-527)
+- [Non-Blocking fd C++](https://www.linuxtoday.com/blog/blocking-and-non-blocking-i-0/)
+- [Sockets](https://beej.us/guide/bgnet/pdf/bgnet_usl_c_1.pdf) (Pag 60)
 
-## Info
-- TCP/IP Protocol in C++: https://lenngro.github.io/how-to/2021/01/05/Simple-TCPIP-Server-Cpp/
-- TCP/IP v4 example in C: https://www.ibm.com/docs/en/zos/2.1.0?topic=applications-example-ipv4-tcp-server-program
-- In-Out events (Poll/Select/Kqueue): https://nima101.github.io/io_multiplexing 
-- Non-Blocking fd C++: https://stackoverflow.com/questions/5616092/non-blocking-call-for-reading-descriptor
-- Non-Blocking fd C++ extended version: https://www.linuxtoday.com/blog/blocking-and-non-blocking-i-0/
-- Sockets: https://beej.us/guide/bgnet/pdf/bgnet_usl_c_1.pdf (Pag 60)
+  ## Usage
+- Run `$make && ./ircserv <SERVER_PORT> <SERVER_PASSWORD>`
+- Connect from client. From CIRC: /server <SERVER_IP> <SERVER_PORT> <SERVER_PASSWORD>
 
-No bloqueante
-- https://www.linuxtoday.com/blog/blocking-and-non-blocking-i-0/
-- https://linux.die.net/man/7/socket
-- https://man7.org/linux/man-pages/man2/fcntl.2.html
-
-Kqueue
-- https://www.youtube.com/watch?v=Y6pFtgRdUts
-- https://nima101.github.io/io_multiplexing
-- http://eradman.com/posts/kqueue-tcp.html
-- https://wiki.netbsd.org/tutorials/kqueue_tutorial/
-- [bueno] https://dev.to/frevib/a-tcp-server-with-kqueue-527
-
-
-
+<!--
 ## CONCEPTS
 * BSD Sockets
 * Receive commands via recv()
@@ -46,22 +34,12 @@ Kqueue
                     send() [OPTIONAL]
                     receive()
 * Serializacion
-
+-->
 # Project Examples
-- https://www.nongnu.org/cpirc/
-- https://opensource.com/life/16/6/irc-quickstart-guide
-- https://opensource.com/life/16/6/irc
-- https://oramind.com/tutorial-how-to-make-an-irc-server-connection/
-- https://se.inf.ethz.ch/student_projects/fabian_gremper/Report.pdf
+- [TPC Server Linux](https://www.youtube.com/watch?v=cNdlrbZSkyQ)
+- [TPC Server Mac](https://www.youtube.com/watch?v=F3iIGUiW27Q)
 
-- TPC Server Linux https://www.youtube.com/watch?v=cNdlrbZSkyQ
-- TPC Server Mac https://www.youtube.com/watch?v=F3iIGUiW27Q
-
-
-Lista de prioridades:
-- Revisar todo y explicarnoslo
-
-
+<!--
 /*
 
 pass 12
@@ -82,7 +60,7 @@ join #test
 
 */
 
-
+-->
 
 https://modern.ircdocs.horse/#connection-setup
 
