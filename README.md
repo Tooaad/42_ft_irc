@@ -1,5 +1,6 @@
 # ft_irc
-This project is a basic IRC Server following the IRC protocol details. We will discover how to create a server with C++, receive connections, and do it on a non-blocking manner without using threads for it. Developed by @gpernas- and @karisti-.
+Simple IRC Server following the IRC protocol specifications. Some concepts we learnt were: how to create a server with C++, handle connections in a non-blocking way without using threads.
+Developed by @gpernas- and @karisti-.
 
 [![Image from Gyazo](https://i.gyazo.com/175f5e05408824fa0f46a7feccb27697.gif)](https://gyazo.com/175f5e05408824fa0f46a7feccb27697)
 
