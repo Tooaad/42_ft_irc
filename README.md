@@ -1,5 +1,5 @@
 # ft_irc 💬
-Simple IRC Server following the IRC protocol specifications. Some concepts we learnt were: how to create a server with C++, handle connections in a non-blocking way without using threads.
+Simple IRC Server following the IRC protocol specifications. Some concepts we learned were: how to create a server with C++ and handle connections in a non-blocking way without using threads.
 Developed by @gpernas- and @karisti-.
 
 [![Image from Gyazo](https://i.gyazo.com/175f5e05408824fa0f46a7feccb27697.gif)](https://gyazo.com/175f5e05408824fa0f46a7feccb27697)
@@ -10,11 +10,11 @@ Developed by @gpernas- and @karisti-.
 - https://modern.ircdocs.horse/#client-to-server
 
 ## IRC Clients
-These are some clients we used and are easy to setup
+These are some clients we used and are easy to set
 - [CIRC](https://chrome.google.com/webstore/detail/circ/bebigdkelppomhhjaaianniiifjbgocn) - Only works on Chrome! 
 - [kiwiIRC](https://kiwiirc.com/)
 
-## Resources learnt
+## Resources learned
 - [TCP/IP Protocol in C++](https://lenngro.github.io/how-to/2021/01/05/Simple-TCPIP-Server-Cpp/)
 - [In-Out events (Poll/Select/Kqueue)](https://nima101.github.io/io_multiplexing)
 - [Kqueue](https://dev.to/frevib/a-tcp-server-with-kqueue-527)
